@@ -1,44 +1,48 @@
-</div>
-        <!-- partial:partials/_footer.html -->
-        <footer class="footer">
-          <div class="container-fluid clearfix">
-            <span class="float-right">
-                <a href="#">Brack Bank</a> &copy; 2018
-</span>
-          </div>
-        </footer>
-
-        <!-- partial -->
-      </div>
+<footer class="probootstrap_section probootstrap-border-top" style="background-color: darkblue">
+    <div class="container" >
+        <div class="row mb-5">
+            <div class="col-md-3">
+                {{--<h3 class="probootstrap_font-18 mb-3">Quick Links</h3>--}}
+                {{--<ul class="list-unstyled">--}}
+                    {{--<li><a href="https://free-template.co" target="_blank">Home</a></li>--}}
+                    {{--<li><a href="https://free-template.co" target="_blank">About</a></li>--}}
+                    {{--<li><a href="https://free-template.co" target="_blank">Services</a></li>--}}
+                    {{--<li><a href="https://free-template.co" target="_blank">Contact</a></li>--}}
+                {{--</ul>--}}
+            {{--</div>--}}
+            {{--<div class="col-md-3">--}}
+                {{--<h3 class="probootstrap_font-18 mb-3">Quick Links</h3>--}}
+                {{--<ul class="list-unstyled">--}}
+                    {{--<li><a href="https://free-template.co" target="_blank">Home</a></li>--}}
+                    {{--<li><a href="https://free-template.co" target="_blank">About</a></li>--}}
+                    {{--<li><a href="https://free-template.co" target="_blank">Services</a></li>--}}
+                    {{--<li><a href="https://free-template.co" target="_blank">Contact</a></li>--}}
+                {{--</ul>--}}
+            {{--</div>--}}
+            {{--<div class="col-md-3">--}}
+                {{--<h3 class="probootstrap_font-18 mb-3">Quick Links</h3>--}}
+                {{--<ul class="list-unstyled">--}}
+                    {{--<li><a href="https://free-template.co" target="_blank">Home</a></li>--}}
+                    {{--<li><a href="https://free-template.co" target="_blank">About</a></li>--}}
+                    {{--<li><a href="https://free-template.co" target="_blank">Services</a></li>--}}
+                    {{--<li><a href="https://free-template.co" target="_blank">Contact</a></li>--}}
+                {{--</ul>--}}
+            {{--</div>--}}
+            {{--<div class="col-md-3">--}}
+                {{--<h3 class="probootstrap_font-18 mb-3">Quick Links</h3>--}}
+                {{--<ul class="list-unstyled">--}}
+                    {{--<li><a href="https://free-template.co" target="_blank">Home</a></li>--}}
+                    {{--<li><a href="https://free-template.co" target="_blank">About</a></li>--}}
+                    {{--<li><a href="https://free-template.co" target="_blank">Services</a></li>--}}
+                    {{--<li><a href="https://free-template.co" target="_blank">Contact</a></li>--}}
+                {{--</ul>--}}
+            </div>
+        </div>
+        <div class="row pt-5">
+            <div class="col-md-12 text-center">
+                <p class="probootstrap_font-14">&copy; 2017. All Rights Reserved. <br> Designed &amp; Developed by <a href="https://uicookies.com/" target="_blank">uiCookies</a><small> (Don't remove credit link on this footer. See <a href="https://uicookies.com/license/">license</a>)</small></p>
+                <p class="probootstrap_font-14">Demo Images: <a href="https://unsplash.com/" target="_blank">Unsplash</a></p>
+            </div>
+        </div>
     </div>
-
-<!-- end of scroller container -->
-  </div>
-<script src="assets/js/jquery-3.1.0.min.js"></script>
-  <script src="assets/js/popper.min.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
-  <script src="assets/js/Chart.min.js"></script>
-  <script src="assets/js/perfect-scrollbar.jquery.min.js"></script>
-  <script src="assets/js/off-canvas.js"></script>
-  <script src="assets/js/hoverable-collapse.js"></script>
-  <script src="assets/js/misc.js"></script>
-  <script src="assets/js/chart.js"></script>
-  <!-- DataTables JavaScript -->
-  <script src="assets/js/jquery.dataTables.min.js"></script>
-  <script src="assets/js/dataTables.bootstrap4.min.js"></script>
-  <script src="assets/js/dataTables.responsive.js"></script>
-  <script>
-$(document).ready(function() {
-    $('#example').DataTable({
-            responsive: true
-        });
-
-      } );
-
-
-  </script>
-</body>
-</html>
-<?php
-ob_end_flush();
-?>
+</footer>
