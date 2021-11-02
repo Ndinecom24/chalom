@@ -14,9 +14,31 @@
 
     <!-- Custom styles for this template -->
     <link href="{{asset('assets/css/signin.css')}}" rel="stylesheet">
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .bg {
+            /* The image used */
+            background-image: url("{{asset('assets/login.jpg')}}");
+
+            /* Full height */
+            height: 100%;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+
+
 </head>
 
-<body>
+<body class="bg">
 @yield('content')
 </body>
 </html>

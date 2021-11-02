@@ -32,8 +32,11 @@ class HomeController extends Controller
         if($user->roles_id == config('constants.role.client.id')){
             return view('dashboard.client.home');
         }
-        else if($user->roles_id == config('constants.role.admin.id')){
+        else if($user->roles_id != config('constants.role.client.id') ){
             return view('dashboard.admin.home');
+        }
+        else{
+            dd("Please call system admin to fix your user role");
         }
 
     }

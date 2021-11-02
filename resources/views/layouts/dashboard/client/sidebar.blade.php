@@ -81,33 +81,6 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('settings')}}" >
-                        <i class="fa fa-gears"></i>
-                        <span class="menu-title">Settings</span>
-                    </a>
-                </li>
-
-
-                <!-- Users option -->
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#settings-pages" aria-expanded="false" aria-controls="liability-pages">
-                        <i class="fa fa-users"></i>
-                        <span class="menu-title">Users <i class="fa fa-sort-down"></i> </span>
-                    </a>
-                    <div class="collapse" id="settings-pages">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item">
-
-                                <a class="nav-link" href="{{route('user.admins')}}" >   <i class="fa fa-user-circle"></i> Admins</a>
-                            </li>
-                            <li class="nav-item">
-
-                                <a class="nav-link" href="{{route('user.clients')}}" > <i class="fa fa-user-circle-o"></i> Clients</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
 
 
 
