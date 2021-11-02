@@ -10,7 +10,7 @@
                     <h2 class="heading mb-2 display-4 font-light probootstrap-animate"><strong>Apply Now</strong>  </h2>
                     <p class="lead mb-5 probootstrap-animate">Get Your Loan Approved 2 Minutes </p>
                     <p class="probootstrap-animate">
-                        <a href="" role="button" class="btn btn-primary p-3 mr-3 pl-5 pr-5 text-uppercase d-lg-inline d-md-inline d-sm-block d-block mb-3">Contact US</a>
+                        <a href="" role="button" class="btn btn-primary p-3 mr-3 pl-5 pr-5 text-uppercase d-lg-inline d-md-inline d-sm-block d-block mb-3" style="background-color: #e65f3f">Contact US</a>
                     </p>
                 </div>
                 <div class="col-md probootstrap-animate">
@@ -91,7 +91,7 @@
                                     <label for="oneway"><input type="radio" id="oneway" name="direction">  Oneway</label>
                                 </div>
                                 <div class="col-md">
-                                    <input type="submit" value="Submit" class="btn btn-primary btn-block">
+                                    <input type="submit" value="Submit" class="btn btn-success btn-block">
                                 </div>
                             </div>
                         </div>
@@ -108,14 +108,14 @@
         <div class="container">
             <div class="row justify-content-center mb-5">
                 <div class="col-md-12 text-center mb-5 probootstrap-animate">
-                    <h2 class="display-4 border-bottom probootstrap-section-heading">Why we Love Places</h2>
+                    <h4 class="display-4 border-bottom probootstrap-section-heading" style="background-color: #2b4a75"><strong style="color: white">Personal Loans | Business Loans </strong></h4>
                     <blockquote class="">
-                        <p class="lead mb-4"><em>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</em></p>
-                        <p class="probootstrap-author">
-                            <a href="https://uicookies.com/" target="_blank">
-                                <img src="{{asset('places/assets/images/person_1.jpg')}}" alt="Free Template by uicookies.com" class="rounded-circle">
-                                <span class="probootstrap-name">James Smith</span>
-                                <span class="probootstrap-title">Chief Executive Officer</span>
+                        <p class="lead mb-4"><em>Our promise to our customers is that we will constantly streamline our processes to ensure that we have the fastest turnaround time in the market. Try our easy 3-step process to get your next loan.</em></p>
+                        {{--<p class="probootstrap-author">--}}
+                            {{--<a href="https://uicookies.com/" target="_blank">--}}
+                                {{--<img src="{{asset('places/assets/images/person_1.jpg')}}" alt="Free Template by uicookies.com" class="rounded-circle">--}}
+                                {{--<span class="probootstrap-name">James Smith</span>--}}
+                                {{--<span class="probootstrap-title">Chief Executive Officer</span>--}}
                             </a>
                         </p>
                     </blockquote>
