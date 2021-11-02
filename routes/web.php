@@ -41,6 +41,7 @@ Route::group([
         'prefix' => 'admin',
     ], function () {
         Route::get('index', [UserController::class, 'index'])->name('user.admins');
+        Route::get('profile/{user}', [UserController::class, 'profile'])->name('user.admin.profile');
         Route::post('store', [UserController::class, 'store'])->name('user.admin.store');
         Route::post('update', [UserController::class, 'update'])->name('user.admin.update');
         Route::post('destroy', [UserController::class, 'destroy'])->name('user.admin.destroy');

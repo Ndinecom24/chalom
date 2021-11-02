@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
+
+    public function profile(User $user){
+        return view('dashboard.admin.users.profile')->with(compact('user'));
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +35,7 @@ class UserController extends Controller
         }
         $types = CustomerTypes::where('id', '=', config('constants.customer_type.employee'))->get();
         $roles = Roles::where('id', '!=', config('constants.role.client.id'))->get();
-        return view('dashboard.admin.users.admins')->with(compact('users', 'types', 'roles'));
+        return view('dashboard.admin.users.index')->with(compact('users', 'types', 'roles'));
     }
 
     /**

@@ -96,10 +96,9 @@
                                                 <td>
                                                     <div class="row ">
                                                         <div class="col-3">
-                                                            <button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal-edit-user"
-                                                                    data-sent_data="{{$user}}" >
+                                                            <a class="btn btn-sm btn-secondary" href="{{route('user.admin.profile', $user)}}" >
                                                                 <i class="fa fa-edit"></i>
-                                                            </button>
+                                                            </a>
                                                         </div>
                                                         <div class="col-3 ">
                                                             <button class="btn btn-sm btn-secondary text-left" data-toggle="modal" data-target="#modal-delete-user"
