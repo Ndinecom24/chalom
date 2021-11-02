@@ -1,4 +1,4 @@
-<footer class="probootstrap_section probootstrap-border-top" style="background-color: darkblue">
+<footer class="probootstrap_section probootstrap-border-top" style="background-color: green">
     <div class="container" >
         <div class="row mb-5">
             <div class="col-md-3">
@@ -40,8 +40,8 @@
         </div>
         <div class="row pt-5">
             <div class="col-md-12 text-center">
-                <p class="probootstrap_font-14">&copy; 2017. All Rights Reserved. <br> Designed &amp; Developed by <a href="https://uicookies.com/" target="_blank">uiCookies</a><small> (Don't remove credit link on this footer. See <a href="https://uicookies.com/license/">license</a>)</small></p>
-                <p class="probootstrap_font-14">Demo Images: <a href="https://unsplash.com/" target="_blank">Unsplash</a></p>
+                <p class="probootstrap_font-14" style="color: white">&copy; 2021. All Rights Reserved.</p>
+                {{--<p class="probootstrap_font-14">Demo Images: <a href="https://unsplash.com/" target="_blank">Unsplash</a></p>--}}
             </div>
         </div>
     </div>
