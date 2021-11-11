@@ -10,11 +10,11 @@ return [
             'name' => 'Client'
         ],
         'admin' => [
-            'id' => 1,
+            'id' => 2,
             'name' => 'Admin'
         ],
         'developer' => [
-            'id' => 2,
+            'id' => 3,
             'name' => 'Developer'
         ],
     ],
@@ -36,5 +36,9 @@ return [
         'new' => 1,
         'returning' => 2,
         'employee' => 4
+    ],
+    'types' => [
+        'avatar' => 'avatar',
+        'nrc' => 'nrc',
     ]
 ];

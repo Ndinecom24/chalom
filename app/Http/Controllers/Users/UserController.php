@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Users;
 
-use App\Models\CustomerTypes;
-use App\Models\Roles;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\FilesController;
+use App\Models\Files;
+use App\Models\Settings\CustomerTypes;
+use App\Models\Settings\Roles;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,8 +17,11 @@ use Illuminate\Support\Facades\Redirect;
 class UserController extends Controller
 {
 
-    public function profile(User $user){
-        return view('dashboard.admin.users.profile')->with(compact('user'));
+    public function profile(User $user)
+    {
+        $roles = Roles::where('id', '!=', config('constants.role.client.id'))->get();
+        $types = CustomerTypes::where('id', '=', config('constants.customer_type.employee'))->get();
+        return view('dashboard.admin.users.profile')->with(compact('user', 'roles', 'types'));
     }
 
 
@@ -28,11 +34,6 @@ class UserController extends Controller
     {
         $users = User::where('customer_type_id', '=', config('constants.customer_type.employee'))->get();
 
-        foreach ($users as $user){
-            $media = $user->getMedia();
-            $url = $user->getFirstMediaUrl();
-          //  dd($media );
-        }
         $types = CustomerTypes::where('id', '=', config('constants.customer_type.employee'))->get();
         $roles = Roles::where('id', '!=', config('constants.role.client.id'))->get();
         return view('dashboard.admin.users.index')->with(compact('users', 'types', 'roles'));
@@ -56,12 +57,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
         //get logged in user
         $user = Auth::user();
-
-//        password' => Hash::make($data['password']),
-
+        //create
         $model = User::updateOrCreate(
             [
                 "name" => $request->name,
@@ -84,18 +82,23 @@ class UserController extends Controller
                 "role_id" => $request->role_id,
                 "password" => Hash::make('password'),
                 "status_id" => config('constants.status.activated'),
-                "created_by" => $user->id ,
+                "created_by" => $user->id,
             ]
         );
 
-       // dd($model);
+        //save avatar
+        $filesModel = new Files();
+        $file = $request->file('avatar');
+        $saved_file = $filesModel->upload($request, $file, config('constants.types.avatar'), $model);
+        $model->profile_img = $saved_file->id;
+        $model->save();
 
-        if($request->file('avatar')) {
+        if ($request->file('avatar')) {
             $model->addMediaFromRequest('avatar')->toMediaCollection('avatars');
-            $model->update(['avatar' => $request->file('avatar')]);
+            $model->update(['profile_img' => $request->file('avatar')]);
         }
 
-        return Redirect::back()->with('message',  $request->name.' Account Created Successfully') ;
+        return Redirect::back()->with('message', $request->name . ' Account Created Successfully');
 
     }
 
@@ -130,7 +133,39 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->mobile_number = $request->mobile_number;
+        $user->dob = $request->dob;
+        $user->email = $request->email;
+        $user->nid = $request->nid;
+        $user->gender = $request->gender;
+        $user->address = $request->address;
+        $user->country = $request->country;
+        $user->city = $request->city;
+        $user->plot_street = $request->plot_street;
+        $user->zip_code = $request->zip_code;
+        $user->role_id = $request->role_id;
+        $user->customer_type_id = $request->customer_type_id;
+        $user->save();
+
+        return Redirect::back()->with('message', $user->name . ' Details Updated Successfully');
+    }
+
+    public function image(Request $request, User $user)
+    {
+        //  dd($request->profile_img); // profile_img
+
+        //save avatar
+        $filesModel = new FilesController();
+        $file = $request->file('avatar');
+        $saved_file = $filesModel->upload($request, $file, config('constants.types.avatar'), $user);
+        $user->avatar = $saved_file->path;
+        $user->save();
+
+
+        return Redirect::back()->with('message', $request->name . ' Profile Image Updated Successfully');
+
     }
 
     /**

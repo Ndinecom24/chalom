@@ -1,35 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Settings;
 
-use App\Models\Status;
+use App\Models\Settings\Roles;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
-class StatusController extends Controller
+class RolesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -40,7 +21,7 @@ class StatusController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $model = Status::updateOrCreate(
+        $model = Roles::updateOrCreate(
             [
                 'name' => $request->name,
                 'description' => $request->description,
@@ -55,27 +36,6 @@ class StatusController extends Controller
         return Redirect::back()->with('message', $model->name . ' Created Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Status $status
-     * @return Response
-     */
-    public function show(Status $status)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Status $status
-     * @return Response
-     */
-    public function edit(Status $status)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -86,7 +46,7 @@ class StatusController extends Controller
      */
     public function update(Request $request)
     {
-        $model = Status::find($request->id);
+        $model = Roles::find($request->id);
         $model->name = $request->name;
         $model->description = $request->description;
         $model->save();
@@ -101,7 +61,9 @@ class StatusController extends Controller
      */
     public function destroy(Request $request)
     {
-        $model = Status::destroy($request->id);
+        $model = Roles::destroy($request->id);
         return Redirect::back()->with('message','Deleted Successfully');
     }
+
+
 }

@@ -7,12 +7,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h3 class="page-heading mb-4">System Users</h3>
+                        <h3 class="page-heading mb-4">Clients</h3>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                            <li class="breadcrumb-item active">System Users</li>
+                            <li class="breadcrumb-item active">Clients</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -30,7 +30,7 @@
                 @endif
                 @if(session()->has('error'))
                     <div class="alert alert-danger alert-dismissible">
-                        <p class="lead"> {{session()->get('message')}}</p>
+                        <p class="lead"> {{session()->get('error')}}</p>
                     </div>
                 @endif
 
@@ -53,7 +53,7 @@
                             <h5 class="mb-0">
                                 <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
                                         aria-expanded="true" aria-controls="collapseOne">
-                                    {{__('SYSTEM USERS')}}
+                                    {{__('CLIENTS')}}
                                 </button>
                             </h5>
                         </div>
@@ -63,7 +63,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <button class="btn btn-sm btn-outline-success mb-2" data-toggle="modal" data-target="#modal-create-user">
-                                            New User
+                                            New Client
                                         </button>
                                     </div>
                                 </div>
@@ -96,7 +96,7 @@
                                                 <td>
                                                     <div class="row ">
                                                         <div class="col-3">
-                                                            <a class="btn btn-sm btn-secondary" href="{{route('user.admin.profile', $user)}}" >
+                                                            <a class="btn btn-sm btn-secondary" href="{{route('user.client.profile', $user)}}" >
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
                                                         </div>
@@ -141,7 +141,7 @@
                     </button>
                 </div>
                 <!-- form start -->
-                <form role="form" method="post" action="{{route('user.admin.store')}}" enctype="multipart/form-data">
+                <form role="form" method="post" action="{{route('user.client.store')}}" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -162,12 +162,12 @@
                             <div class="col-3">
                                 <div class="form-group">
                                     <label for="inputGender"> Gender</label>
-                                <select id="inputGender" name="gender" class="form-control">
-                                <option>--choose--</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                    <option>Other</option>
-                                </select>
+                                    <select id="inputGender" name="gender" class="form-control">
+                                        <option>--choose--</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                        <option>Other</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -196,36 +196,36 @@
                                 </div>
                             </div>
                         </div>
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label for="inputCustomerType"> User Type</label>
-                                <select id="inputCustomerType" name="customer_type_id" class="form-control">
-                                    <option>--choose</option>
-                                    @foreach($types as $type)
-                                        <option value="{{$type->id}}">{{$type->name}}</option>
-                                    @endforeach
-                                </select>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="inputCustomerType"> User Type</label>
+                                    <select id="inputCustomerType" name="customer_type_id" class="form-control">
+                                        <option>--choose</option>
+                                        @foreach($types as $type)
+                                            <option value="{{$type->id}}">{{$type->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label for="inputRole"> User Role</label>
-                                <select id="inputRole" name="role_id" class="form-control">
-                                    <option>--choose</option>
-                                    @foreach($roles as $role)
-                                        <option value="{{$role->id}}">{{$role->name}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="inputRole"> User Role</label>
+                                    <select id="inputRole" name="role_id" class="form-control">
+                                        <option>--choose</option>
+                                        @foreach($roles as $role)
+                                            <option value="{{$role->id}}">{{$role->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label for="inputImage"> Profile Image</label>
-                                <input type="file" class="form-control" id="inputImage" name="image_id"
-                                       placeholder="Enter Image" >
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="inputImage"> Profile Image</label>
+                                    <input type="file" class="form-control" id="inputImage" name="image_id"
+                                           placeholder="Enter Image" >
+                                </div>
                             </div>
-                        </div>
                         </div>
 
                     </div>
@@ -288,15 +288,17 @@
 
 @push('custom-scripts')
 
-<script>
+    <script>
 
-    $('#modal-delete-user').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        var recipient = button.data('sent_data'); // Extract info from data-* attributes
-        $('#delete-user-name').val(recipient.name);
-        $('#delete-user-id').val(recipient.id);
-    });
+        //USER
+
+        $('#modal-delete-user').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var recipient = button.data('sent_data'); // Extract info from data-* attributes
+            $('#delete-user-name').val(recipient.name);
+            $('#delete-user-id').val(recipient.id);
+        });
 
 
-</script>
+    </script>
 @endpush
