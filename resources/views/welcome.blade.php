@@ -110,7 +110,9 @@
                 <div class="col-md-12 text-center mb-5 probootstrap-animate">
                     <h4 class="display-4 border-bottom probootstrap-section-heading" style="background-color: #2b4a75"><strong style="color: white">Personal Loans | Business Loans </strong></h4>
                     <blockquote class="">
-                        <p class="lead mb-4"><em>Our promise to our customers is that we will constantly streamline our processes to ensure that we have the fastest turnaround time in the market. Try our easy 3-step process to get your next loan.</em></p>
+                        <p class="lead mb-4"><em>Chalom Investments Limited is a wholly Zambian owned company, duly registered in accordance with the provision of registration business names Act (Cap 389 of the Laws of Zambia).  It was incorporated in XXX and became fully operational in XXX.</em></p>
+                        <p class="lead mb-4"><em>Chalom Investments Limited is a wholly Zambian owned company, duly registered in accordance with the provision of registration business names Act (Cap 389 of the Laws of Zambia).  It was incorporated in XXX and became fully operational in XXX.</em></p>
+
                         {{--<p class="probootstrap-author">--}}
                             {{--<a href="https://uicookies.com/" target="_blank">--}}
                                 {{--<img src="{{asset('places/assets/images/person_1.jpg')}}" alt="Free Template by uicookies.com" class="rounded-circle">--}}
