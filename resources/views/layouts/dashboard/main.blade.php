@@ -27,12 +27,12 @@
 <!-- start scroller container -->
 <div class=" container-scroller">
 
-@include('layouts.dashboard.admin.nav')
+@include('layouts.dashboard.nav')
 
     <div class="container-fluid">
         <div class="row row-offcanvas row-offcanvas-right">
 
-        @include('layouts.dashboard.admin.sidebar')
+        @include('layouts.dashboard.sidebar')
 
 
         @yield('content')
@@ -40,7 +40,7 @@
         </div>
         </div>
 
-    @include('layouts.dashboard.admin.footer')
+    @include('layouts.dashboard.footer')
     <!-- partial -->
     </div>
 </div>

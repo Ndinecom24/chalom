@@ -4,6 +4,29 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                @if(session()->has('message'))
+                    <div class="alert alert-success alert-dismissible">
+                        <p class="lead"> {{session()->get('message')}}</p>
+                    </div>
+                @endif
+                @if(session()->has('error'))
+                    <div class="alert alert-danger alert-dismissible">
+                        <p class="lead"> {{session()->get('error')}}</p>
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
+
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
                         <form class="form-signin" method="POST" action="{{ route('login') }}">

@@ -1,6 +1,10 @@
 <nav class="bg-white sidebar sidebar-offcanvas" id="sidebar">
             <div class="user-info">
+                @if( ($user->avatar ?? "" ) == "" )
                 <img src="{{asset('images/user.png')}}" alt="">
+                @else
+                    <img  width="100%"  src="{{$user->avatar ?? ""}}" alt="{{asset('images/user.png')}}">
+                @endif
                 <p class="name">{{\Illuminate\Support\Facades\Auth::user()->name }} </p>
                 <p class="designation">{{\Illuminate\Support\Facades\Auth::user()->email }} </p>
                 <span class="online"></span>
@@ -81,13 +85,18 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('settings')}}" >
-                        <i class="fa fa-gears"></i>
-                        <span class="menu-title">Settings</span>
-                    </a>
-                </li>
 
+
+@if(\Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
+|| \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.admin.id')
+)
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('settings')}}" >
+                            <i class="fa fa-gears"></i>
+                            <span class="menu-title">Settings</span>
+                        </a>
+                    </li>
 
                 <!-- Users option -->
                 <li class="nav-item">
@@ -108,6 +117,7 @@
                         </ul>
                     </div>
                 </li>
+    @endif
 
             </ul>
         </nav>

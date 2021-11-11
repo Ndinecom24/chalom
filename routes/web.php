@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\CustomerTypesController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\RolesController;
-use App\Http\Controllers\StatusController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Settings\CustomerTypesController;
+use App\Http\Controllers\Settings\RolesController;
+use App\Http\Controllers\Settings\StatusController;
+use App\Http\Controllers\Users\ClientController;
+use App\Http\Controllers\Users\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +25,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 /*
@@ -41,18 +42,21 @@ Route::group([
         'prefix' => 'admin',
     ], function () {
         Route::get('index', [UserController::class, 'index'])->name('user.admins');
+        Route::get('profile/{user}', [UserController::class, 'profile'])->name('user.admin.profile');
         Route::post('store', [UserController::class, 'store'])->name('user.admin.store');
-        Route::post('update', [UserController::class, 'update'])->name('user.admin.update');
+        Route::post('update/{id}', [UserController::class, 'update'])->name('user.admin.update');
+        Route::post('update/image/{user}', [UserController::class, 'image'])->name('user.admin.update.image');
         Route::post('destroy', [UserController::class, 'destroy'])->name('user.admin.destroy');
     });
 
     Route::group([
         'prefix' => 'client',
     ], function () {
-        Route::get('index', [UserController::class, 'store'])->name('user.clients');
-        Route::post('store', [UserController::class, 'store'])->name('user.client.store');
-        Route::post('update', [UserController::class, 'update'])->name('user.client.update');
-        Route::post('destroy', [UserController::class, 'destroy'])->name('user.client.destroy');
+        Route::get('index', [ClientController::class, 'index'])->name('user.clients');
+        Route::get('profile/{user}', [ClientController::class, 'profile'])->name('user.client.profile');
+        Route::post('store', [ClientController::class, 'store'])->name('user.client.store');
+        Route::post('update/{id}', [ClientController::class, 'update'])->name('user.client.update');
+        Route::post('destroy', [ClientController::class, 'destroy'])->name('user.client.destroy');
     });
 
 }

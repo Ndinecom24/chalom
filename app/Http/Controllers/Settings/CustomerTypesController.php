@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Settings;
 
-use App\Models\Roles;
+use App\Models\Settings\CustomerTypes;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
-class RolesController extends Controller
+class CustomerTypesController extends Controller
 {
 
     /**
@@ -21,7 +21,7 @@ class RolesController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $model = Roles::updateOrCreate(
+        $model = CustomerTypes::updateOrCreate(
             [
                 'name' => $request->name,
                 'description' => $request->description,
@@ -46,7 +46,7 @@ class RolesController extends Controller
      */
     public function update(Request $request)
     {
-        $model = Roles::find($request->id);
+        $model = CustomerTypes::find($request->id);
         $model->name = $request->name;
         $model->description = $request->description;
         $model->save();
@@ -61,9 +61,8 @@ class RolesController extends Controller
      */
     public function destroy(Request $request)
     {
-        $model = Roles::destroy($request->id);
+        $model = CustomerTypes::destroy($request->id);
         return Redirect::back()->with('message','Deleted Successfully');
     }
-
 
 }

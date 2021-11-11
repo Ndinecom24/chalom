@@ -1,4 +1,4 @@
-@extends('layouts.dashboard.client.main')
+@extends('layouts.dashboard.main')
 
 @section('content')
     <!-- partial -->

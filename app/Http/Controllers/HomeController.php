@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CustomerTypes;
-use App\Models\Roles;
-use App\Models\Status;
+use App\Model\Settings\Roles;
+use App\Models\Settings\CustomerTypes;
+use App\Models\Settings\Status;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use function redirect;
 
 class HomeController extends Controller
 {
@@ -23,29 +25,35 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         //check user types
         $user = Auth::user();
-        if($user->roles_id == config('constants.role.client.id')){
+//        dd(config('constants.role.client.id') );
+//        dd($user->role_id );
+        if ($user->role_id == config('constants.role.client.id')) {
             return view('dashboard.client.home');
-        }
-        else if($user->roles_id != config('constants.role.client.id') ){
+        } else if ($user->role_id == config('constants.role.admin.id')
+            || $user->role_id == config('constants.role.developer.id')
+        ) {
             return view('dashboard.admin.home');
-        }
-        else{
-            dd("Please call system admin to fix your user role");
+        } else {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect('/login')->with('error', 'Your user type is not defined, please call system admin');
         }
 
     }
 
 
-    public function settings(){
+    public function settings()
+    {
         $statuses = Status::all();
         $customer_types = CustomerTypes::all();
-        $roles = Roles::all();
+        $roles = \App\Models\Settings\Roles::all();
         return view('dashboard.admin.settings.index')
             ->with(compact('statuses', 'roles', 'customer_types'));
     }

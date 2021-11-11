@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Settings\CustomerTypes;
+use App\Models\Settings\Roles;
+use App\Models\Settings\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -30,6 +33,8 @@ class User extends Authenticatable
         'avatar',
         'country',
         'city',
+        'plot_street',
+        'zip_code',
         'email_verified_at',
         'work_status',
         'role_id',
@@ -63,6 +68,9 @@ class User extends Authenticatable
         'customerType'
     ];
 
+//    public function image(){
+//        return $this->belongsTo(Files::class , 'avatar', 'id');
+//    }
     public function role(){
         return $this->belongsTo(Roles::class);
     }

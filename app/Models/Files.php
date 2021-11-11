@@ -4,20 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Status extends Model
+class Files extends Model
 {
     use HasFactory;
 
-    //primary key
+    protected $table = 'files';
     protected $primaryKey = 'id';
-    //fields fillable
     protected $fillable = [
         'name',
-        'description',
-        'created_by',
-    ] ;
-
-
+        'path',
+        'size',
+        'ext',
+        'type',
+        'author',
+        'date_posted',
+        'modal_id',
+        'modal_type',
+    ];
 }
