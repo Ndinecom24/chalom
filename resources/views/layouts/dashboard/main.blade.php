@@ -1,78 +1,123 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Micro Credit Management</title>
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/font-awesome/font-awesome.min.css')}}">
-    <link rel="stylesheet" type="text/css"
-          href="{{asset('assets/perfect-scrollbar/dist/css/perfect-scrollbar.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/flag-icon-css/css/flag-icon.min.css')}}">
-    <!-- DataTables CSS -->
-    <link href="{{asset('assets/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/css/dataTables.responsive.css')}}" rel="stylesheet">
-    <!-- main  + bootstrap css -->
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.css')}}">
-    <!-- custom css -->
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/main.css')}}">
+    <meta name="description" content="Bootstrap 5 Template">
 
-    <link rel="shortcut icon" href="images/favicon.png"/>
 
-    @stack('custom-styles')
+    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('theme/borrow/assets/images/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('theme/borrow/assets/images/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('theme/borrow/assets/images/favicon-16x16.png')}}">
+
+{{--    <link rel="stylesheet" href="{{asset('theme/bootstrap/css/bootstrap-theme.css')}}">--}}
+{{--    <link rel="stylesheet" href="{{asset('theme/bootstrap/css/bootstrap.css')}}">--}}
+
+
+    <!-- Libs CSS -->
+
+    <link rel="stylesheet" href="{{asset('theme/borrow/assets/libs/bootstrap-icons/font/bootstrap-icons.css')}}">
+    <link rel="stylesheet" href="{{asset('theme/borrow/assets/libs/tiny-slider/dist/tiny-slider.css')}}">
+    <link rel="stylesheet" href="{{asset('theme/borrow/assets/libs/nouislider/dist/nouislider.min.css')}}">
+    <link rel="stylesheet" href="{{asset('theme/borrow/assets/fonts/flat-font-icons/css/flaticon.css')}}">
+    <link rel="stylesheet" href="{{asset('theme/borrow/assets/fonts/fontello-icons/fontello.css')}}">
+    <link rel="stylesheet" href="{{asset('theme/borrow/assets/libs/magnific-popup/dist/magnific-popup.css')}}">
+    <link rel="stylesheet" href="{{asset('theme/borrow/assets/libs/jquery-ui/themes/base/all.css')}}">
+    <link rel="stylesheet" href="{{asset('theme/borrow/assets/libs/jquery-ui/demos/demos.css')}}">
+    <link rel="stylesheet" href="{{asset('theme/borrow/assets/libs/magnific-popup/dist/magnific-popup.css')}}">
+
+
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+
+@push('custom-stylesheets')
+
+
+    <!-- Theme CSS -->
+
+    <link rel="stylesheet" href="{{asset('theme/borrow/assets/css/theme.min.css')}}">
+
+    <title>Chaloam</title>
 
 </head>
 
 <body>
-<!-- start scroller container -->
-<div class=" container-scroller">
-
-@include('layouts.dashboard.nav')
-
-    <div class="container-fluid">
-        <div class="row row-offcanvas row-offcanvas-right">
-
-        @include('layouts.dashboard.sidebar')
 
 
-        @yield('content')
-
+<!-- main wrapper -->
+<div class="docs-main-wrapper">
+    <!-- navbar -->
+   @include('layouts.dashboard.nav')
+    <!-- left sidebar -->
+   @include('layouts.dashboard.sidebar')
+    <!-- wrapper -->
+    <div class="docs-wrapper">
+        <div class="container-fluid pl-0">
+           @yield('content')
         </div>
-        </div>
-
-    @include('layouts.dashboard.footer')
-    <!-- partial -->
     </div>
 </div>
+<!-- footer -->
+@include('layouts.dashboard.footer')
+<!-- scripts -->
 
-</body>
+{{--<script  src="{{asset('theme/bootstrap/js/bootstrap.js')}}"></script>--}}
 
-
-<script src="{{asset('assets/js/jquery-3.1.0.min.js')}}"></script>
-<script src="{{asset('assets/js/popper.min.js')}}"></script>
-<script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
-<script src="{{asset('assets/js/Chart.min.js')}}"></script>
-<script src="{{asset('assets/js/perfect-scrollbar.jquery.min.js')}}"></script>
-<script src="{{asset('assets/js/off-canvas.js')}}"></script>
-<script src="{{asset('assets/js/hoverable-collapse.js')}}"></script>
-<script src="{{asset('assets/js/misc.js')}}"></script>
-<script src="{{asset('assets/js/chart.js')}}"></script>
-<!-- DataTables JavaScript -->
-<script src="{{asset('assets/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('assets/js/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{asset('assets/js/dataTables.responsive.js')}}"></script>
-<script>
-    $(document).ready(function () {
-        $('#example').DataTable({
-            responsive: true
-        });
-
-    });
-
-
-</script>
-
-
+<!-- Libs JS -->
+<script src="{{asset('theme/borrow/assets/libs/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{asset('theme/borrow/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('theme/borrow/assets/libs/tiny-slider/dist/min/tiny-slider.js')}}"></script>
+<script src="{{asset('theme/borrow/assets/libs/nouislider/dist/nouislider.min.js')}}"></script>
+<script src="{{asset('theme/borrow/assets/libs/wnumb/wNumb.min.js')}}"></script>
+<script src="{{asset('theme/borrow/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
+<script src="{{asset('theme/borrow/assets/libs/isotope-layout/dist/isotope.pkgd.min.js')}}"></script>
+<script src="{{asset('theme/borrow/assets/libs/imagesloaded/imagesloaded.pkgd.min.js')}}"></script>
+<script src="{{asset('theme/borrow/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
+<script src="{{asset('theme/borrow/assets/libs/prismjs/prism.js')}}"></script>
 @stack('custom-scripts')
 
-</html>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js')}}/1.5.12/clipboard.min.js')}}"></script>
+
+
+<!-- Theme JS -->
+<script src="{{asset('theme/borrow/assets/js/theme.min.js')}}"></script>
+

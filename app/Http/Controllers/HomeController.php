@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Model\Settings\Roles;
+use App\Models\Loans\LoanProducts;
 use App\Models\Settings\CustomerTypes;
 use App\Models\Settings\Status;
+use App\Models\Settings\WorkStatus;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +19,11 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
+
+    public function index(Request $request){
+        $work_status = [];
+        $loanProducts = LoanProducts::where('statuses_id', config('constants.status.active'))->get();
+        return view('welcome')->with(compact('work_status', 'loanProducts'));
     }
 
     /**
@@ -27,7 +31,7 @@ class HomeController extends Controller
      *
      * @return Renderable
      */
-    public function index(Request $request)
+    public function home(Request $request)
     {
         //check user types
         $user = Auth::user();
@@ -53,8 +57,9 @@ class HomeController extends Controller
     {
         $statuses = Status::all();
         $customer_types = CustomerTypes::all();
+        $works = WorkStatus::all();
         $roles = \App\Models\Settings\Roles::all();
         return view('dashboard.admin.settings.index')
-            ->with(compact('statuses', 'roles', 'customer_types'));
+            ->with(compact('works','statuses', 'roles', 'customer_types'));
     }
 }

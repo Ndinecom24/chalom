@@ -23,7 +23,9 @@ return [
         'application' => 1,
         'activated' => 2,
         'pending' => 2,
-        'deactivated' => 3
+        'deactivated' => 3,
+
+        'active' =>1
     ],
     'work_status' => [
         '1' => 'Student',

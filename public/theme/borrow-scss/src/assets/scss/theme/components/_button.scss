@@ -1,0 +1,108 @@
+// Button
+
+// Social Brand colors
+
+// facebook
+
+.btn-facebook{
+    background-color: #3b5998;
+    color: $white;
+    &:hover{
+    background-color: #3b5998;
+    color: $white;
+}
+}
+
+// twitter
+
+.btn-twitter {
+    background-color: #1da1f2;
+    color: $white;
+    &:hover{
+        background-color: #1da1f2;
+        color: $white;
+    }
+
+}
+
+// instagram
+.btn-instagram {
+      background-color: #5851db;
+    color: $white;
+    &:hover{
+          background-color: #5851db;
+        color: $white;
+    }
+
+}
+
+// google
+
+.btn-google {
+    background-color: #ea4335;
+    color: $white;
+  &:hover{
+    background-color: #ea4335;
+    color: $white;
+  }
+
+}
+
+
+// linkedin
+.btn-linkedin {
+     background-color: #0077b5;
+    color: $white;
+  &:hover{
+     background-color: #0077b5;
+    color: $white;
+  }
+
+}
+
+
+// Sizing
+.btn-xs {
+  padding: $input-btn-padding-y-xs $input-btn-padding-x-xs;
+  font-size: $input-btn-font-size-xs;
+}
+
+
+
+
+
+// btn icon
+.btn-icon {
+    position: relative;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center;
+    font-size: .92969rem;
+    font-weight: 400;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+}
+
+.btn-icon.btn-xs {
+    font-size: .75rem;
+    width: 1.53125rem;
+    height: 1.53125rem;
+}
+
+.btn-icon.btn-sm {
+    font-size: .875rem;
+    width: 2.1875rem;
+    height: 2.1875rem;
+}
+
+.btn-icon.btn-lg {
+    font-size: 1rem;
+    width: 3.36875rem;
+    height: 3.36875rem;
+}

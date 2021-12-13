@@ -1,12 +1,15 @@
 <?php
 
+use App\Http\Controllers\Dashboard\Settings\CustomerTypesController;
+use App\Http\Controllers\Dashboard\Settings\RolesController;
+use App\Http\Controllers\Dashboard\Settings\StatusController;
+use App\Http\Controllers\Dashboard\Settings\WorkStatusController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Settings\CustomerTypesController;
-use App\Http\Controllers\Settings\RolesController;
-use App\Http\Controllers\Settings\StatusController;
 use App\Http\Controllers\Users\ClientController;
 use App\Http\Controllers\Users\UserController;
+use App\Http\Controllers\Website\Loans\LoanApplicationsController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,13 +22,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', [HomeController::class, 'index'])->name('welcome');
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::group([
+    'middleware' => 'auth'
+], function () {
+    Route::get('/home', [HomeController::class, 'home'])->name('home');
+}
+);
 
 
 /*
@@ -36,7 +43,6 @@ Route::group([
     'prefix' => 'users',
     'middleware' => 'auth'
 ], function () {
-
 
     Route::group([
         'prefix' => 'admin',
@@ -70,34 +76,53 @@ Route::group([
 Route::group([
     'prefix' => 'settings',
     'middleware' => 'auth'
-], function () {
+],
+    function () {
 
 
-    Route::get('/', [HomeController::class, 'settings'])->name('settings');
+        Route::get('/', [HomeController::class, 'settings'])->name('settings');
 
-    Route::group([
-        'prefix' => 'statuses',
-    ], function () {
-        Route::post('store', [StatusController::class, 'store'])->name('statuses.store');
-        Route::post('update', [StatusController::class, 'update'])->name('statuses.update');
-        Route::post('destroy', [StatusController::class, 'destroy'])->name('statuses.destroy');
+        Route::group([
+            'prefix' => 'statuses',
+        ], function () {
+            Route::get('show/{status}', [StatusController::class, 'show'])->name('statuses.show');
+            Route::get('create', [StatusController::class, 'create'])->name('statuses.create');
+            Route::post('store', [StatusController::class, 'store'])->name('statuses.store');
+            Route::post('update/{status}', [StatusController::class, 'update'])->name('statuses.update');
+            Route::post('destroy', [StatusController::class, 'destroy'])->name('statuses.destroy');
+        });
+
+        Route::group([
+            'prefix' => 'role',
+        ], function () {
+            Route::get('show/{role}', [RolesController::class, 'show'])->name('role.show');
+            Route::get('create', [RolesController::class, 'create'])->name('role.create');
+            Route::post('store', [RolesController::class, 'store'])->name('role.store');
+            Route::post('update/{role}', [RolesController::class, 'update'])->name('role.update');
+            Route::post('destroy', [RolesController::class, 'destroy'])->name('role.destroy');
+        });
+
+
+        Route::group([
+            'prefix' => 'customer-type',
+        ], function () {
+            Route::get('show/{customer_types}', [CustomerTypesController::class, 'show'])->name('customer.type.show');
+            Route::get('create', [CustomerTypesController::class, 'create'])->name('customer.type.create');
+            Route::post('store', [CustomerTypesController::class, 'store'])->name('customer.type.store');
+            Route::post('update/{customer_types}', [CustomerTypesController::class, 'update'])->name('customer.type.update');
+            Route::post('destroy', [CustomerTypesController::class, 'destroy'])->name('customer.type.destroy');
+        });
+
+        Route::group([
+            'prefix' => 'work-status',
+        ], function () {
+            Route::get('show/{work_status}', [WorkStatusController::class, 'show'])->name('work.status.show');
+            Route::get('create', [WorkStatusController::class, 'create'])->name('work.status.create');
+            Route::post('store', [WorkStatusController::class, 'store'])->name('work.status.store');
+            Route::post('update/{work_status}', [WorkStatusController::class, 'update'])->name('work.status.update');
+            Route::post('destroy', [WorkStatusController::class, 'destroy'])->name('work.status.destroy');
+        });
+
     });
 
-    Route::group([
-        'prefix' => 'role',
-    ], function () {
-        Route::post('store', [RolesController::class, 'store'])->name('role.store');
-        Route::post('update', [RolesController::class, 'update'])->name('role.update');
-        Route::post('destroy', [RolesController::class, 'destroy'])->name('role.destroy');
-    });
 
-
-    Route::group([
-        'prefix' => 'customer-type',
-    ], function () {
-        Route::post('store', [CustomerTypesController::class, 'store'])->name('customer.type.store');
-        Route::post('update', [CustomerTypesController::class, 'update'])->name('customer.type.update');
-        Route::post('destroy', [CustomerTypesController::class, 'destroy'])->name('customer.type.destroy');
-    });
-
-});

@@ -1,0 +1,39 @@
+//
+// Extended from bootstrap
+//
+// Text scss
+
+// Weight and italics
+
+
+
+// Text Inherit
+
+.text-inherit {
+  color: inherit;
+}
+
+// Muted hover
+
+a.text-muted:hover {
+  color: $primary !important;
+}
+
+// Primary hover
+
+a:hover .text-primary-hover {
+  color: $primary !important;
+}
+
+// disableClick
+
+.disableClick {
+  pointer-events: none;
+}
+
+// text inverse
+
+.text-inverse{
+  -webkit-filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1);
+}

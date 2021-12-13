@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Settings\CustomerTypes;
 use App\Models\Settings\Roles;
 use App\Models\Settings\Status;
+use App\Models\Settings\WorkStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -31,14 +32,16 @@ class User extends Authenticatable
         'gender',
         'address',
         'avatar',
+        'identity',
         'country',
         'city',
         'plot_street',
         'zip_code',
         'email_verified_at',
-        'work_status',
+        'work_status_id',
         'role_id',
         'customer_type_id',
+        'next_of_kin_id',
         'status_id',
         'password_change',
         'created_by',
@@ -80,6 +83,12 @@ class User extends Authenticatable
     }
     public function status(){
         return $this->belongsTo(Status::class);
+    }
+    public function work(){
+        return $this->belongsTo(WorkStatus::class);
+    }
+    public function kin(){
+        return $this->hasOne(NextOfKin::class);
     }
 
 }

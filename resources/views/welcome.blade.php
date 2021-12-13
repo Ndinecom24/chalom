@@ -2,385 +2,274 @@
 
 @section('content')
 
-    <section class="probootstrap-cover overflow-hidden relative"  style="background-image: url('{{asset('places/assets/images/bg_1.jpg')}}');" data-stellar-background-ratio="0.5"  id="section-home">
-        <div class="overlay"></div>
+    <div class="py-22" style="background:url({{asset('theme/borrow/assets/images/slider/slider-2.jpg')}})no-repeat; background-position: center; background-size: cover;">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md">
-                    <h2 class="heading mb-2 display-4 font-light probootstrap-animate"><strong>Apply Now</strong>  </h2>
-                    <p class="lead mb-5 probootstrap-animate">Get Your Loan Approved 2 Minutes </p>
-                    <p class="probootstrap-animate">
-                        <a href="" role="button" class="btn btn-primary p-3 mr-3 pl-5 pr-5 text-uppercase d-lg-inline d-md-inline d-sm-block d-block mb-3" style="background-color: #e65f3f">Contact US</a>
-                    </p>
+            <div class="row">
+                <div class="offset-xl-2 col-xl-8 offset-lg-2 col-lg-8 col-md-12 col-sm-12 col-12 ">
+                    <div>
+                        <div>
+                            <!-- Nav tabs -->
+                            <div class="tab-content bg-white p-6 rounded-top-md smooth-shadow-sm">
+                                @foreach($loanProducts as $key=>$loanProd)
+                                <div role="tabpanel" class="tab-pane fade show @if($key == 0) active  @endif " id="service{{$loanProd->id}}">
+                                    <form id="form-{{$loanProd->id}}" method="GET" action="{{route('loan.apply', $loanProd )}}" >
+                                        @csrf
+                                        <div class="row g-2">
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                <h2 class="fw-bold mb-3 text-capitalize ">Get {{$loanProd->name}} Loan Offers in Minutes</h2>
+                                            </div>
+                                            <div class="col-md-9 col-sm-12 col-12">
+                                                <div>
+
+                                                    <select class="form-select" name="loan_purpose">
+                                                        <option value="Select Loan Purpose">Select Loan Purpose</option>
+                                                        <option value="Debt Consolidation">Debt Consolidation</option>
+                                                        <option value="Wedding Expenses">Wedding Expenses</option>
+                                                        <option value="Alternative Salary Advance">Alternative Salary Advance</option>
+                                                        <option value="Emergency Expenses">Emergency Expenses</option>
+                                                        <option value="School Fees">School Fees</option>
+                                                        <option value="Vehicle Financing Advance">Vehicle Financing Advance</option>
+                                                        <option value="Moving Expenses">Moving Expenses</option>
+                                                        <option value="Vehicle Repairs">Vehicle Repairs</option>
+                                                        <option value="Home Improvements">Home Improvements</option>
+                                                        <option value="Vacation">Vacation</option>
+                                                        <option value="Other">Other</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-sm-12 col-12">
+                                                <div class="d-grid">
+                                                    <button type="submit" class="btn btn-primary">Get Your Loan</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                                @endforeach
+                            </div>
+                            <ul class="nav nav-pills nav-justified bg-white border-top flex-nowrap overflow-scroll overflow-md-hidden" id="myTab" role="tablist">
+                              @foreach($loanProducts as $key=>$loanProduct)
+                                <li class="nav-item">
+                                    <a class="nav-link @if($key == 0) active @endif rounded-0 d-grid py-3" id="tab-{{$loanProduct->id}}" data-bs-toggle="pill" href="#service{{$loanProduct->id}}" role="tab" aria-controls="{{$loanProduct->id}}" aria-selected="true"><i class="fas fa-money-bill fs-3"></i>
+                                        <p class="mb-0 mt-1 fs-5 text-lowercase"> {{$loanProduct->name}}</p>
+                                    </a>
+                                </li>
+                                @endforeach
+
+                            </ul>
+                            <!-- Tab panes -->
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md probootstrap-animate">
-                    <form action="#" class="probootstrap-form">
-                        <div class="form-group">
-                            <div class="row mb-3">
-                                <div class="col-md">
-                                    <div class="form-group">
-                                        <label for="id_label_single">From</label>
+            </div>
+        </div>
+    </div>
+    <div class="bg-primary py-6">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-12 col-12">
+                    <div class="text-center text-white-50">
+                        <h1 class="display-4 fw-bold text-white">15 Billion</h1>
+                        <div class="fw-semi-bold fs-5 ">Customers Empowered</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12 col-12">
+                    <div class="text-center text-white-50">
+                        <h1 class="display-4 fw-bold text-white">1.5 Billion+</h1>
+                        <div class="fw-semi-bold fs-5">Customer</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12 col-12">
+                    <div class="text-center text-white-50 ">
+                        <div class="text-warning display-5 mb-2 lh-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+                        <div class="fw-semi-bold fs-5">Average Customer Rating</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="py-10 py-lg-14 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="offset-xl-2 col-xl-8 offset-lg-2 col-lg-8 col-md-12 col-sm-12 col-12">
+                    <div class="text-center mb-8">
+                        <h1>Why take a loan with us?</h1>
+                        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus maximus lorem id arcu sagittis, in euismod erat faucibus. Nullam rutrum suscipit velit nec simply dummy content gravida. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                    <div class="text-center ">
+                        <h3>Fast</h3>
+                        <p>Borrow processes your application and your loan - no third iesnsectetur ultriciesi.</p>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                    <div class="text-center ">
+                        <h3>Flexible </h3>
+                        <p>Apply online in just minutes no more document or callequired simpmy content.</p>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                    <div class="text-center ">
+                        <h3>Great rates</h3>
+                        <p>The generated Lorem Ipsum is free from repetitionected humooc words etc. </p>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+                    <div class="text-center ">
+                        <h3>Reviews</h3>
+                        <p> Nunc at sapien bibendum, dapibus dolo sodalauciapibus nibh varius egestas. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="py-lg-16 py-10 bg-white border-top border-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="offset-xl-2 col-xl-8 offset-lg-2 col-lg-8 col-md-12 col-sm-12 col-12">
+                    <div class="text-center mb-10">
+                        <h1 class="mb-1">Getting started is easy</h1>
+                        <p class="mb-0 lead">Apply online in just minutes no more document or calling required </p>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="offset-xl-1 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12 mb-3">
+                            <div class="bg-white d-grid ">
+                                <img src="{{asset('theme/borrow/assets/images/background/process-img-1.jpeg')}}" alt="Borrow - Loan Company Responsive Website Templates" class="rounded-circle img-fluid w-100">
+                                <div class="icon-shape icon-lg bg-white border-primary border-2 border text-primary rounded-circle mt-n5 mx-auto fw-bold">
+                                    <span>1</span></div>
 
-                                        <label for="id_label_single" style="width: 100%;">
-                                            <select class="js-example-basic-single js-states form-control" id="id_label_single" style="width: 100%;">
-                                                <option value="Australia">Australia</option>
-                                                <option value="Japan">Japan</option>
-                                                <option value="United States">United States</option>
-                                                <option value="Brazil">Brazil</option>
-                                                <option value="China">China</option>
-                                                <option value="Israel">Israel</option>
-                                                <option value="Philippines">Philippines</option>
-                                                <option value="Malaysia">Malaysia</option>
-                                                <option value="Canada">Canada</option>
-                                                <option value="Chile">Chile</option>
-                                                <option value="Chile">Zimbabwe</option>
-                                            </select>
-                                        </label>
-
-
-                                    </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group">
-                                        <label for="id_label_single2">To</label>
-                                        <div class="probootstrap_select-wrap">
-                                            <label for="id_label_single2" style="width: 100%;">
-                                                <select class="js-example-basic-single js-states form-control" id="id_label_single2" style="width: 100%;">
-                                                    <option value="Australia">Australia</option>
-                                                    <option value="Japan">Japan</option>
-                                                    <option value="United States">United States</option>
-                                                    <option value="Brazil">Brazil</option>
-                                                    <option value="China">China</option>
-                                                    <option value="Israel">Israel</option>
-                                                    <option value="Philippines">Philippines</option>
-                                                    <option value="Malaysia">Malaysia</option>
-                                                    <option value="Canada">Canada</option>
-                                                    <option value="Chile">Chile</option>
-                                                    <option value="Chile">Zimbabwe</option>
-                                                </select>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END row -->
-                            <div class="row mb-5">
-                                <div class="col-md">
-                                    <div class="form-group">
-                                        <label for="probootstrap-date-departure">Departure</label>
-                                        <div class="probootstrap-date-wrap">
-                                            <span class="icon ion-calendar"></span>
-                                            <input type="text" id="probootstrap-date-departure" class="form-control" placeholder="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md">
-                                    <div class="form-group">
-                                        <label for="probootstrap-date-arrival">Arrival</label>
-                                        <div class="probootstrap-date-wrap">
-                                            <span class="icon ion-calendar"></span>
-                                            <input type="text" id="probootstrap-date-arrival" class="form-control" placeholder="">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END row -->
-                            <div class="row">
-                                <div class="col-md">
-                                    <label for="round" class="mr-5"><input type="radio" id="round" name="direction">  Round</label>
-                                    <label for="oneway"><input type="radio" id="oneway" name="direction">  Oneway</label>
-                                </div>
-                                <div class="col-md">
-                                    <input type="submit" value="Submit" class="btn btn-success btn-block">
-                                </div>
                             </div>
                         </div>
-                    </form>
+                        <div class="offset-xl-1 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12 mb-3">
+                            <div class="bg-white d-grid ">
+                                <img src="{{asset('theme/borrow/assets/images/background/process-img-2.jpeg')}}" alt="Borrow - Loan Company Responsive Website Templates" class="rounded-circle img-fluid w-100">
+                                <div class="icon-shape icon-lg bg-white border-primary border-2 border text-primary rounded-circle mt-n5 mx-auto fw-bold">
+                                    <span>2</span></div>
+
+                            </div>
+                        </div>
+                        <div class="offset-xl-1 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12 mb-3">
+                            <div class="bg-white d-grid ">
+                                <img src="{{asset('theme/borrow/assets/images/background/process-img-3.jpeg')}}" alt="Borrow - Loan Company Responsive Website Templates" class="rounded-circle img-fluid w-100">
+                                <div class="icon-shape icon-lg bg-white border-primary border-2 border text-primary rounded-circle mt-n5 mx-auto fw-bold">
+                                    <span>3</span></div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 
-    </section>
-    <!-- END section -->
-
-
-    <section class="probootstrap_section" id="section-feature-testimonial">
+    <div class="py-lg-16 py-10 ">
         <div class="container">
-            <div class="row justify-content-center mb-5">
-                <div class="col-md-12 text-center mb-5 probootstrap-animate">
-                    <h4 class="display-4 border-bottom probootstrap-section-heading" style="background-color: #2b4a75"><strong style="color: white">Personal Loans | Business Loans </strong></h4>
-                    <blockquote class="">
-                        <p class="lead mb-4"><em>Chalom Investments Limited is a wholly Zambian owned company, duly registered in accordance with the provision of registration business names Act (Cap 389 of the Laws of Zambia).  It was incorporated in XXX and became fully operational in XXX.</em></p>
-                        <p class="lead mb-4"><em>Chalom Investments Limited is a wholly Zambian owned company, duly registered in accordance with the provision of registration business names Act (Cap 389 of the Laws of Zambia).  It was incorporated in XXX and became fully operational in XXX.</em></p>
-
-                        {{--<p class="probootstrap-author">--}}
-                            {{--<a href="https://uicookies.com/" target="_blank">--}}
-                                {{--<img src="{{asset('places/assets/images/person_1.jpg')}}" alt="Free Template by uicookies.com" class="rounded-circle">--}}
-                                {{--<span class="probootstrap-name">James Smith</span>--}}
-                                {{--<span class="probootstrap-title">Chief Executive Officer</span>--}}
-                            </a>
+            <div class="row">
+                <div class="offset-xl-2 col-xl-8 offset-lg-2 col-lg-8 offset-md-2 col-md-8 col-sm-12 col-12">
+                    <div class="mb-10 text-center">
+                        <!-- section title start-->
+                        <h1 class="mb-1">Trusted By Thousands Peoples</h1>
+                        <p class="lead">What people are saying about us product and service.</p>
+                    </div>
+                    <!-- /.section title start-->
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12  col-12">
+                    <div class="mb-6">
+                        <div class="text-warning mb-3">
+                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                        </div>
+                        <p class="fw-bold h4 lh-2">Excellent very easy to apply people are very helpful</p>
+                        <p class="">Best company I have worked with in a long time they really know how to get the job done.
                         </p>
-                    </blockquote>
+                    </div>
+                    <div class="mt-4">
+                        <h4 class="text-uppercase fs-5">Chester H. Davis</h4>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12  col-12">
+                    <div class="mb-6">
+                        <div class="text-warning mb-3"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+                        <p class=" fw-bold h4 lh-2">Simple and very smooth process easy to get loan</p>
+                        <p class="">Applying for a loan with Borrow was easy and quick. I’m so thankful I found them.
+                        </p>
+                    </div>
 
+                    <div class="mt-4">
+                        <h4 class="text-uppercase fs-5">Linda M. Evans</h4>
+                    </div>
                 </div>
             </div>
 
+
+            <div class="row mt-8">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center">
+                    <a href="#!" class="btn btn-primary">Show more review</a>
+                </div>
+            </div>
         </div>
-    </section>
-    <!-- END section -->
+    </div>
 
+    <div class="py-10 py-lg-14" style="background: linear-gradient(rgba(20, 30, 40, 0.8), rgba(20, 30, 40, 0.8)),
+  rgba(16, 75, 149, 0.8) url({{asset('theme/borrow/assets/images/background/cta-img.jpg')}}) no-repeat center;">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="text-center">
+                        <!-- section title start-->
+                        <h1 class="display-4 text-white">Lending solution for your every desire. Its easy</h1>
+                        <p class="text-white-50 lead mb-6">Suilectus lobortis qus laciniaserdem proinvel.</p>
+                        <a href="#!" class="btn btn-primary">Get Started</a>
+                    </div>
+                    <!-- /.section title start-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="py-12">
+        <div class="container">
+            <div class="row">
+                <div class="offset-xl-2 col-xl-8  col-md-12 col-12">
+                    <div class="mb-8 text-center">
+                        <!-- section title start-->
+                        <h1>Our Lenders</h1>
+                        <p class="lead">We partner with hundreds of lenders and banks who share a common goal of helping you achieve your dreams.
+                        </p>
+                    </div>
+                    <!-- /.section title start-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6">
+                    <div class="text-center">
+                        <a href="#!"><img src="{{asset('theme/borrow/assets/images/brand/company-logo/logo-big-1.png')}}" alt="Borrow - Loan Company Responsive Website Templates" class="img-fluid"></a>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6">
+                    <div class="text-center">
+                        <a href="#!"><img src="{{asset('theme/borrow/assets/images/brand/company-logo/logo-big-2.png')}}" alt="Borrow - Loan Company Responsive Website Templates" class="img-fluid"></a>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6">
+                    <div class="text-center">
+                        <a href="#!"><img src="{{asset('theme/borrow/assets/images/brand/company-logo/logo-big-3.png')}}" alt="Borrow - Loan Company Responsive Website Templates" class="img-fluid"></a>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6">
+                    <div class="text-center">
+                        <a href="#!"><img src="{{asset('theme/borrow/assets/images/brand/company-logo/logo-big-4.png')}}" alt="Borrow - Loan Company Responsive Website Templates" class="img-fluid"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    {{--<section class="probootstrap_section">--}}
-        {{--<div class="container">--}}
-            {{--<div class="row text-center mb-5 probootstrap-animate">--}}
-                {{--<div class="col-md-12">--}}
-                    {{--<h2 class="display-4 border-bottom probootstrap-section-heading">Our Services</h2>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</section>--}}
-
-
-    {{--<section class="probootstrap-section-half d-md-flex" id="section-about">--}}
-        {{--<div class="probootstrap-image probootstrap-animate" data-animate-effect="fadeIn" style="background-image: url({{asset('places/assets/images/img_2.jpg')}}"></div>--}}
-        {{--<div class="probootstrap-text">--}}
-            {{--<div class="probootstrap-inner probootstrap-animate" data-animate-effect="fadeInRight">--}}
-                {{--<h2 class="heading mb-4">Customer Service</h2>--}}
-                {{--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>--}}
-                {{--<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>--}}
-                {{--<p><a href="#" class="btn btn-primary">Read More</a></p>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</section>--}}
-
-
-    {{--<section class="probootstrap-section-half d-md-flex">--}}
-        {{--<div class="probootstrap-image order-2 probootstrap-animate" data-animate-effect="fadeIn" style="background-image: url({{asset('places/assets/images/img_3.jpg')}}"></div>--}}
-        {{--<div class="probootstrap-text order-1">--}}
-            {{--<div class="probootstrap-inner probootstrap-animate" data-animate-effect="fadeInLeft">--}}
-                {{--<h2 class="heading mb-4">Payment Options</h2>--}}
-                {{--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>--}}
-                {{--<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>--}}
-                {{--<p><a href="#" class="btn btn-primary">Learn More</a></p>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</section>--}}
-
-
-
-
-    {{--<section class="probootstrap_section" id="section-feature-testimonial">--}}
-        {{--<div class="container">--}}
-            {{--<div class="row justify-content-center mb-5">--}}
-                {{--<div class="col-md-12 text-center mb-5 probootstrap-animate">--}}
-                    {{--<h2 class="display-4 border-bottom probootstrap-section-heading">Testimonial</h2>--}}
-                    {{--<blockquote class="">--}}
-                        {{--<p class="lead mb-4"><em>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</em></p>--}}
-                        {{--<p class="probootstrap-author">--}}
-                            {{--<a href="https://uicookies.com/" target="_blank">--}}
-                                {{--<img src="{{asset('places/assets/images/person_1.jpg')}}" alt="Free Template by uicookies.com" class="rounded-circle">--}}
-                                {{--<span class="probootstrap-name">James Smith</span>--}}
-                                {{--<span class="probootstrap-title">Chief Executive Officer</span>--}}
-                            {{--</a>--}}
-                        {{--</p>--}}
-                    {{--</blockquote>--}}
-
-                {{--</div>--}}
-            {{--</div>--}}
-
-        {{--</div>--}}
-    {{--</section>--}}
-    <!-- END section -->
-
-    {{--<section class="probootstrap_section bg-light">--}}
-        {{--<div class="container">--}}
-            {{--<div class="row text-center mb-5 probootstrap-animate">--}}
-                {{--<div class="col-md-12">--}}
-                    {{--<h2 class="display-4 border-bottom probootstrap-section-heading">News</h2>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-            {{--<div class="row">--}}
-                {{--<div class="col-md-6">--}}
-
-                    {{--<div class="media probootstrap-media d-flex align-items-stretch mb-4 probootstrap-animate">--}}
-                        {{--<div class="probootstrap-media-image" style="background-image: url({{asset('places/assets/images/img_1.jpg')}}">--}}
-                        {{--</div>--}}
-                        {{--<div class="media-body">--}}
-                            {{--<span class="text-uppercase">January 1st 2018</span>--}}
-                            {{--<h5 class="mb-3">Travel To United States Without Visa</h5>--}}
-                            {{--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>--}}
-                            {{--<p><a href="#">Read More</a></p>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-
-                    {{--<div class="media probootstrap-media d-flex align-items-stretch mb-4 probootstrap-animate">--}}
-                        {{--<div class="probootstrap-media-image" style="background-image: url({{asset('places/assets/images/img_2.jpg')}}">--}}
-                        {{--</div>--}}
-                        {{--<div class="media-body">--}}
-                            {{--<span class="text-uppercase">January 1st 2018</span>--}}
-                            {{--<h5 class="mb-3">Travel To United States Without Visa</h5>--}}
-                            {{--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>--}}
-                            {{--<p><a href="#">Read More</a></p>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-
-                {{--</div>--}}
-                {{--<div class="col-md-6">--}}
-
-                    {{--<div class="media probootstrap-media d-flex align-items-stretch mb-4 probootstrap-animate">--}}
-                        {{--<div class="probootstrap-media-image" style="background-image: url({{asset('places/assets/images/img_4.jpg')}}">--}}
-                        {{--</div>--}}
-                        {{--<div class="media-body">--}}
-                            {{--<span class="text-uppercase">January 1st 2018</span>--}}
-                            {{--<h5 class="mb-3">Travel To United States Without Visa</h5>--}}
-                            {{--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>--}}
-                            {{--<p><a href="#">Read More</a></p>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-
-                    {{--<div class="media probootstrap-media d-flex align-items-stretch mb-4 probootstrap-animate">--}}
-                        {{--<div class="probootstrap-media-image" style="background-image: url({{asset('places/assets/images/img_5.jpg')}}">--}}
-                        {{--</div>--}}
-                        {{--<div class="media-body">--}}
-                            {{--<span class="text-uppercase">January 1st 2018</span>--}}
-                            {{--<h5 class="mb-3">Travel To United States Without Visa</h5>--}}
-                            {{--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>--}}
-                            {{--<p><a href="#">Read More</a></p>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</section>--}}
-    <!-- END section -->
-
-    {{--<section class="probootstrap_section">--}}
-        {{--<div class="container">--}}
-            {{--<div class="row text-center mb-5 probootstrap-animate">--}}
-                {{--<div class="col-md-12">--}}
-                    {{--<h2 class="display-4 border-bottom probootstrap-section-heading">Travel With Us</h2>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-
-            {{--<div class="row probootstrap-animate">--}}
-                {{--<div class="col-md-12">--}}
-                    {{--<div class="owl-carousel js-owl-carousel-2">--}}
-                        {{--<div>--}}
-                            {{--<div class="media probootstrap-media d-block align-items-stretch mb-4 probootstrap-animate">--}}
-                                {{--<img src="{{asset('places/assets/images/sq_img_2.jpg')}}" alt="Free Template by uiCookies" class="img-fluid">--}}
-                                {{--<div class="media-body">--}}
-                                    {{--<h5 class="mb-3">02. Service Title Here</h5>--}}
-                                    {{--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<!-- END slide item -->--}}
-
-                        {{--<div>--}}
-                            {{--<div class="media probootstrap-media d-block align-items-stretch mb-4 probootstrap-animate">--}}
-                                {{--<img src="{{asset('places/assets/images/sq_img_1.jpg')}}" alt="Free Template by uiCookies" class="img-fluid">--}}
-                                {{--<div class="media-body">--}}
-                                    {{--<h5 class="mb-3">02. Service Title Here</h5>--}}
-                                    {{--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<!-- END slide item -->--}}
-
-                        {{--<div>--}}
-                            {{--<div class="media probootstrap-media d-block align-items-stretch mb-4 probootstrap-animate">--}}
-                                {{--<img src="{{asset('places/assets/images/sq_img_3.jpg')}}" alt="Free Template by uiCookies" class="img-fluid">--}}
-                                {{--<div class="media-body">--}}
-                                    {{--<h5 class="mb-3">02. Service Title Here</h5>--}}
-                                    {{--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<!-- END slide item -->--}}
-
-                        {{--<div>--}}
-                            {{--<div class="media probootstrap-media d-block align-items-stretch mb-4 probootstrap-animate">--}}
-                                {{--<img src="{{asset('places/assets/images/sq_img_4.jpg')}}" alt="Free Template by uiCookies" class="img-fluid">--}}
-                                {{--<div class="media-body">--}}
-                                    {{--<h5 class="mb-3">02. Service Title Here</h5>--}}
-                                    {{--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<!-- END slide item -->--}}
-
-                        {{--<div>--}}
-                            {{--<div class="media probootstrap-media d-block align-items-stretch mb-4 probootstrap-animate">--}}
-                                {{--<img src="{{asset('places/assets/images/sq_img_5.jpg')}}" alt="Free Template by uiCookies" class="img-fluid">--}}
-                                {{--<div class="media-body">--}}
-                                    {{--<h5 class="mb-3">02. Service Title Here</h5>--}}
-                                    {{--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<!-- END slide item -->--}}
-
-
-                        {{--<div>--}}
-                            {{--<div class="media probootstrap-media d-block align-items-stretch mb-4 probootstrap-animate">--}}
-                                {{--<img src="{{asset('places/assets/images/sq_img_2.jpg')}}" alt="Free Template by uiCookies" class="img-fluid">--}}
-                                {{--<div class="media-body">--}}
-                                    {{--<h5 class="mb-3">02. Service Title Here</h5>--}}
-                                    {{--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<!-- END slide item -->--}}
-
-                        {{--<div>--}}
-                            {{--<div class="media probootstrap-media d-block align-items-stretch mb-4 probootstrap-animate">--}}
-                                {{--<img src="{{asset('places/assets/images/sq_img_1.jpg')}}" alt="Free Template by uiCookies" class="img-fluid">--}}
-                                {{--<div class="media-body">--}}
-                                    {{--<h5 class="mb-3">02. Service Title Here</h5>--}}
-                                    {{--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<!-- END slide item -->--}}
-
-                        {{--<div>--}}
-                            {{--<div class="media probootstrap-media d-block align-items-stretch mb-4 probootstrap-animate">--}}
-                                {{--<img src="{{asset('places/assets/images/sq_img_3.jpg')}}" alt="Free Template by uiCookies" class="img-fluid">--}}
-                                {{--<div class="media-body">--}}
-                                    {{--<h5 class="mb-3">02. Service Title Here</h5>--}}
-                                    {{--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<!-- END slide item -->--}}
-
-                        {{--<div>--}}
-                            {{--<div class="media probootstrap-media d-block align-items-stretch mb-4 probootstrap-animate">--}}
-                                {{--<img src="{{asset('places/assets/images/sq_img_4.jpg')}}" alt="Free Template by uiCookies" class="img-fluid">--}}
-                                {{--<div class="media-body">--}}
-                                    {{--<h5 class="mb-3">02. Service Title Here</h5>--}}
-                                    {{--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<!-- END slide item -->--}}
-
-                        {{--<div>--}}
-                            {{--<div class="media probootstrap-media d-block align-items-stretch mb-4 probootstrap-animate">--}}
-                                {{--<img src="{{asset('places/assets/images/sq_img_5.jpg')}}" alt="Free Template by uiCookies" class="img-fluid">--}}
-                                {{--<div class="media-body">--}}
-                                    {{--<h5 class="mb-3">02. Service Title Here</h5>--}}
-                                    {{--<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<!-- END slide item -->--}}
-
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</section>--}}
-
-    @endsection
+@endsection

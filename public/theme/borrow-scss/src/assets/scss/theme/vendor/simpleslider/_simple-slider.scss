@@ -1,0 +1,56 @@
+
+
+.slider {
+	width: 100%;
+	>.dragger {
+		background: #754ffe;
+		background: -webkit-linear-gradient(to top, #754ffe, #754ffe);
+		background: -moz-linear-gradient(to top, #754ffe, #754ffe);
+		background: linear-gradient(to top, #754ffe, #754ffe);
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 20px;
+		border: 1px solid #754ffe;
+		width: 16px;
+		height: 16px;
+		&:hover {
+			background: -webkit-linear-gradient(to top, #754ffe, #754ffe);
+		}
+	}
+	>.track {
+		background: $gray-100;
+		background: -webkit-linear-gradient(to top, #dee7f2, #e2e7ee);
+		background: -moz-linear-gradient(to top, #bbb, #ddd);
+		background: linear-gradient(to top, #bbb, #ddd);
+		-webkit-border-radius: 8px;
+		-moz-border-radius: 8px;
+		border-radius: 8px;
+		border: 1px solid #dee7f2;
+		height: 8px;
+	}
+	>.highlight-track {
+		background: #ccc;
+		background: -webkit-linear-gradient(to top, #dee7f2, #e2e7ee);
+		background: -moz-linear-gradient(to top, #bbb, #ddd);
+		background: linear-gradient(to top, #bbb, #ddd);
+		-webkit-border-radius: 8px;
+		-moz-border-radius: 8px;
+		border-radius: 8px;
+		border: 1px solid #dee7f2;
+		height: 8px;
+		background-color: $success;
+		background: -webkit-linear-gradient(to top, #8DCA09, #72A307);
+		background: -moz-linear-gradient(to top, #8DCA09, #72A307);
+		background: linear-gradient(to top, #8DCA09, #72A307);
+		border-color: $success;
+	}
+}
+.result {
+	background: #f2f2f2;
+}
+.emi {
+	background: #f2f2f2;
+	border: 5px solid #496805;
+	padding: 10px;
+	text-align: center;
+}
