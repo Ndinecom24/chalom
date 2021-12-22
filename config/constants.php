@@ -25,7 +25,13 @@ return [
         'pending' => 2,
         'deactivated' => 3,
 
-        'active' =>1
+        'active' =>1,
+        'unseen' => 100,
+        'seen' => 200,
+
+        'loan_request' => 0 ,
+        'loan_request_login' => 4,
+        'loan_submission' => 5,
     ],
     'work_status' => [
         '1' => 'Student',
@@ -39,8 +45,14 @@ return [
         'returning' => 2,
         'employee' => 4
     ],
+    'notifications' => [
+        'loan' => 'loan',
+    ],
     'types' => [
         'avatar' => 'avatar',
         'nrc' => 'nrc',
-    ]
+        'identity' => 'identity',
+        'account_statement' => 'account_statement',
+        'payslip' => 'payslip',
+    ],
 ];

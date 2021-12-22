@@ -136,6 +136,13 @@
                     </div>
                 @endif
             @else
+                <ul class="navbar-nav ">
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{route('home')}}"    `>
+                        Dashboard
+                    </a>
+                </li>
+                </ul>
                 <div class="ms-lg-3 mt-3 d-grid mt-lg-0 text-end" >
                     @if( ($user->avatar ?? "" ) == "" )
                         <img class="nav-item " width="40px" src="{{asset('images/user.png')}}" alt="">

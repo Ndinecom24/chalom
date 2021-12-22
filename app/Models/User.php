@@ -23,6 +23,7 @@ class User extends Authenticatable
      */
 
     protected $fillable = [
+        'uuid',
         'name',
         'password',
         'mobile_number',
@@ -89,6 +90,9 @@ class User extends Authenticatable
     }
     public function kin(){
         return $this->hasOne(NextOfKin::class);
+    }
+    public function nrc(){
+        return $this->hasOne(Files::class, 'identity', 'uuid');
     }
 
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Settings\Roles;
+use App\Models\Loans\LoanApplications;
 use App\Models\Loans\LoanProducts;
 use App\Models\Settings\CustomerTypes;
 use App\Models\Settings\Status;
@@ -38,6 +39,15 @@ class HomeController extends Controller
 //        dd(config('constants.role.client.id') );
 //        dd($user->role_id );
         if ($user->role_id == config('constants.role.client.id')) {
+            //check if there is a loan request
+            $loans = LoanApplications::where('customer_id', $user->id)
+                ->where('statuses_id',  config('constants.status.loan_request_login'));
+            if($loans->exists() ){
+                $works = WorkStatus::all();
+                $statuses = Status::all();
+                $loan = $loans->first();
+                return view('dashboard.client.loan.finish_apply')->with(compact('user', 'loan', 'works', 'statuses' ));
+            }
             return view('dashboard.client.home');
         } else if ($user->role_id == config('constants.role.admin.id')
             || $user->role_id == config('constants.role.developer.id')

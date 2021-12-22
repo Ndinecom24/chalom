@@ -20,6 +20,7 @@ class Files extends Model
         'author',
         'date_posted',
         'modal_id',
+        'modal_uuid',
         'modal_type',
     ];
 }

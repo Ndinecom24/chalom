@@ -43,8 +43,13 @@ Route::group([
     'prefix' => 'loan/apply',
 ], function () {
     Route::get('/{loanProd}', [LoanApplicationsController::class, 'apply'])->name('loan.apply');
-//            Route::get('/show/{LoanFeatures}', [LoanFeaturesController::class, 'show'])->name('loan.apply.show');
-//            Route::get('/create', [LoanFeaturesController::class, 'create'])->name('loan.apply.create');
+    Route::post('/save/details', [LoanApplicationsController::class, 'save'])->name('loan.save');
+    Route::post('/finish/{loan}/{user}', [LoanApplicationsController::class, 'finish'])->name('loan.finish');
+    Route::post('/returning', [LoanApplicationsController::class, 'returningCustomer'])->name('loan.returning.customer');
+    Route::post('/new', [LoanApplicationsController::class, 'newCustomer'])->name('loan.new.customer');
+    Route::get('/show/{loan}', [LoanApplicationsController::class, 'show'])->name('loan.show');
+    Route::get('/list/{status}', [LoanApplicationsController::class, 'index'])->name('loan.list');
+    Route::post('/approve/{loan}', [LoanApplicationsController::class, 'approve'])->name('loan.approve');
 //            Route::post('/store', [LoanFeaturesController::class, 'store'])->name('loan.apply.store');
 //            Route::post('/update/{LoanFeatures}', [LoanFeaturesController::class, 'update'])->name('loan.apply.update');
 //            Route::post('/destroy/{LoanFeatures}', [LoanFeaturesController::class, 'destroy'])->name('loan.apply.destroy');
