@@ -22,7 +22,7 @@
                                                 <div>
 
                                                     <select class="form-select" name="loan_purpose">
-                                                        <option value="Select Loan Purpose">Select Loan Purpose</option>
+                                                        <option value="Select Loan Purpose">Select Loan testing  Purpose</option>
                                                         <option value="Debt Consolidation">Debt Consolidation</option>
                                                         <option value="Wedding Expenses">Wedding Expenses</option>
                                                         <option value="Alternative Salary Advance">Alternative Salary Advance</option>
@@ -95,34 +95,34 @@
             <div class="row">
                 <div class="offset-xl-2 col-xl-8 offset-lg-2 col-lg-8 col-md-12 col-sm-12 col-12">
                     <div class="text-center mb-8">
-                        <h1>Why take a loan with us?</h1>
-                        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus maximus lorem id arcu sagittis, in euismod erat faucibus. Nullam rutrum suscipit velit nec simply dummy content gravida. </p>
+                        <h1 style="color: green">How it works</h1>
+                        <p>Our promise to our customers is that we will constantly streamline our processes to ensure that we have the fastest turnaround time in the market. Try our easy 2 minutes process to get your next loan.</p>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
                     <div class="text-center ">
-                        <h3>Fast</h3>
-                        <p>Borrow processes your application and your loan - no third iesnsectetur ultriciesi.</p>
+                        <h3 >Loan Type</h3>
+                        <p>elect a loan type that is most suitable for you and use the loan calculator to determine the loan amount you wish to borrow and reasons.</p>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
                     <div class="text-center ">
-                        <h3>Flexible </h3>
-                        <p>Apply online in just minutes no more document or callequired simpmy content.</p>
+                        <h3>Check Eligibility </h3>
+                        <p>Our eligibility calculator saves you time by quickly letting you know if you should proceed with the application process or not by simulating.</p>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
                     <div class="text-center ">
-                        <h3>Great rates</h3>
-                        <p>The generated Lorem Ipsum is free from repetitionected humooc words etc. </p>
+                        <h3>Create or Login</h3>
+                        <p>If you are eligible, you will be requested to create an account which will allow you access loans from Chalom and to track loan processing.</p>
                     </div>
                 </div>
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
                     <div class="text-center ">
-                        <h3>Reviews</h3>
-                        <p> Nunc at sapien bibendum, dapibus dolo sodalauciapibus nibh varius egestas. </p>
+                        <h3>Apply</h3>
+                        <p> Complete your profile, upload requested documents and submit your loan application. You will get notifications as your loan is processed. </p>
                     </div>
                 </div>
             </div>
@@ -133,8 +133,8 @@
             <div class="row">
                 <div class="offset-xl-2 col-xl-8 offset-lg-2 col-lg-8 col-md-12 col-sm-12 col-12">
                     <div class="text-center mb-10">
-                        <h1 class="mb-1">Getting started is easy</h1>
-                        <p class="mb-0 lead">Apply online in just minutes no more document or calling required </p>
+                        <h1 class="mb-1" style="color: green">Getting started is easy</h1>
+                        <p class="mb-0 lead">Apply online in just 2 minutes no more document or calling required. Chalom investments believes in business, School Fees and person build through easy access access and stress free process to to obtain financial support  </p>
                     </div>
                 </div>
                 <div class="col-12">
@@ -176,38 +176,77 @@
                     <div class="mb-10 text-center">
                         <!-- section title start-->
                         <h1 class="mb-1">Trusted By Thousands Peoples</h1>
-                        <p class="lead">What people are saying about us product and service.</p>
+                        <p class="lead">Our product list in the areas of operations are very wide, with the core being: XXXx and XXX..</p>
                     </div>
                     <!-- /.section title start-->
                 </div>
             </div>
-            <div class="row d-flex justify-content-center">
-                <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12  col-12">
-                    <div class="mb-6">
-                        <div class="text-warning mb-3">
-                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-                        </div>
-                        <p class="fw-bold h4 lh-2">Excellent very easy to apply people are very helpful</p>
-                        <p class="">Best company I have worked with in a long time they really know how to get the job done.
-                        </p>
-                    </div>
-                    <div class="mt-4">
-                        <h4 class="text-uppercase fs-5">Chester H. Davis</h4>
-                    </div>
+            {{--<div class="row d-flex justify-content-center">--}}
+                {{--<div class="col-xl-5 col-lg-6 col-md-6 col-sm-12  col-12">--}}
+                    {{--<div class="mb-6">--}}
+                        {{--<div class="text-warning mb-3">--}}
+                            {{--<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>--}}
+                        {{--</div>--}}
+                        {{--<p class="fw-bold h4 lh-2">Excellent very easy to apply people are very helpful</p>--}}
+                        {{--<p class="">Best company I have worked with in a long time they really know how to get the job done.--}}
+                        {{--</p>--}}
+                    {{--</div>--}}
+                    {{--<div class="mt-4">--}}
+                        {{--<h4 class="text-uppercase fs-5">Chester H. Davis</h4>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="col-xl-5 col-lg-6 col-md-6 col-sm-12  col-12">--}}
+                    {{--<div class="mb-6">--}}
+                        {{--<div class="text-warning mb-3"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>--}}
+                        {{--<p class=" fw-bold h4 lh-2">Simple and very smooth process easy to get loan</p>--}}
+                        {{--<p class="">Applying for a loan with Borrow was easy and quick. I’m so thankful I found them.--}}
+                        {{--</p>--}}
+                    {{--</div>--}}
+
+                    {{--<div class="mt-4">--}}
+                        {{--<h4 class="text-uppercase fs-5">Linda M. Evans</h4>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+
+            <div class="row">
+                <div class="row d-flex justify-content-center>
+                    {{--<div class="text-center">--}}
+                        {{--<h3 >MISSION</h3>--}}
+                        {{--<p>We aim for a quick disbursement of low interest rate loans to carter to the financial needs of employees,--}}
+                            {{--parents needing school fees for their children or dependents, startups or growing corporations ( schools,--}}
+                            {{--vendors , suppliers) needing growth in working capital  (startup schools- infrastructure projects like building classrooms,--}}
+                            {{--labs or other facilities) </p>--}}
+                    {{--</div>--}}
                 </div>
-                <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12  col-12">
-                    <div class="mb-6">
-                        <div class="text-warning mb-3"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
-                        <p class=" fw-bold h4 lh-2">Simple and very smooth process easy to get loan</p>
-                        <p class="">Applying for a loan with Borrow was easy and quick. I’m so thankful I found them.
+
+                        <div class="row d-flex justify-content-center>
+                    <div class="text-center ">
+                        <h3>MISSION </h3>
+                        <p>We aim for a quick disbursement of low interest rate loans to carter to the financial needs of employees,
+                            parents needing school fees for their children or dependents, startups or growing corporations ( schools,
+                            vendors , suppliers) needing growth in working capital  (startup schools- infrastructure projects like building classrooms,
+                            labs or other facilities) </p>
+                    </div>
+
+                    <div class="text-center ">
+                        <h3>VISION </h3>
+                        <p>To be the best provider in the micro finance market place for micro loans  through offering of customized,
+                            affordable lower interest rate loan packages countrywide thereby assist our clients to achieve their social and economic freedom and improve community
+                            livelihoods through the provisioning of collateral free and collateral based loans. </p>
+                    </div>
+
+                    <div class="text-center ">
+                        <h3>VALUES </h3>
+                        <p> •	Integrity
+                            •	Confidentiality
+                            •	Fairness
+                            •	Accountability
                         </p>
                     </div>
 
-                    <div class="mt-4">
-                        <h4 class="text-uppercase fs-5">Linda M. Evans</h4>
-                    </div>
                 </div>
-            </div>
+
+                </div>
 
 
             <div class="row mt-8">
@@ -240,8 +279,8 @@
                 <div class="offset-xl-2 col-xl-8  col-md-12 col-12">
                     <div class="mb-8 text-center">
                         <!-- section title start-->
-                        <h1>Our Lenders</h1>
-                        <p class="lead">We partner with hundreds of lenders and banks who share a common goal of helping you achieve your dreams.
+                        <h1 style="color: green">Partners and Affiliations</h1>
+                        <p class="lead">Chalom Investments Limited  partners with hundreds of lenders and banks who share a common goal of helping you achieve your dreams.
                         </p>
                     </div>
                     <!-- /.section title start-->
