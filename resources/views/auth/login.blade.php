@@ -31,6 +31,7 @@
                     <div class="card-body">
                         <form class="form-signin" method="POST" action="{{ route('login') }}">
                             @csrf
+                            <input hidden id="uuid" name="uuid" class="form-control mt-2" value="{{$uuid ?? 0}}">
 
                             <div class="text-center mb-4">
                                 <img class="mb-2" src="{{asset('images/brac.jpg')}}" alt="" width="220" height="72">

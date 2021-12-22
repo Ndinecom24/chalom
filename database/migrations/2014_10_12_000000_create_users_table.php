@@ -36,6 +36,7 @@ class CreateUsersTable extends Migration
             $table->integer('next_of_kin_id');
             $table->integer('status_id');
             $table->integer('password_change');
+            $table->uuid('uuid');
             $table->integer('created_by')->nullable();
             $table->integer('deleted_at')->nullable();
             $table->rememberToken();

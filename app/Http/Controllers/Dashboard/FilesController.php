@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Controller;
 use App\Models\Files;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class FilesController extends Controller
 {
@@ -49,6 +51,7 @@ class FilesController extends Controller
         // Upload File
         $path = $file->storeAs('public/' . $type, $fileNameToStore);
         $path = asset('storage/' . $type . '/' . $fileNameToStore);
+        $uuid = Str::uuid()->toString();
 
         //upload the receipt
         $file = Files::updateOrCreate(
@@ -60,6 +63,7 @@ class FilesController extends Controller
                 'type' => $type,
             ],
             [
+                'uuid' => $uuid,
                 'name' => $fileNameToStore,
                 'path' => $path,
                 'ext' => $extension,
@@ -68,6 +72,7 @@ class FilesController extends Controller
                 'size' => $size,
                 'type' => $type,
                 'modal_id' => $model->id ,
+                'modal_uuid' => $model->uuid ?? $model->id ,
                 'model_type' =>  get_class($model),
             ]
         );

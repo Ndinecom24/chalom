@@ -15,7 +15,7 @@
                 </li>
                 <!-- apply for a loan -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('loan.apply')}}">
+                    <a class="nav-link" href="{{route('welcome')}}">
                         <img width="10%"  src="{{asset('images/icons/4.png')}}" alt="">
                         <span class="menu-title">Apply for loan</span>
                     </a>

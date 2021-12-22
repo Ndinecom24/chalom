@@ -21,8 +21,8 @@
                                             <div class="col-md-9 col-sm-12 col-12">
                                                 <div>
 
-                                                    <select class="form-select" name="loan_purpose">
-                                                        <option value="Select Loan Purpose">Select Loan testing  Purpose</option>
+                                                    <select class="form-select" name="loan_purpose" required >
+                                                        <option value="">Select Loan Purpose</option>
                                                         <option value="Debt Consolidation">Debt Consolidation</option>
                                                         <option value="Wedding Expenses">Wedding Expenses</option>
                                                         <option value="Alternative Salary Advance">Alternative Salary Advance</option>
