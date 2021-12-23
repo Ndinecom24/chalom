@@ -59,22 +59,10 @@
                     </ul>
                     <ul class="dropdown-menu dropdown-menu-arrow" aria-labelledby="navbarProducts">
 
-
-                        <li class="dropdown-submenu dropstart-lg">
-                            <a class="dropdown-item dropdown-list-group-item dropdown-toggle" href="#">
+                        <li><a href="{{route('loan.index')}}" class="dropdown-item">
                                 Loans
                             </a>
-                            <ul class="dropdown-menu">
-                                {{--                              @foreach()--}}
-                                <li>
-                                    <a class="dropdown-item" href="../pages/education-loan.html">
-                                        Education Loan Single
-                                    </a>
-                                </li>
-                                {{--                                @endforeach--}}
-                            </ul>
                         </li>
-
                         <li><a href="{{route('loan.calculator')}}" class="dropdown-item">
                                 Loan Calculator
                             </a>
@@ -95,25 +83,10 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarFeatures">
 
-                        <li><a class="dropdown-item" href="../pages/about.html">About Us</a></li>
-                        <li> <a class="dropdown-item" href="../pages/team.html">Team</a></li>
-                        <li> <a class="dropdown-item" href="../pages/faq.html">FAQ</a></li>
-
-                        <li> <a class="dropdown-item" href="../pages/error.html">404 error</a></li>
-                        <li class="dropdown-submenu dropstart-lg">
-                            <a class="dropdown-item dropdown-list-group-item dropdown-toggle" href="#">
-                                Gallery
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="../pages/gallery-filter-2.html">
-                                        Two Column
-                                    </a>
-                                </li>
-                            </ul>
-
-                        </li>
-                        <li><a class="dropdown-item" href="../pages/contact-us.html">Contact
+                        <li><a class="dropdown-item" href="{{route('company.about')}}">About Us</a></li>
+                        <li> <a class="dropdown-item" href="{{route('company.team')}}">Team</a></li>
+                        <li> <a class="dropdown-item" href="{{route('company.faq')}}">FAQ</a></li>
+                        <li><a class="dropdown-item" href="{{route('company.contact')}}">Contact
                             </a>
                         </li>
 

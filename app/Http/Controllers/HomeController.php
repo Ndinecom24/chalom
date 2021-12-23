@@ -36,8 +36,8 @@ class HomeController extends Controller
     {
         //check user types
         $user = Auth::user();
-//        dd(config('constants.role.client.id') );
-//        dd($user->role_id );
+       // dd(config('constants.role.client.id') );
+        //dd($user->role_id );
         if ($user->role_id == config('constants.role.client.id')) {
             //check if there is a loan request
             $loans = LoanApplications::where('customer_id', $user->id)
@@ -71,5 +71,27 @@ class HomeController extends Controller
         $roles = \App\Models\Settings\Roles::all();
         return view('dashboard.admin.settings.index')
             ->with(compact('works','statuses', 'roles', 'customer_types'));
+    }
+
+
+
+    public function about(){
+        return view('website.about_us');
+    }
+
+    public function contact(){
+        return view('website.contact_us');
+    }
+
+    public function faq(){
+        return view('website.faq');
+    }
+
+    public function team(){
+        return view('website.team');
+    }
+
+    public function apply(){
+        return view('website.how_to_apply');
     }
 }

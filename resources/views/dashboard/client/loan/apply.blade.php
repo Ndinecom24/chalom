@@ -246,9 +246,10 @@
     <!-- partial -->
     <div class="py-2"
          style="background:url({{asset('theme/borrow/assets/images/slider/slider-2.jpg')}})no-repeat; background-position: center; background-size: cover;">
-        <div class="row">
-            <div class="col-8 offset-2">
+        <div class="row " style="align-content: center">
+            <div class="col-xl-8 col-lg-8 col-md-8  col-sm-12 center-block ">
                 <div class="row">
+                    <div class="row">
                     <div class="col-12">
                         @if(session()->has('message'))
                             <div class="alert alert-success alert-dismissible">
@@ -271,319 +272,322 @@
                             </div>
                         @endif
                     </div>
+                    </div>
                     <div class="row">
-                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 offset-2 mb-4 mt-4 text-center p-0 mt-3 mb-2 ">
-                            <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
-                                <h2><strong>Sign Up Your User Account</strong></h2>
-                                <p>Fill all form field to go to next step</p>
-                                <div class="row">
-                                    <div class="col-md-12 mx-0">
-                                        <form id="msform">
-                                            <!-- progressbar -->
-                                            <ul id="progressbar">
-                                                <li class="active" id="account"><strong>Loan</strong></li>
-                                                <li id="personal"><strong>Eligibility</strong></li>
-                                                <li id="payment"><strong>Type</strong></li>
-                                                <li id="confirm"><strong>Finish</strong></li>
-                                            </ul> <!-- fieldsets -->
-                                            <fieldset>
-                                                <div class="form-card">
-                                                    <h2 class="fs-title">Loan Details</h2>
+                        <div class="container-fluid ">
+                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8  offset-2 text-center p-0 mt-3 mb-2 ">
+                                <div class="card ">
+                                    <h2><strong>Sign Up Your User Account</strong></h2>
+                                    <p>Fill all form field to go to next step</p>
+                                    <div class="row">
+                                        <div class="col-md-12 mx-0">
+                                            <form id="msform">
+                                                <!-- progressbar -->
+                                                <ul id="progressbar">
+                                                    <li class="active" id="account"><strong>Loan</strong></li>
+                                                    <li id="personal"><strong>Eligibility</strong></li>
+                                                    <li id="payment"><strong>Type</strong></li>
+                                                    <li id="confirm"><strong>Finish</strong></li>
+                                                </ul> <!-- fieldsets -->
+                                                <fieldset>
+                                                    <div class="form-card">
+                                                        <h2 class="fs-title">Loan Details</h2>
 
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <div class="row gutters">
-                                                                <div class="col-12">
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            for="loan_amount">
-                                                                            Loan Type</label>
-                                                                        <select id="loan_type" name="loan_type"
-                                                                                onchange="loanPercent(event)"
-                                                                                class="form-control ">
-                                                                            <option value="{{$loanProd->id}}">{{$loanProd->name}}</option>
-                                                                        </select>
-                                                                        <label id="loan_type_error"
-                                                                               style="display: none"
-                                                                               class="text-danger"> Select Loan
-                                                                            Type </label>
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="row gutters">
+                                                                    <div class="col-12">
+                                                                        <div class="form-group">
+                                                                            <label
+                                                                                for="loan_amount">
+                                                                                Loan Type</label>
+                                                                            <select id="loan_type" name="loan_type"
+                                                                                    onchange="loanPercent(event)"
+                                                                                    class="form-control ">
+                                                                                <option value="{{$loanProd->id}}">{{$loanProd->name}}</option>
+                                                                            </select>
+                                                                            <label id="loan_type_error"
+                                                                                   style="display: none"
+                                                                                   class="text-danger"> Select Loan
+                                                                                Type </label>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
 
-                                                                <div class="col-12">
-                                                                    <div class="form-group mt-2">
-                                                                        <label
-                                                                            for="payslip_three">Purpose</label>
-                                                                        <input type="text" readonly
-                                                                               class="form-control "
-                                                                               name="loan_purpose"
-                                                                               value="{{$loan_purpose}}"
-                                                                               id="loan_purpose">
+                                                                    <div class="col-12">
+                                                                        <div class="form-group mt-2">
+                                                                            <label
+                                                                                for="payslip_three">Purpose</label>
+                                                                            <input type="text" readonly
+                                                                                   class="form-control "
+                                                                                   name="loan_purpose"
+                                                                                   value="{{$loan_purpose}}"
+                                                                                   id="loan_purpose">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-12">
-                                                                    <div class="form-group mt-2">
-                                                                        <label
-                                                                            for="payslip_three">Next Repayment Date</label>
-                                                                        <input type="text" readonly
-                                                                               class="form-control "
-                                                                               name="loan_purpose"
-                                                                               value="{{date("D d M Y", strtotime("1 month"))}}"
-                                                                               id="loan_purpose">
+                                                                    <div class="col-12">
+                                                                        <div class="form-group mt-2">
+                                                                            <label
+                                                                                for="payslip_three">Next Repayment Date</label>
+                                                                            <input type="text" readonly
+                                                                                   class="form-control "
+                                                                                   name="loan_purpose"
+                                                                                   value="{{date("D d M Y", strtotime("1 month"))}}"
+                                                                                   id="loan_purpose">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-12">
-                                                                    <div class="form-group mt-2">
-                                                                        <label
-                                                                            for="loan_amount">
-                                                                            Loan Amount in Kwacha</label>
-                                                                        <input type="number" class="form-control "
-                                                                               name="loan_amount" id="loan_amount"
-                                                                               placeholder="How much? e.g 5000 ">
-                                                                        <label id="loan_amount_error"
-                                                                               style="display: none"
-                                                                               class="text-danger"> Enter Loan
-                                                                            Amount </label>
+                                                                    <div class="col-12">
+                                                                        <div class="form-group mt-2">
+                                                                            <label
+                                                                                for="loan_amount">
+                                                                                Loan Amount in Kwacha</label>
+                                                                            <input type="number" class="form-control "
+                                                                                   name="loan_amount" id="loan_amount"
+                                                                                   placeholder="How much? e.g 5000 ">
+                                                                            <label id="loan_amount_error"
+                                                                                   style="display: none"
+                                                                                   class="text-danger"> Enter Loan
+                                                                                Amount </label>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class=" col-12">
-                                                                    <div class="form-group mt-2">
-                                                                        <label
-                                                                            for="repayment_period">
-                                                                            Repayment Period in Months</label>
-                                                                        <input type="number" class="form-control "
-                                                                               onchange="totalRepayment()"
-                                                                               name="repayment_period"
-                                                                               id="repayment_period"
-                                                                               placeholder="How many months? e.g 2 ">
-                                                                        <label id="repayment_period_error"
-                                                                               style="display: none"
-                                                                               class="text-danger"> Enter Repayment
-                                                                            Period </label>
+                                                                    <div class=" col-12">
+                                                                        <div class="form-group mt-2">
+                                                                            <label
+                                                                                for="repayment_period">
+                                                                                Repayment Period in Months</label>
+                                                                            <input type="number" class="form-control "
+                                                                                   onchange="totalRepayment()"
+                                                                                   name="repayment_period"
+                                                                                   id="repayment_period"
+                                                                                   placeholder="How many months? e.g 2 ">
+                                                                            <label id="repayment_period_error"
+                                                                                   style="display: none"
+                                                                                   class="text-danger"> Enter Repayment
+                                                                                Period </label>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="form-group mt-2">
-                                                                        <label
-                                                                            for="payslip_three">Percentage</label>
-                                                                        <input type="number" readonly
-                                                                               class="form-control is-valid"
-                                                                               name="loan_percentage"
-                                                                               value="{{$loanProd->rate_per_month}}"
-                                                                               id="loan_percentage"
-                                                                               placeholder="10 %">
+                                                                    <div class="col-6">
+                                                                        <div class="form-group mt-2">
+                                                                            <label
+                                                                                for="payslip_three">Percentage</label>
+                                                                            <input type="number" readonly
+                                                                                   class="form-control is-valid"
+                                                                                   name="loan_percentage"
+                                                                                   value="{{$loanProd->rate_per_month}}"
+                                                                                   id="loan_percentage"
+                                                                                   placeholder="10 %">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="form-group mt-2">
-                                                                        <label
-                                                                            for="payslip_three">Arrangement Fee</label>
-                                                                        <input type="number" readonly
-                                                                               class="form-control is-valid"
-                                                                               name="arrangement_fee"
-                                                                               value="{{$loanProd->arrangement_fee}}"
-                                                                               id="arrangement_fee">
+                                                                    <div class="col-6">
+                                                                        <div class="form-group mt-2">
+                                                                            <label
+                                                                                for="payslip_three">Arrangement Fee</label>
+                                                                            <input type="number" readonly
+                                                                                   class="form-control is-valid"
+                                                                                   name="arrangement_fee"
+                                                                                   value="{{$loanProd->arrangement_fee}}"
+                                                                                   id="arrangement_fee">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-6 mt-2">
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            for="payslip_three">Monthly
-                                                                            Repayments</label>
-                                                                        <input type="number" readonly
-                                                                               class="form-control is-valid"
-                                                                               name="monthly_amount" id="monthly_amount"
-                                                                               placeholder="ZMW">
+                                                                    <div class="col-6 mt-2">
+                                                                        <div class="form-group">
+                                                                            <label
+                                                                                for="payslip_three">Monthly
+                                                                                Repayments</label>
+                                                                            <input type="number" readonly
+                                                                                   class="form-control is-valid"
+                                                                                   name="monthly_amount" id="monthly_amount"
+                                                                                   placeholder="ZMW">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="form-group mt-2">
-                                                                        <label
-                                                                            for="payslip_three">Total Repayment</label>
-                                                                        <input type="number" readonly
-                                                                               class="form-control is-valid"
-                                                                               name="total_repayment"
-                                                                               id="total_repayment"
-                                                                               placeholder="ZMW">
+                                                                    <div class="col-6">
+                                                                        <div class="form-group mt-2">
+                                                                            <label
+                                                                                for="payslip_three">Total Repayment</label>
+                                                                            <input type="number" readonly
+                                                                                   class="form-control is-valid"
+                                                                                   name="total_repayment"
+                                                                                   id="total_repayment"
+                                                                                   placeholder="ZMW">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-12 text-left mt-2" id="calculate_btn"
-                                                                     onclick="calculateDisappear()">
-                                                                    <button class="btn btn-info">
-                                                                        Calculate
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                                <input type="button" name="next" class="next action-button"
-                                                       value="Next Step"/>
-                                            </fieldset>
-                                            <fieldset>
-                                                <div class="form-card">
-                                                    <h2 class="fs-title">Loan Eligibility</h2>
-                                                    <div id="selected_loan_div"></div>
-                                                    <div class="row">
-                                                        <div class="col-12 mt-2">
-                                                            <div class="row gutters">
-                                                                <div class="col-12">
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            for="monthly_income">
-                                                                            Monthly Income</label>
-                                                                        <input type="number" class="form-control "
-                                                                               name="monthly_income" id="monthly_income"
-                                                                               placeholder="How much? e.g 5000 ">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-12">
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            for="other_income">
-                                                                            Other Income</label>
-                                                                        <input type="number" class="form-control "
-                                                                               name="other_income" id="other_income"
-                                                                               placeholder="How much? e.g 5000 ">
-                                                                    </div>
-                                                                </div>
-                                                                <div class=" col-12">
-                                                                    <div class="form-group mt-2">
-                                                                        <label
-                                                                            for="monthly_deduct">
-                                                                            Other Loans / Deduction</label>
-                                                                        <input type="number" class="form-control "
-                                                                               name="monthly_deduct"
-                                                                               id="monthly_deduct"
-                                                                               placeholder="Monthly earnings deductions? e.g 2000 ">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-12">
-                                                                    <div class="form-group mt-2">
-                                                                        <input type="checkbox" class="custom-checkbox"
-                                                                               id="citizen_check" name="citizen_check">
-                                                                        <label
-                                                                            for="citizen_check">I am a Zambian
-                                                                            Citizen/Resident</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-12">
-                                                                    <div class="form-group mt-1">
-                                                                        <input type="checkbox" class="custom-checkbox"
-                                                                               id="nrc_check" name="nrc_check">
-                                                                        <label
-                                                                            for="nrc_check"> Copy of ID</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-12">
-                                                                    <div class="form-group mt-1">
-                                                                        <input type="checkbox" class="custom-checkbox"
-                                                                               id="account_check" name="account_check">
-                                                                        <label
-                                                                            for="account_check"> Active Bank/Mobile
-                                                                            Money Account</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-12">
-                                                                    <div class="form-group mt-1">
-                                                                        <input type="checkbox" class="custom-checkbox"
-                                                                               id="account_statement_check"
-                                                                               name="account_statement_check">
-                                                                        <label
-                                                                            for="account_statement_check"> Latest
-                                                                            Bank/Mobile Money Account Statement</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-12">
-                                                                    <div class="form-group mt-1">
-                                                                        <input type="checkbox" class="custom-checkbox"
-                                                                               id="payslip_check" name="payslip_check">
-                                                                        <label
-                                                                            for="payslip_check">Latest 2 months
-                                                                            payslips</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-12">
-                                                                    <div class="form-group mt-1">
-                                                                        <input type="checkbox" class="custom-checkbox"
-                                                                               id="guarantor_check"
-                                                                               name="guarantor_check">
-                                                                        <label
-                                                                            for="guarantor_check">Guarantor</label>
+                                                                    <div class="col-12 text-left mt-2" id="calculate_btn"
+                                                                         onclick="calculateDisappear()">
+                                                                        <button class="btn btn-info">
+                                                                            Calculate
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <input type="button" name="previous"
-                                                       class="previous action-button-previous" value="Previous"/>
-                                                <input
-                                                    type="button" id="check_eligibility" name="check_eligibility"
-                                                    class="check_eligibility btn btn-outline-success"
-                                                    value="Check Now"/>
 
-                                            </fieldset>
+                                                    </div>
+
+                                                    <input type="button" name="next" class="next action-button"
+                                                           value="Next Step"/>
+                                                </fieldset>
+                                                <fieldset>
+                                                    <div class="form-card">
+                                                        <h2 class="fs-title">Loan Eligibility</h2>
+                                                        <div id="selected_loan_div"></div>
+                                                        <div class="row">
+                                                            <div class="col-12 mt-2">
+                                                                <div class="row gutters">
+                                                                    <div class="col-12">
+                                                                        <div class="form-group">
+                                                                            <label
+                                                                                for="monthly_income">
+                                                                                Monthly Income</label>
+                                                                            <input type="number" class="form-control "
+                                                                                   name="monthly_income" id="monthly_income"
+                                                                                   placeholder="How much? e.g 5000 ">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <div class="form-group">
+                                                                            <label
+                                                                                for="other_income">
+                                                                                Other Income</label>
+                                                                            <input type="number" class="form-control "
+                                                                                   name="other_income" id="other_income"
+                                                                                   placeholder="How much? e.g 5000 ">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class=" col-12">
+                                                                        <div class="form-group mt-2">
+                                                                            <label
+                                                                                for="monthly_deduct">
+                                                                                Other Loans / Deduction</label>
+                                                                            <input type="number" class="form-control "
+                                                                                   name="monthly_deduct"
+                                                                                   id="monthly_deduct"
+                                                                                   placeholder="Monthly earnings deductions? e.g 2000 ">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <div class="form-group mt-2">
+                                                                            <input type="checkbox" class="custom-checkbox"
+                                                                                   id="citizen_check" name="citizen_check">
+                                                                            <label
+                                                                                for="citizen_check">I am a Zambian
+                                                                                Citizen/Resident</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <div class="form-group mt-1">
+                                                                            <input type="checkbox" class="custom-checkbox"
+                                                                                   id="nrc_check" name="nrc_check">
+                                                                            <label
+                                                                                for="nrc_check"> Copy of ID</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <div class="form-group mt-1">
+                                                                            <input type="checkbox" class="custom-checkbox"
+                                                                                   id="account_check" name="account_check">
+                                                                            <label
+                                                                                for="account_check"> Active Bank/Mobile
+                                                                                Money Account</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <div class="form-group mt-1">
+                                                                            <input type="checkbox" class="custom-checkbox"
+                                                                                   id="account_statement_check"
+                                                                                   name="account_statement_check">
+                                                                            <label
+                                                                                for="account_statement_check"> Latest
+                                                                                Bank/Mobile Money Account Statement</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <div class="form-group mt-1">
+                                                                            <input type="checkbox" class="custom-checkbox"
+                                                                                   id="payslip_check" name="payslip_check">
+                                                                            <label
+                                                                                for="payslip_check">Latest 2 months
+                                                                                payslips</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <div class="form-group mt-1">
+                                                                            <input type="checkbox" class="custom-checkbox"
+                                                                                   id="guarantor_check"
+                                                                                   name="guarantor_check">
+                                                                            <label
+                                                                                for="guarantor_check">Guarantor</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <input type="button" name="previous"
+                                                           class="previous action-button-previous" value="Previous"/>
+                                                    <input
+                                                        type="button" id="check_eligibility" name="check_eligibility"
+                                                        class="check_eligibility btn btn-outline-success"
+                                                        value="Check Now"/>
+
+                                                </fieldset>
+                                                <fieldset>
+                                                    <div class="form-card">
+                                                        <h2 class="fs-title">Customer Type</h2>
+                                                        <div class="row">
+
+                                                            <label for="customer_type">Are you a new Customer or You are a
+                                                                Returning ?</label>
+                                                            <select name="customer_type" id="customer_type" required
+                                                                    class="form-control">
+                                                                <option value="">--Choose</option>
+                                                                @foreach($customer_types as $customer_type)
+                                                                    <option
+                                                                        value="{{$customer_type->id}}">{{$customer_type->name}}</option>
+                                                                @endforeach
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
+                                                    <input type="button" name="previous"
+                                                           class="previous action-button-previous" value="Previous"/> <input
+                                                        type="button" name="make_payment" class="submit action-button"
+                                                        value="Confirm"/>
+                                                </fieldset>
+
+                                            </form>
+
                                             <fieldset>
-                                                <div class="form-card">
-                                                    <h2 class="fs-title">Customer Type</h2>
-                                                    <div class="row">
+                                                <div class="form-card" id="success_div" style="display: none">
+                                                    <h2 class="fs-title text-center">Success !</h2> <br><br>
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-3"><img
+                                                                src="https://img.icons8.com/color/96/000000/ok--v2.png"
+                                                                class="fit-image"></div>
+                                                    </div>
+                                                    <br><br>
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-7 text-center">
+                                                            <h5>You Have Successfully submitted your loan request!</h5>
+                                                        </div>
+                                                    </div>
+                                                    <br>
 
-                                                        <label for="customer_type">Are you a new Customer or You are a
-                                                            Returning ?</label>
-                                                        <select name="customer_type" id="customer_type" required
-                                                                class="form-control">
-                                                            <option value="">--Choose</option>
-                                                            @foreach($customer_types as $customer_type)
-                                                                <option
-                                                                    value="{{$customer_type->id}}">{{$customer_type->name}}</option>
-                                                            @endforeach
-                                                        </select>
+                                                    <div class="row justify-content-center">
+                                                        <form id="msform-sign"  id="old_btn" method="post" action="{{route('loan.returning.customer')}}" >
+                                                            @csrf
+                                                            <div class="row"  id="uuid_div_1" >
+                                                            </div>
+                                                        </form>
 
+                                                        <form id="msform-create"  id="new_btn" method="post" action="{{route('loan.new.customer')}}"   >
+                                                            @csrf
+                                                            <div class="row" id="uuid_div_2">
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
-                                                <input type="button" name="previous"
-                                                       class="previous action-button-previous" value="Previous"/> <input
-                                                    type="button" name="make_payment" class="submit action-button"
-                                                    value="Confirm"/>
                                             </fieldset>
 
-                                        </form>
-
-                                        <fieldset>
-                                            <div class="form-card" id="success_div" style="display: none">
-                                                <h2 class="fs-title text-center">Success !</h2> <br><br>
-                                                <div class="row justify-content-center">
-                                                    <div class="col-3"><img
-                                                            src="https://img.icons8.com/color/96/000000/ok--v2.png"
-                                                            class="fit-image"></div>
-                                                </div>
-                                                <br><br>
-                                                <div class="row justify-content-center">
-                                                    <div class="col-7 text-center">
-                                                        <h5>You Have Successfully submitted your loan request!</h5>
-                                                    </div>
-                                                </div>
-                                                <br>
-
-                                                <div class="row justify-content-center">
-                                                    <form id="msform-sign"  id="old_btn" method="post" action="{{route('loan.returning.customer')}}" >
-                                                       @csrf
-                                                        <div class="row"  id="uuid_div_1" >
-                                                        </div>
-                                                    </form>
-
-                                                    <form id="msform-create"  id="new_btn" method="post" action="{{route('loan.new.customer')}}"   >
-                                                        @csrf
-                                                        <div class="row" id="uuid_div_2">
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-
+                                        </div>
                                     </div>
                                 </div>
                             </div>

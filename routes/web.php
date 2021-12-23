@@ -24,6 +24,17 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
+Route::group([
+    'prefix' => 'chalom/company',
+], function () {
+    Route::get('/faq', [HomeController::class, 'faq'])->name('company.faq');
+    Route::get('/contact', [HomeController::class, 'contact'])->name('company.contact');
+    Route::get('/about', [HomeController::class, 'about'])->name('company.about');
+    Route::get('/team', [HomeController::class, 'team'])->name('company.team');
+    Route::get('/how-to-apply', [HomeController::class, 'apply'])->name('company.how_to_apply');
+}
+);
+
 
 Auth::routes();
 

@@ -13,12 +13,7 @@
                     <div class="bg-white p-5 rounded-top-md">
                         <div class="row align-items-center">
                             <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12">
-                                <h1 class="mb-0">Team</h1>
-                            </div>
-                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
-                                <div class="text-md-end mt-3 mt-md-0">
-                                    <a href="{{route('company.how_to_apply')}}" class="btn btn-primary">How To Apply</a>
-                                </div>
+                                <h1 class="mb-0">How To Apply</h1>
                             </div>
                         </div>
                     </div>
@@ -28,7 +23,7 @@
                                 <a href="{{route('company.about')}}" class="nav-link">Give me call back</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#!" class="nav-link">Emi Caculator</a>
+                                <a href="#!" class="nav-link">Emi Calculator</a>
                             </li>
                         </ul>
                     </div>
