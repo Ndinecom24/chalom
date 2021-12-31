@@ -82,36 +82,14 @@
                 <div class="mb-3">
                     <!-- widget footer -->
                     <ul class="list-unstyled text-muted">
+
+                        @foreach($loan_lists as $loan_list)
                         <li class="d-flex">
                             <a href="#" class="text-inherit fs-5">
                                 <i class="bi bi-chevron-right fs-6
-                        me-2"></i>Car Loan</a>
+                        me-2"></i>{{$loan_list->name}}</a>
                         </li>
-                        <li class="d-flex">
-                            <a href="#" class="text-inherit fs-5">
-                                <i class="bi bi-chevron-right fs-6
-                        me-2"></i>Personal Loan</a>
-                        </li>
-                        <li class="d-flex">
-                            <a href="#" class="text-inherit fs-5">
-                                <i class="bi bi-chevron-right fs-6
-                        me-2"></i>Education Loan</a>
-                        </li>
-                        <li class="d-flex">
-                            <a href="#" class="text-inherit fs-5">
-                                <i class="bi bi-chevron-right fs-6
-                        me-2"></i>Business Loan</a>
-                        </li>
-                        <li class="d-flex">
-                            <a href="#" class="text-inherit fs-5">
-                                <i class="bi bi-chevron-right fs-6
-                        me-2"></i>Home Loan</a>
-                        </li>
-                        <li class="d-flex">
-                            <a href="#" class="text-inherit fs-5">
-                                <i class="bi bi-chevron-right fs-6
-                        me-2"></i>Debt Consolidation</a>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
                 <!-- /.widget footer -->
@@ -119,18 +97,8 @@
             <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6">
                 <div class="mb-3">
                     <!-- widget footer -->
-                    <ul class="list-unstyled text-muted">
-                        <li class="d-flex"><a href="#!" class="text-inherit">
-                                <i class="fab fa-facebook-f me-2 fs-5"></i>Facebook</a></li>
-                        <li class="d-flex"><a href="#!" class="text-inherit"><i class="fab fa-google
-                        me-2 fs-5"></i>Google
-                            </a></li>
-                        <li class="d-flex"><a href="#!" class="text-inherit"><i class="fab fa-twitter
-                        me-2 fs-5"></i>Twitter</a></li>
-                        <li class="d-flex"><a href="#!" class="text-inherit"><i class="fab
-                        fa-linkedin me-2 fs-5"></i>Linked
-                                In</a></li>
-                    </ul>
+
+                    
                 </div>
                 <!-- /.widget footer -->
             </div>

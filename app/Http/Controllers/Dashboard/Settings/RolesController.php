@@ -15,11 +15,11 @@ class RolesController extends Controller
 
 
     public function create(){
-        return view('dashboard.admin.settings.roles.create');
+        return view('dashboard.settings.roles.create');
     }
 
     public function show(Roles $role){
-        return view('dashboard.admin.settings.roles.show')->with(compact('role'));
+        return view('dashboard.settings.roles.show')->with(compact('role'));
     }
 
     /**

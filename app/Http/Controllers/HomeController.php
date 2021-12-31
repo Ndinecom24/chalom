@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Model\Settings\Roles;
+use App\Models\Dashboard\Logs\Notifications;
+use App\Models\dashboardTotals;
 use App\Models\Loans\LoanApplications;
 use App\Models\Loans\LoanProducts;
 use App\Models\Settings\CustomerTypes;
@@ -34,26 +36,30 @@ class HomeController extends Controller
      */
     public function home(Request $request)
     {
+
+        $total = dashboardTotals::first();
         //check user types
         $user = Auth::user();
-       // dd(config('constants.role.client.id') );
-        //dd($user->role_id );
         if ($user->role_id == config('constants.role.client.id')) {
             //check if there is a loan request
-            $loans = LoanApplications::where('customer_id', $user->id)
-                ->where('statuses_id',  config('constants.status.loan_request_login'));
+            $loans = LoanApplications::
+            where('statuses_id',  config('constants.status.loan_request_login'));
             if($loans->exists() ){
                 $works = WorkStatus::all();
                 $statuses = Status::all();
                 $loan = $loans->first();
-                return view('dashboard.client.loan.finish_apply')->with(compact('user', 'loan', 'works', 'statuses' ));
+                return view('dashboard.loan.finish_apply')->with(compact('user', 'loan', 'works', 'statuses' ));
             }
-            return view('dashboard.client.home');
+            $notifications = Notifications::where('customer_id', $user->id )
+                ->get();
+            return view('dashboard.home')->with(compact('notifications', 'total'));
         } else if ($user->role_id == config('constants.role.admin.id')
             || $user->role_id == config('constants.role.developer.id')
         ) {
-            return view('dashboard.admin.home');
-        } else {
+            $notifications = Notifications::where('status_id', config('constants.status.unseen'))->get();
+            return view('dashboard.home')->with(compact('notifications', 'total'));
+        }
+        else {
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
@@ -69,7 +75,7 @@ class HomeController extends Controller
         $customer_types = CustomerTypes::all();
         $works = WorkStatus::all();
         $roles = \App\Models\Settings\Roles::all();
-        return view('dashboard.admin.settings.index')
+        return view('dashboard.settings.index')
             ->with(compact('works','statuses', 'roles', 'customer_types'));
     }
 

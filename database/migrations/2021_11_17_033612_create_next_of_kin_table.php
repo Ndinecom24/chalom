@@ -16,12 +16,12 @@ class CreateNextOfKinTable extends Migration
         Schema::create('next_of_kin', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('phone');
-            $table->string('email');
-            $table->string('address');
-            $table->string('relationship');
-            $table->string('work_status');
-            $table->string('work_place');
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->string('address')->nullable();
+            $table->string('relationship')->nullable();
+            $table->string('work_status')->nullable();
+            $table->string('work_place')->nullable();
             $table->integer('user_id');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

@@ -7,12 +7,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h3 class="page-heading mb-4">Loans</h3>
+                        <h3 class="page-heading mb-4">Loan Application</h3>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-end">
                             <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                            <li class="breadcrumb-item active">Loans</li>
+                            <li class="breadcrumb-item active">Loan Application</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -53,7 +53,7 @@
                             <h5 class="mb-0">
                                 <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
                                         aria-expanded="true" aria-controls="collapseOne">
-                                    {{__('LOANS')}}
+                                    {{__('LOAN APPLICATIONS')}}
                                 </button>
                             </h5>
                         </div>
@@ -66,6 +66,7 @@
                                             <thead>
                                             <tr>
                                                 <td>#</td>
+                                                <td>Customer</td>
                                                 <td>Type</td>
                                                 <td>Amount</td>
                                                 <td>Installments</td>
@@ -79,11 +80,12 @@
                                             @foreach($list as $loan)
                                                 <tr>
                                                     <td> {{$loan->id}} </td>
+                                                    <td>{{$loan->customer->name}} </td>
                                                     <td>{{$loan->loan->name}} </td>
-                                                    <td>{{$loan->loan_amount_due }}  </td>
+                                                    <td>{{number_format( $loan->loan_amount_due , 2) }}  </td>
                                                     <td>{{$loan->repayment_period }}  </td>
-                                                    <td>{{$loan->repayment_period }}  </td>
-                                                    <td>{{$loan->repayment_period }}  </td>
+                                                    <td>{{$loan->schedules->sum('paid') }}  </td>
+                                                    <td>{{number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }}  </td>
                                                     <td>{{$loan->status->name ?? $loan->statuses_id }}  </td>
                                                     <td>
                                                         <div class="row ">

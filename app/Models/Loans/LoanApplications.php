@@ -4,9 +4,11 @@ namespace App\Models\Loans;
 
 use App\Models\Files;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class LoanApplications extends Model
 {
@@ -37,10 +39,33 @@ class LoanApplications extends Model
         'deleted_at',
     ];
 
-//    protected $with = [
-//        'loan',
-//        'customer'
-//    ];
+    protected static function booted()
+    {
+        //check if authenticated user
+        if ( auth()->check()) {
+            //get the profile for this user
+            $user = Auth::user();
+
+            if($user->role_id  == config('constants.role.admin.id')){
+                static::addGlobalScope('staff_number', function (Builder $builder) {
+//                    $builder->where('claimant_staff_no', Auth::user()->staff_no);
+                });
+            }
+            elseif ( $user->role_id  == config('constants.role.client.id') ){
+                static::addGlobalScope('staff_number', function (Builder $builder) use ($user) {
+                    $builder->where('customer_id', $user->id);
+                });
+            }
+            elseif ( $user->role_id  == config('constants.role.developer.id') ){
+                static::addGlobalScope('staff_number', function (Builder $builder) use ($user) {
+//                    $builder->where('customer_id', $user->id);
+                });
+            }
+            else{
+
+            }
+        }
+    }
 
 
     public function getMonthlyInstallmentsAttribute()
@@ -64,6 +89,10 @@ class LoanApplications extends Model
     public function statements(){
         return $this->hasMany(Files::class , 'modal_uuid' , 'uuid')
             ->where('type',  config('constants.types.account_statement') );
+    }
+
+    public function schedules(){
+        return $this->hasMany(LoanSchedule::class ) ;
     }
 
 

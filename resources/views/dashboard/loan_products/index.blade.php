@@ -114,7 +114,7 @@
                                                             <div class="form-group  text-start ">
                                                                 <label for="about">About</label>
                                                                 <textarea rows="3" class="form-control" id="about" name="about"
-                                                                       placeholder="Enter Details about this loan type" required></textarea>
+                                                                          placeholder="Enter Details about this loan type" required></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -219,19 +219,19 @@
                     <div class="mt-n6 mb-10 ">
                         <div class="row">
                             @foreach($list as $item)
-                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-                                <div class="card mb-6 text-center border-0 smooth-shadow-sm">
-                                    <div class="card-body p-5">
-                                        <div class="mb-6"> <img src="{{$item->image }}" alt="Chalom" class="icon-xxl"> </div>
-                                        <h3><a href="{{route('loan.product.show', $item->id)}}" class="text-inherit">{{$item->name}}</a></h3>
-                                        <p>{{$item->description }}</p>
-                                        <a href="{{route('loan.product.show', $item->id)}}" class="btn-link border-bottom border-primary border-2 fw-bold fs-5 ">Read More</a>
-                                    </div>
-                                    <div class="card-footer">
-                                        <p>{{$item->status->name }}</p>
+                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                                    <div class="card mb-6 text-center border-0 smooth-shadow-sm">
+                                        <div class="card-body p-5">
+                                            <div class="mb-6"> <img src="{{$item->image }}" alt="Chalom" class="icon-xxl"> </div>
+                                            <h3><a href="{{route('loan.product.show', $item->id)}}" class="text-inherit">{{$item->name}}</a></h3>
+                                            <p>{{$item->description }}</p>
+                                            <a href="{{route('loan.product.show', $item->id)}}" class="btn-link border-bottom border-primary border-2 fw-bold fs-5 ">Read More</a>
+                                        </div>
+                                        <div class="card-footer">
+                                            <p>{{$item->status->name }}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             @endforeach
                         </div>
                     </div>

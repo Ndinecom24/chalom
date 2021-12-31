@@ -15,11 +15,11 @@ class WorkStatusController extends Controller
 
 
     public function create(){
-        return view('dashboard.admin.settings.work_status.create');
+        return view('dashboard.settings.work_status.create');
     }
 
     public function show(WorkStatus $work_status){
-        return view('dashboard.admin.settings.work_status.show')->with(compact('work_status'));
+        return view('dashboard.settings.work_status.show')->with(compact('work_status'));
     }
 
 

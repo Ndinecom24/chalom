@@ -22,7 +22,7 @@ class LoanProductsController extends Controller
         $list = LoanProducts::all();
         $list->load('status');
         $statuses = Status::all();
-        return view('dashboard.admin.loans.index')->with(compact('list', 'statuses'));
+        return view('dashboard.loan_products.index')->with(compact('list', 'statuses'));
     }
 
     /**
@@ -33,7 +33,7 @@ class LoanProductsController extends Controller
     public function create()
     {
         $statuses = Status::all();
-     return view('dashboard.admin.loans.create')->with(compact('statuses'));
+     return view('dashboard.loan_products.create')->with(compact('statuses'));
     }
 
     /**
@@ -85,7 +85,7 @@ class LoanProductsController extends Controller
     {
         $loanProducts->load('faq', 'features', 'eligibility');
         $statuses = Status::all();
-        return view('dashboard.admin.loans.show')->with(compact('loanProducts', 'statuses'));
+        return view('dashboard.loan_products.show')->with(compact('loanProducts', 'statuses'));
     }
 
     /**

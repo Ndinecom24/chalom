@@ -7,12 +7,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h3 class="page-heading mb-4">Clients</h3>
+                        <h3 class="page-heading mb-4">{{$user_types}}</h3>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
+                        <ol class="breadcrumb float-sm-end">
                             <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                            <li class="breadcrumb-item active">Clients</li>
+                            <li class="breadcrumb-item active">{{$user_types}}</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -53,7 +53,7 @@
                             <h5 class="mb-0">
                                 <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
                                         aria-expanded="true" aria-controls="collapseOne">
-                                    {{__('CLIENTS')}}
+                                    {{$user_types}}
                                 </button>
                             </h5>
                         </div>
@@ -63,7 +63,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <button class="btn btn-sm btn-outline-success mb-2" data-toggle="modal" data-target="#modal-create-user">
-                                            New Client
+                                            New {{$user_types}}
                                         </button>
                                     </div>
                                 </div>

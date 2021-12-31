@@ -29,7 +29,7 @@ class StatusController extends Controller
      */
     public function create()
     {
-        return view('dashboard.admin.settings.statuses.create');
+        return view('dashboard.settings.statuses.create');
     }
 
     /**
@@ -64,7 +64,7 @@ class StatusController extends Controller
      */
     public function show(Status $status)
     {
-        return view('dashboard.admin.settings.statuses.show')->with(compact('status'));
+        return view('dashboard.settings.statuses.show')->with(compact('status'));
     }
 
 

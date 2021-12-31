@@ -24,7 +24,8 @@ class CreateNotificationsTable extends Migration
             $table->string('model_id')->nullable();
             $table->integer('status_id') ;
             $table->integer('created_by') ;
-            $table->dateTime('deleted_at') ;
+            $table->integer('customer_id') ;
+            $table->dateTime('deleted_at')->nullable() ;
             $table->timestamps();
         });
     }

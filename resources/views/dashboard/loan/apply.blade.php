@@ -460,6 +460,13 @@
                                                                                placeholder="Monthly earnings deductions? e.g 2000 ">
                                                                     </div>
                                                                 </div>
+                                                                <div class=" col-12">
+                                                                    <div class="form-group mt-2">
+                                                                        <label
+                                                                            for="monthly_deduct">
+                                                                            Do you have the following loan requirements</label>
+                                                                    </div>
+                                                                </div>
                                                                 <div class="col-12">
                                                                     <div class="form-group mt-2">
                                                                         <input type="checkbox" class="custom-checkbox"
@@ -474,7 +481,7 @@
                                                                         <input type="checkbox" class="custom-checkbox"
                                                                                id="nrc_check" name="nrc_check">
                                                                         <label
-                                                                            for="nrc_check"> Copy of ID</label>
+                                                                            for="nrc_check">I have a Copy of ID</label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-12">
@@ -482,7 +489,7 @@
                                                                         <input type="checkbox" class="custom-checkbox"
                                                                                id="account_check" name="account_check">
                                                                         <label
-                                                                            for="account_check"> Active Bank/Mobile
+                                                                            for="account_check"> i have an Active Bank/Mobile
                                                                             Money Account</label>
                                                                     </div>
                                                                 </div>
@@ -492,7 +499,7 @@
                                                                                id="account_statement_check"
                                                                                name="account_statement_check">
                                                                         <label
-                                                                            for="account_statement_check"> Latest
+                                                                            for="account_statement_check"> i have a Latest
                                                                             Bank/Mobile Money Account Statement</label>
                                                                     </div>
                                                                 </div>
@@ -501,7 +508,7 @@
                                                                         <input type="checkbox" class="custom-checkbox"
                                                                                id="payslip_check" name="payslip_check">
                                                                         <label
-                                                                            for="payslip_check">Latest 2 months
+                                                                            for="payslip_check">i have Latest 2 months
                                                                             payslips</label>
                                                                     </div>
                                                                 </div>
@@ -691,7 +698,7 @@
         }
     </script>
 
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(document).ready(function () {
@@ -736,8 +743,11 @@
                     eligible = true;
                 }
 
+
                 //response
                 if (eligible == true) {
+
+
                     Swal.fire(
                         'Eligible',
                         'You are Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan',

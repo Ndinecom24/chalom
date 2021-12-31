@@ -292,6 +292,7 @@
                                         </div>
                                         <div class="col-sm-9">
                                             <h2 class="text-center"><strong>LOAN APPLICATION</strong></h2>
+                                            <h5 class="text-center">({{$loan->statuses_id}})</h5>
                                         </div>
                                     </div>
 
@@ -326,7 +327,7 @@
                                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                             <div class="form-group">
                                                                 <label for="dob">Date of Birth : <span
-                                                                        class="text-danger">{{$loan->customer->dob}}</span></label>
+                                                                        class="text-dark">{{$loan->customer->dob}}</span></label>
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -467,10 +468,10 @@
                                         <div class="row gutters">
                                             @if($loan->payslips != null)
                                                 @foreach($loan->payslips as $payslip)
-                                                    <div class="col-6">
+                                                    <div class="col-12">
                                                         <iframe id="{{$payslip->id}}"
                                                                 src="{{$payslip->path }}"
-                                                                style="width:100%; height: 1000px"
+                                                                style="width:100%; height: 800px"
                                                                 title="{{$payslip->name}}"></iframe>
                                                         <span>{{number_format( $payslip->file_size, 2) }}MB {{$payslip->name}} </span>
                                                         <span> | </span>
@@ -494,10 +495,10 @@
                                         <div class="row gutters">
                                             @if($loan->statements != null)
                                                 @foreach($loan->statements as $statement)
-                                                    <div class="col-6">
+                                                    <div class="col-12">
                                                         <iframe id="{{$statement->id}}"
                                                                 src="{{$statement->path }}"
-                                                                style="width:100%; height: 1000px"
+                                                                style="width:100%; height: 800px"
                                                                 title="{{$statement->name}}"></iframe>
                                                         <span>{{number_format( $statement->file_size, 2) }}MB {{$statement->name}} </span>
                                                         <span> | </span>
@@ -519,11 +520,11 @@
                                     </div>
                                     <div class="card-body  ">
                                         <div class="row gutters">
-                                            @if($loan->customer->identity != null)
-                                                <div class="col-6">
+                                            @if($loan->customer->nrc != null)
+                                                <div class="col-12">
                                                     <iframe id="{{$loan->customer->nrc->id}}"
                                                             src="{{$loan->customer->nrc->path }}"
-                                                            style="width:100%; height: 1000px"
+                                                            style="width:100%; height: 800px"
                                                             title="{{$loan->customer->nrc->name}}"></iframe>
                                                     <span>{{number_format( $loan->customer->nrc->file_size, 2) }}MB {{$loan->customer->nrc->name}} </span>
                                                     <span> | </span>
@@ -538,50 +539,104 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="card-footer">
+                                </div>
+
+                                <div class="card mt-2">
+                                    <div class="card-body">
                                         <div class="row">
-                                        <div class="col-12 mt-1 mb-3">
-                                            <label> <b>Current Status : {{$loan->statuses_id }}</b></label>
-                                        </div>
-
-                                        @if($loan->statuses_id == config('constants.status.loan_request'))
-                                        <div class="row-cols-6">
-                                            <button type="submit" name="Submit" disabled
-                                                    class="btn btn-outline-success"> Approve
-                                            </button>
-                                        </div>
-                                        @elseif($loan->statuses_id == config('constants.status.loan_request_login'))
-                                            <div class="col-8">
-                                                <div class="form-group">
-                                                    <label for="eMail">Comment<span class="text-danger">*</span></label>
-                                                    <input type="text" readonly
-                                                           class="form-control" id="comment" name="comment"
-                                                           placeholder="Enter comment for your action">
-                                                </div>
-                                            </div>
-                                                <div class="col-2">
-                                                    <label for="approve"><span class="text-success">Approve</span></label>
-                                                    <button type="submit" name="Submit" readonly
-                                                            class="btn btn-outline-success"> <i class="ui-icon ui-icon-circle-check"></i>
-                                                    </button>
-                                                </div>
-                                                <div class="col-2">
-                                                    <label for="reject"><span class="text-danger">Reject</span></label>
-                                                    <button type="submit" name="Reject" readonly
-                                                            class="btn btn-outline-danger"> <i class="ui-icon ui-icon-circle-close "></i>
-                                                    </button>
-                                                </div>
-                                        @else
-                                            <div class="row-cols-6">
-                                                <button type="submit" name="Submit"
-                                                        class="btn btn-outline-success"> Approve
-                                                </button>
+                                            <div class="col-12 mt-1 mb-3">
+                                                <label> <b>Current Status : {{$loan->statuses_id }}</b></label>
+                                                {{ config('constants.role.admin.id')}} | {{$logged_in_user->role_id}}
                                             </div>
 
+                                            @if($loan->statuses_id == config('constants.status.loan_request'))
+                                                <div class="row-cols-6">
+                                                    <button type="submit" name="Submit" disabled
+                                                            class="btn btn-outline-success"> Approve
+                                                    </button>
+                                                </div>
+
+                                                {{-- [1] : LOAN APPLICATION NEEDS TO BE COMPLETED--}}
+                                            @elseif($loan->statuses_id == config('constants.status.loan_request_login'))
+
+                                                {{-- ADMIN --}}
+                                                @if($logged_in_user->role_id ==  config('constants.role.admin.id'))
+                                                {{-- CLIENT --}}
+                                                <div class="col-12 text-center">
+                                                    <span class="btn btn-outline-primary"
+                                                            title="Client ({{$loan->customer->name}}) needs to complete this loan application and submit for verification" >
+                                                        Pending Loan Submission
+                                                    </span>
+                                                </div>
+                                                @else
+                                                    <div class="col-12 text-center">
+                                                        <a class="btn btn-outline-primary"
+                                                           title="{{$loan->customer->name}} needs to complete this loan application and then submit for verification"
+                                                           href="">
+                                                            Complete Loan Application
+                                                        </a>
+                                                    </div>
+                                                @endif
+
+
+                                                {{--  LOAN HAS BEEN SUBMITTED --}}
+                                            @elseif($loan->statuses_id == config('constants.status.loan_submission'))
+
+                                                {{-- ADMIN --}}
+                                                @if($logged_in_user->role_id ==  config('constants.role.admin.id'))
+                                                    <div class="col-8">
+                                                        <div class="form-group">
+                                                            <label for="eMail">Comment<span class="text-danger">*</span></label>
+                                                            <input type="text" required
+                                                                   title="You need to add a reason/comments for your decision"
+                                                                   class="form-control" id="comment" name="comment"
+                                                                   placeholder="Enter comment for your action">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <label for="approve"><span
+                                                                class="text-success">Approve</span></label>
+                                                        <button type="submit" name="approve"
+                                                                title="Click to approve that you have verified this loan"
+                                                                value="{{config('constants.action.review')}}"
+                                                                class="btn btn-outline-success"><i
+                                                                class="ui-icon ui-icon-circle-check"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <label for="reject"><span
+                                                                class="text-danger">Reject</span></label>
+                                                        <button type="submit" name="reject"
+                                                                title="Click to reject this loan application e.g because you have not verified the details"
+                                                                value="{{config('constants.action.reject')}}"
+                                                                class="btn btn-outline-danger"><i
+                                                                class="ui-icon ui-icon-circle-close "></i>
+                                                        </button>
+                                                    </div>
+                                                @else
+                                                    {{-- CLIENT --}}
+                                                    <div class="col-12 text-center">
+                                                        <span class="btn btn-outline-primary"
+                                                                title="Client ({{$loan->customer->name}}) has completed and submitted loan application, it now needs to be verified by admins" >
+                                                            Pending Loan Verification
+                                                        </span>
+                                                    </div>
+                                                @endif
+                                            @else
+                                                {{--   --}}
+                                                <div class="row-cols-6">
+                                                    <span type="submit" name="Submit"
+                                                          title="ummmm devs"
+                                                            class="btn btn-outline-success">
+                                                        PENDING NEXT ACTION
+                                                    </span>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>
                                 </div>
+
+
 
                             </form>
 
@@ -663,16 +718,33 @@
                                                                 <td>Installment</td>
                                                                 <td>Amount</td>
                                                                 <td>Date</td>
+                                                                <td>Paid</td>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                            @for($i=1 ; $i <= $loan->repayment_period; $i++)
+                                                            @foreach($loan->schedules as $schedule)
                                                                 <tr>
-                                                                    <td>Installment {{$i}}</td>
-                                                                    <td>ZMW {{$loan->monthly_installments}}</td>
-                                                                    <td>{{date("D d M Y", strtotime( $i." month"))}}</td>
+                                                                    <td>{{$schedule->installment}}</td>
+                                                                    <td>ZMW {{ number_format($schedule->amount,2)}}</td>
+                                                                    <td>{{$schedule->date}}</td>
+                                                                    @if( $schedule->date  > date('Y-m-d') && $schedule->paid ?? 0 < 1)
+                                                                        <td><span class="lable"><i
+                                                                                    class="bi bi-x-circle-fill text-danger"></i></span>
+                                                                        </td>
+                                                                    @else
+                                                                        @if($schedule->paid ?? 0 >= $schedule->amount )
+                                                                            <td><span class="text-success"><i
+                                                                                        class="bi bi-check2-circle"></i></span>
+                                                                            </td>
+                                                                        @else
+                                                                            <td><span class="text-info"><i
+                                                                                        class="bi bi-dash-circle"></i></span>
+                                                                            </td>
+                                                                        @endif
+                                                                    @endif
+
                                                                 </tr>
-                                                            @endfor
+                                                            @endforeach
                                                             </tbody>
                                                         </table>
                                                     </div>

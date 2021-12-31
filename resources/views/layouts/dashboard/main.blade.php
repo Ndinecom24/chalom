@@ -67,7 +67,7 @@
         }
     </style>
 
-@push('custom-stylesheets')
+@stack('custom-stylesheets')
 
 
     <!-- Theme CSS -->

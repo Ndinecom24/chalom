@@ -92,7 +92,8 @@ class User extends Authenticatable
         return $this->hasOne(NextOfKin::class);
     }
     public function nrc(){
-        return $this->hasOne(Files::class, 'identity', 'uuid');
+        return $this->hasOne(Files::class, 'modal_uuid', 'uuid')
+            ->where('type',  config('constants.types.identity') );
     }
 
 }

@@ -7,13 +7,12 @@
             <div class="container-fluid">
                 <div class="row ">
                     <div class="col-sm-6">
-                        <h3 class="page-heading mb-4">Clients Profile</h3>
+                        <h3 class="page-heading mb-4">{{$user_types}} Profile</h3>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-end">
                             <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                            <li class="breadcrumb-item"><a href="{{route('user.clients')}}">Clients</a></li>
-                            <li class="breadcrumb-item active">Clients Profile</li>
+                            <li class="breadcrumb-item active">{{$user_types}} Profile</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -122,7 +121,6 @@
                                                         <option>{{$user->gender}}</option>
                                                         <option>Male</option>
                                                         <option>Female</option>
-                                                        <option>Other</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -167,8 +165,10 @@
                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                 <div class="form-group">
                                                     <label for="role_id">Role</label>
-                                                    <select class="form-control" name="role_id">
-                                                        <option value="{{$user->role->id }}">{{$user->role->name }}</option>
+                                                    <select class="form-control" name="role_id"
+                                                    @if(\Illuminate\Support\Facades\Auth::user()->role_id ==  config('constants.role.client.id')) readonly @endif
+                                                    >
+                                                        <option value="{{$user->role->id ?? "" }}">{{$user->role->name ?? "" }}</option>
                                                         @foreach($roles as $role)
                                                             <option value="{{$role->id }}">{{$role->name }}</option>
                                                         @endforeach
@@ -179,7 +179,8 @@
                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                 <div class="form-group">
                                                     <label for="customer_type_id">User-Type </label>
-                                                    <select class="form-control" name="customer_type_id">
+                                                    <select class="form-control" name="customer_type_id"
+                                                            @if(\Illuminate\Support\Facades\Auth::user()->role_id ==  config('constants.role.client.id')) readonly @endif >
                                                         <option value="{{$user->customerType->id }}">{{$user->customerType->name }}</option>
                                                         @foreach($types as $type)
                                                             <option value="{{$type->id }}">{{$type->name }}</option>

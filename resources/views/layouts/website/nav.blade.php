@@ -31,28 +31,13 @@
                                 Loans
                             </a>
                             <ul class="dropdown-menu">
+                                @foreach($loan_lists as $loan_list)
                                 <li>
-                                    <a class="dropdown-item" href="../pages/loan-listing-image.html">
-                                        Loan List Image
+                                    <a class="dropdown-item" href="">
+                                        {{$loan_list->name}}
                                     </a>
                                 </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-submenu dropstart-lg">
-                            <a class="dropdown-item dropdown-list-group-item dropdown-toggle" href="#">
-                                Credit Card
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="../pages/credit-card-listing.html">
-                                        Credit Card List
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="../pages/credit-card-single.html">
-                                        Credit Card Single
-                                    </a>
-                                </li>
+                                @endforeach
                             </ul>
                         </li>
 

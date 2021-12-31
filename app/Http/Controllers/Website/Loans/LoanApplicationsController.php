@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Dashboard\FilesController;
 use App\Models\Dashboard\Logs\Notifications;
 use App\Models\Loans\LoanApplications;
+use App\Models\Loans\LoanApproals;
 use App\Models\Loans\LoanProducts;
+use App\Models\Loans\LoanSchedule;
 use App\Models\NextOfKin;
 use App\Models\Settings\CustomerTypes;
 use App\Models\Settings\Status;
@@ -27,12 +29,14 @@ class LoanApplicationsController extends Controller
      */
     public function index($status)
     {
-        if($status ==  config('constants.status.application')){
+        if($status == 0){
             $list = LoanApplications::get();
         }else{
-            $list = LoanApplications::where('statuses_id',$status )->get();
+            $list = LoanApplications::where('statuses_id', $status)->get();
         }
-        $list->load('loan');
+
+        $list->load('loan', 'schedules');
+
         return view('dashboard.loan.index')->with(compact('list' ));
     }
 
@@ -46,7 +50,7 @@ class LoanApplicationsController extends Controller
         $user = Auth::user();
         $works = WorkStatus::all();
 
-        return view('dashboard.client.loan.create')->with(compact('user', 'works'));
+        return view('dashboard.loan.create')->with(compact('user', 'works'));
     }
 
     /**
@@ -61,11 +65,16 @@ class LoanApplicationsController extends Controller
         $works = WorkStatus::all();
         $statuses = Status::all();
         $customer_types = CustomerTypes::where('id', '!=', config('constants.customer_type.employee'))->get();
-        return view('dashboard.client.loan.apply')->with(compact('user', 'works', 'loanProd', 'statuses', 'customer_types', 'loan_purpose'));
+        return view('dashboard.loan.apply')->with(compact('user', 'works', 'loanProd', 'statuses', 'customer_types', 'loan_purpose'));
     }
 
     public function finish(Request $request, LoanApplications $loan, User $user)
     {
+        $status_unseen =  config('constants.status.unseen') ;
+        $status =  config('constants.status.loan_submission') ;
+        $logged_in = Auth::user();
+        $schedule_amount = ($loan->loan_amount_due / $loan->repayment_period) ;
+
         $loan->loan('loan');
 
         /** upload identity file */
@@ -73,7 +82,7 @@ class LoanApplicationsController extends Controller
         if ($request->hasFile('identity')) {
             $filesController = new FilesController();
             $identity = $filesController->upload($request, $file, config('constants.types.identity'), $user);
-            $user->identity = $identity->uuid;
+            $user->identity = $identity->uuid ?? $identity->id;
         }
 
         /** upload account_statement file */
@@ -113,7 +122,7 @@ class LoanApplicationsController extends Controller
             'work_status' => $request->kin_work,
             'work_place' => $request->kin_work_place,
             'user_id' => $user->id,
-            'created_by' => Auth::user()->id,
+            'created_by' => $logged_in->id,
         ]);
 
 
@@ -131,9 +140,31 @@ class LoanApplicationsController extends Controller
         $user->save();
 
         //loan
-        $loan->statuses_id = config('constants.status.loan_submission');
+        $loan->statuses_id = $status;
         $loan->date_submitted = date('Y-m-d');
         $loan->save();
+
+        //schedule
+        for ($i = 1; $i <= $loan->repayment_period ; $i++ ){
+            $schedule = LoanSchedule::UpdateOrCreate(
+                [
+                    'loan_applications_id' => $loan->first()->id,
+                    'customer_id' => $user->first()->id ,
+                    'status' => $status ,
+                    'installment' => 'Installment '.$i,
+                    'date' => date("Y-m-d", strtotime( $i." month")),
+                    'amount' => $schedule_amount,
+                ],
+                [
+                    'loan_applications_id' => $loan->first()->id,
+                    'customer_id' => $user->first()->id ,
+                    'status' => $status ,
+                    'installment' => 'Installment '.$i,
+                    'date' => date("Y-m-d", strtotime( $i." month")),
+                    'amount' => $schedule_amount,
+                ]
+            );
+        }
 
         //url
         $url = route('loan.show', $loan);
@@ -145,36 +176,38 @@ class LoanApplicationsController extends Controller
                 'subject' => 'New Loan Submission',
                 'message' => $user->name . ' has submitted a ZMW '.$loan->loan_amount.' '.$loan->loan->name. ' Loan for '
                     .$loan->loan_purpose. 'to be repayed in '.$loan->repayment_period. ' installments.',
-                'comment' => 'Loan submitted by '. Auth::user()->name ,
+                'comment' => 'Loan submitted by '. $logged_in->name ,
                 'type' => config('constants.notifications.loan'),
                 'model_id' => $loan->id ,
                 'url' => $url,
-                'status_id' => config('constants.status.loan.unseen'),
-                'created_by' =>Auth::user()->id
+                'status_id' => $status_unseen,
+                'created_by' =>$logged_in->id
             ],
             [
                 'name' => 'Loan Submission',
                 'subject' => 'New Loan Submission',
                 'message' => $user->name . ' has submitted a ZMW '.$loan->loan_amount.' '.$loan->loan->name. ' Loan for '
                     .$loan->loan_purpose. 'to be repayed in '.$loan->repayment_period. ' installments.',
-                'comment' => 'Loan submitted by '. Auth::user()->name ,
+                'comment' => 'Loan submitted by '. $logged_in->name ,
                 'type' => config('constants.notifications.loan'),
                 'model_id' => $loan->id ,
                 'url' => $url,
-                'status_id' => config('constants.status.loan.unseen'),
-                'created_by' =>Auth::user()->id
+                'status_id' => $status_unseen,
+                'created_by' =>$logged_in->id
             ]
         );
 
-        //schedule
-
         //return
-        return Redirect::route('loan.list', config('constants.status.loan_request_login'));
+        return Redirect::route('loan.list', config('constants.status.loan_request_login'))->with('message', 'Your Loan has been submitted successfully');
 
     }
 
-    public function save(Request $request)
+    public function save(Request $request, User $user)
     {
+        //
+        $status =  config('constants.status.loan_request_login') ;
+        $logged_in = Auth::user();
+        $schedule_amount = ($request->total_repayment / $request->repayment_period) ;
         //
         $uuid = Str::uuid()->toString();
         $customer_type = $request->customer_type;
@@ -192,7 +225,7 @@ class LoanApplicationsController extends Controller
                 "monthly_income" => $request->monthly_income,
                 "other_income" => $request->other_income,
                 "monthly_deduct" => $request->monthly_deduct,
-                "statuses_id" => 0
+                "statuses_id" => $status
             ],
             [
                 "uuid" => $uuid,
@@ -206,9 +239,9 @@ class LoanApplicationsController extends Controller
                 "loan_rate" => $loan->rate_per_month,
                 "loan_amount_due" => $request->total_repayment,
                 "loan_arrangement_fee" => $loan->arrangement_fee,
-                "customer_id" => 0,
-                "created_by" => 0,
-                "statuses_id" => 0
+                "customer_id" => $user->id,
+                "created_by" => $logged_in->id,
+                "statuses_id" => $status
             ]
         );
 
@@ -239,7 +272,111 @@ class LoanApplicationsController extends Controller
      */
     public function approve(Request $request, LoanApplications $loan)
     {
-        //
+        $loan->load('customer', 'loan');
+        $logged_in = Auth::user();
+        $next_status = $loan->first()->statuses_id  ;
+        $current_status = $loan->first()->statuses_id ;
+        $save = false ;
+        $action = $request->approve ?? $request->reject;
+
+           //FIRST APPROVAL
+           if($current_status == config('constants.status.loan_submission')
+               && $logged_in->role_id  ==  config('constants.role.admin.id')
+           ){
+               //actions
+               if($action == config('constants.action.reject')){
+                   $next_status = config('constants.status.loan_rejected') ;
+                   $save = true;
+               }
+               elseif ($action == config('constants.action.review')){
+                   $next_status = config('constants.status.loan_reviewed') ;
+                   $save = true;
+               }
+               else{
+                   $next_status = config('constants.status.loan_submission') ;
+               }
+
+           }
+
+           //SECOND APPROVAL
+           if($current_status == config('constants.status.loan_reviewed')
+               && $logged_in->role_id  ==  config('constants.role.admin.id')
+           ){
+               //actions
+               if($action == config('constants.action.reject')){
+                   $next_status = config('constants.status.loan_rejected') ;
+                   $save = true;
+               }
+               elseif ($action == config('constants.action.approve')){
+                   $next_status = config('constants.status.loan_approved') ;
+                   $save = true;
+               }
+               else{
+                   $next_status = config('constants.status.loan_reviewed') ;
+               }
+           }
+
+
+        //save approval
+        if($save){
+
+            //modal create
+            $modal = LoanApproals::UpdateOrCreate(
+                [
+                    'comment' => $request->comment,
+                    'action' => $action ,
+                    'from_status_id' => $current_status ,
+                    'to_status_id'=> $next_status ,
+                    'loan_applications_id' => $loan->first()->id,
+                    'users_id' => $logged_in->id ,
+                ],
+                [
+                    'comment' => $request->comment,
+                    'action' => $action ,
+                    'from_status_id' => $current_status ,
+                    'to_status_id'=> $next_status ,
+                    'loan_applications_id' => $loan->first()->id,
+                    'users_id' => $logged_in->id ,
+                ]
+            );
+
+            //create notification
+            $status_unseen =  config('constants.status.unseen') ;
+            $url = route('loan.show', $loan);
+
+            $notification = Notifications::UpdateOrCreate(
+                [
+                    'name' => 'Loan '.$action ,
+                    'subject' => $loan->customer->name.'\'s '.$loan->loan_amount_due.'ZMW Loan '.$action,
+                    'comment' => $request->comment ,
+                    'type' => config('constants.notifications.loan'),
+                    'model_id' => $loan->id ,
+                    'url' => $url,
+                    'status_id' => $status_unseen,
+                    'created_by' =>$logged_in->id
+                ],
+                [
+                    'name' => 'Loan '.$action ,
+                    'subject' => $loan->customer->name.'\'s '.$loan->loan_amount_due.'ZMW Loan '.$action,
+                    'message' => $logged_in->name . ' has '.$action.' a ZMW '.$loan->loan_amount_due.' '.$loan->loan->name. ' Loan for '
+                        .$loan->loan_purpose. ' at '.date('r'),
+                    'comment' => $request->comment ,
+                    'type' => config('constants.notifications.loan'),
+                    'model_id' => $loan->id ,
+                    'url' => $url,
+                    'status_id' => $status_unseen,
+                    'created_by' =>$logged_in->id
+                ]
+            );
+
+            //update loan application
+            $loan->statuses_id = $next_status ;
+            $loan->save();
+        }
+
+        //return
+        return Redirect::route('loan.list', $next_status)->with('message', $loan->customer->name.'\'s '.$loan->loan_amount_due.'ZMW Loan has been successfully '.$action );
+
     }
 
     /**
@@ -251,9 +388,9 @@ class LoanApplicationsController extends Controller
     public function show(LoanApplications $loan)
     {
         $loan->load('loan', 'payslips', 'statements');
-        $loan->load('customer');
-
-        return view('dashboard.loan.show')->with(compact('loan' ));
+        $loan->load('customer.nrc', 'schedules');
+        $logged_in_user = Auth::user();
+        return view('dashboard.loan.show')->with(compact('loan', 'logged_in_user' ));
     }
 
     /**

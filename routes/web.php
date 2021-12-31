@@ -54,6 +54,7 @@ Route::group([
     'prefix' => 'users',
     'middleware' => 'auth'
 ], function () {
+    Route::get('profile/{user}', [UserController::class, 'profile'])->name('user.profile');
 
     Route::group([
         'prefix' => 'admin',

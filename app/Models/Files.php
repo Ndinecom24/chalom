@@ -14,6 +14,7 @@ class Files extends Model
     protected $fillable = [
         'name',
         'path',
+        'uuid',
         'size',
         'ext',
         'type',
@@ -21,6 +22,6 @@ class Files extends Model
         'date_posted',
         'modal_id',
         'modal_uuid',
-        'modal_type',
+        'model_type',
     ];
 }

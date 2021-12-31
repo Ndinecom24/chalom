@@ -10,7 +10,7 @@
                         <h3 class="page-heading mb-4">Settings</h3>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
+                        <ol class="breadcrumb float-sm-end">
                             <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
                             <li class="breadcrumb-item active">Settings</li>
                         </ol>

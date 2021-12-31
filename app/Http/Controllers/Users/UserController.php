@@ -19,9 +19,10 @@ class UserController extends Controller
 
     public function profile(User $user)
     {
-        $roles = Roles::where('id', '!=', config('constants.role.client.id'))->get();
+        $roles = Roles::all();
         $types = CustomerTypes::where('id', '=', config('constants.customer_type.employee'))->get();
-        return view('dashboard.admin.users.profile')->with(compact('user', 'roles', 'types'));
+        $user_types = 'System Admins';
+        return view('dashboard.users.profile')->with(compact('user', 'roles', 'types', 'user_types'));
     }
 
 
@@ -33,10 +34,10 @@ class UserController extends Controller
     public function index()
     {
         $users = User::where('customer_type_id', '=', config('constants.customer_type.employee'))->get();
-
         $types = CustomerTypes::where('id', '=', config('constants.customer_type.employee'))->get();
         $roles = Roles::where('id', '!=', config('constants.role.client.id'))->get();
-        return view('dashboard.admin.users.index')->with(compact('users', 'types', 'roles'));
+        $user_types = 'System Admins';
+        return view('dashboard.users.index')->with(compact('users', 'types', 'roles', 'user_types'));
     }
 
     /**

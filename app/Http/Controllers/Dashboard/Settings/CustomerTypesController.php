@@ -16,11 +16,11 @@ class CustomerTypesController extends Controller
 
 
     public function create(){
-        return view('dashboard.admin.settings.customer_types.create');
+        return view('dashboard.settings.customer_types.create');
     }
 
     public function show(CustomerTypes $customer_types){
-        return view('dashboard.admin.settings.customer_types.show')->with(compact('customer_types'));
+        return view('dashboard.settings.customer_types.show')->with(compact('customer_types'));
     }
 
 

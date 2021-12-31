@@ -21,7 +21,8 @@ class ClientController extends Controller
     {
         $types = CustomerTypes::where('id', '!=', config('constants.customer_type.employee'))->get();
         $roles = Roles::where('id', '=', config('constants.role.client.id'))->get();
-        return view('dashboard.client.users.profile')->with(compact('user', 'types', 'roles'));
+        $user_types = 'Customers';
+        return view('dashboard.users.profile')->with(compact('user', 'types', 'roles', 'user_types'));
     }
 
 
@@ -33,10 +34,10 @@ class ClientController extends Controller
     public function index()
     {
         $users = User::where('customer_type_id', '!=', config('constants.customer_type.employee'))->get();
-
+        $user_types = 'Customers';
         $types = CustomerTypes::where('id', '!=', config('constants.customer_type.employee'))->get();
         $roles = Roles::where('id', '=', config('constants.role.client.id'))->get();
-        return view('dashboard.client.users.index')->with(compact('users', 'types', 'roles'));
+        return view('dashboard.users.index')->with(compact('users', 'types', 'roles', 'user_types'));
     }
 
     /**

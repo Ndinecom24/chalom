@@ -4,6 +4,12 @@ return [
     'password_change' => 0,
     'password_changed' => 1,
 
+    'action' =>[
+        'approve' => 'Approved',
+        'reject' => 'Rejected',
+        'review' => 'Reviewed',
+    ],
+
     'role' => [
         'client' => [
             'id' => 1,
@@ -26,12 +32,16 @@ return [
         'deactivated' => 3,
 
         'active' =>1,
-        'unseen' => 100,
-        'seen' => 200,
+        'unseen' => 11,
+        'seen' => 12,
 
-        'loan_request' => 0 ,
         'loan_request_login' => 4,
         'loan_submission' => 5,
+        'loan_reviewed' => 6,
+        'loan_approved' => 7,
+        'loan_rejected' => 8,
+        'loan_paid' => 9,
+        'loan_overdue' => 10,
     ],
     'work_status' => [
         '1' => 'Student',

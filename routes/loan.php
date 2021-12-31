@@ -47,12 +47,9 @@ Route::group([
     Route::post('/finish/{loan}/{user}', [LoanApplicationsController::class, 'finish'])->name('loan.finish');
     Route::post('/returning', [LoanApplicationsController::class, 'returningCustomer'])->name('loan.returning.customer');
     Route::post('/new', [LoanApplicationsController::class, 'newCustomer'])->name('loan.new.customer');
-    Route::get('/show/{loan}', [LoanApplicationsController::class, 'show'])->name('loan.show');
-    Route::get('/list/{status}', [LoanApplicationsController::class, 'index'])->name('loan.list');
+    Route::get('/show/{loan}', [LoanApplicationsController::class, 'show'])->name('loan.show')->middleware('auth');
+    Route::get('/list/{status}', [LoanApplicationsController::class, 'index'])->name('loan.list')->middleware('auth');
     Route::post('/approve/{loan}', [LoanApplicationsController::class, 'approve'])->name('loan.approve');
-//            Route::post('/store', [LoanFeaturesController::class, 'store'])->name('loan.apply.store');
-//            Route::post('/update/{LoanFeatures}', [LoanFeaturesController::class, 'update'])->name('loan.apply.update');
-//            Route::post('/destroy/{LoanFeatures}', [LoanFeaturesController::class, 'destroy'])->name('loan.apply.destroy');
 }
 );
 
@@ -61,7 +58,6 @@ Route::group([
     'prefix' => 'chalom/admin',
     'middleware' => 'auth'
 ], function () {
-
 
     Route::group([
         'prefix' => 'loan',
