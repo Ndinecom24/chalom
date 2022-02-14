@@ -11,6 +11,7 @@ use App\Models\Settings\CustomerTypes;
 use App\Models\Settings\Status;
 use App\Models\Settings\WorkStatus;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use function redirect;
@@ -23,7 +24,8 @@ class HomeController extends Controller
      * @return void
      */
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $work_status = [];
         $loanProducts = LoanProducts::where('statuses_id', config('constants.status.active'))->get();
         return view('welcome')->with(compact('work_status', 'loanProducts'));
@@ -36,30 +38,35 @@ class HomeController extends Controller
      */
     public function home(Request $request)
     {
-
-        $total = dashboardTotals::first();
         //check user types
         $user = Auth::user();
         if ($user->role_id == config('constants.role.client.id')) {
+
+            $loans = LoanApplications::orderBy('created_at');
+            $loan_current = $loans->where('statuses_id', '!=' , config('constants.status.loan_rejected') );
+            $total =  $loan_current->first() ;
+            $total->load('schedules');
+
             //check if there is a loan request
-            $loans = LoanApplications::
-            where('statuses_id',  config('constants.status.loan_request_login'));
-            if($loans->exists() ){
+            $loans = $loans->where('statuses_id', config('constants.status.loan_request_login'));
+            if ($loans->exists()) {
                 $works = WorkStatus::all();
                 $statuses = Status::all();
                 $loan = $loans->first();
                 return view('dashboard.loan.finish_apply')->with(compact('user', 'loan', 'works', 'statuses' ));
             }
-            $notifications = Notifications::where('customer_id', $user->id )
+            $notifications = Notifications::where('customer_id', $user->id)
                 ->get();
             return view('dashboard.home')->with(compact('notifications', 'total'));
         } else if ($user->role_id == config('constants.role.admin.id')
             || $user->role_id == config('constants.role.developer.id')
         ) {
+            $loans = LoanApplications::orderBy('created_at');
+
+            $total = dashboardTotals::first();
             $notifications = Notifications::where('status_id', config('constants.status.unseen'))->get();
-            return view('dashboard.home')->with(compact('notifications', 'total'));
-        }
-        else {
+            return view('dashboard.home')->with(compact('notifications', 'total', 'loans'));
+        } else {
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
@@ -76,28 +83,32 @@ class HomeController extends Controller
         $works = WorkStatus::all();
         $roles = \App\Models\Settings\Roles::all();
         return view('dashboard.settings.index')
-            ->with(compact('works','statuses', 'roles', 'customer_types'));
+            ->with(compact('works', 'statuses', 'roles', 'customer_types'));
     }
 
 
-
-    public function about(){
+    public function about()
+    {
         return view('website.about_us');
     }
 
-    public function contact(){
+    public function contact()
+    {
         return view('website.contact_us');
     }
 
-    public function faq(){
+    public function faq()
+    {
         return view('website.faq');
     }
 
-    public function team(){
+    public function team()
+    {
         return view('website.team');
     }
 
-    public function apply(){
+    public function apply()
+    {
         return view('website.how_to_apply');
     }
 }

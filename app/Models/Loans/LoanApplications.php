@@ -3,6 +3,7 @@
 namespace App\Models\Loans;
 
 use App\Models\Files;
+use App\Models\Settings\Status;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,6 +35,7 @@ class LoanApplications extends Model
         'date_submitted',
         'customer_id',
 
+        'created_at',
         'created_by',
         'updated_by',
         'deleted_at',
@@ -67,6 +69,8 @@ class LoanApplications extends Model
         }
     }
 
+    protected $with = ['status'];
+
 
     public function getMonthlyInstallmentsAttribute()
     {
@@ -79,6 +83,10 @@ class LoanApplications extends Model
 
     public function customer(){
         return $this->belongsTo(User::class , 'customer_id');
+    }
+
+    public function status(){
+        return $this->belongsTo(Status::class );
     }
 
 

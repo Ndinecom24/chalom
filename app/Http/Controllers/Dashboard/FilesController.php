@@ -60,7 +60,7 @@ class FilesController extends Controller
                 'type' => $type,
                 'modal_id' => $model->id ,
                 'modal_uuid' => $model->uuid ?? $model->id ,
-                'model_type' =>  get_class($model),
+                'modal_type' =>  " ".get_class($model),
             ],
             [
                 'uuid' => $uuid,
@@ -73,7 +73,7 @@ class FilesController extends Controller
                 'type' => $type,
                 'modal_id' => $model->id ,
                 'modal_uuid' => $model->uuid ?? $model->id ,
-                'model_type' =>  get_class($model),
+                'modal_type' =>  " ".get_class($model),
             ]
         );
 

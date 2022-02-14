@@ -125,7 +125,6 @@ class LoanApplicationsController extends Controller
             'created_by' => $logged_in->id,
         ]);
 
-
         //user
         $user->mobile_number = $request->mobile_number;
         $user->dob = $request->dob;
@@ -192,6 +191,7 @@ class LoanApplicationsController extends Controller
                 'type' => config('constants.notifications.loan'),
                 'model_id' => $loan->id ,
                 'url' => $url,
+                'customer_id' =>  $user->id,
                 'status_id' => $status_unseen,
                 'created_by' =>$logged_in->id
             ]
@@ -239,8 +239,8 @@ class LoanApplicationsController extends Controller
                 "loan_rate" => $loan->rate_per_month,
                 "loan_amount_due" => $request->total_repayment,
                 "loan_arrangement_fee" => $loan->arrangement_fee,
-                "customer_id" => $user->id,
-                "created_by" => $logged_in->id,
+                "customer_id" => $user->id ?? 0,
+                "created_by" => $logged_in->id ?? 0,
                 "statuses_id" => $status
             ]
         );

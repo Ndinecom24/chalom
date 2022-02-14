@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Loans\LoanApplications;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -65,9 +66,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        //
         $uuid = Str::uuid()->toString();
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'uuid' => $uuid,
             'email' => $data['email'],
@@ -77,5 +77,13 @@ class RegisterController extends Controller
             'password_change' => config('constants.password_changed'),
             'password' => Hash::make($data['password']),
         ]);
+        if($data['uuid'] != 0){
+            // find the loan
+            $loan = LoanApplications::where('uuid', $data['uuid'])->first();
+            $loan->customer_id = $user->id ;
+            $loan->statuses_id = config('constants.status.loan_request_login');
+            $loan->save();
+        }
+        return $user;
     }
 }

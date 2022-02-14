@@ -17,15 +17,12 @@
                         Home
                     </a>
                 </li>
-
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarProducts" data-bs-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         Products
                     </a>
                     <ul class="dropdown-menu dropdown-menu-arrow" aria-labelledby="navbarProducts">
-
-
                         <li class="dropdown-submenu dropstart-lg">
                             <a class="dropdown-item dropdown-list-group-item dropdown-toggle" href="#">
                                 Loans
@@ -43,7 +40,6 @@
 
                     </ul>
                     <ul class="dropdown-menu dropdown-menu-arrow" aria-labelledby="navbarProducts">
-
                         <li><a href="{{route('loan.index')}}" class="dropdown-item">
                                 Loans
                             </a>
@@ -60,25 +56,20 @@
 
                     </ul>
                 </li>
-
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarFeatures" role="button" data-bs-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         Features
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarFeatures">
-
                         <li><a class="dropdown-item" href="{{route('company.about')}}">About Us</a></li>
                         <li> <a class="dropdown-item" href="{{route('company.team')}}">Team</a></li>
                         <li> <a class="dropdown-item" href="{{route('company.faq')}}">FAQ</a></li>
                         <li><a class="dropdown-item" href="{{route('company.contact')}}">Contact
                             </a>
                         </li>
-
                     </ul>
                 </li>
-
-
             </ul>
             <!-- Authentication Links -->
             @guest

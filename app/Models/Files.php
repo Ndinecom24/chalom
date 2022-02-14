@@ -22,6 +22,6 @@ class Files extends Model
         'date_posted',
         'modal_id',
         'modal_uuid',
-        'model_type',
+        'modal_type',
     ];
 }

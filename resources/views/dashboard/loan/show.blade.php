@@ -292,7 +292,6 @@
                                         </div>
                                         <div class="col-sm-9">
                                             <h2 class="text-center"><strong>LOAN APPLICATION</strong></h2>
-                                            <h5 class="text-center">({{$loan->statuses_id}})</h5>
                                         </div>
                                     </div>
 
@@ -545,8 +544,8 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-12 mt-1 mb-3">
-                                                <label> <b>Current Status : {{$loan->statuses_id }}</b></label>
-                                                {{ config('constants.role.admin.id')}} | {{$logged_in_user->role_id}}
+                                                <label> <b>Current Status : {{$loan->status->name ?? $loan->statuses_id }}</b></label>
+{{--                                                {{ config('constants.role.admin.id')}} | {{$logged_in_user->role_id}}--}}
                                             </div>
 
                                             @if($loan->statuses_id == config('constants.status.loan_request'))

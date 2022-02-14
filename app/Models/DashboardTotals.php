@@ -12,4 +12,13 @@ class dashboardTotals extends Model
 
     protected $table = 'dashboard_totals_view';
 
+    protected $fillable = [
+        "borrowers",
+        "total_paid" ,
+        "pending_loans" ,
+        "pending_loans_amount" ,
+        "active_loans" ,
+        "active_loans_amount" ,
+    ];
+
 }
