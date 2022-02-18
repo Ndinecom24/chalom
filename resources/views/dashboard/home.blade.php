@@ -161,7 +161,7 @@
                                     </h4>
                                 </div>
                                 <p class="text-muted">
-                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Count Paid Loans :
+                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i>Count Paid Loans :
                                 </p>
                             </div>
 
@@ -174,7 +174,7 @@
         @else
 
         <!-- USER DASHBOARD -->
-            <h3 class="page-heading mb-4"> Dashboard</h3>
+            <h3 class="page-heading mb-4">Dashboard</h3>
             <div class="row">
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 mb-4">
                     <div class="card card-statistics">
