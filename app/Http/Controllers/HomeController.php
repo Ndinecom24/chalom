@@ -41,12 +41,7 @@ class HomeController extends Controller
         //check user types
         $user = Auth::user();
         if ($user->role_id == config('constants.role.client.id')) {
-
             $loans = LoanApplications::orderBy('created_at');
-            $loan_current = $loans->where('statuses_id', '!=' , config('constants.status.loan_rejected') );
-            $total =  $loan_current->first() ;
-            $total->load('schedules');
-
             //check if there is a loan request
             $loans = $loans->where('statuses_id', config('constants.status.loan_request_login'));
             if ($loans->exists()) {
@@ -54,11 +49,16 @@ class HomeController extends Controller
                 $statuses = Status::all();
                 $loan = $loans->first();
                 return view('dashboard.loan.finish_apply')->with(compact('user', 'loan', 'works', 'statuses' ));
+            }else{
+                $loan_current = $loans->where('statuses_id', '!=' , config('constants.status.loan_rejected') );
+                $total =  $loan_current->first() ;
+                $total->load('schedules');
+                $notifications = Notifications::where('customer_id', $user->id)->get();
+                return view('dashboard.home')->with(compact('notifications', 'total'));
             }
-            $notifications = Notifications::where('customer_id', $user->id)
-                ->get();
-            return view('dashboard.home')->with(compact('notifications', 'total'));
-        } else if ($user->role_id == config('constants.role.admin.id')
+        }
+
+        else if ($user->role_id == config('constants.role.admin.id')
             || $user->role_id == config('constants.role.developer.id')
         ) {
             $loans = LoanApplications::orderBy('created_at');
