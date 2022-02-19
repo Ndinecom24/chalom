@@ -26,14 +26,11 @@ return [
     ],
 
     'status' => [
-        'application' => 1,
-        'activated' => 2,
-        'pending' => 2,
-        'deactivated' => 3,
-
+//        'application' => 1,
         'active' =>1,
-        'unseen' => 11,
-        'seen' => 12,
+        'activated' => 1,
+        'deactivated' => 2,
+        'suspended' => 3,
 
         'loan_request_login' => 4,
         'loan_submission' => 5,
@@ -42,6 +39,10 @@ return [
         'loan_rejected' => 8,
         'loan_paid' => 9,
         'loan_overdue' => 10,
+        'loan_cancelled' => 11,
+
+        'seen' => 12,
+        'unseen' => 13,
     ],
     'work_status' => [
         '1' => 'Student',
