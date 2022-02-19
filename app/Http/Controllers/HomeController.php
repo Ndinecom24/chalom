@@ -54,9 +54,8 @@ class HomeController extends Controller
             }else{
                 $loan_current = $loans->where('statuses_id', '!=' , config('constants.status.loan_rejected') );
                 $total =  $loan_current->first() ;
-                try{
+                if($total != null ) {
                     $total->load('schedules');
-                }catch (Exception $exception){
                 }
                 $notifications = Notifications::where('customer_id', $user->id)->get();
                 return view('dashboard.home')->with(compact('notifications', 'total'));
