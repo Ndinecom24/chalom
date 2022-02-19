@@ -43,11 +43,12 @@ class HomeController extends Controller
         if ($user->role_id == config('constants.role.client.id')) {
             $loans = LoanApplications::orderBy('created_at');
             //check if there is a loan request
-            $loans = $loans->where('statuses_id', config('constants.status.loan_request_login'));
-            if ($loans->exists()) {
+            $loans_req = $loans->where('statuses_id', config('constants.status.loan_request_login'));
+          //  dd($loans);
+            if ($loans_req->exists()) {
                 $works = WorkStatus::all();
                 $statuses = Status::all();
-                $loan = $loans->first();
+                $loan = $loans_req->first();
                 return view('dashboard.loan.finish_apply')->with(compact('user', 'loan', 'works', 'statuses' ));
             }else{
                 $loan_current = $loans->where('statuses_id', '!=' , config('constants.status.loan_rejected') );
