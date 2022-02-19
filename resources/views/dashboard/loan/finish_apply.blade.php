@@ -570,7 +570,7 @@
                                 </div>
 
                                 <div class="card-footer">
-                                    <div class="row-cols-6">
+                                    <div class="row-col-6">
                                         <button type="submit" name="Submit"
                                                 class="btn btn-outline-success" > Submit</button>
                                     </div>
