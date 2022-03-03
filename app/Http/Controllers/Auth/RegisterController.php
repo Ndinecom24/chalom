@@ -71,9 +71,9 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'uuid' => $uuid,
             'email' => $data['email'],
-            'role_id' => $data['roles_id'],
-            'customer_type_id' => $data['customer_types_id'],
-            'status_id' => $data['status_id'],
+            'role_id' => $data['roles_id'] ?? 1,
+            'customer_type_id' => $data['customer_types_id'] ?? 1,
+            'status_id' => $data['status_id'] ?? 1,
             'password_change' => config('constants.password_changed'),
             'password' => Hash::make($data['password']),
         ]);
