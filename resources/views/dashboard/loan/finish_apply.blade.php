@@ -572,9 +572,14 @@
                                 <div class="card-footer">
                                     <div class="row-col-6">
                                         <button type="submit" name="Submit"
+                                                title="If you want your loan to be processed, please submit"
                                                 class="btn btn-outline-success" > Submit</button>
-                                    </div>
 
+                                        <span id="action_cancel" name="action_cancel" onclick="actionCancel(111)"
+
+                                                title="If you are no longer interested in submitting this loan"
+                                                class="btn btn-outline-danger" > Cancel</span>
+                                    </div>
                                 </div>
                             </div>
                             </form>
@@ -683,5 +688,37 @@
 
 
 @push('custom-scripts')
+
+    <script>
+
+
+        function actionCancel(form_id){
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                }
+            }) ;
+
+            // let text = "Are you sure you want to cancel this loan application?.";
+            // if (confirm(text) == true) {
+            //     alert(form_id) ;
+            // } else {
+            //     text = "You canceled!";
+            // }
+        }
+    </script>
 
 @endpush

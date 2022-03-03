@@ -8,6 +8,7 @@ return [
         'approve' => 'Approved',
         'reject' => 'Rejected',
         'review' => 'Reviewed',
+        'cancel' => 'Cancelled',
     ],
 
     'role' => [
@@ -26,7 +27,7 @@ return [
     ],
 
     'status' => [
-//        'application' => 1,
+        'application' => 1,
         'active' =>1,
         'activated' => 1,
         'deactivated' => 2,

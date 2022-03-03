@@ -70,6 +70,12 @@ class LoanApplicationsController extends Controller
 
     public function finish(Request $request, LoanApplications $loan, User $user)
     {
+        //if action was to cancel
+        dd($request->all());
+        if(3){
+
+        }
+
         $status_unseen =  config('constants.status.unseen') ;
         $status =  config('constants.status.loan_submission') ;
         $logged_in = Auth::user();

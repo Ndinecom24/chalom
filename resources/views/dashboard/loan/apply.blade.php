@@ -748,13 +748,13 @@
                 if (eligible == true) {
 
 
-                    // Swal.fire(
-                    //     'Eligible',
-                    //     'You are Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan',
-                    //     'success'
-                    // )
+                    Swal.fire(
+                        'Eligible',
+                        'You are Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan',
+                        'success'
+                    )
 
-                    alert( 'You are Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan');
+                 //   alert( 'You are Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan');
                     current_fs = $(this).parent();
                     next_fs = $(this).parent().next();
                     //Add Class Active
@@ -778,13 +778,13 @@
                     });
 
                 } else {
-                    // Swal.fire(
-                    //     'Not Eligible',
-                    //     'You are not Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan',
-                    //     'warning'
-                    // )
+                    Swal.fire(
+                        'Not Eligible',
+                        'You are not Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan',
+                        'warning'
+                    )
 
-                    alert('You are not Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan');
+                    // alert('You are not Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan');
                 }
 
 
