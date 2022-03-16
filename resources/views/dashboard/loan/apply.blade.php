@@ -750,7 +750,7 @@
 
                     Swal.fire(
                         'Eligible',
-                        'You are Eligible fan',
+                        'You are Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan',
                         'success'
                     )
 

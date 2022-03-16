@@ -80,7 +80,7 @@
                                             @foreach($list as $loan)
                                                 <tr>
                                                     <td> {{$loan->id}} </td>
-                                                    <td>{{$loan->customer->name}} </td>
+                                                    <td>{{$loan->customer->name ?? ""}} </td>
                                                     <td>{{$loan->loan->name}} </td>
                                                     <td>{{number_format( $loan->loan_amount_due , 2) }}  </td>
                                                     <td>{{$loan->repayment_period }}  </td>
