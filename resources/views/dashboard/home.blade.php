@@ -188,7 +188,7 @@
                                 <div class="float-right">
                                     <p class="card-text text-dark">Current Loan Application</p>
                                     <h4 class="bold-text">
-                                        ZMW {{ number_format($total->loan_amount_due, 2)}}
+                                        ZMW {{ number_format($total->loan_amount_due ?? 0, 2)}}
                                     </h4>
                                 </div>
                             </div>
@@ -233,7 +233,7 @@
                                 <div class="float-right">
                                     <p class="card-text text-dark">Current Balance</p>
                                     <h4 class="bold-text">
-                                        ZMW {{ number_format( ( ($total->loan_amount_due) - (array_sum($total->schedules->pluck('paid')->toArray())) ), 2)}}
+                                        ZMW {{ number_format( ( ($total->loan_amount_due  ?? 0) - (array_sum($total->schedules->pluck('paid')->toArray())) ), 2)}}
                                     </h4>
                                 </div>
                             </div>
