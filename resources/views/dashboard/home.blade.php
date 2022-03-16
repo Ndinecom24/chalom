@@ -211,12 +211,20 @@
                                 <div class="float-right">
                                     <p class="card-text text-dark">Amount Paid</p>
                                     <h4 class="bold-text">
-                                        ZMW {{ number_format( (array_sum($total->schedules->pluck('paid')->toArray())), 2)}}
+                                        @if($total != null)
+                                            ZMW {{ number_format( (array_sum($total->schedules->pluck('paid')->toArray() ?? 0 )), 2)}}
+                                        @else
+                                            ZMW 0.00
+                                        @endif
                                     </h4>
                                 </div>
                             </div>
                             <p class="text-muted">
-                                <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Last Payment : {{$total->schedules->where('status',  config('constants.status.loan_paid'))->last()->paid_date ?? "none"}}
+                                @if($total != null)
+                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Last Payment : {{$total->schedules->where('status',  config('constants.status.loan_paid'))->last()->paid_date ?? "none"}}
+                                @else
+                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Last Payment : None
+                                @endif
                             </p>
                         </div>
                     </div>
@@ -233,12 +241,20 @@
                                 <div class="float-right">
                                     <p class="card-text text-dark">Current Balance</p>
                                     <h4 class="bold-text">
-                                        ZMW {{ number_format( ( ($total->loan_amount_due  ?? 0) - (array_sum($total->schedules->pluck('paid')->toArray())) ), 2)}}
+                                        @if($total != null)
+                                        ZMW {{ number_format( ( ($total->loan_amount_due  ?? 0) - (array_sum($total->schedules->pluck('paid')->toArray() ?? 0)) ), 2)}}
+                                        @else
+                                            ZMW 0.00
+                                        @endif
                                     </h4>
                                 </div>
                             </div>
                             <p class="text-muted">
-                                <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Remaining Installments : {{sizeof($total->schedules->where('status', '!=' ,config('constants.status.loan_paid')) )}}
+                                @if($total != null)
+                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Remaining Installments : {{sizeof($total->schedules->where('status', '!=' ,config('constants.status.loan_paid')) ?? 0 )}}
+                                @else
+                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Remaining Installments : 0.00
+                                @endif
                             </p>
                         </div>
                     </div>
@@ -255,12 +271,20 @@
                                 <div class="float-right">
                                     <p class="card-text text-dark">Next Payment</p>
                                     <h4 class="bold-text">
-                                        ZMW {{ number_format( ($total->schedules->where('status', '!=' ,config('constants.status.loan_paid'))->first()->amount ?? "none") ,2)}}
+                                        @if($total != null)
+                                            ZMW {{ number_format( ($total->schedules->where('status', '!=' ,config('constants.status.loan_paid'))->first()->amount ?? "none") ,2)}}
+                                        @else
+                                            ZMW 0.00
+                                        @endif
                                     </h4>
                                 </div>
                             </div>
                             <p class="text-muted">
-                                <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Next Payment : {{ $total->schedules->where('status', '!=' ,config('constants.status.loan_paid'))->first()->date ?? "none" }}
+                                @if($total != null)
+                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Next Payment : {{ $total->schedules->where('status', '!=' ,config('constants.status.loan_paid'))->first()->date ?? "none" }}
+                                @else
+                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Next Payment : None
+                                @endif
                             </p>
                         </div>
                     </div>

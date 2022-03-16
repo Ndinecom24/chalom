@@ -698,7 +698,7 @@
         }
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{{--    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
 
     <script>
         $(document).ready(function () {
@@ -750,7 +750,7 @@
 
                     Swal.fire(
                         'Eligible',
-                        'You are Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan',
+                        'You are Eligible fan',
                         'success'
                     )
 
