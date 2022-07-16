@@ -50,12 +50,28 @@
                 <div id="accordion">
                     <div class="card">
                         <div class="card-header" id="headingOne">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
-                                        aria-expanded="true" aria-controls="collapseOne">
-                                    {{__('LOAN APPLICATIONS')}}
-                                </button>
-                            </h5>
+                            <form name="searh_loans" method="post" action="{{route('loan.product.search')}}">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-12">
+                                        <select class="form-control" name="status" id="status">
+                                            <option value="" disabled >--Choose Status--</option>
+                                            <option value="0">All</option>
+                                            @foreach($statuses as $status)
+                                                <option value="{{$status->id}}">{{$status->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <input type="text" placeholder="Search Term - NRC/Name/Loan Type" class="form-control" name="search_term" id="search_term" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <button class="btn btn-outline-primary " type="submit">
+                                            {{__('Search')}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
                              data-parent="#accordion">
@@ -68,6 +84,8 @@
                                                 <td>#</td>
                                                 <td>Customer</td>
                                                 <td>Type</td>
+                                                <td>Loan</td>
+                                                <td>Rate</td>
                                                 <td>Amount</td>
                                                 <td>Installments</td>
                                                 <td>Amount Repaid</td>
@@ -77,11 +95,13 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($list as $loan)
+                                            @foreach($list as $key=>$loan)
                                                 <tr>
-                                                    <td> {{$loan->id}} </td>
+                                                    <td> {{++$key}} </td>
                                                     <td>{{$loan->customer->name ?? ""}} </td>
                                                     <td>{{$loan->loan->name}} </td>
+                                                    <td>{{number_format( $loan->loan_amount , 2) }}  </td>
+                                                    <td>{{ $loan->loan_rate  }}%  </td>
                                                     <td>{{number_format( $loan->loan_amount_due , 2) }}  </td>
                                                     <td>{{$loan->repayment_period }}  </td>
                                                     <td>{{$loan->schedules->sum('paid') }}  </td>
@@ -100,6 +120,9 @@
                                             @endforeach
                                             </tbody>
                                         </table>
+                                    </div>
+                                    <div class="pagination-sm">
+                                        {{$list->links()}}
                                     </div>
                                 </div>
                             </div>

@@ -246,8 +246,9 @@
     <!-- partial -->
     <div class="py-2"
          style="background:url({{asset('theme/borrow/assets/images/slider/slider-2.jpg')}})no-repeat; background-position: center; background-size: cover;">
-        <div class="row">
-            <div class="col-8 offset-2">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-8 col-sm-12 ">
                 <div class="row">
                     <div class="col-12">
                         @if(session()->has('message'))
@@ -406,8 +407,7 @@
                                                     <div class="form-group">
                                                         <label for="role_id">Work Status<span class="text-danger">*</span></label>
                                                         <select class="form-control" required name="work_status_id">
-                                                            <option
-                                                                value="{{$user->work->id ?? "" }}">{{$user->work->name ?? "--Choose--" }}</option>
+{{--                                                            <option  value="{{$user->work->id ?? "" }}">{{$user->work->name ?? "--Choose--" }}</option>--}}
                                                             @foreach($works as $work)
                                                                 <option
                                                                     value="{{$work->id ?? "" }}">{{$work->name ?? "" }}</option>
@@ -678,6 +678,7 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 
@@ -735,7 +736,7 @@
                                 text: "Your application has been cancelled",
                                 icon: 'success',
                                 confirmButtonColor: '#3085d6',
-                                confirmButtonText: 'Okay ' + response_data
+                                confirmButtonText: 'Okay '
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     window.location.reload();

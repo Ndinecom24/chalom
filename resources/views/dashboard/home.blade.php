@@ -70,6 +70,8 @@
         <!-- ADMIN DASHBOARD -->
         @if(\Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
         || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.admin.id')
+        || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.verifier.id')
+        || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.approver.id')
         )
             <h3 class="page-heading mb-4">Admin Dashboard</h3>
             <div class="row">

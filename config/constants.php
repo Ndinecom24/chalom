@@ -24,6 +24,14 @@ return [
             'id' => 3,
             'name' => 'Developer'
         ],
+        'verifier' => [
+            'id' => 4,
+            'name' => 'Verifier'
+        ],
+        'approver' => [
+            'id' => 5,
+            'name' => 'Approver'
+        ],
     ],
 
     'status' => [

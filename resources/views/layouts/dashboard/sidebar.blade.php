@@ -30,17 +30,19 @@
                             <span class="menu-title">Loan applications</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="payloan.php">
-                            <i class="text-danger text-primary-hover bi bi-wallet"></i>
-                            <span class="menu-title">Loan Payment</span>
-                        </a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link" href="payloan.php">--}}
+{{--                            <i class="text-danger text-primary-hover bi bi-wallet"></i>--}}
+{{--                            <span class="menu-title">Loan Payment</span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
 
                 @endif
 
             @if(\Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
             || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.admin.id')
+             || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.verifier.id')
+        || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.approver.id')
             )
 
                     <li class="nav-header text-dark fw-bold">Loans</li>
@@ -57,35 +59,35 @@
                             <span class="menu-title">Loan applications</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="payloan.php">
-                            <i class="text-danger text-primary-hover bi bi-wallet"></i>
-                            <span class="menu-title">Loan Payment</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="loanverify.php">
-                            <i class="text-danger text-primary-hover bi bi-binoculars"></i>
-                            <span class="menu-title">Loan Verification</span>
-                        </a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link" href="payloan.php">--}}
+{{--                            <i class="text-danger text-primary-hover bi bi-wallet"></i>--}}
+{{--                            <span class="menu-title">Loan Payment</span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link" href="loanverify.php">--}}
+{{--                            <i class="text-danger text-primary-hover bi bi-binoculars"></i>--}}
+{{--                            <span class="menu-title">Loan Verification</span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
 
-                    <!-- liability option -->
+{{--                    <!-- liability option -->--}}
 
-                    <li class="nav-header text-dark fw-bold">Liability</li>
-                    <li class="nav-item">
+{{--                    <li class="nav-header text-dark fw-bold">Liability</li>--}}
+{{--                    <li class="nav-item">--}}
 
-                        <a class="nav-link" href="recordsellinfo.php">
-                            <i class="text-danger text-primary-hover bi bi-gear"></i>
-                            <span class="menu-title">Record property sell</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="showsellinfo.php">
-                            <i class="text-danger text-primary-hover bi bi-archive"></i>
-                            <span class="menu-title">View Property info</span>
-                        </a>
-                    </li>
+{{--                        <a class="nav-link" href="recordsellinfo.php">--}}
+{{--                            <i class="text-danger text-primary-hover bi bi-gear"></i>--}}
+{{--                            <span class="menu-title">Record property sell</span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link" href="showsellinfo.php">--}}
+{{--                            <i class="text-danger text-primary-hover bi bi-archive"></i>--}}
+{{--                            <span class="menu-title">View Property info</span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
 
                     <li class="nav-header text-dark fw-bold">Maintenance</li>
                     <li class="nav-item">

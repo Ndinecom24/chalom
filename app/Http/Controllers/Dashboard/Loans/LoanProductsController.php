@@ -25,6 +25,7 @@ class LoanProductsController extends Controller
         return view('dashboard.loan_products.index')->with(compact('list', 'statuses'));
     }
 
+
     /**
      * Show the form for creating a new resource.
      *

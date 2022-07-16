@@ -58,6 +58,16 @@ class LoanApplications extends Model
                     $builder->where('customer_id', $user->id);
                 });
             }
+            elseif ( $user->role_id  == config('constants.role.verifier.id') ){
+                static::addGlobalScope('staff_number', function (Builder $builder) use ($user) {
+//                    $builder->where('customer_id', $user->id);
+                });
+            }
+            elseif ( $user->role_id  == config('constants.role.approver.id') ){
+                static::addGlobalScope('staff_number', function (Builder $builder) use ($user) {
+//                    $builder->where('customer_id', $user->id);
+                });
+            }
             elseif ( $user->role_id  == config('constants.role.developer.id') ){
                 static::addGlobalScope('staff_number', function (Builder $builder) use ($user) {
 //                    $builder->where('customer_id', $user->id);
@@ -86,7 +96,7 @@ class LoanApplications extends Model
     }
 
     public function status(){
-        return $this->belongsTo(Status::class );
+        return $this->belongsTo(Status::class , 'statuses_id');
     }
 
 

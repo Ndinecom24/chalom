@@ -10,8 +10,9 @@
                             @csrf
 
                             <div class="text-center mb-4">
-                                <img class="mb-2" src="{{asset('images/brac.jpg')}}" alt="" width="220" height="72">
-                            </div>
+                                <a href="{{ route('welcome') }}">
+                                    <img class="mb-2" src="{{asset('images/brac.jpg')}}" alt="" width="220" height="72">
+                                </a>                            </div>
                             <div class="text-center mb-4">
                                 {{ __('Register Account') }}
                             </div>
@@ -66,7 +67,7 @@
                                 <select hidden id="customer_types_id" name="customer_types_id"  class="form-control">
                                     <option class="form-control" value="{{config('constants.customer_type.new')}}">{{config('constants.customer_type.new')}}</option>
                                 </select>
-                                <input hidden id="uuid" name="uuid" class="form-control mt-2" value="{{$uuid ?? 0}}">
+                                <input readonly id="uuid" name="uuid" class="form-control mt-2" value="{{$uuid ?? 0}}">
                                 <input hidden id="status_id" name="status_id" class="form-control mt-2" value="{{config('constants.status.application')}}">
                             </div>
 

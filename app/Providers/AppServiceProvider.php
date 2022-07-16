@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Loans\LoanProducts;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $loan_products = LoanProducts::all() ;
         \view()->share('loan_lists',$loan_products);
+        Paginator::useBootstrap();
     }
 }

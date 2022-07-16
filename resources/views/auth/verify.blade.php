@@ -8,8 +8,9 @@
                     <div class="card-body">
 
                         <div class="text-center mb-4">
-                            <img class="mb-2" src="{{asset('images/brac.jpg')}}" alt="" width="220" height="72">
-                        </div>
+                            <a href="{{ route('welcome') }}">
+                                <img class="mb-2" src="{{asset('images/brac.jpg')}}" alt="" width="220" height="72">
+                            </a>                        </div>
                         <div class="text-center mb-4">
                             {{ __('Verify Your Email Address') }}
                         </div>

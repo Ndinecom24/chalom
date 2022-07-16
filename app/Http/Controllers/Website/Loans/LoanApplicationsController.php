@@ -17,6 +17,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
@@ -29,15 +30,40 @@ class LoanApplicationsController extends Controller
      */
     public function index($status)
     {
+        $statuses = Status::all();
         if ($status == 0) {
-            $list = LoanApplications::get();
+            $list = LoanApplications::orderBy('created_at', 'desc')->paginate(10);
         } else {
-            $list = LoanApplications::where('statuses_id', $status)->get();
+            $list = LoanApplications::where('statuses_id', $status)->orderBy('created_at')->paginate(10);
         }
 
         $list->load('loan', 'schedules');
 
-        return view('dashboard.loan.index')->with(compact('list'));
+
+        return view('dashboard.loan.index')->with(compact('list', 'statuses'));
+    }
+
+    public function search(Request $request){
+        $statuses = Status::all();
+        if ($request->status == 0) {
+            if($request->search_term == null){
+                $list = LoanApplications::orderBy('created_at', 'desc')->paginate(10);
+            }else{
+                $users = User::where('name', $request->search_term )->get();
+                dd($users);
+                $list = LoanApplications::where('statuses_id', $request->status )
+                    -> where('statuses_id', $request->status )
+                    -> where('statuses_id', $request->status )
+                ->orderBy('created_at', 'desc')->paginate(10);
+            }
+        } else {
+            $list = LoanApplications::where('statuses_id', $request->status )->orderBy('created_at')->paginate(10);
+        }
+//search_term
+        $list->load('loan', 'schedules');
+
+
+        return view('dashboard.loan.index')->with(compact('list', 'statuses'));
     }
 
     /**
@@ -73,6 +99,7 @@ class LoanApplicationsController extends Controller
 
         $status_unseen = config('constants.status.unseen');
         $status = config('constants.status.loan_submission');
+        $user_type = config('constants.customer_type.returning');
         $logged_in = Auth::user();
         $schedule_amount = ($loan->loan_amount_due / $loan->repayment_period);
 
@@ -134,6 +161,7 @@ class LoanApplicationsController extends Controller
         $user->address = $request->plot_street;
         $user->country = $request->country;
         $user->city = $request->city;
+        $user->customer_type_id = $user_type ;
         $user->plot_street = $request->plot_street;
         $user->zip_code = $request->zip_code;
         $user->work_status_id = $request->work_status_id;
@@ -199,7 +227,7 @@ class LoanApplicationsController extends Controller
         );
 
         //return
-        return Redirect::route('loan.list', config('constants.status.loan_request_login'))->with('message', 'Your Loan has been submitted successfully');
+        return Redirect::route('loan.list', $status )->with('message', 'Your Loan has been submitted successfully');
 
     }
 
@@ -208,7 +236,6 @@ class LoanApplicationsController extends Controller
         //
         $status = config('constants.status.loan_request_login');
         $logged_in = Auth::user();
-        $schedule_amount = ($request->total_repayment / $request->repayment_period);
         //
         $uuid = Str::uuid()->toString();
         $customer_type = $request->customer_type;
@@ -254,15 +281,31 @@ class LoanApplicationsController extends Controller
 
     public function returningCustomer(Request $request)
     {
-        $uuid = $request->uuid;
-        return view('auth.register')->with(compact('uuid'));
+        $user = auth()->user() ;
+        $uuid =  $request->uuid ;
+
+        if( auth()->check() ){
+            $loan = DB::table('loan_applications')
+                ->where('uuid', $uuid)
+                ->update([
+                    'customer_id' =>  $user->id,
+                    'statuses_id' => config('constants.status.loan_request_login') ,
+                    ]);
+            $loan = LoanApplications::where('uuid', $uuid)->first();
+
+          //  dd($loan);
+            return Redirect::route('home') ;
+
+        }else{
+            return view('auth.login')->with(compact('uuid'));
+        }
     }
 
 
     public function newCustomer(Request $request)
     {
         $uuid = $request->uuid;
-        return view('auth.login')->with(compact('uuid'));
+        return view('auth.register')->with(compact('uuid'));
     }
 
     /**

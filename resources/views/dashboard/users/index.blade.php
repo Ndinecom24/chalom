@@ -49,22 +49,21 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
                 <div id="accordion">
                     <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
-                                        aria-expanded="true" aria-controls="collapseOne">
-                                    {{$user_types}}
-                                </button>
-                            </h5>
-                        </div>
+{{--                        <div class="card-header" id="headingOne">--}}
+{{--                            <h5 class="mb-0">--}}
+{{--                                <a class="btn btn-link" href="{{route('user.create')}}" >--}}
+{{--                                    {{$user_types}} --}}
+{{--                                </a>--}}
+{{--                            </h5>--}}
+{{--                        </div>--}}
                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
                              data-parent="#accordion">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12">
-                                        <button class="btn btn-sm btn-outline-success mb-2" data-toggle="modal" data-target="#modal-create-user">
+                                        <a class="btn btn-sm btn-outline-success mb-2"  href="{{route('user.create')}}"  >
                                             New {{$user_types}}
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="col-12">

@@ -43,16 +43,18 @@ class HomeController extends Controller
         $user = Auth::user();
         if ($user->role_id == config('constants.role.client.id')) {
             $loans = LoanApplications::orderBy('created_at');
+
             //check if there is a loan request
-            $loans_req = $loans->where('statuses_id', config('constants.status.loan_request_login'));
-          //  dd($loans);
-            if ($loans_req->exists()) {
+            $loans_req = $loans->where('statuses_id', config('constants.status.loan_request_login'))->get() ;
+
+            if ( (sizeof($loans_req) )  > 0 ) {
                 $works = WorkStatus::all();
                 $statuses = Status::all();
                 $loan = $loans_req->first();
                 return view('dashboard.loan.finish_apply')->with(compact('user', 'loan', 'works', 'statuses' ));
-            }else{
-                $loan_current = $loans->where('statuses_id', '!=' , config('constants.status.loan_rejected') );
+            }
+            else{
+                $loan_current = $loans->where('statuses_id', '!=' ,  config('constants.status.loan_rejected') );
                 $total =  $loan_current->first() ;
                 if($total != null ) {
                     $total->load('schedules');
@@ -64,9 +66,10 @@ class HomeController extends Controller
 
         else if ($user->role_id == config('constants.role.admin.id')
             || $user->role_id == config('constants.role.developer.id')
+            || $user->role_id == config('constants.role.verifier.id')
+            || $user->role_id == config('constants.role.approver.id')
         ) {
             $loans = LoanApplications::orderBy('created_at');
-
             $total = dashboardTotals::first();
             $notifications = Notifications::where('status_id', config('constants.status.unseen'))->get();
             return view('dashboard.home')->with(compact('notifications', 'total', 'loans'));

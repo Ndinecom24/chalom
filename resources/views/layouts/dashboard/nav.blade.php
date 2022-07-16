@@ -102,10 +102,10 @@
                 </li>
             </ul>
             <div class="ms-lg-3 mt-3 d-grid mt-lg-0 text-end" >
-                @if( ($user->avatar ?? "" ) == "" )
+                @if( (Auth::user()->avatar ?? "" ) == "" )
                     <img class="nav-item " width="40px" src="{{asset('images/user.png')}}" alt="">
                 @else
-                    <img class="nav-item "  width="20%" src="{{$user->avatar ?? ""}}" alt="{{asset('images/user.png')}}">
+                    <img class="nav-item "  width="40px" src="{{Auth::user()->avatar ?? ""}}" alt="{{asset('images/user.png')}}">
                 @endif
             </div>
             <div class="ms-lg-3 mt-3 d-grid mt-lg-0"   >
@@ -118,7 +118,7 @@
                         <ul class="dropdown-menu dropdown-menu-arrow" aria-labelledby="navbarProducts">
 
                             <li>
-                                <a href="{{route('loan.calculator')}}" class="dropdown-item">
+                                <a href="{{route('user.profile', auth()->user())}}" class="dropdown-item">
                                     Profile
                                 </a>
                             </li>

@@ -19,8 +19,8 @@ class ClientController extends Controller
 
     public function profile(User $user)
     {
-        $types = CustomerTypes::where('id', '!=', config('constants.customer_type.employee'))->get();
-        $roles = Roles::where('id', '=', config('constants.role.client.id'))->get();
+        $types = CustomerTypes::get();
+        $roles = Roles::get();
         $user_types = 'Customers';
         return view('dashboard.users.profile')->with(compact('user', 'types', 'roles', 'user_types'));
     }

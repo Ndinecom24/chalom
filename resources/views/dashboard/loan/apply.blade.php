@@ -243,11 +243,13 @@
 @endpush
 
 @section('content')
+
     <!-- partial -->
     <div class="py-2"
          style="background:url({{asset('theme/borrow/assets/images/slider/slider-2.jpg')}})no-repeat; background-position: center; background-size: cover;">
-        <div class="row">
-            <div class="col-8 offset-2">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-8 col-sm-12">
                 <div class="row">
                     <div class="col-12">
                         @if(session()->has('message'))
@@ -542,11 +544,15 @@
                                                             Returning ?</label>
                                                         <select name="customer_type" id="customer_type" required
                                                                 class="form-control">
-                                                            <option value="">--Choose</option>
+                                                            <option value="">--Choose--</option>
+                                                            @if(auth()->check())
+                                                                <option value="{{config('constants.customer_type.returning')}}">{{auth()->user()->customerType->name ?? ""}}</option>
+                                                            @else
                                                             @foreach($customer_types as $customer_type)
                                                                 <option
                                                                     value="{{$customer_type->id}}">{{$customer_type->name}}</option>
                                                             @endforeach
+                                                            @endif
                                                         </select>
 
                                                     </div>
@@ -599,9 +605,8 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
-
-
 
 @endsection
 
@@ -646,11 +651,12 @@
             document.getElementById('total_repayment').value = round(total_loan_repayment, 2);
             document.getElementById('monthly_amount').value = round(monthly, 2);
 
-            var name = $("#loan_type").find(':selected').data('name');
+            var name = @json( $loanProd->name );
+            var purpose = @json( $loan_purpose );
             var loan_amount = document.getElementById('loan_amount').value;
 
             //set the text on next tab
-            var html_text = '<label>Iam Applying for <b> K' + loan_amount + ' ' + name + '</b> loan';
+            var html_text = '<label>Iam Applying for a <b> K' + loan_amount + ' ' + name + '</b> loan for '+purpose+' .';
             document.getElementById('selected_loan_div').innerHTML = html_text;
 
 
@@ -712,7 +718,7 @@
 
                     //input values
                 var loan_amount = document.getElementById('loan_amount').value;
-                var loan_name = $("#loan_type").find(':selected').data('name');
+                var loan_name = @json( $loanProd->name ?? "" );
                 var monthly_amount_repayment = document.getElementById('monthly_amount').value;
                 var monthly_income = document.getElementById('monthly_income').value;
                 var other_income = document.getElementById('other_income').value;
@@ -896,7 +902,7 @@
                         var returning = {!! json_encode(config('constants.customer_type.returning')) !!} ;
                         var new_cus = {!! json_encode(config('constants.customer_type.new')) !!} ;
 
-                        var html_div1 = "<div class='col-12'>" +
+                        var html_div2 = "<div class='col-12'>" +
                             " <div class='form-group'>" +
                             " <label hidden for='monthly_income'> Unique Reference</label> " +
                             "<input hidden type='text' class='form-control' name='uuid' id='uuid1' value='" + response.uuid + "' readonly> " +
@@ -907,7 +913,7 @@
                             "<button class='btn btn-outline-success'>Create Account </button> " +
                             "</div>";
 
-                        var html_div2 = "<div class='col-12'>" +
+                        var html_div1 = "<div class='col-12'>" +
                             " <div class='form-group'>" +
                             " <label hidden for='monthly_income'> Unique Reference</label> " +
                             "<input hidden type='text' class='form-control' name='uuid' id='uuid2' value='" + response.uuid + "' readonly> " +
@@ -919,9 +925,9 @@
                             "</div>";
 
                         if(response.customer_type == new_cus){
-                            $('#uuid_div_1').html(html_div1);
-                        }else if (response.customer_type == returning){
                             $('#uuid_div_2').html(html_div2);
+                        }else if (response.customer_type == returning){
+                            $('#uuid_div_1').html(html_div1);
                         }
                         else {
 

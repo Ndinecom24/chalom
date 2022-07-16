@@ -34,7 +34,10 @@
                             <input hidden id="uuid" name="uuid" class="form-control mt-2" value="{{$uuid ?? 0}}">
 
                             <div class="text-center mb-4">
-                                <img class="mb-2" src="{{asset('images/brac.jpg')}}" alt="" width="220" height="72">
+                                <a href="{{ route('welcome') }}">
+                                    <h1 style="font-family:'Arial Rounded MT Bold'">CHALOM</h1>
+{{--                                    <img class="mb-2" src="{{asset('images/brac.jpg')}}" alt="" width="220" height="72">--}}
+                                </a>
                             </div>
                             <div class="text-center mb-4">
                                 {{ __('Login') }}

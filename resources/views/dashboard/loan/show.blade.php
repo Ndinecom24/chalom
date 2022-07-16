@@ -246,9 +246,10 @@
     <!-- partial -->
     <div class="py-2"
          style="background:url({{asset('theme/borrow/assets/images/slider/slider-2.jpg')}})no-repeat; background-position: center; background-size: cover;">
-        <div class="row">
-            <div class="col-8 offset-2">
-                <div class="row">
+        <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-8 col-sm-12 ">
+                <div class="row justify-content-lg-center">
                     <div class="col-12">
                         @if(session()->has('message'))
                             <div class="alert alert-success alert-dismissible">
@@ -272,7 +273,7 @@
                         @endif
                     </div>
                     <div class="row">
-                        <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-12 mb-4 mt-4 p-0 mt-3 mb-2">
+                        <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 mb-4 mt-4 p-0 mt-3 mb-2">
                             <form id="finish_apply_form" action="{{ route('loan.approve', compact('loan' )) }}"
                                   method="POST" enctype="multipart/form-data">
                                 @csrf
@@ -307,38 +308,38 @@
                                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                             <div class="form-group">
                                                                 <label for="name">Full Name : <span
-                                                                        class="text-dark "> {{$loan->customer->name}} </span>
+                                                                        class="text-dark "> {{$loan->customer->name  ?? "" }} </span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                             <div class="form-group">
                                                                 <label for="eMail">Email : <span
-                                                                        class="text-dark">{{$loan->customer->email}}</span></label>
+                                                                        class="text-dark">{{$loan->customer->email  ?? "" }}</span></label>
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                             <div class="form-group">
                                                                 <label for="phone">Phone : <span
-                                                                        class="text-dark">{{$loan->customer->mobile_number}}</span></label>
+                                                                        class="text-dark">{{$loan->customer->mobile_number  ?? ""  }}</span></label>
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                             <div class="form-group">
                                                                 <label for="dob">Date of Birth : <span
-                                                                        class="text-dark">{{$loan->customer->dob}}</span></label>
+                                                                        class="text-dark">{{$loan->customer->dob  ?? "" }}</span></label>
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                             <div class="form-group">
                                                                 <label for="nid">National Identity<span
-                                                                        class="text-dark">{{$loan->customer->nid}}</span></label>
+                                                                        class="text-dark">{{$loan->customer->nid  ?? ""  }}</span></label>
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                             <div class="form-group">
                                                                 <label for="gender">Gender : <span
-                                                                        class="text-dark">{{$loan->customer->gender }}</span></label>
+                                                                        class="text-dark">{{$loan->customer->gender  ?? ""  }}</span></label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -399,7 +400,7 @@
                                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                         <div class="form-group">
                                                             <label for="customer_type_id">User-Type <span
-                                                                    class="text-dark">{{$loan->customer->customerType->name }}</span>
+                                                                    class="text-dark">{{$loan->customer->customerType->name  ?? "" }}</span>
                                                             </label>
                                                         </div>
                                                     </div>
@@ -519,19 +520,19 @@
                                     </div>
                                     <div class="card-body  ">
                                         <div class="row gutters">
-                                            @if($loan->customer->nrc != null)
+                                            @if($loan->customer->nrc  ?? ""  != null)
                                                 <div class="col-12">
-                                                    <iframe id="{{$loan->customer->nrc->id}}"
-                                                            src="{{$loan->customer->nrc->path }}"
+                                                    <iframe id="{{$loan->customer->nrc->id  ?? "" }}"
+                                                            src="{{$loan->customer->nrc->path  ?? ""  }}"
                                                             style="width:100%; height: 800px"
-                                                            title="{{$loan->customer->nrc->name}}"></iframe>
-                                                    <span>{{number_format( $loan->customer->nrc->file_size, 2) }}MB {{$loan->customer->nrc->name}} </span>
+                                                            title="{{$loan->customer->nrc->name  ?? "" }}"></iframe>
+                                                    <span>{{number_format( $loan->customer->nrc->file_size  ?? 0 , 2) }}MB {{$loan->customer->nrc->name  ?? "" }} </span>
                                                     <span> | </span>
-                                                    <a href="{{$loan->customer->nrc->path}}"
+                                                    <a href="{{$loan->customer->nrc->path  ?? "" }}"
                                                        target="_blank">View</a>
                                                     <span> | </span>
                                                     <a href="#" data-toggle="modal"
-                                                       data-sent_data="{{$loan->customer->nrc}}"
+                                                       data-sent_data="{{$loan->customer->nrc  ?? "" }}"
                                                        data-target="#modal-change">Edit</a>
 
                                                 </div>
@@ -548,29 +549,29 @@
 {{--                                                {{ config('constants.role.admin.id')}} | {{$logged_in_user->role_id}}--}}
                                             </div>
 
-                                            @if($loan->statuses_id == config('constants.status.loan_request'))
-                                                <div class="row-cols-6">
-                                                    <button type="submit" name="Submit" disabled
-                                                            class="btn btn-outline-success"> Approve
-                                                    </button>
-                                                </div>
+{{--                                            @if($loan->statuses_id == config('constants.status.loan_request'))--}}
+{{--                                                <div class="row-cols-6">--}}
+{{--                                                    <button type="submit" name="Submit" disabled--}}
+{{--                                                            class="btn btn-outline-success"> Approve--}}
+{{--                                                    </button>--}}
+{{--                                                </div>--}}
 
                                                 {{-- [1] : LOAN APPLICATION NEEDS TO BE COMPLETED--}}
-                                            @elseif($loan->statuses_id == config('constants.status.loan_request_login'))
+                                            @if($loan->statuses_id == config('constants.status.loan_request_login'))
 
                                                 {{-- ADMIN --}}
                                                 @if($logged_in_user->role_id ==  config('constants.role.admin.id'))
                                                 {{-- CLIENT --}}
                                                 <div class="col-12 text-center">
                                                     <span class="btn btn-outline-primary"
-                                                            title="Client ({{$loan->customer->name}}) needs to complete this loan application and submit for verification" >
+                                                            title="Client ({{$loan->customer->name  ?? "" }}) needs to complete this loan application and submit for verification" >
                                                         Pending Loan Submission
                                                     </span>
                                                 </div>
                                                 @else
                                                     <div class="col-12 text-center">
                                                         <a class="btn btn-outline-primary"
-                                                           title="{{$loan->customer->name}} needs to complete this loan application and then submit for verification"
+                                                           title="{{$loan->customer->name  ?? ""  }} needs to complete this loan application and then submit for verification"
                                                            href="">
                                                             Complete Loan Application
                                                         </a>
@@ -581,8 +582,8 @@
                                                 {{--  LOAN HAS BEEN SUBMITTED --}}
                                             @elseif($loan->statuses_id == config('constants.status.loan_submission'))
 
-                                                {{-- ADMIN --}}
-                                                @if($logged_in_user->role_id ==  config('constants.role.admin.id'))
+                                                {{-- VERIFIER --}}
+                                                @if($logged_in_user->role_id ==  config('constants.role.verifier.id'))
                                                     <div class="col-8">
                                                         <div class="form-group">
                                                             <label for="eMail">Comment<span class="text-danger">*</span></label>
@@ -594,7 +595,7 @@
                                                     </div>
                                                     <div class="col-2">
                                                         <label for="approve"><span
-                                                                class="text-success">Approve</span></label>
+                                                                class="text-success ">Approve</span></label>
                                                         <button type="submit" name="approve"
                                                                 title="Click to approve that you have verified this loan"
                                                                 value="{{config('constants.action.review')}}"
@@ -616,21 +617,115 @@
                                                     {{-- CLIENT --}}
                                                     <div class="col-12 text-center">
                                                         <span class="btn btn-outline-primary"
-                                                                title="Client ({{$loan->customer->name}}) has completed and submitted loan application, it now needs to be verified by admins" >
+                                                                title="Client ({{$loan->customer->name  ?? ""  }}) has completed and submitted loan application, it now needs to be verified by admins" >
                                                             Pending Loan Verification
                                                         </span>
                                                     </div>
                                                 @endif
+
+
+                                            {{--  LOAN HAS BEEN APPROVED --}}
+                                            @elseif($loan->statuses_id == config('constants.status.loan_submission'))
+
+                                                {{-- VERIFIER --}}
+                                                @if($logged_in_user->role_id ==  config('constants.role.verifier.id'))
+                                                    <div class="col-8">
+                                                        <div class="form-group">
+                                                            <label for="eMail">Comment<span class="text-danger">*</span></label>
+                                                            <input type="text" required
+                                                                   title="You need to add a reason/comments for your decision"
+                                                                   class="form-control" id="comment" name="comment"
+                                                                   placeholder="Enter comment for your action">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <label for="approve"><span
+                                                                class="text-success ">Approve</span></label>
+                                                        <button type="submit" name="approve"
+                                                                title="Click to approve that you have verified this loan"
+                                                                value="{{config('constants.action.review')}}"
+                                                                class="btn btn-outline-success"><i
+                                                                class="ui-icon ui-icon-circle-check"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <label for="reject"><span
+                                                                class="text-danger">Reject</span></label>
+                                                        <button type="submit" name="reject"
+                                                                title="Click to reject this loan application e.g because you have not verified the details"
+                                                                value="{{config('constants.action.reject')}}"
+                                                                class="btn btn-outline-danger"><i
+                                                                class="ui-icon ui-icon-circle-close "></i>
+                                                        </button>
+                                                    </div>
+                                                @else
+                                                    {{-- CLIENT --}}
+                                                    <div class="col-12 text-center">
+                                                        <span class="btn btn-outline-primary"
+                                                              title="Client ({{$loan->customer->name  ?? ""  }}) has completed and submitted loan application, it now needs to be verified by admins" >
+                                                            Pending Loan Verification
+                                                        </span>
+                                                    </div>
+                                                @endif
+
+                                            {{--  FUNDS NEEDS TO BE DISBURSED--}}
+                                            @elseif($loan->statuses_id == config('constants.status.loan_submission'))
+
+                                                {{-- VERIFIER --}}
+                                                @if($logged_in_user->role_id ==  config('constants.role.verifier.id'))
+                                                    <div class="col-8">
+                                                        <div class="form-group">
+                                                            <label for="eMail">Comment<span class="text-danger">*</span></label>
+                                                            <input type="text" required
+                                                                   title="You need to add a reason/comments for your decision"
+                                                                   class="form-control" id="comment" name="comment"
+                                                                   placeholder="Enter comment for your action">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <label for="approve"><span
+                                                                class="text-success ">Approve</span></label>
+                                                        <button type="submit" name="approve"
+                                                                title="Click to approve that you have verified this loan"
+                                                                value="{{config('constants.action.review')}}"
+                                                                class="btn btn-outline-success"><i
+                                                                class="ui-icon ui-icon-circle-check"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <label for="reject"><span
+                                                                class="text-danger">Reject</span></label>
+                                                        <button type="submit" name="reject"
+                                                                title="Click to reject this loan application e.g because you have not verified the details"
+                                                                value="{{config('constants.action.reject')}}"
+                                                                class="btn btn-outline-danger"><i
+                                                                class="ui-icon ui-icon-circle-close "></i>
+                                                        </button>
+                                                    </div>
+                                                @else
+                                                    {{-- CLIENT --}}
+                                                    <div class="col-12 text-center">
+                                                        <span class="btn btn-outline-primary"
+                                                              title="Client ({{$loan->customer->name  ?? ""  }}) has completed and submitted loan application, it now needs to be verified by admins" >
+                                                            Pending Loan Verification
+                                                        </span>
+                                                    </div>
+                                                @endif
+
+
+                                                {{--  NEXT ACTION  --}}
                                             @else
-                                                {{--   --}}
                                                 <div class="row-cols-6">
                                                     <span type="submit" name="Submit"
                                                           title="ummmm devs"
-                                                            class="btn btn-outline-success">
+                                                          class="btn btn-outline-success">
                                                         PENDING NEXT ACTION
                                                     </span>
                                                 </div>
                                             @endif
+
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -640,7 +735,7 @@
                             </form>
 
                         </div>
-                        <div class="col-xl-5 col-lg-5  col-md-5  col-sm-5  col-12   mb-4 mt-4  p-0 mt-3 mb-2 ">
+                        <div class="col-xl-5 col-lg-5  col-md-5  col-sm-12   mb-4 mt-4  p-0 mt-3 mb-2 ">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
@@ -758,6 +853,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 

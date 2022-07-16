@@ -7,12 +7,12 @@
             <div class="container-fluid">
                 <div class="row ">
                     <div class="col-sm-6">
-                        <h3 class="page-heading mb-4">{{$user_types}} Profile</h3>
+                        <h3 class="page-heading mb-4">User Profile</h3>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-end">
                             <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                            <li class="breadcrumb-item active">{{$user_types}} Profile</li>
+                            <li class="breadcrumb-item active">User Profile</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -57,15 +57,32 @@
                                                 </a>
                                             </div>
                                         @endif
-                                        <br>
-                                        <h5 class="user-name">{{$user->name}}</h5>
-                                        <h6 class="user-email">{{$user->email}}</h6>
+                                        <br> <br>
+                                        <h4 class="user-name text-uppercase">{{$user->name}}</h4>
+                                        <h5 class="user-email">{{$user->email}}</h5>
                                     </div>
-                                    <div class="text-center">
-                                        <h5>{{$user->customerType->name ?? ""}}</h5>
-                                        <p>{{$user->role->name ?? ""}}</p>
+                                    <div class="text-center"> <hr>
+                                        <p>{{$user->customerType->name ?? ""}}<br>
+                                        {{$user->role->name ?? ""}} Profile</p>
                                     </div>
+                                    @if(\Illuminate\Support\Facades\Auth::user()->id ==  $user->id )
+
+                                    <form id="update_user" method="POST" action="{{route('user.admin.update.image', $user )}}" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="modal-footer justify-content-between">
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                <div class="form-group">
+                                                    <label for="Street">Change Image</label>
+                                                    <input type="file"
+                                                           class="form-control" id="avatar" name="avatar" placeholder="Enter Image">
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-xs btn-secondary">Update Image</button>
+                                        </div>
+                                    </form>
+                                    @endif
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -79,42 +96,42 @@
                                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                                 <h6 class="mb-2 text-primary">Personal Details</h6>
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                                 <div class="form-group">
                                                     <label for="name">Full Name</label>
                                                     <input type="text" value="{{$user->name}}" class="form-control"
                                                            id="name" name="name" placeholder="Enter full name">
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                                 <div class="form-group">
                                                     <label for="eMail">Email</label>
                                                     <input type="email" value="{{$user->email}}" class="form-control" id="eMail" name="email"
                                                            placeholder="Enter email ID">
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                                 <div class="form-group">
                                                     <label for="phone">Phone</label>
                                                     <input type="text" value="{{$user->mobile_number}}" class="form-control" name="mobile_number"
                                                            id="phone" placeholder="Enter phone number">
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                                 <div class="form-group">
                                                     <label for="dob">Date of Birth</label>
                                                     <input type="date" value="{{$user->dob}}" class="form-control" id="dob"- name="dob"
                                                            placeholder="Date of Birth">
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                                 <div class="form-group">
                                                     <label for="nid">National Identity</label>
                                                     <input type="text" value="{{$user->nid}}" class="form-control" id="nid" name="nid"
                                                            placeholder="Enter national Identity Number">
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                                 <div class="form-group">
                                                     <label for="gender">Gender</label>
                                                     <select id="inputGender" name="gender" class="form-control">
@@ -129,28 +146,28 @@
                                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                                 <h6 class="mt-3 mb-2 text-primary">Address</h6>
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                                 <div class="form-group">
                                                     <label for="Street">Plot and Street</label>
                                                     <input type="name" value="{{$user->plot_street ?? "" }}"
                                                            class="form-control" id="Street" name="plot_street" placeholder="Enter Street">
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                                 <div class="form-group">
                                                     <label for="ciTy">City</label>
                                                     <input type="name" value="{{$user->city ?? "" }}" class="form-control"
                                                            name="city"  id="ciTy" placeholder="Enter City">
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                                 <div class="form-group">
                                                     <label for="sTate">Country</label>
                                                     <input type="text" value="{{$user->country ?? "" }}" class="form-control"
                                                            name="country" id="sTate" placeholder="Enter Country">
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                                 <div class="form-group">
                                                     <label for="zIp">Zip Code</label>
                                                     <input type="text" value="{{$user->zip_code ?? "" }}" class="form-control"
@@ -162,29 +179,33 @@
                                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                                 <h6 class="mt-3 mb-2 text-primary">Roles</h6>
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                                 <div class="form-group">
                                                     <label for="role_id">Role</label>
                                                     <select class="form-control" name="role_id"
                                                     @if(\Illuminate\Support\Facades\Auth::user()->role_id ==  config('constants.role.client.id')) readonly @endif
                                                     >
                                                         <option value="{{$user->role->id ?? "" }}">{{$user->role->name ?? "" }}</option>
+                                                        @if(\Illuminate\Support\Facades\Auth::user()->role_id !=  config('constants.role.client.id'))
                                                         @foreach($roles as $role)
                                                             <option value="{{$role->id }}">{{$role->name }}</option>
                                                         @endforeach
+                                                        @endif
                                                     </select>
 
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                                 <div class="form-group">
                                                     <label for="customer_type_id">User-Type </label>
                                                     <select class="form-control" name="customer_type_id"
                                                             @if(\Illuminate\Support\Facades\Auth::user()->role_id ==  config('constants.role.client.id')) readonly @endif >
                                                         <option value="{{$user->customerType->id }}">{{$user->customerType->name }}</option>
-                                                        @foreach($types as $type)
+                                                        @if(\Illuminate\Support\Facades\Auth::user()->role_id !=  config('constants.role.client.id'))
+                                                            @foreach($types as $type)
                                                             <option value="{{$type->id }}">{{$type->name }}</option>
                                                         @endforeach
+                                                            @endif
                                                     </select>
                                                 </div>
                                             </div>
@@ -208,52 +229,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal-edit-user-image">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-            <form id="update_user" method="POST" action="{{route('user.admin.update.image', $user )}}" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body">
-                <div class="row gutters">
 
-                    <div class="col-12">
-                        <h6 class="mb-2 text-primary">Profile Image</h6>
-                    </div>
-
-                    <div class="col-12">
-                        @if( ($user->avatar ?? "" ) == "" )
-                            <div class="profile-pic">
-                            <img width="100%" src="{{asset('images/user.png')}}" alt="">
-                            </div>
-                        @else
-                            <div class="user-avatar">
-                                <img  width="100%"  src="{{$user->avatar ?? ""}}" alt="{{asset('images/user.png')}}">
-                            </div>
-                        @endif
-                    </div>
-
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label for="name">Full Name : {{$user->name}}</label>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div class="form-group">
-                            <label for="Street">Change Image</label>
-                            <input type="file"
-                                   class="form-control" id="avatar" name="avatar" placeholder="Enter Image">
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
-            </form>
-            </div>
-        </div>
-    </div>
 @endsection
 
 

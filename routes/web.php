@@ -55,6 +55,7 @@ Route::group([
     'middleware' => 'auth'
 ], function () {
     Route::get('profile/{user}', [UserController::class, 'profile'])->name('user.profile');
+    Route::get('create', [UserController::class, 'create'])->name('user.create');
 
     Route::group([
         'prefix' => 'admin',

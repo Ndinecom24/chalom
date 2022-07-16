@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\FilesController;
+use App\Http\Controllers\Dashboard\FilesController;
 use App\Models\Files;
 use App\Models\Settings\CustomerTypes;
 use App\Models\Settings\Roles;
@@ -47,7 +47,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $types = CustomerTypes::where('id', '=', config('constants.customer_type.employee'))->get();
+        $roles = Roles::where('id', '!=', config('constants.role.client.id'))->get();
+        $user_types = 'System Admins';
+        return view('dashboard.users.create')->with(compact('types', 'roles' ));
+
     }
 
     /**
@@ -88,10 +92,10 @@ class UserController extends Controller
         );
 
         //save avatar
-        $filesModel = new Files();
+        $filesModel = new FilesController();
         $file = $request->file('avatar');
         $saved_file = $filesModel->upload($request, $file, config('constants.types.avatar'), $model);
-        $model->profile_img = $saved_file->id;
+        $model->avatar = $saved_file->id;
         $model->save();
 
         if ($request->file('avatar')) {
@@ -155,8 +159,6 @@ class UserController extends Controller
 
     public function image(Request $request, User $user)
     {
-        //  dd($request->profile_img); // profile_img
-
         //save avatar
         $filesModel = new FilesController();
         $file = $request->file('avatar');
