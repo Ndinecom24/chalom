@@ -2,8 +2,8 @@
 
 @section('content')
 
-    <div class="pt-18 pb-10" style="background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), rgba(0, 0, 0, 0.2) url(../assets/images/background/page-header.jpg) no-repeat center;
-  background-size: cover;
+    <div class="pt-18 pb-10" style="background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), rgba(0, 0, 0, 0.2) url({{asset('theme/borrow/assets/images/slider/slider-2.jpg')}}) no-repeat center;
+     background-size: cover;
 }
 
 ">
@@ -17,7 +17,7 @@
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                                 <div class="text-md-end mt-3 mt-md-0">
-                                    <a href="{{route('company.how_to_apply')}}" class="btn btn-primary">How To Apply</a>
+                                    <a href="{{route('company.contact')}}" class="btn btn-primary">Contact Us Here</a>
                                 </div>
                             </div>
                         </div>
@@ -25,7 +25,7 @@
                     <div>
                         <ul class="nav nav-fill nav-pills-gray-fill">
                             <li class="nav-item ">
-                                <a href="{{route('company.about')}}" class="nav-link">Give me call back</a>
+                                <a href="{{route('company.contact')}}" class="nav-link">Give me call back</a>
                             </li>
                             <li class="nav-item">
                                 <a href="#!" class="nav-link">Emi Caculator</a>

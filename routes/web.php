@@ -134,6 +134,8 @@ Route::group([
             Route::post('store', [WorkStatusController::class, 'store'])->name('work.status.store');
             Route::post('update/{work_status}', [WorkStatusController::class, 'update'])->name('work.status.update');
             Route::post('destroy', [WorkStatusController::class, 'destroy'])->name('work.status.destroy');
+            Route::get('contact-us', [ContactController::class, 'index']);
+            Route::post('contact-us', [ContactController::class, 'store'])->name('contact.us.store');
         });
 
     });
