@@ -8,6 +8,8 @@ return [
         'approve' => 'Approved',
         'reject' => 'Rejected',
         'review' => 'Reviewed',
+        'funds_disbursed' => 'Funds Disbursed',
+        'loan_payment' => 'Loan Payment',
         'cancel' => 'Cancelled',
     ],
 
@@ -52,6 +54,8 @@ return [
 
         'seen' => 12,
         'unseen' => 13,
+
+        'loan_funds_disbursed' => 14 ,
     ],
     'work_status' => [
         '1' => 'Student',

@@ -3,7 +3,8 @@
         <div class="navbar-collapse offcanvas-collapse" id="navbarNav">
 
             <div class="m-2">
-                <a class="navbar-brand" href="{{route('home')}}"><img width="100%" src="{{ asset('theme/borrow/assets/images/brand/logo/logo.png')}}" alt="" /></a>
+                <a class="navbar-brand" href="{{route('home')}}"><img width="100%" src="
+         {{ asset('theme/borrow/assets/images/brand/logo/chalom_logo.png')}}" alt="" /></a>
             </div>
 
             <ul class="navbar-nav flex-column" style="margin-top: 4%"  >

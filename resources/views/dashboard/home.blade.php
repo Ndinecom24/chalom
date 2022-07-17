@@ -80,29 +80,6 @@
                         <div class="card-body">
                             <div class="clearfix">
                                 <div class="float-left">
-                                    <h4 class="text-primary">
-                                        <i class="fa fa-bell highlight-icon" aria-hidden="true"></i>
-                                    </h4>
-                                </div>
-                                <div class="float-right">
-                                    <p class="card-text text-dark">Pending Loan Applications</p>
-                                    <h4 class="bold-text">
-                                        ZMW {{ number_format($total->pending_loans_amount, 2)}}
-                                    </h4>
-                                </div>
-                            </div>
-                            <p class="text-muted">
-                                <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Loan Count :  {{$total->pending_loans}}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 mb-4">
-                    <div class="card card-statistics">
-                        <div class="card-body">
-                            <div class="clearfix">
-                                <div class="float-left">
                                     <h4 class="text-danger">
                                         <i class="fa fa-bar-chart-o highlight-icon" aria-hidden="true"></i>
                                     </h4>
@@ -114,14 +91,43 @@
                                     </h4>
                                 </div>
                                 <p class="text-muted">
-                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> With Active Loans :  {{sizeof($loans->where('statuses_id' , config('constants.status.loan_approved') )
-                ->Orwhere('statuses_id',  config('constants.status.loan_reviewed') )
-                ->Orwhere('statuses_id',  config('constants.status.loan_submission') )
+                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> With Active Loans :  {{sizeof($loans->where('statuses_id' , config('constants.status.loan_funds_disbursed') )
+
                 ->Orwhere('statuses_id',  config('constants.status.loan_overdue') )
             ->get() )}}
                                 </p>
+{{--                                <p class="text-muted">--}}
+{{--                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Repaid Loans :  {{sizeof($loans->where('statuses_id' , config('constants.status.loan_paid') )--}}
+
+{{--            ->get() )}}--}}
+{{--                                </p>--}}
                             </div>
 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 mb-4">
+                    <div class="card card-statistics">
+                        <div class="card-body">
+                            <div class="clearfix">
+                                <div class="float-left">
+                                    <h4 class="text-primary">
+                                        <i class="fa fa-bell highlight-icon" aria-hidden="true"></i>
+                                    </h4>
+                                </div>
+                                <div class="float-right">
+                                    <p class="card-text text-dark">Pending Loan Applications</p>
+                                    <h4 class="bold-text">
+                                         {{ number_format($total->pending_loans_amount, 2)}}
+                                    </h4>
+                                    <h4 class="bold-text text-muted">
+                                         {{ number_format($total->pending_loans_amount_due, 2)}}
+                                    </h4>
+                                </div>
+                            </div>
+                            <p class="text-muted">
+                                <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Loan Count :  {{$total->pending_loans}}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -137,7 +143,10 @@
                                 <div class="float-right">
                                     <p class="card-text text-dark">Active Loans</p>
                                     <h4 class="bold-text">
-                                        ZMW {{ number_format($total->active_loans_amount, 2)}}
+                                         {{ number_format($total->active_loans_amount, 2)}}
+                                    </h4>
+                                    <h4 class="bold-text text-muted">
+                                        {{ number_format($total->active_loans_amount_due, 2)}}
                                     </h4>
                                 </div>
                                 <p class="text-muted">
@@ -159,11 +168,14 @@
                                 <div class="float-right">
                                     <p class="card-text text-dark">Total Paid Money</p>
                                     <h4 class="bold-text">
-                                        ZMW {{ number_format($total->total_paid,2)}}
+                                         {{ number_format($total->paid_loans_amount,2)}}
+                                    </h4>
+                                    <h4 class="bold-text text-muted">
+                                         {{ number_format($total->paid_loans_amount_due, 2)}}
                                     </h4>
                                 </div>
                                 <p class="text-muted">
-                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i>Count Paid Loans :
+                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i>Count Paid Loans :{{ number_format($total->paid_loans,0)}}
                                 </p>
                             </div>
 
@@ -190,7 +202,7 @@
                                 <div class="float-right">
                                     <p class="card-text text-dark">Current Loan Application</p>
                                     <h4 class="bold-text">
-                                        ZMW {{ number_format($total->loan_amount_due ?? 0, 2)}}
+                                         {{ number_format($total->loan_amount_due ?? 0, 2)}}
                                     </h4>
                                 </div>
                             </div>
@@ -214,7 +226,7 @@
                                     <p class="card-text text-dark">Amount Paid</p>
                                     <h4 class="bold-text">
                                         @if($total != null)
-                                            ZMW {{ number_format( (array_sum($total->schedules->pluck('paid')->toArray() ?? 0 )), 2)}}
+                                             {{ number_format( (array_sum($total->schedules->pluck('paid')->toArray() ?? 0 )), 2)}}
                                         @else
                                             ZMW 0.00
                                         @endif
@@ -244,7 +256,7 @@
                                     <p class="card-text text-dark">Current Balance</p>
                                     <h4 class="bold-text">
                                         @if($total != null)
-                                        ZMW {{ number_format( ( ($total->loan_amount_due  ?? 0) - (array_sum($total->schedules->pluck('paid')->toArray() ?? 0)) ), 2)}}
+                                         {{ number_format( ( ($total->loan_amount_due  ?? 0) - (array_sum($total->schedules->pluck('paid')->toArray() ?? 0)) ), 2)}}
                                         @else
                                             ZMW 0.00
                                         @endif
@@ -274,7 +286,7 @@
                                     <p class="card-text text-dark">Next Payment</p>
                                     <h4 class="bold-text">
                                         @if($total != null)
-                                            ZMW {{ number_format( ($total->schedules->where('status', '!=' ,config('constants.status.loan_paid'))->first()->amount ?? "none") ,2)}}
+                                             {{ number_format( ($total->schedules->where('status', '!=' ,config('constants.status.loan_paid'))->first()->amount ?? "none") ,2)}}
                                         @else
                                             ZMW 0.00
                                         @endif
@@ -346,11 +358,17 @@
                         <a href="{{$notification->url}}">
 
 
-                            <div class="notifications-item"><img src="{{{$notification->user->avatar}}}}" alt="img">
+                            <div class="notifications-item">
+                                @if( ($notification->user->avatar ?? "" ) == "" )
+                                    <img class="img-circle" width="40px" src="{{asset('images/user.png')}}" alt="">
+                                @else
+                                    <img class="img-circle"  width="40px" src="{{$notification->user->avatar ?? ""}}" alt="{{asset('images/user.png')}}">
+                                @endif
                                 <div class="text">
                                     <h4> {{$notification->name}}</h4>
                                     <h6>{{$notification->user->name}} | {{$notification->subject}} </h6>
                                     <p>{{$notification->message}}</p>
+                                    <p class="text-xs text-muted">{{ \Carbon\Carbon::parse($notification->created_at)->diffForhumans() }} </p>
                                 </div>
                             </div>
                         </a>
