@@ -14,11 +14,15 @@ class dashboardTotals extends Model
 
     protected $fillable = [
         "borrowers",
-        "total_paid" ,
+        "paid_loans" ,
+        "paid_loans_amount" ,
+        "paid_loans_amount_due" ,
         "pending_loans" ,
         "pending_loans_amount" ,
+        "pending_loans_amount_due" ,
         "active_loans" ,
         "active_loans_amount" ,
+        "active_loans_amount_due" ,
     ];
 
 }

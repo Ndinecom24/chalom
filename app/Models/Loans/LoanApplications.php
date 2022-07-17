@@ -114,4 +114,9 @@ class LoanApplications extends Model
     }
 
 
+    public function approvals(){
+        return $this->hasMany(LoanApproals::class, 'loan_applications_id','id' ) ;
+    }
+
+
 }

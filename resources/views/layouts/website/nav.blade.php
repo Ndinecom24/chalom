@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg py-3 navbar-default  bg-primary-gradient">
     <div class="container px-0">
-            <a class="navbar-brand" href="{{route('welcome')}}" ><img width="100%" src="{{ asset('theme/borrow/assets/images/brand/logo/logo.png')}}" alt="" /></a>
+            <a class="navbar-brand" href="{{route('welcome')}}" ><img width="100%" src="
+         {{ asset('theme/borrow/assets/images/brand/logo/chalom_logo.png')}}" alt="" /></a>
 
     <!-- Button -->
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-default"
@@ -94,9 +95,9 @@
                 </ul>
                 <div class="ms-lg-3 mt-3 d-grid mt-lg-0 text-end" >
                     @if( (Auth::user()->avatar ?? "" ) == "" )
-                        <img class="nav-item " width="40px" src="{{asset('images/user.png')}}" alt="">
+                        <img class="img-circle " width="40px" src="{{asset('images/user.png')}}" alt="">
                     @else
-                        <img class="nav-item "  width="40px" src="{{Auth::user()->avatar ?? ""}}" alt="{{asset('images/user.png')}}">
+                        <img class="img-circle "  width="40px" src="{{Auth::user()->avatar ?? ""}}" alt="{{asset('images/user.png')}}">
                     @endif
                 </div>
                 <div class="ms-lg-3 mt-3 d-grid mt-lg-0"   >

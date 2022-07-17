@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Website\Loans;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Dashboard\FilesController;
 use App\Models\Dashboard\Logs\Notifications;
+use App\Models\dashboardTotals;
 use App\Models\Loans\LoanApplications;
 use App\Models\Loans\LoanApproals;
 use App\Models\Loans\LoanProducts;
@@ -318,14 +319,14 @@ class LoanApplicationsController extends Controller
     {
         $loan->load('customer', 'loan');
         $logged_in = Auth::user();
-        $next_status = $loan->first()->statuses_id;
-        $current_status = $loan->first()->statuses_id;
+        $next_status = $loan->statuses_id;
+        $current_status = $loan->statuses_id;
         $save = false;
         $action = $request->approve ?? $request->reject;
 
         //FIRST APPROVAL
         if ($current_status == config('constants.status.loan_submission')
-            && $logged_in->role_id == config('constants.role.admin.id')
+            && $logged_in->role_id == config('constants.role.verifier.id')
         ) {
             //actions
             if ($action == config('constants.action.reject')) {
@@ -334,6 +335,9 @@ class LoanApplicationsController extends Controller
             } elseif ($action == config('constants.action.review')) {
                 $next_status = config('constants.status.loan_reviewed');
                 $save = true;
+
+                //add or subtract from dashboard totals
+               // $dashboard = dashboardTotals::get()->first();
             } else {
                 $next_status = config('constants.status.loan_submission');
             }
@@ -341,8 +345,8 @@ class LoanApplicationsController extends Controller
         }
 
         //SECOND APPROVAL
-        if ($current_status == config('constants.status.loan_reviewed')
-            && $logged_in->role_id == config('constants.role.admin.id')
+        elseif ($current_status == config('constants.status.loan_reviewed')
+            && $logged_in->role_id == config('constants.role.approver.id')
         ) {
             //actions
             if ($action == config('constants.action.reject')) {
@@ -357,6 +361,77 @@ class LoanApplicationsController extends Controller
         }
 
 
+        //THIRD APPROVAL
+        elseif ($current_status == config('constants.status.loan_approved')
+            && $logged_in->role_id == config('constants.role.verifier.id')
+        ) {
+            //actions
+            if ($action == config('constants.action.reject')) {
+                $next_status = config('constants.status.loan_rejected');
+                $save = true;
+            } elseif ($action == config('constants.action.funds_disbursed')) {
+                $next_status = config('constants.status.loan_funds_disbursed');
+                $save = true;
+            } else {
+                $next_status = config('constants.status.loan_approved');
+            }
+        }
+
+        //LOAN REPAYMENT PROCESS
+        elseif( $loan->statuses_id == config('constants.status.loan_funds_disbursed')
+            && (
+                ($logged_in->role_id == config('constants.role.verifier.id') )
+              ||  ($logged_in->role_id == config('constants.role.approver.id') )
+            )){
+
+
+            $date = \Carbon\Carbon::now();
+            $amt = $request->amount ;
+
+            //get the schedules
+            $loan_schedules = LoanSchedule::where('loan_applications_id', $loan->id)->get();
+
+
+            //amount should be within balance
+            if( $amt > ($loan->loan_amount_due - $loan->schedules->sum('paid')) ){
+                return Redirect::route('loan.list', $next_status)->with('error', 'Sorry the amount entered for repayment ('.$amt.') is larger than the balance' );
+            }else{
+                $save = true;
+            foreach($loan_schedules as $loan_schedule ){
+                $amount_due = $loan_schedule->balance  ;
+                if($amount_due == 0 ){
+                    $amount_due = $loan_schedule->amount  ;
+                }
+
+              //  dd(compact('loan_schedules','loan_schedule', 'amount_due'));
+                if (  (($amt > 0 ) &&  ($amount_due > 0 ))  ){
+                    if($amt > $amount_due ){ // of amount is larger than schedule
+                        $pay =  $amount_due ;
+                        $amt = $amt - $amount_due ;
+                        $loan_schedule->status =   config('constants.status.loan_paid') ;
+                    }else{ // if amount is smaller than schedule
+                        $pay =  $amt ;
+                        $amt = $amt - $amt ;
+                    }
+                    $pay =  $loan_schedule->paid + $pay;
+                    $loan_schedule->paid =  $pay ;
+                    $loan_schedule->date_paid = $date  ;
+                    $loan_schedule->balance = $loan_schedule->amount - $pay  ;
+                    $loan_schedule->save() ;
+                }
+            }
+
+            //check if i have finished paying
+            if(($loan->loan_amount_due - $loan_schedules->sum('paid')) == 0 ){
+                $next_status = config('constants.status.loan_paid');
+            }else{
+                $next_status = config('constants.status.loan_funds_disbursed');
+            }
+            }
+
+        }
+
+
         //save approval
         if ($save) {
 
@@ -367,7 +442,7 @@ class LoanApplicationsController extends Controller
                     'action' => $action,
                     'from_status_id' => $current_status,
                     'to_status_id' => $next_status,
-                    'loan_applications_id' => $loan->first()->id,
+                    'loan_applications_id' => $loan->id,
                     'users_id' => $logged_in->id,
                 ],
                 [
@@ -375,14 +450,23 @@ class LoanApplicationsController extends Controller
                     'action' => $action,
                     'from_status_id' => $current_status,
                     'to_status_id' => $next_status,
-                    'loan_applications_id' => $loan->first()->id,
+                    'loan_applications_id' => $loan->id,
                     'users_id' => $logged_in->id,
                 ]
             );
 
             //create notification
             $status_unseen = config('constants.status.unseen');
+            $seen = config('constants.status.seen');
             $url = route('loan.show', $loan);
+
+            //old notification
+            $old_not = Notifications::where('model_id', $loan->id,)
+                ->where( 'url' , $url,)
+                ->update(
+                ['status_id' => $seen ,
+                    ]
+            );
 
             $notification = Notifications::UpdateOrCreate(
                 [
@@ -404,6 +488,7 @@ class LoanApplicationsController extends Controller
                     'type' => config('constants.notifications.loan'),
                     'model_id' => $loan->id,
                     'url' => $url,
+                    'customer_id' =>$loan->customer->id ,
                     'status_id' => $status_unseen,
                     'created_by' => $logged_in->id
                 ]
@@ -476,9 +561,32 @@ class LoanApplicationsController extends Controller
     public function show(LoanApplications $loan)
     {
         $loan->load('loan', 'payslips', 'statements');
-        $loan->load('customer.nrc', 'schedules');
+        $loan->load('customer.nrc', 'schedules', 'approvals' );
         $logged_in_user = Auth::user();
-        return view('dashboard.loan.show')->with(compact('loan', 'logged_in_user'));
+        $next_users = [] ;
+//        $approvals = LoanApproals::where('loan_applications_id' , $loan->id)->get();
+        $approvals = $loan->approvals ;
+      //  dd($approvals);
+
+        if( $loan->statuses_id == config('constants.status.loan_request_login') ){
+            $next_users = User::where('id',$loan->customer_id  )->get();
+        }
+        elseif(  $loan->statuses_id == config('constants.status.loan_submission') ){
+            $next_users = User::where('role_id',config('constants.role.verifier.id')  )->get();
+        }
+        elseif(  $loan->statuses_id == config('constants.status.loan_reviewed') ){
+            $next_users = User::where('role_id',config('constants.role.approver.id')  )->get();
+        }
+        elseif(  $loan->statuses_id == config('constants.status.loan_approved') ){
+            $next_users = User::where('role_id',config('constants.role.verifier.id')  )->get();
+        }
+        elseif(  $loan->statuses_id == config('constants.status.loan_funds_disbursed') ){
+            $next_users = User::where('id',$loan->customer_id  )->get();
+        }else{
+
+        }
+
+        return view('dashboard.loan.show')->with(compact('loan', 'approvals', 'logged_in_user', 'next_users'));
     }
 
     /**

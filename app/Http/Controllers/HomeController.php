@@ -59,7 +59,7 @@ class HomeController extends Controller
                 if($total != null ) {
                     $total->load('schedules');
                 }
-                $notifications = Notifications::where('customer_id', $user->id)->get();
+                $notifications = Notifications::where('customer_id', $user->id)->orderBy('created_at', 'DESC')->get();
                 return view('dashboard.home')->with(compact('notifications', 'total'));
             }
         }
@@ -71,7 +71,7 @@ class HomeController extends Controller
         ) {
             $loans = LoanApplications::orderBy('created_at');
             $total = dashboardTotals::first();
-            $notifications = Notifications::where('status_id', config('constants.status.unseen'))->get();
+            $notifications = Notifications::where('status_id', config('constants.status.unseen'))->orderBy('created_at', 'desc')->get();
             return view('dashboard.home')->with(compact('notifications', 'total', 'loans'));
         } else {
             Auth::logout();

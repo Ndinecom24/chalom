@@ -282,13 +282,19 @@
                                         <div class="col-sm-3 ">
                                             <div class=" text-end">
                                                 @if( ($loan->customer->avatar ?? "" ) == "" )
-                                                    <img class="nav-item " width="60%"
-                                                         src="{{asset('images/user.png')}}" alt="">
+                                                    <img class="img-circle" width="60px" src="{{asset('images/user.png')}}" alt="">
                                                 @else
-                                                    <img class="nav-item " width="60%"
-                                                         src="{{$loan->customer->avatar ?? ""}}"
-                                                         alt="{{asset('images/user.png')}}">
+                                                    <img class="img-circle"  width="60%" src="{{$loan->customer->avatar ?? ""}}" alt="{{asset('images/user.png')}}">
                                                 @endif
+
+{{--                                                @if( ($loan->customer->avatar ?? "" ) == "" )--}}
+{{--                                                    <img class="nav-item " width="60%"--}}
+{{--                                                         src="{{asset('images/user.png')}}" alt="">--}}
+{{--                                                @else--}}
+{{--                                                    <img class="nav-item " width="60%"--}}
+{{--                                                         src="{{$loan->customer->avatar ?? ""}}"--}}
+{{--                                                         alt="{{asset('images/user.png')}}">--}}
+{{--                                                @endif--}}
                                             </div>
                                         </div>
                                         <div class="col-sm-9">
@@ -541,26 +547,59 @@
                                     </div>
                                 </div>
 
+
+                                <!-- APPROVALS LIST -->
+                                <div class="card mt-2">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <td>By</td>
+                                                        <td>From</td>
+                                                        <td>To</td>
+                                                        <td>Comment</td>
+                                                        <td>Date</td>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($approvals as $approval)
+                                                        <tr>
+                                                            <td>{{$approval->by->name ?? '--'}}</td>
+                                                            <td>{{$approval->from->name ?? '--'}}</td>
+                                                            <td>{{$approval->to->name ?? '--'}}</td>
+                                                            <td>{{$approval->comment ?? '--'}}</td>
+                                                            <td>{{ \Carbon\Carbon::parse($approval->created_at)->diffForhumans() }}</td>
+
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- APPROVE ACTIONS -->
                                 <div class="card mt-2">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-12 mt-1 mb-3">
                                                 <label> <b>Current Status : {{$loan->status->name ?? $loan->statuses_id }}</b></label>
-{{--                                                {{ config('constants.role.admin.id')}} | {{$logged_in_user->role_id}}--}}
                                             </div>
-
-{{--                                            @if($loan->statuses_id == config('constants.status.loan_request'))--}}
-{{--                                                <div class="row-cols-6">--}}
-{{--                                                    <button type="submit" name="Submit" disabled--}}
-{{--                                                            class="btn btn-outline-success"> Approve--}}
-{{--                                                    </button>--}}
-{{--                                                </div>--}}
 
                                                 {{-- [1] : LOAN APPLICATION NEEDS TO BE COMPLETED--}}
                                             @if($loan->statuses_id == config('constants.status.loan_request_login'))
 
                                                 {{-- ADMIN --}}
-                                                @if($logged_in_user->role_id ==  config('constants.role.admin.id'))
+                                                @if(
+    ($logged_in_user->role_id ==  config('constants.role.admin.id'))
+   || ($logged_in_user->role_id ==  config('constants.role.verifier.id'))
+   || ($logged_in_user->role_id ==  config('constants.role.approver.id'))
+    )
                                                 {{-- CLIENT --}}
                                                 <div class="col-12 text-center">
                                                     <span class="btn btn-outline-primary"
@@ -586,7 +625,7 @@
                                                 @if($logged_in_user->role_id ==  config('constants.role.verifier.id'))
                                                     <div class="col-8">
                                                         <div class="form-group">
-                                                            <label for="eMail">Comment<span class="text-danger">*</span></label>
+                                                            <label for="eMail">Comment <span class="text-danger">*</span></label>
                                                             <input type="text" required
                                                                    title="You need to add a reason/comments for your decision"
                                                                    class="form-control" id="comment" name="comment"
@@ -624,11 +663,11 @@
                                                 @endif
 
 
-                                            {{--  LOAN HAS BEEN APPROVED --}}
-                                            @elseif($loan->statuses_id == config('constants.status.loan_submission'))
+                                            {{--  LOAN HAS BEEN VERIFIED / PENDING APPROVAL --}}
+                                            @elseif($loan->statuses_id == config('constants.status.loan_reviewed'))
 
                                                 {{-- VERIFIER --}}
-                                                @if($logged_in_user->role_id ==  config('constants.role.verifier.id'))
+                                                @if($logged_in_user->role_id ==  config('constants.role.approver.id'))
                                                     <div class="col-8">
                                                         <div class="form-group">
                                                             <label for="eMail">Comment<span class="text-danger">*</span></label>
@@ -643,7 +682,7 @@
                                                                 class="text-success ">Approve</span></label>
                                                         <button type="submit" name="approve"
                                                                 title="Click to approve that you have verified this loan"
-                                                                value="{{config('constants.action.review')}}"
+                                                                value="{{config('constants.action.approve')}}"
                                                                 class="btn btn-outline-success"><i
                                                                 class="ui-icon ui-icon-circle-check"></i>
                                                         </button>
@@ -662,15 +701,14 @@
                                                     {{-- CLIENT --}}
                                                     <div class="col-12 text-center">
                                                         <span class="btn btn-outline-primary"
-                                                              title="Client ({{$loan->customer->name  ?? ""  }}) has completed and submitted loan application, it now needs to be verified by admins" >
-                                                            Pending Loan Verification
+                                                              title=" {{$loan->customer->name  ?? ""  }} Loan has been verified and now needs to be approved" >
+                                                            Pending Loan Approval
                                                         </span>
                                                     </div>
                                                 @endif
 
-                                            {{--  FUNDS NEEDS TO BE DISBURSED--}}
-                                            @elseif($loan->statuses_id == config('constants.status.loan_submission'))
-
+                                                {{--  APPROVED / FUNDS NEEDS TO BE DISBURSED--}}
+                                            @elseif($loan->statuses_id == config('constants.status.loan_approved'))
                                                 {{-- VERIFIER --}}
                                                 @if($logged_in_user->role_id ==  config('constants.role.verifier.id'))
                                                     <div class="col-8">
@@ -687,7 +725,7 @@
                                                                 class="text-success ">Approve</span></label>
                                                         <button type="submit" name="approve"
                                                                 title="Click to approve that you have verified this loan"
-                                                                value="{{config('constants.action.review')}}"
+                                                                value="{{config('constants.action.funds_disbursed')}}"
                                                                 class="btn btn-outline-success"><i
                                                                 class="ui-icon ui-icon-circle-check"></i>
                                                         </button>
@@ -706,8 +744,57 @@
                                                     {{-- CLIENT --}}
                                                     <div class="col-12 text-center">
                                                         <span class="btn btn-outline-primary"
-                                                              title="Client ({{$loan->customer->name  ?? ""  }}) has completed and submitted loan application, it now needs to be verified by admins" >
-                                                            Pending Loan Verification
+                                                              title="{{$loan->customer->name  ?? ""  }} Loan has been approved, waiting for funds to be disbursed now." >
+                                                            Pending Funds Disbursement
+                                                        </span>
+                                                    </div>
+                                                @endif
+
+
+                                                {{--  FUNDS NEEDS TO BE DISBURSED / REPAYEMENT--}}
+                                            @elseif( ($loan->statuses_id == config('constants.status.loan_funds_disbursed') )
+                                               )
+                                                {{-- VERIFIER / ADMIN / APPROVER --}}
+                                                @if($logged_in_user->role_id ==  config('constants.role.verifier.id')
+                                               || ($loan->statuses_id == config('constants.role.approver.id')) )
+                                                    <div class="col-8">
+                                                        <div class="form-group">
+                                                            <label for="eMail">Amount<span class="text-danger">*</span></label>
+                                                            <input type="number" required
+                                                                   title="Enter Amount being repaid"
+                                                                   class="form-control" id="amount" name="amount"
+                                                                   placeholder="Enter Amount Repaid">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <label>Total Balance :<br> ZMK {{number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }} </label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <div class="form-group">
+                                                            <label for="eMail">Comment<span class="text-danger">*</span></label>
+                                                            <input type="text" required
+                                                                   title="You need to add a reason/comments for your decision"
+                                                                   class="form-control" id="comment" name="comment"
+                                                                   placeholder="Enter comment for your action">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <label for="approve"><span
+                                                                class="text-success ">Submit Payment</span></label>
+                                                        <button type="submit" name="approve"
+                                                                title="Click to approve that you have verified this loan"
+                                                                value="{{config('constants.action.loan_payment')}}"
+                                                                class="btn btn-outline-success"><i
+                                                                class="ui-icon ui-icon-circle-check"></i>
+                                                        </button>
+                                                    </div>
+
+                                                @else
+                                                    {{-- CLIENT --}}
+                                                    <div class="col-12 text-center">
+                                                        <span class="btn btn-outline-primary"
+                                                              title="{{$loan->customer->name  ?? ""  }} Loan has been approved, waiting for funds to be disbursed now." >
+                                                            Pending Loan Repayment
                                                         </span>
                                                     </div>
                                                 @endif
@@ -715,19 +802,44 @@
 
                                                 {{--  NEXT ACTION  --}}
                                             @else
-                                                <div class="row-cols-6">
-                                                    <span type="submit" name="Submit"
-                                                          title="ummmm devs"
-                                                          class="btn btn-outline-success">
-                                                        PENDING NEXT ACTION
-                                                    </span>
+                                                <div class="row-cols-12">
+{{--                                                    <span type="submit" name="Submit"--}}
+{{--                                                          title="ummmm devs"--}}
+{{--                                                          class="btn btn-outline-success">--}}
+{{--                                                        PENDING NEXT ACTION--}}
+{{--                                                    </span>--}}
                                                 </div>
                                             @endif
 
 
 
+
+
                                         </div>
                                     </div>
+
+                                    @if(\Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
+      || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.admin.id')
+       || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.verifier.id')
+  || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.approver.id')
+      )
+
+                                    <div class="card-footer">
+                                            <div class="row-cols-12">
+                                                @if(sizeof($next_users) > 0 )
+                                            <h6 class="mb-2 text-primary">NEXT USER TO ACT</h6>
+                                                    @endif
+                                        </div>
+                                        @foreach( $next_users as $next_user)
+                                            <span class="text-xs text-danger text-muted">Name : {{$next_user->name ?? '--'}}</span> <br>
+                                            <span class="text-xs text-danger text-muted">Email :{{$next_user->email ?? '--'}}</span> <br>
+                                            <span class="text-xs text-danger text-muted">Phone : {{$next_user->mobile_number ?? '--'}}</span> <br>
+                                            <span class="text-xs text-danger text-muted">Role  : {{$next_user->role->name ?? '--'}}</span> <br>
+                                            <hr>
+                                        @endforeach
+                                    </div>
+                                        @endif
+
                                 </div>
 
 
@@ -806,6 +918,14 @@
                                             <div class="card-body  border-top py-3">
                                                 <div class="row">
                                                     <div class="col-12">
+                                                        Balance : <span
+                                                            class="mb-0"> <b>ZMW {{number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }} </b></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body  border-top py-3">
+                                                <div class="row">
+                                                    <div class="col-12">
                                                         <table class="table table-striped">
                                                             <thead>
                                                             <tr>
@@ -819,20 +939,27 @@
                                                             @foreach($loan->schedules as $schedule)
                                                                 <tr>
                                                                     <td>{{$schedule->installment}}</td>
-                                                                    <td>ZMW {{ number_format($schedule->amount,2)}}</td>
+                                                                    <td>ZMW {{ number_format(($schedule->amount - ($schedule->paid ?? 0)),2)}}</td>
                                                                     <td>{{$schedule->date}}</td>
-                                                                    @if( $schedule->date  > date('Y-m-d') && $schedule->paid ?? 0 < 1)
-                                                                        <td><span class="lable"><i
-                                                                                    class="bi bi-x-circle-fill text-danger"></i></span>
-                                                                        </td>
-                                                                    @else
-                                                                        @if($schedule->paid ?? 0 >= $schedule->amount )
-                                                                            <td><span class="text-success"><i
-                                                                                        class="bi bi-check2-circle"></i></span>
+{{--                                                                    @if( $schedule->date  > date('Y-m-d') &&  ($schedule->paid ?? 0) != $schedule->amount )--}}
+                                                                        @if( $schedule->date  > date('Y-m-d') )
+                                                                        @if( ( $schedule->balance ?? -1 ) == 0)
+                                                                            <td><span title="Paid after due date" class="text-success"><i
+                                                                                        class="bi bi-check2-circle"></i> {{$schedule->paid ?? 0}}</span>
                                                                             </td>
                                                                         @else
-                                                                            <td><span class="text-info"><i
-                                                                                        class="bi bi-dash-circle"></i></span>
+                                                                        <td><span title="Payment is overdue. Please make payment" class="lable"><i
+                                                                                    class="bi bi-info-circle-fill text-danger"></i> {{$schedule->paid ?? 0}}</span>
+                                                                        </td>
+                                                                        @endif
+                                                                    @else
+                                                                        @if( ( $schedule->balance ?? -1 ) == 0)
+                                                                            <td><span title="Paid in time" class="text-success"><i
+                                                                                        class="bi bi-check2-circle"></i> {{$schedule->paid ?? 0}}</span>
+                                                                            </td>
+                                                                        @else
+                                                                            <td><span title="Pending payment" class="text-info"><i
+                                                                                        class="bi bi-dash-circle"></i> {{$schedule->paid ?? 0}}</span>
                                                                             </td>
                                                                         @endif
                                                                     @endif
