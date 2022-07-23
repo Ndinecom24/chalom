@@ -754,7 +754,7 @@
                                                 {{-- VERIFIER --}}
 {{--                                                @if( $logged_in_user->role_id ==  config('constants.role.verifier.id'))--}}
                                                     @if( ($logged_in_user->role_id ==  config('constants.role.verifier.id')) ||
-                                               ($logged_in_user->role_id ==  config('constants.role.verifier.id')))
+                                               ($logged_in_user->role_id ==  config('constants.role.approver.id')))
                                                     <div class="col-lg-8 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="eMail">Comment<span class="text-danger">*</span></label>
@@ -837,7 +837,7 @@
                                                     {{-- CLIENT --}}
                                                     <div class="col-12 text-center">
                                                         <span class="btn btn-outline-primary"
-                                                              title="{{$loan->customer->name  ?? ""  }} Loan has been approved, waiting for funds to be disbursed now." >
+                                                              title="{{$loan->customer->name  ?? ""  }} Loan has been approved, waiting for funds to be repaid now." >
                                                             Pending Loan Repayment
                                                         </span>
                                                     </div>
@@ -973,9 +973,9 @@
                                                         <table class="table table-striped table_wrapper">
                                                             <thead>
                                                             <tr>
-                                                                <td>Installmendfasdf</td>
-                                                                <td>Amount</td>
-                                                                <td>Date</td>
+                                                                <td>Installment</td>
+                                                                <td>Amount ZMK</td>
+                                                                <td>Due Date</td>
                                                                 <td>Paid</td>
                                                             </tr>
                                                             </thead>
@@ -983,7 +983,7 @@
                                                             @foreach($loan->schedules as $schedule)
                                                                 <tr>
                                                                     <td>{{$schedule->installment}}</td>
-                                                                    <td>ZMW {{ number_format(($schedule->amount - ($schedule->paid ?? 0)),2)}}</td>
+                                                                    <td> {{ number_format(($schedule->amount - ($schedule->paid ?? 0)),2)}}</td>
                                                                     <td>{{$schedule->date}}</td>
 {{--                                                                    @if( $schedule->date  > date('Y-m-d') &&  ($schedule->paid ?? 0) != $schedule->amount )--}}
                                                                         @if( $schedule->date  < date('Y-m-d') )

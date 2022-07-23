@@ -379,7 +379,9 @@ class LoanApplicationsController extends Controller
 
         //THIRD APPROVAL
         elseif ($current_status == config('constants.status.loan_approved')
-            && $logged_in->role_id == config('constants.role.verifier.id')
+            &&   ( ($logged_in->role_id == config('constants.role.verifier.id') )
+            ||   ( $logged_in->role_id == config('constants.role.approver.id') )
+            )
         ) {
             //actions
             if ($action == config('constants.action.reject')) {
@@ -594,7 +596,8 @@ class LoanApplicationsController extends Controller
             $next_users = User::where('role_id',config('constants.role.approver.id')  )->get();
         }
         elseif(  $loan->statuses_id == config('constants.status.loan_approved') ){
-            $next_users = User::where('role_id',config('constants.role.verifier.id')  )->get();
+            $next_users = User::where('role_id',config('constants.role.verifier.id')  )
+                ->orWhere('role_id',config('constants.role.approver.id') )->get();
         }
         elseif(  $loan->statuses_id == config('constants.status.loan_funds_disbursed') ){
             $next_users = User::where('id',$loan->customer_id  )->get();

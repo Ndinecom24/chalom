@@ -17,9 +17,11 @@ class CreateDashboardTotalsViewTable extends Migration
         DB::statement("
         CREATE OR REPLACE VIEW dashboard_totals_view AS
         (
-           SELECT
+            SELECT
 
-            count(id) as borrowers,
+            count(id) as users,
+            (SELECT count(id) as total FROM `users` WHERE customer_type_id = '2'  ) as employees ,
+            (SELECT count(id) as total FROM `users` WHERE customer_type_id = '1'  ) as customers ,
             (SELECT count(id) as total FROM `loan_applications` WHERE statuses_id = '9'  ) as paid_loans ,
             (SELECT sum(loan_amount) as total FROM `loan_applications` WHERE statuses_id = '9'  ) as paid_loans_amount ,
             (SELECT sum(loan_amount_due) as total FROM `loan_applications` WHERE statuses_id = '9'  ) as paid_loans_amount_due ,

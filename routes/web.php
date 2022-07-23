@@ -7,7 +7,7 @@ use App\Http\Controllers\Dashboard\Settings\WorkStatusController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Users\ClientController;
 use App\Http\Controllers\Users\UserController;
-use App\Http\Controllers\Website\Loans\LoanApplicationsController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
 

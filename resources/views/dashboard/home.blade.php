@@ -85,19 +85,22 @@
                                     </h4>
                                 </div>
                                 <div class="float-right">
-                                    <p class="card-text text-dark">Customers</p>
+                                    <p class="card-text text-dark">Total Users</p>
                                     <h4 class="bold-text">
-                                        {{$total->borrowers}}
+                                        {{$total->users}}
+                                    </h4>
+                                    <h4 class="bold-text text-muted">
+                                       Customers: {{ number_format($total->customers, 0)}} | Employees:  {{$total->employees}}
                                     </h4>
                                 </div>
                                 <p class="text-muted">
-                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> With Active Loans :  {{sizeof($loans->where('statuses_id' , config('constants.status.loan_funds_disbursed') )
+                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> With Active Loans :  {{sizeof($loans->where('statuses_id' , config('constants.status.loan_funds_disbursed') )
 
                 ->Orwhere('statuses_id',  config('constants.status.loan_overdue') )
             ->get() )}}
                                 </p>
 {{--                                <p class="text-muted">--}}
-{{--                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Repaid Loans :  {{sizeof($loans->where('statuses_id' , config('constants.status.loan_paid') )--}}
+{{--                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Repaid Loans :  {{sizeof($loans->where('statuses_id' , config('constants.status.loan_paid') )--}}
 
 {{--            ->get() )}}--}}
 {{--                                </p>--}}
@@ -126,7 +129,7 @@
                                 </div>
                             </div>
                             <p class="text-muted">
-                                <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Loan Count :  {{$total->pending_loans}}
+                                <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Loan Count :  {{$total->pending_loans}}
                             </p>
                         </div>
                     </div>
@@ -150,7 +153,7 @@
                                     </h4>
                                 </div>
                                 <p class="text-muted">
-                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Count Active Loans :   {{$total->active_loans}}
+                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Count Active Loans :   {{$total->active_loans}}
                                 </p>
                             </div>
                         </div>
@@ -175,7 +178,7 @@
                                     </h4>
                                 </div>
                                 <p class="text-muted">
-                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i>Count Paid Loans :{{ number_format($total->paid_loans,0)}}
+                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i>Count Paid Loans :{{ number_format($total->paid_loans,0)}}
                                 </p>
                             </div>
 
@@ -207,7 +210,7 @@
                                 </div>
                             </div>
                             <p class="text-muted">
-                                <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Status : Updated
+                                <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Status : Updated
                             </p>
                         </div>
                     </div>
@@ -235,9 +238,9 @@
                             </div>
                             <p class="text-muted">
                                 @if($total != null)
-                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Last Payment : {{$total->schedules->where('status',  config('constants.status.loan_paid'))->last()->paid_date ?? "none"}}
+                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Last Payment : {{$total->schedules->where('status',  config('constants.status.loan_paid'))->last()->paid_date ?? "none"}}
                                 @else
-                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Last Payment : None
+                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Last Payment : None
                                 @endif
                             </p>
                         </div>
@@ -265,9 +268,9 @@
                             </div>
                             <p class="text-muted">
                                 @if($total != null)
-                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Remaining Installments : {{sizeof($total->schedules->where('status', '!=' ,config('constants.status.loan_paid')) ?? 0 )}}
+                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Remaining Installments : {{sizeof($total->schedules->where('status', '!=' ,config('constants.status.loan_paid')) ?? 0 )}}
                                 @else
-                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Remaining Installments : 0.00
+                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Remaining Installments : 0.00
                                 @endif
                             </p>
                         </div>
@@ -295,9 +298,9 @@
                             </div>
                             <p class="text-muted">
                                 @if($total != null)
-                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Next Payment : {{ $total->schedules->where('status', '!=' ,config('constants.status.loan_paid'))->first()->date ?? "none" }}
+                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Next Payment : {{ $total->schedules->where('status', '!=' ,config('constants.status.loan_paid'))->first()->date ?? "none" }}
                                 @else
-                                    <i class="fa fa-repeat mr-1" aria-hidden="true"></i> Next Payment : None
+                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Next Payment : None
                                 @endif
                             </p>
                         </div>
