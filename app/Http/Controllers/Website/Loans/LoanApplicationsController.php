@@ -48,15 +48,19 @@ class LoanApplicationsController extends Controller
             if($request->search_term == null){
                 $list = LoanApplications::orderBy('created_at', 'desc')->paginate(10);
             }else{
-                $users = User::where('name', $request->search_term )->get();
-                dd($users);
-                $list = LoanApplications::where('statuses_id', $request->status )
-                    -> where('statuses_id', $request->status )
-                    -> where('statuses_id', $request->status )
+                $users = User::where('name', 'like', '%'.$request->search_term.'%' )->get();
+                $list = LoanApplications::whereIn('customer_id', $users->pluck('id')->toArray() )
                 ->orderBy('created_at', 'desc')->paginate(10);
             }
         } else {
-            $list = LoanApplications::where('statuses_id', $request->status )->orderBy('created_at')->paginate(10);
+            if($request->search_term == null){
+                $list = LoanApplications::where('statuses_id', $request->status )->orderBy('created_at')->paginate(10);
+            }else{
+                $users = User::where('name', 'like', '%'.$request->search_term.'%' )->get();
+                $list = LoanApplications::where('statuses_id', $request->status )
+                    -> whereIn('customer_id', $users->pluck('id')->toArray() )
+                    ->orderBy('created_at', 'desc')->paginate(10);
+            }
         }
 //search_term
         $list->load('loan', 'schedules');
@@ -405,6 +409,7 @@ class LoanApplicationsController extends Controller
 
             $date = \Carbon\Carbon::now();
             $amt = $request->amount ;
+            $request->comment = $request->comment ." | ZMW ". $request->amount;
 
             //get the schedules
             $loan_schedules = LoanSchedule::where('loan_applications_id', $loan->id)->get();
@@ -416,27 +421,34 @@ class LoanApplicationsController extends Controller
             }else{
                 $save = true;
             foreach($loan_schedules as $loan_schedule ){
-                $amount_due = $loan_schedule->balance  ;
+
+              //  dd($loan_schedule );
+                $amount_due = $loan_schedule->balance ?? 0  ;
                 if($amount_due == 0 ){
                     $amount_due = $loan_schedule->amount  ;
                 }
 
-              //  dd(compact('loan_schedules','loan_schedule', 'amount_due'));
-                if (  (($amt > 0 ) &&  ($amount_due > 0 ))  ){
-                    if($amt > $amount_due ){ // of amount is larger than schedule
-                        $pay =  $amount_due ;
-                        $amt = $amt - $amount_due ;
-                        $loan_schedule->status =   config('constants.status.loan_paid') ;
-                    }else{ // if amount is smaller than schedule
-                        $pay =  $amt ;
-                        $amt = $amt - $amt ;
+                if($loan_schedule->amount != $loan_schedule->paid ){
+                    //  dd(compact('loan_schedules','loan_schedule', 'amount_due'));
+                    if (  ($amt > 0 ) &&  ($amount_due > 0 )  ){
+
+                        if($amt > $amount_due ){ // of amount is larger than schedule
+                            $pay =  $amount_due ;
+                            $amt = $amt - $pay ;
+                            $loan_schedule->status =   config('constants.status.loan_paid') ;
+                        }else{ // if amount is smaller than schedule
+                            $pay =  $amt ;
+                            $amt = $amt - $amt ;
+                        }
+                        $pay =  $loan_schedule->paid + $pay;
+                        $loan_schedule->paid =  $pay ;
+                        $loan_schedule->date_paid = $date  ;
+                        $loan_schedule->balance = $loan_schedule->amount - $pay  ;
+                        $loan_schedule->save() ;
                     }
-                    $pay =  $loan_schedule->paid + $pay;
-                    $loan_schedule->paid =  $pay ;
-                    $loan_schedule->date_paid = $date  ;
-                    $loan_schedule->balance = $loan_schedule->amount - $pay  ;
-                    $loan_schedule->save() ;
                 }
+
+
             }
 
             //check if i have finished paying
@@ -489,7 +501,7 @@ class LoanApplicationsController extends Controller
             $notification = Notifications::UpdateOrCreate(
                 [
                     'name' => 'Loan ' . $action,
-                    'subject' => $loan->customer->name . '\'s ' . $loan->loan_amount_due . 'ZMW Loan ' . $action,
+                    'subject' => $loan->customer->name . '\'s ' . $loan->loan_amount_due . ' ZMW Loan ' . $action,
                     'comment' => $request->comment,
                     'type' => config('constants.notifications.loan'),
                     'model_id' => $loan->id,
@@ -499,7 +511,7 @@ class LoanApplicationsController extends Controller
                 ],
                 [
                     'name' => 'Loan ' . $action,
-                    'subject' => $loan->customer->name . '\'s ' . $loan->loan_amount_due . 'ZMW Loan ' . $action,
+                    'subject' => $loan->customer->name . '\'s ' . $loan->loan_amount_due . ' ZMW Loan ' . $action,
                     'message' => $logged_in->name . ' has ' . $action . ' a ZMW ' . $loan->loan_amount_due . ' ' . $loan->loan->name . ' Loan for '
                         . $loan->loan_purpose . ' at ' . date('r'),
                     'comment' => $request->comment,

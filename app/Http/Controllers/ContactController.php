@@ -32,9 +32,11 @@ class ContactController extends Controller
             'message' => 'required'
         ]);
 
+
+
         Contact::create($request->all());
 
         return redirect()->back()
-            ->with(['success' => 'Thank you for contact us. we will contact you shortly.']);
+            ->with(['success' => 'Thank you for contact us. message sent successfully, we will contact you shortly.']);
     }
 }

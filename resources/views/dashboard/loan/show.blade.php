@@ -795,12 +795,12 @@
                                                 @endif
 
 
-                                                {{--  FUNDS NEEDS TO BE DISBURSED / REPAYEMENT--}}
+                                                {{--  FUNDS NEEDS TO BE REPAYEMENT--}}
                                             @elseif( ($loan->statuses_id == config('constants.status.loan_funds_disbursed') )
                                                )
                                                 {{-- VERIFIER / ADMIN / APPROVER --}}
-                                                @if($logged_in_user->role_id ==  config('constants.role.verifier.id')
-                                               || ($loan->statuses_id == config('constants.role.approver.id')) )
+                                                @if( ($logged_in_user->role_id ==  config('constants.role.verifier.id')) ||
+                                                 ($logged_in_user->role_id ==  config('constants.role.approver.id')))
                                                     <div class="col-lg-8 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="eMail">Amount<span class="text-danger">*</span></label>
@@ -811,7 +811,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4 col-sm-12">
-                                                        <label>Total Balance :<br> ZMK {{number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }} </label>
+                                                        <label>Total Balance :<br> <b>ZMK {{number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }}</b> </label>
                                                     </div>
                                                     <div class="col-lg-8 col-sm-12">
                                                         <div class="form-group">
