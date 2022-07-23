@@ -68,6 +68,7 @@ class LoanProductsController extends Controller
                 'highest_amount' => $request->highest_amount,
                 'lowest_tenure' => $request->lowest_tenure,
                 'highest_tenure' => $request->highest_tenure,
+                'collateral' => $request->collateral ,
                 'description' => $request->description,
                 'statuses_id' => $request->statuses_id,
                 'created_by' => $user->id,
@@ -117,6 +118,7 @@ class LoanProductsController extends Controller
         $loanProducts->highest_amount = $request->highest_amount;     // 50000.0
         $loanProducts->lowest_tenure = $request->lowest_tenure;     // 1
         $loanProducts->highest_tenure = $request->highest_tenure;     // 36
+        $loanProducts->collateral = $request->collateral;     // 36
         $loanProducts->about = $request->about;     // "BUSINESS LOANS"
         $loanProducts->description = $request->description;     // "BUSINESS LOANS"
         $loanProducts->image = $request->image;     // "http://localhost/ndinecom/chalom/public/theme/borrow/assets/images/svg/piggy-bank.svg"

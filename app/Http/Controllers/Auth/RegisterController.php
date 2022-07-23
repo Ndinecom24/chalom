@@ -66,10 +66,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $uuid = Str::uuid()->toString();
+        $uuid_user = Str::uuid()->toString();
+
+      //  dd($data);
+
         $user = User::create([
             'name' => $data['name'],
-            'uuid' => $uuid,
+            'uuid' => $uuid_user,
             'email' => $data['email'],
             'role_id' => $data['roles_id'] ?? 1,
             'customer_type_id' => $data['customer_types_id'] ?? 1,
@@ -78,6 +81,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
         if($data['uuid'] != 0){
+
             // find the loan
             $loan = LoanApplications::where('uuid', $data['uuid'])->first();
             $loan->customer_id = $user->id ;

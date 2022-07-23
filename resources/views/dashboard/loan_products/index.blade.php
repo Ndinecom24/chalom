@@ -103,14 +103,14 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-6">
+                                                        <div class="col-lg-6 col-md-12 col-sm-12">
                                                             <div class="form-group  text-start ">
                                                                 <label for="description">Brief Description</label>
                                                                 <textarea rows="3"  class="form-control" id="description" name="description"
                                                                           placeholder="Enter Brief Description" required></textarea>
                                                             </div>
                                                         </div>
-                                                        <div class="col-6">
+                                                        <div class="col-lg-6 col-md-12 col-sm-12">
                                                             <div class="form-group  text-start ">
                                                                 <label for="about">About</label>
                                                                 <textarea rows="3" class="form-control" id="about" name="about"
@@ -119,14 +119,14 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-6">
+                                                        <div class="col-lg-6 col-md-12 col-sm-12">
                                                             <div class="form-group text-start">
                                                                 <span  for="rate_per_month">Rate Per Month (%)</span>
                                                                 <input type="number" class="form-control" id="rate_per_month" name="rate_per_month"
                                                                        placeholder="Enter Rate Per Month" required>
                                                             </div>
                                                         </div>
-                                                        <div class="col-6">
+                                                        <div class="col-lg-6 col-md-12 col-sm-12">
                                                             <div class="form-group text-start">
                                                                 <span  for="arrangement_fee"> Arrangement Fee (ZMW)</span>
                                                                 <input type="number" class="form-control" id="arrangement_fee" name="arrangement_fee"
@@ -135,28 +135,28 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-3">
+                                                        <div class="col-lg-3 col-md-12 col-sm-12">
                                                             <div class="form-group text-start">
                                                                 <span  for="lowest_amount">Lowest Amount (ZMW)</span>
                                                                 <input type="number" class="form-control" id="lowest_amount" name="lowest_amount"
                                                                        placeholder="Enter Name" required>
                                                             </div>
                                                         </div>
-                                                        <div class="col-3">
+                                                        <div class="col-lg-3 col-md-12 col-sm-12">
                                                             <div class="form-group text-start">
                                                                 <span  for="highest_amount"> Highest Amount (ZMW)</span>
                                                                 <input type="number" class="form-control" id="highest_amount" name="highest_amount"
                                                                        placeholder="Enter Highest Amount" required>
                                                             </div>
                                                         </div>
-                                                        <div class="col-3">
+                                                        <div class="col-lg-3 col-md-12 col-sm-12">
                                                             <div class="form-group text-start">
                                                                 <span  for="lowest_tenure"> Lowest Tenure (Months)</span>
                                                                 <input type="number" class="form-control" id="lowest_tenure" name="lowest_tenure"
                                                                        placeholder="Enter Lowest Tenure" required>
                                                             </div>
                                                         </div>
-                                                        <div class="col-3">
+                                                        <div class="col-lg-3 col-md-12 col-sm-12">
                                                             <div class="form-group text-start">
                                                                 <span  for="highest_tenure"> Highest Tenure (Months)</span>
                                                                 <input type="number" class="form-control" id="highest_tenure" name="highest_tenure"
@@ -165,7 +165,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-6">
+                                                        <div class="col-lg-4 col-md-12 col-sm-12">
                                                             <div class="form-group text-start">
                                                                 <span  for="highest_tenure">Icon</span>
                                                                 <select class="form-control" id="image" name="image"
@@ -180,7 +180,7 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <div class="col-6">
+                                                        <div class="col-lg-4 col-md-12 col-sm-12">
                                                             <div class="form-group text-start">
                                                                 <span  for="status_id">Status</span>
                                                                 <select class="form-control" id="statuses_id" name="statuses_id"
@@ -189,6 +189,16 @@
                                                                     @foreach($statuses as $status)
                                                                         <option value="{{$status->id}}">{{$status->name}}</option>
                                                                     @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-12 col-sm-12">
+                                                            <div class="form-group text-start">
+                                                                <span for="status_id"> Collateral </span>
+                                                                <select class="form-control" id="collateral" name="collateral" required>
+                                                                    <option value="">--Choose--</option>
+                                                                    <option value="No Collateral">No Collateral</option>
+                                                                    <option value="Need Collateral">Need Collateral</option>
                                                                 </select>
                                                             </div>
                                                         </div>

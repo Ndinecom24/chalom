@@ -1,6 +1,13 @@
 @extends('layouts.website.main')
 
 @push('custom-stylesheets')
+    <style>
+        .table_wrapper{
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+    </style>
     <style class="stylesheet">
         * {
             margin: 0;
@@ -311,38 +318,38 @@
                                                 <div class="col-12">
                                                     <div class="row gutters">
 
-                                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                             <div class="form-group">
                                                                 <label for="name">Full Name : <span
                                                                         class="text-dark "> {{$loan->customer->name  ?? "" }} </span>
                                                                 </label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                             <div class="form-group">
                                                                 <label for="eMail">Email : <span
                                                                         class="text-dark">{{$loan->customer->email  ?? "" }}</span></label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                             <div class="form-group">
                                                                 <label for="phone">Phone : <span
                                                                         class="text-dark">{{$loan->customer->mobile_number  ?? ""  }}</span></label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                             <div class="form-group">
                                                                 <label for="dob">Date of Birth : <span
                                                                         class="text-dark">{{$loan->customer->dob  ?? "" }}</span></label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                             <div class="form-group">
                                                                 <label for="nid">National Identity<span
                                                                         class="text-dark">{{$loan->customer->nid  ?? ""  }}</span></label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                             <div class="form-group">
                                                                 <label for="gender">Gender : <span
                                                                         class="text-dark">{{$loan->customer->gender  ?? ""  }}</span></label>
@@ -361,25 +368,25 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="row gutters">
-                                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="Street">Plot and Street : <span
                                                                     class="text-dark">{{$loan->customer->plot_street ?? "" }}</span></label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="ciTy">City : <span
                                                                     class="text-dark">{{$loan->customer->city ?? "" }}</span></label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="sTate">Country : <span
                                                                     class="text-dark">{{$loan->customer->country ?? "Zambia" }}</span></label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="zIp">Zip Code : <span
                                                                     class="text-dark">{{$loan->customer->zip_code ?? "10101" }}</span></label>
@@ -397,13 +404,13 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="row gutters">
-                                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="role_id">Work Status : <span
                                                                     class="text-dark">{{$loan->customer->work->name ?? "--Choose--" }}</span></label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="customer_type_id">User-Type <span
                                                                     class="text-dark">{{$loan->customer->customerType->name  ?? "" }}</span>
@@ -420,38 +427,38 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row gutters">
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="kin_name">Full Name : <span
                                                             class="text-dark">{{$loan->customer->kin->name ?? "" }}</span></label>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="kin_phone">Phone : <span
                                                             class="text-dark">{{$loan->customer->kin->phone ?? "" }}</span></label>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="kin_email">Email : <span
                                                             class="text-dark">{{$loan->customer->kin->email ?? "" }}</span></label>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="kin_work">Work Status : <span
                                                             class="text-dark">{{$loan->customer->kin->work_status ?? "" }}</span></label>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="kin_work_place">Work/School/Institution/Home : <span
                                                             class="text-dark">{{$loan->customer->kin->work_place ?? "" }}</span></label>
                                                 </div>
                                             </div>
 
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="kin_relationship">Relationship : <span
                                                             class="text-dark">{{$loan->customer->kin->kin_relationship ?? "" }}</span></label>
@@ -520,6 +527,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="card mt-2">
                                     <div class="card-header">
                                         <h6 class="mb-2 text-primary">NRC</h6>
@@ -547,13 +555,47 @@
                                     </div>
                                 </div>
 
+                                @if($loan->loan->collateral == "Need Collateral")
+                                <div class="card mt-2">
+                                    <div class="card-header">
+                                        <h6 class="mb-2 text-primary">Collateral</h6>
+                                    </div>
+                                    <div class="card-body  ">
+                                        <div class="row gutters">
+                                            @if($loan->collaterals != null)
+                                                @foreach($loan->collaterals as $collateral)
+                                                    <div class="col-12">
+                                                        <iframe id="{{$collateral->id}}"
+                                                                src="{{$collateral->path }}"
+                                                                style="width:100%; height: 800px"
+                                                                title="{{$collateral->name}}"></iframe>
+                                                        <span>{{number_format( $collateral->file_size, 2) }}MB {{$collateral->name}} </span>
+                                                        <span> | </span>
+                                                        <a href="{{$collateral->path}}"
+                                                           target="_blank">View</a>
+                                                        <span> | </span>
+                                                        <a href="#" data-toggle="modal" data-sent_data="{{$collateral}}"
+                                                           data-target="#modal-change">Edit</a>
+
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <span class="text-bold">Description : </span>
+                                        <span>{{$loan->collateral_description}}</span>
+                                    </div>
+                                </div>
+                                @endif
+
 
                                 <!-- APPROVALS LIST -->
                                 <div class="card mt-2">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-12">
-                                                <table class="table table-striped">
+                                                <table class="table table-striped table_wrapper" >
                                                     <thead>
                                                     <tr>
                                                         <td>By</td>
@@ -602,7 +644,7 @@
     )
                                                 {{-- CLIENT --}}
                                                 <div class="col-12 text-center">
-                                                    <span class="btn btn-outline-primary"
+                                                    <span class=" bg-gradient-green"
                                                             title="Client ({{$loan->customer->name  ?? "" }}) needs to complete this loan application and submit for verification" >
                                                         Pending Loan Submission
                                                     </span>
@@ -623,7 +665,7 @@
 
                                                 {{-- VERIFIER --}}
                                                 @if($logged_in_user->role_id ==  config('constants.role.verifier.id'))
-                                                    <div class="col-8">
+                                                    <div class="col-lg-8 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="eMail">Comment <span class="text-danger">*</span></label>
                                                             <input type="text" required
@@ -632,7 +674,7 @@
                                                                    placeholder="Enter comment for your action">
                                                         </div>
                                                     </div>
-                                                    <div class="col-2">
+                                                    <div class="col-lg-2 col-sm-12">
                                                         <label for="approve"><span
                                                                 class="text-success ">Approve</span></label>
                                                         <button type="submit" name="approve"
@@ -642,7 +684,7 @@
                                                                 class="ui-icon ui-icon-circle-check"></i>
                                                         </button>
                                                     </div>
-                                                    <div class="col-2">
+                                                    <div class="col-lg-2 col-sm-12">
                                                         <label for="reject"><span
                                                                 class="text-danger">Reject</span></label>
                                                         <button type="submit" name="reject"
@@ -668,7 +710,7 @@
 
                                                 {{-- VERIFIER --}}
                                                 @if($logged_in_user->role_id ==  config('constants.role.approver.id'))
-                                                    <div class="col-8">
+                                                    <div class="col-lg-8 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="eMail">Comment<span class="text-danger">*</span></label>
                                                             <input type="text" required
@@ -677,7 +719,7 @@
                                                                    placeholder="Enter comment for your action">
                                                         </div>
                                                     </div>
-                                                    <div class="col-2">
+                                                    <div class="col-lg-2 col-sm-12">
                                                         <label for="approve"><span
                                                                 class="text-success ">Approve</span></label>
                                                         <button type="submit" name="approve"
@@ -687,7 +729,7 @@
                                                                 class="ui-icon ui-icon-circle-check"></i>
                                                         </button>
                                                     </div>
-                                                    <div class="col-2">
+                                                    <div class="col-lg-2 col-sm-12">
                                                         <label for="reject"><span
                                                                 class="text-danger">Reject</span></label>
                                                         <button type="submit" name="reject"
@@ -710,8 +752,10 @@
                                                 {{--  APPROVED / FUNDS NEEDS TO BE DISBURSED--}}
                                             @elseif($loan->statuses_id == config('constants.status.loan_approved'))
                                                 {{-- VERIFIER --}}
-                                                @if($logged_in_user->role_id ==  config('constants.role.verifier.id'))
-                                                    <div class="col-8">
+{{--                                                @if( $logged_in_user->role_id ==  config('constants.role.verifier.id'))--}}
+                                                    @if( ($logged_in_user->role_id ==  config('constants.role.verifier.id')) ||
+                                               ($logged_in_user->role_id ==  config('constants.role.verifier.id')))
+                                                    <div class="col-lg-8 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="eMail">Comment<span class="text-danger">*</span></label>
                                                             <input type="text" required
@@ -720,7 +764,7 @@
                                                                    placeholder="Enter comment for your action">
                                                         </div>
                                                     </div>
-                                                    <div class="col-2">
+                                                    <div class="col-lg-2 col-sm-12">
                                                         <label for="approve"><span
                                                                 class="text-success ">Approve</span></label>
                                                         <button type="submit" name="approve"
@@ -730,7 +774,7 @@
                                                                 class="ui-icon ui-icon-circle-check"></i>
                                                         </button>
                                                     </div>
-                                                    <div class="col-2">
+                                                    <div class="col-lg-2 col-sm-12">
                                                         <label for="reject"><span
                                                                 class="text-danger">Reject</span></label>
                                                         <button type="submit" name="reject"
@@ -757,7 +801,7 @@
                                                 {{-- VERIFIER / ADMIN / APPROVER --}}
                                                 @if($logged_in_user->role_id ==  config('constants.role.verifier.id')
                                                || ($loan->statuses_id == config('constants.role.approver.id')) )
-                                                    <div class="col-8">
+                                                    <div class="col-lg-8 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="eMail">Amount<span class="text-danger">*</span></label>
                                                             <input type="number" required
@@ -766,10 +810,10 @@
                                                                    placeholder="Enter Amount Repaid">
                                                         </div>
                                                     </div>
-                                                    <div class="col-4">
+                                                    <div class="col-lg-4 col-sm-12">
                                                         <label>Total Balance :<br> ZMK {{number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }} </label>
                                                     </div>
-                                                    <div class="col-8">
+                                                    <div class="col-lg-8 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="eMail">Comment<span class="text-danger">*</span></label>
                                                             <input type="text" required
@@ -778,7 +822,7 @@
                                                                    placeholder="Enter comment for your action">
                                                         </div>
                                                     </div>
-                                                    <div class="col-4">
+                                                    <div class="col-lg-4 col-sm-12">
                                                         <label for="approve"><span
                                                                 class="text-success ">Submit Payment</span></label>
                                                         <button type="submit" name="approve"
@@ -926,10 +970,10 @@
                                             <div class="card-body  border-top py-3">
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <table class="table table-striped">
+                                                        <table class="table table-striped table_wrapper">
                                                             <thead>
                                                             <tr>
-                                                                <td>Installment</td>
+                                                                <td>Installmendfasdf</td>
                                                                 <td>Amount</td>
                                                                 <td>Date</td>
                                                                 <td>Paid</td>
@@ -942,13 +986,13 @@
                                                                     <td>ZMW {{ number_format(($schedule->amount - ($schedule->paid ?? 0)),2)}}</td>
                                                                     <td>{{$schedule->date}}</td>
 {{--                                                                    @if( $schedule->date  > date('Y-m-d') &&  ($schedule->paid ?? 0) != $schedule->amount )--}}
-                                                                        @if( $schedule->date  > date('Y-m-d') )
+                                                                        @if( $schedule->date  < date('Y-m-d') )
                                                                         @if( ( $schedule->balance ?? -1 ) == 0)
                                                                             <td><span title="Paid after due date" class="text-success"><i
                                                                                         class="bi bi-check2-circle"></i> {{$schedule->paid ?? 0}}</span>
                                                                             </td>
                                                                         @else
-                                                                        <td><span title="Payment is overdue. Please make payment" class="lable"><i
+                                                                        <td><span title="Payment is overdue. Please make payment" class="label"><i
                                                                                     class="bi bi-info-circle-fill text-danger"></i> {{$schedule->paid ?? 0}}</span>
                                                                         </td>
                                                                         @endif

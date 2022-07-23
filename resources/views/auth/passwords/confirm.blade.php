@@ -8,9 +8,11 @@
                     <div class="card-body">
                         <form  class="form-signin"  method="POST" action="{{ route('password.confirm') }}">
                             @csrf
-
                             <div class="text-center mb-4">
-                                <img class="mb-2" src="{{asset('images/brac.jpg')}}" alt="" width="220" height="72">
+                            <a href="{{ route('welcome') }}">
+                                <h1 style="font-family:'Arial Rounded MT Bold'">CHALOM</h1>
+                                {{--                                    <img class="mb-2" src="{{asset('images/brac.jpg')}}" alt="" width="220" height="72">--}}
+                            </a>
                             </div>
                             <div class="text-center mb-4">
                                 {{ __('Confirm Password') }}

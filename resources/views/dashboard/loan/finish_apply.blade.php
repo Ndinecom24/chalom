@@ -551,6 +551,33 @@
 
                                             </div>
                                         </div>
+                                        @if($loan->loan->collateral == "Need Collateral")
+                                        <div class="col-12">
+                                            <div class="row gutters">
+                                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                    <div class="form-group mt-1">
+                                                        <label for="collateral"> Collateral File<span class="text-danger">*</span></label>
+                                                        <input type="file"
+                                                               class="form-control"
+                                                               name="collateral" id="collateral">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="row gutters">
+                                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                    <div class="form-group mt-1">
+                                                        <label for="collateral_description"> Collateral Description<span class="text-danger">*</span></label>
+                                                        <textarea class="form-control" title="Please Describe your collateral item/s"
+                                                               name="collateral_description" id="collateral_description"></textarea>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        @endif
                                         @if($user->identity == null)
                                             <div class="col-12">
                                                 <div class="row gutters">

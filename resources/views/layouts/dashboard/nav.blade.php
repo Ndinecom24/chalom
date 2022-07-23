@@ -101,13 +101,6 @@
                     </a>
                 </li>
             </ul>
-            <div class="ms-lg-3 mt-3 d-grid mt-lg-0 text-end" >
-                @if( (Auth::user()->avatar ?? "" ) == "" )
-                    <img class="img-circle" width="40px" src="{{asset('images/user.png')}}" alt="">
-                @else
-                    <img class="img-circle "  width="40px" src="{{Auth::user()->avatar ?? ""}}" alt="{{asset('images/user.png')}}">
-                @endif
-            </div>
             <div class="ms-lg-3 mt-3 d-grid mt-lg-0"   >
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
@@ -135,6 +128,13 @@
                         </ul>
                     </li>
                 </ul>
+            </div>
+            <div class="ms-lg-3 mt-3 d-grid mt-lg-0 text-end" >
+                @if( (Auth::user()->avatar ?? "" ) == "" )
+                    <img class="img-circle"  style="border-radius: 100%"  width="40px" src="{{asset('images/user.png')}}" alt="">
+                @else
+                    <img class="img-circle "  style="border-radius: 100%"  width="40px" src="{{Auth::user()->avatar ?? ""}}" alt="{{asset('images/user.png')}}">
+                @endif
             </div>
 
         @endguest

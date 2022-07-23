@@ -351,11 +351,11 @@
         {{--            </div>--}}
         {{--        </div>--}}
 
-        <div class="row">
+        <div class="row" >
             <div class="col-12">
-                <div class="notifications" id="box">
+                <div class="notifications mt-lg-8 ml-lg-4 bg-secondary-gradient" id="box">
                     @foreach($notifications as $notification)
-                        <a href="{{$notification->url}}">
+                        <a href="{{$notification->url}} ">
 
 
                             <div class="notifications-item">

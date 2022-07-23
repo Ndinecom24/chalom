@@ -273,21 +273,31 @@
                             </div>
                         @endif
                     </div>
-                    <div class="row">
-                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 offset-2 mb-4 mt-4 text-center p-0 mt-3 mb-2 ">
+
+                    <div class="container-fluid">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8 col-md-8 col-sm-12 ">
                             <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
-                                <h2><strong>Sign Up Your User Account</strong></h2>
-                                <p>Fill all form field to go to next step</p>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                    <h2><strong>Sign Up Your User Account</strong></h2>
+                                    <p>Fill all form field to go to next step</p>
+                                </div>
+                                </div>
+
                                 <div class="row">
                                     <div class="col-md-12 mx-0">
                                         <form id="msform">
                                             <!-- progressbar -->
+                                            <div class="row justify-content-center">
                                             <ul id="progressbar">
                                                 <li class="active" id="account"><strong>Loan</strong></li>
                                                 <li id="personal"><strong>Eligibility</strong></li>
                                                 <li id="payment"><strong>Type</strong></li>
                                                 <li id="confirm"><strong>Finish</strong></li>
-                                            </ul> <!-- fieldsets -->
+                                            </ul>
+                                            </div>
+                                                <!-- fieldsets -->
                                             <fieldset>
                                                 <div class="form-card">
                                                     <h2 class="fs-title">Loan Details</h2>
@@ -300,7 +310,7 @@
                                                                         <label
                                                                             for="loan_amount">
                                                                             Loan Type</label>
-                                                                        <select id="loan_type" name="loan_type"
+                                                                        <select readonly id="loan_type" name="loan_type"
                                                                                 onchange="loanPercent(event)"
                                                                                 class="form-control ">
                                                                             <option value="{{$loanProd->id}}">{{$loanProd->name}}</option>
@@ -364,7 +374,7 @@
                                                                             Period </label>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-6">
+                                                                <div class="col-lg-6 col-md-12 col-sm-12">
                                                                     <div class="form-group mt-2">
                                                                         <label
                                                                             for="payslip_three">Percentage</label>
@@ -376,7 +386,7 @@
                                                                                placeholder="10 %">
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-6">
+                                                                <div class="col-lg-6 col-md-12 col-sm-12">
                                                                     <div class="form-group mt-2">
                                                                         <label
                                                                             for="payslip_three">Arrangement Fee</label>
@@ -387,8 +397,8 @@
                                                                                id="arrangement_fee">
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-6 mt-2">
-                                                                    <div class="form-group">
+                                                                <div class="col-lg-6 col-md-12 col-sm-12 ">
+                                                                    <div class="form-group mt-2 ">
                                                                         <label
                                                                             for="payslip_three">Monthly
                                                                             Repayments</label>
@@ -398,7 +408,7 @@
                                                                                placeholder="ZMW">
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-6">
+                                                                <div class="col-lg-6 col-md-12 col-sm-12 mt-2">
                                                                     <div class="form-group mt-2">
                                                                         <label
                                                                             for="payslip_three">Total Repayment</label>
@@ -436,7 +446,7 @@
                                                                         <label
                                                                             for="monthly_income">
                                                                             Monthly Income</label>
-                                                                        <input type="number" class="form-control "
+                                                                        <input required type="number" class="form-control "
                                                                                name="monthly_income" id="monthly_income"
                                                                                placeholder="How much? e.g 5000 ">
                                                                     </div>
@@ -446,7 +456,7 @@
                                                                         <label
                                                                             for="other_income">
                                                                             Other Income</label>
-                                                                        <input type="number" class="form-control "
+                                                                        <input required type="number" class="form-control "
                                                                                name="other_income" id="other_income"
                                                                                placeholder="How much? e.g 5000 ">
                                                                     </div>
@@ -456,7 +466,7 @@
                                                                         <label
                                                                             for="monthly_deduct">
                                                                             Other Loans / Deduction</label>
-                                                                        <input type="number" class="form-control "
+                                                                        <input required type="number" class="form-control "
                                                                                name="monthly_deduct"
                                                                                id="monthly_deduct"
                                                                                placeholder="Monthly earnings deductions? e.g 2000 ">
@@ -599,6 +609,7 @@
 
                                     </div>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -752,15 +763,13 @@
 
                 //response
                 if (eligible == true) {
-
-
                     Swal.fire(
                         'Eligible',
                         'You are Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan',
                         'success'
                     )
-
                  //   alert( 'You are Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan');
+
                     current_fs = $(this).parent();
                     next_fs = $(this).parent().next();
                     //Add Class Active
