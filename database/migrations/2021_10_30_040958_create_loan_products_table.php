@@ -22,6 +22,7 @@ class CreateLoanProductsTable extends Migration
             $table->double('highest_amount');
             $table->integer('lowest_tenure');
             $table->integer('highest_tenure');
+            $table->string('collateral', 20);
             $table->string('about', 1000);
             $table->string('description', 1000);
             $table->string('image');

@@ -37,9 +37,7 @@ class LoanApplicationsController extends Controller
         } else {
             $list = LoanApplications::where('statuses_id', $status)->orderBy('created_at')->paginate(10);
         }
-
         $list->load('loan', 'schedules');
-
 
         return view('dashboard.loan.index')->with(compact('list', 'statuses'));
     }
@@ -106,6 +104,15 @@ class LoanApplicationsController extends Controller
 
         $loan->loan('loan');
 
+        //validate if it needs a collateral
+        if($loan->loan->collateral == "Need Collateral"){
+            if ( $request->hasFile('collateral') ) {
+                //file attached
+            }else{
+                return redirect()->back()->with('error', 'This loan needs collateral documentation. Please attach documentation and enter collateral description');
+            }
+        }
+
         /** upload identity file */
         $file = $request->file('identity');
         if ($request->hasFile('identity')) {
@@ -133,6 +140,13 @@ class LoanApplicationsController extends Controller
         if ($request->hasFile('payslip_two')) {
             $filesController = new FilesController();
             $filesController->upload($request, $file, config('constants.types.payslip'), $loan);
+        }
+
+        /** upload collateral file */
+        $file = $request->file('collateral');
+        if ($request->hasFile('collateral')) {
+            $filesController = new FilesController();
+            $filesController->upload($request, $file, config('constants.types.collateral'), $loan);
         }
 
         //save next of kin
@@ -171,6 +185,7 @@ class LoanApplicationsController extends Controller
         //loan
         $loan->statuses_id = $status;
         $loan->date_submitted = date('Y-m-d');
+        $loan->collateral_description = $request->collateral_description ?? $loan->loan->collateral ;
         $loan->save();
 
         //schedule
@@ -268,6 +283,7 @@ class LoanApplicationsController extends Controller
                 "loan_rate" => $loan->rate_per_month,
                 "loan_amount_due" => $request->total_repayment,
                 "loan_arrangement_fee" => $loan->arrangement_fee,
+                'collateral_description' => $loan->collateral ?? "none",
                 "customer_id" => $user->id ?? 0,
                 "created_by" => $logged_in->id ?? 0,
                 "statuses_id" => $status

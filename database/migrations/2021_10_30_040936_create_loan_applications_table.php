@@ -28,7 +28,7 @@ class CreateLoanApplicationsTable extends Migration
             $table->double('monthly_deduct');
             $table->integer('statuses_id');
             $table->dateTime('date_submitted')->nullable();
-
+            $table->string('collateral_description', 1000);
             $table->integer('customer_id')->nullable();
             $table->integer('created_by')->nullable();
             $table->dateTime('deleted_at')->nullable();

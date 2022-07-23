@@ -31,6 +31,7 @@ class LoanApplications extends Model
         'monthly_income',
         'other_income',
         'monthly_deduct',
+        'collateral_description',
         'statuses_id',
         'date_submitted',
         'customer_id',
@@ -100,6 +101,10 @@ class LoanApplications extends Model
     }
 
 
+    public function collaterals(){
+        return $this->hasMany(Files::class , 'modal_uuid' , 'uuid')
+            ->where('type', config('constants.types.collateral'));
+    }
     public function payslips(){
         return $this->hasMany(Files::class , 'modal_uuid' , 'uuid')
             ->where('type', config('constants.types.payslip'));

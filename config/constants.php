@@ -78,5 +78,6 @@ return [
         'identity' => 'identity',
         'account_statement' => 'account_statement',
         'payslip' => 'payslip',
+        'collateral' => 'collateral',
     ],
 ];

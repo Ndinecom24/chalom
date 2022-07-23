@@ -22,6 +22,7 @@ class LoanProducts extends Model
         'highest_amount',
         'lowest_tenure',
         'highest_tenure',
+        'collateral',
         'about',
         'description',
         'image',
