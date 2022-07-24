@@ -11,7 +11,7 @@
 
                             <div class="text-center mb-4">
                                 <a href="{{ route('welcome') }}">
-                                    <img class="mb-2" src="{{asset('images/brac.jpg')}}" alt="" width="220" height="72">
+                                    <img class="mb-2" src="{{asset('images/chalom_logo.png')}}" alt="" width="220" height="72">
                                 </a>                            </div>
                             <div class="text-center mb-4">
                                 {{ __('Register Account') }}
