@@ -18,58 +18,58 @@
                 </a>
             </li>
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarProducts" data-bs-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    Products
-                </a>
-                <ul class="dropdown-menu dropdown-menu-arrow" aria-labelledby="navbarProducts">
+{{--            <li class="nav-item dropdown">--}}
+{{--                <a class="nav-link dropdown-toggle" href="#" id="navbarProducts" data-bs-toggle="dropdown"--}}
+{{--                   aria-haspopup="true" aria-expanded="false">--}}
+{{--                    Products--}}
+{{--                </a>--}}
+{{--                <ul class="dropdown-menu dropdown-menu-arrow" aria-labelledby="navbarProducts">--}}
 
 
-                    <li class="dropdown-submenu dropstart-lg">
-                        <a class="dropdown-item dropdown-list-group-item dropdown-toggle" href="#">
-                            Loans
-                        </a>
-                        <ul class="dropdown-menu">
-                            @foreach($loan_lists as $loan_list)
-                                <li>
-                                    <a class="dropdown-item" href="">
-                                        {{$loan_list->name}}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </li>
+{{--                    <li class="dropdown-submenu dropstart-lg">--}}
+{{--                        <a class="dropdown-item dropdown-list-group-item dropdown-toggle" href="#">--}}
+{{--                            Loans--}}
+{{--                        </a>--}}
+{{--                        <ul class="dropdown-menu">--}}
+{{--                            @foreach($loan_lists as $loan_list)--}}
+{{--                                <li>--}}
+{{--                                    <a class="dropdown-item" href="">--}}
+{{--                                        {{$loan_list->name}}--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+{{--                            @endforeach--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
 
-                </ul>
-                <ul class="dropdown-menu dropdown-menu-arrow" aria-labelledby="navbarProducts">
+{{--                </ul>--}}
+{{--                <ul class="dropdown-menu dropdown-menu-arrow" aria-labelledby="navbarProducts">--}}
 
-                    <li><a href="{{route('loan.index')}}" class="dropdown-item">
-                            Loans
-                        </a>
-                    </li>
-                    <li><a href="{{route('loan.calculator')}}" class="dropdown-item">
-                            Loan Calculator
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{route('loan.eligibility')}}" class="dropdown-item">
-                            Eligibility Calculator
-                        </a>
-                    </li>
+{{--                    <li><a href="{{route('loan.index')}}" class="dropdown-item">--}}
+{{--                            Loans--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    <li><a href="{{route('loan.calculator')}}" class="dropdown-item">--}}
+{{--                            Loan Calculator--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    <li>--}}
+{{--                        <a href="{{route('loan.eligibility')}}" class="dropdown-item">--}}
+{{--                            Eligibility Calculator--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
 
-                </ul>
-            </li>
+{{--                </ul>--}}
+{{--            </li>--}}
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarFeatures" role="button" data-bs-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                    Features
+                    Chalom
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarFeatures">
 
                     <li><a class="dropdown-item" href="{{route('company.about')}}">About Us</a></li>
-                    <li> <a class="dropdown-item" href="{{route('company.team')}}">Team</a></li>
+{{--                    <li> <a class="dropdown-item" href="{{route('company.team')}}">Team</a></li>--}}
                     <li> <a class="dropdown-item" href="{{route('company.faq')}}">FAQ</a></li>
                     <li><a class="dropdown-item" href="{{route('company.contact')}}">Contact
                         </a>
