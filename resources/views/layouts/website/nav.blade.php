@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg py-3 navbar-default  bg-primary-gradient">
     <div class="container px-0">
-            <a class="navbar-brand" href="{{route('welcome')}}" ><img width="100%" src="
-         {{ asset('theme/borrow/assets/images/brand/logo/chalom_logo.png')}}" alt="" /></a>
+            <a class="navbar-brand img-thumbnail" href="{{route('welcome')}}" ><img width="100%" src="
+         {{ asset('theme/borrow/assets/images/brand/logo/chalom_logo.png')}}" alt="Chalom" /></a>
 
     <!-- Button -->
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-default"
@@ -18,45 +18,6 @@
                         Home
                     </a>
                 </li>
-{{--                <li class="nav-item dropdown">--}}
-{{--                    <a class="nav-link dropdown-toggle" href="#" id="navbarProducts" data-bs-toggle="dropdown"--}}
-{{--                       aria-haspopup="true" aria-expanded="false">--}}
-{{--                        Products--}}
-{{--                    </a>--}}
-{{--                    <ul class="dropdown-menu dropdown-menu-arrow" aria-labelledby="navbarProducts">--}}
-{{--                        <li class="dropdown-submenu dropstart-lg">--}}
-{{--                            <a class="dropdown-item dropdown-list-group-item dropdown-toggle" href="#">--}}
-{{--                                Loans--}}
-{{--                            </a>--}}
-{{--                            <ul class="dropdown-menu">--}}
-{{--                                @foreach($loan_lists as $loan_list)--}}
-{{--                                <li>--}}
-{{--                                    <a class="dropdown-item" href="">--}}
-{{--                                        {{$loan_list->name}}--}}
-{{--                                    </a>--}}
-{{--                                </li>--}}
-{{--                                @endforeach--}}
-{{--                            </ul>--}}
-{{--                        </li>--}}
-
-{{--                    </ul>--}}
-{{--                    <ul class="dropdown-menu dropdown-menu-arrow" aria-labelledby="navbarProducts">--}}
-{{--                        <li><a href="{{route('loan.index')}}" class="dropdown-item">--}}
-{{--                                Loans--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li><a href="{{route('loan.calculator')}}" class="dropdown-item">--}}
-{{--                                Loan Calculator--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li>--}}
-{{--                            <a href="{{route('loan.eligibility')}}" class="dropdown-item">--}}
-{{--                                Eligibility Calculator--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-
-{{--                    </ul>--}}
-{{--                </li>--}}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarFeatures" role="button" data-bs-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">

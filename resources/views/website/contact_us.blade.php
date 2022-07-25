@@ -17,7 +17,7 @@
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                                 <div class="text-md-end mt-3 mt-md-0">
-                                    <a href="{{route('company.contact')}}" class="btn btn-primary">How To Apply</a>
+                                    <a href="{{route('company.how_to_apply')}}" class="btn btn-primary">How To Apply</a>
                                 </div>
                             </div>
                         </div>

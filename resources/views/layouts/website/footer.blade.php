@@ -2,10 +2,12 @@
     <!-- footer -->
     <div class="container">
         <div class="row">
-            <div class="col-xl-4 col-lg-4 col-sm-12 col-12">
+            <div class="col-xl-12 col-lg-12 col-sm-12 col-12">
                 <div class="mb-4 mb-lg-0">
                     <!-- Footer Logo -->
-                    <img src="{{asset('theme/borrow/assets/images/brand/company-logo/ft-logo.png')}}" alt="Chalom Loans">
+{{--                    <a class="navbar-brand img-thumbnail" href="{{route('welcome')}}" ><img width="100%" src="--}}
+{{--         {{ asset('theme/borrow/assets/images/brand/logo/chalom_logo.png')}}" alt="Chalom" /></a>--}}
+                    <img class="img-thumbnail" src="{{asset('theme/borrow/assets/images/brand/logo/chalom_logo.png')}}" alt="Chalom Loans">
                 </div>
                 <!-- /.Footer Logo -->
             </div>
