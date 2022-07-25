@@ -83,7 +83,10 @@
                 <div class="fs-6 text-uppercase text-white fw-semi-bold">Chalom Investment Limited</div>
             </div>
             <div class="col-xl-8 col-lg-7 col-md-7 col-12 text-md-end">
-                <div class="fs-6 text-uppercase text-white fw-semi-bold"><a href="https://goo.gl/maps/XERkLr2nTTnVohDv5" class="text-white">View Locations</a><span class="ms-2 ms-md-4 "><a href="tel:+260973284884" class="text-white" >+260973284884</a></span> <span class="ms-2 ms-md-4"><a href="#!" class="text-white ">EMI calculator</a></span></div>
+                <div class="fs-6 text-uppercase text-white fw-semi-bold">
+                    <a href="https://goo.gl/maps/XERkLr2nTTnVohDv5" class="text-white">View Location</a>
+                    <span class="ms-2 ms-md-4 "><a href="tel:+260973284884" class="text-white" >+260973284884</a>
+{{--                    </span> <span class="ms-2 ms-md-4"><a href="#!" class="text-white ">EMI calculator</a></span></div>--}}
             </div>
         </div>
     </div>

@@ -178,8 +178,10 @@ Lusaka City, ZAMBIA</span>
                             <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;" valign="top" align="center">
                                 Powered by <a href="http:ndinecom.com" style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">ndinecom</a>.
                             </td>
+                        </tr>
+                        <tr>
                             <td class="content-block powered-by" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;" valign="top" align="center">
-                                Maintained by <a href="http:ndinecom.com" style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">Pemucomputers</a>.
+                                Maintained by <a href="https://www.secureserver.net/?prog_id=585270" style="color: #999999; font-size: 12px; text-align: center; text-decoration: none;">Pemucomputers</a>.
                             </td>
                         </tr>
                     </table>
