@@ -25,6 +25,8 @@ class CreateLoansTable extends Migration
             $table->string('about', 1000);
             $table->string('description', 1000);
             $table->string('image');
+            $table->integer('dept_service_ratio');
+            $table->integer('loan_category_id');
             $table->integer('statuses_id')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

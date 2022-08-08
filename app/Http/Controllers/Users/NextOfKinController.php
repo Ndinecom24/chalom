@@ -26,6 +26,7 @@ class NextOfKinController extends Controller
                 'phone'=> $request->phone,
                 'email'=> $request->email,
                 'address'=> $request->address,
+                'nid'=> $request->nid,
                 'relationship'=> $request->relationship,
                 'work_status'=> $request->work_status,
                 'work_place'=> $request->work_place,
@@ -58,6 +59,7 @@ class NextOfKinController extends Controller
         $model = NextOfKin::find($request->id);
         $model->name = $request->name;
         $model->phone = $request->phone;
+        $model->nid = $request->nid;
         $model->email = $request->email;
         $model->address = $request->address;
         $model->relationship = $request->relationship;
@@ -76,7 +78,7 @@ class NextOfKinController extends Controller
     public function destroy(Request $request)
     {
         $model = NextOfKin::destroy($request->id);
-        return Redirect::back()->with('message','Deleted Successfully');
+        return Redirect::back()->with('message','Next of Kin Deleted Successfully');
     }
 
 }

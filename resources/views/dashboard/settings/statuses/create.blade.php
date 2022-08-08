@@ -67,6 +67,24 @@
                                                            placeholder="Enter Description" required>
                                                 </div>
                                             </div>
+                                            <div class="col-12">
+                                                <div class="form-group text-start">
+                                                    <span for="status_id"> Colour </span>
+                                                    <select class="form-control" id="html" name="html" required>
+                                                        <option value="">--Choose--</option>
+                                                        <option value="success"><span class="text-success">green</span></option>
+                                                        <option value="info"><span class="text-info">blue</span></option>
+                                                        <option value="danger"><span class="text-danger">red</span></option>
+                                                        <option value="warning"><span class="text-warning">yellow</span></option>
+                                                        <option value="primary"><span class="text-primary">primary</span></option>
+                                                        <option value="body"><span class="text-body">body</span></option>
+                                                        <option value="default"><span class="text-default">default</span></option>
+                                                        <option value="dark"><span class="text-dark">dark</span></option>
+                                                        <option value="light"><span class="text-light">orange</span></option>
+                                                            <option value="muted"><span class="text-muted">muted</span></option>
+                                                    </select>
+                                                </div>
+                                            </div>
 
                                         </div>
                                     </div>

@@ -430,7 +430,7 @@
                                 </div>
 
                                 <div class="card-header">
-                                    <h6 class="mt-3 mb-2 text-primary">NEXT OF KIN</h6>
+                                    <h6 class="mt-3 mb-2 text-primary">NEXT OF KIN / GUARANTOR</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -453,6 +453,22 @@
                                                         <input type="number" value="{{$user->kin->phone ?? "" }}"
                                                                class="form-control" required
                                                                name="kin_phone" id="kin_phone" placeholder="Enter Next of Kin Phone">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="kin_nid">NID (NRC/DRIVERS LICENCE)<span class="text-danger">*</span></label>
+                                                        <input type="text" value="{{$user->kin->phone ?? "" }}"
+                                                               class="form-control" required
+                                                               name="kin_nid" id="kin_nid" placeholder="Enter National Identity">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="kin_address">Address <span class="text-danger">*</span></label>
+                                                        <input type="text" value="{{$user->kin->phone ?? "" }}"
+                                                               class="form-control" required
+                                                               name="kin_address" id="kin_address" placeholder="Enter Address">
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -494,6 +510,8 @@
                                                         <label for="kin_relationship">Relationship</label>
                                                         <select class="form-control" id="kin_relationship" name="kin_relationship">
                                                             <option value="">--Choose--</option>
+                                                            <option>Husband</option>
+                                                            <option>Wife</option>
                                                             <option>Brother</option>
                                                             <option>Mother</option>
                                                             <option>Father</option>
@@ -544,8 +562,8 @@
                                                     <div class="form-group mt-1">
                                                         <label for="account_statement"> Account Statement<span class="text-danger">*</span></label>
                                                         <input type="file" required
-                                                               class="form-control"
-                                                               name="account_statement" id="account_statement">
+                                                               class="form-control" multiple
+                                                               name="account_statement[]" id="account_statement">
                                                     </div>
                                                 </div>
 
@@ -556,10 +574,10 @@
                                             <div class="row gutters">
                                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                                     <div class="form-group mt-1">
-                                                        <label for="collateral"> Collateral File<span class="text-danger">*</span></label>
-                                                        <input type="file"
+                                                        <label for="collateral"> Collateral Files<span class="text-danger">*</span></label>
+                                                        <input type="file" multiple
                                                                class="form-control"
-                                                               name="collateral" id="collateral">
+                                                               name="collateral[]" id="collateral">
                                                     </div>
                                                 </div>
 
@@ -585,8 +603,8 @@
                                                         <div class="form-group mt-1">
                                                             <label for="identity"> NRC<span class="text-danger">*</span></label>
                                                             <input type="file"
-                                                                   class="form-control"
-                                                                   name="identity" id="identity">
+                                                                   class="form-control" multiple
+                                                                   name="identity[]" id="identity">
                                                         </div>
                                                     </div>
 

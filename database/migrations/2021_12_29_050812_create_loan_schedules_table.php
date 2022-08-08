@@ -23,7 +23,7 @@ class CreateLoanSchedulesTable extends Migration
             $table->double('amount');
             $table->double('paid')->nullable();
             $table->double('balance')->nullable();
-            $table->double('date_paid')->nullable();
+            $table->dateTime('date_paid')->nullable();
             $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
         });

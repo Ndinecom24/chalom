@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Models\Settings\LoanCategory ;
 use App\Models\Settings\Status;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -10,27 +11,17 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
-class StatusController extends Controller
+class LoanCategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        //
+
+    public function create(){
+        return view('dashboard.settings.loan_category.create');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        return view('dashboard.settings.statuses.create');
+    public function show(LoanCategory $loanCategory){
+        return view('dashboard.settings.loan_category.show')->with(compact('loanCategory'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -41,7 +32,7 @@ class StatusController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $model = Status::updateOrCreate(
+        $model = LoanCategory::updateOrCreate(
             [
                 'name' => $request->name,
                 'description' => $request->description,
@@ -49,7 +40,6 @@ class StatusController extends Controller
             [
                 'name' => $request->name,
                 'description' => $request->description,
-                'html' => $request->html,
                 'created_by' => $user->id,
             ]
         );
@@ -57,29 +47,6 @@ class StatusController extends Controller
         return Redirect::back()->with('message', $model->name . ' Created Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param Status $status
-     * @return Response
-     */
-    public function show(Status $status)
-    {
-        return view('dashboard.settings.statuses.show')->with(compact('status'));
-    }
-
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Status $status
-     * @return Response
-     */
-    public function edit(Status $status)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -88,12 +55,11 @@ class StatusController extends Controller
      * @param Status $status
      * @return Response
      */
-    public function update(Request $request, Status $status)
+    public function update(Request $request, LoanCategory $loanCategory)
     {
-        $model = $status;
+        $model = $loanCategory ;
         $model->name = $request->name;
         $model->description = $request->description;
-        $model->html = $request->html ;
         $model->save();
         return Redirect::back()->with('message', $model->name . ' Updated Successfully');
     }
@@ -104,9 +70,9 @@ class StatusController extends Controller
      * @param Status $status
      * @return Response
      */
-    public function destroy(Request $request)
+    public function destroy( LoanCategory $loanCategory)
     {
-        $model = Status::destroy($request->id);
-        return Redirect::back()->with('message','Deleted Successfully');
+         LoanCategory::destroy($loanCategory->id);
+        return redirect()->route('settings')->with('message','Loan Category Deleted Successfully');
     }
 }

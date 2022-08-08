@@ -6,6 +6,7 @@ use App\Model\Settings\Roles;
 use App\Models\Dashboard\Logs\Notifications;
 use App\Models\dashboardTotals;
 use App\Models\Loans\LoanApplications;
+use App\Models\Settings\LoanCategory;
 use App\Models\Loans\LoanProducts;
 use App\Models\Settings\CustomerTypes;
 use App\Models\Settings\Status;
@@ -28,8 +29,8 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $work_status = [];
-        $loanProducts = LoanProducts::where('statuses_id', config('constants.status.active'))->get();
-        return view('welcome')->with(compact('work_status', 'loanProducts'));
+        $loanCategories = LoanCategory::with('products')->get();
+        return view('welcome')->with(compact('work_status', 'loanCategories'));
     }
 
     /**
@@ -85,12 +86,13 @@ class HomeController extends Controller
 
     public function settings()
     {
-        $statuses = Status::all();
-        $customer_types = CustomerTypes::all();
-        $works = WorkStatus::all();
-        $roles = \App\Models\Settings\Roles::all();
+        $statuses = Status::select('id', 'name', 'description', 'html')->get();
+        $customer_types = CustomerTypes::select('id', 'name', 'description')->get();
+        $works = WorkStatus::select('id', 'name', 'description')->get();
+        $roles = \App\Models\Settings\Roles::select('id', 'name', 'description')->get();
+        $loanCategories = LoanCategory ::select('id', 'name', 'description')->get();
         return view('dashboard.settings.index')
-            ->with(compact('works', 'statuses', 'roles', 'customer_types'));
+            ->with(compact('works', 'statuses', 'roles', 'customer_types', 'loanCategories'));
     }
 
 

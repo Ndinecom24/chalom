@@ -1,13 +1,15 @@
 <?php
 
+use App\Http\Controllers\Users\BankDetailsController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Dashboard\Settings\CustomerTypesController;
+use App\Http\Controllers\Dashboard\Settings\LoanCategoryController;
 use App\Http\Controllers\Dashboard\Settings\RolesController;
 use App\Http\Controllers\Dashboard\Settings\StatusController;
 use App\Http\Controllers\Dashboard\Settings\WorkStatusController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Users\ClientController;
 use App\Http\Controllers\Users\UserController;
-use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -57,7 +59,7 @@ Route::group([
     'middleware' => 'auth'
 ], function () {
     Route::get('profile/{user}', [UserController::class, 'profile'])->name('user.profile');
-    Route::get('create', [UserController::class, 'create'])->name('user.create');
+    Route::post('destroy/{user}', [UserController::class, 'destroy'])->name('user.destroy');
 
     Route::group([
         'prefix' => 'admin',
@@ -68,6 +70,7 @@ Route::group([
         Route::post('update/{id}', [UserController::class, 'update'])->name('user.admin.update');
         Route::post('update/image/{user}', [UserController::class, 'image'])->name('user.admin.update.image');
         Route::post('destroy', [UserController::class, 'destroy'])->name('user.admin.destroy');
+        Route::get('create', [UserController::class, 'create'])->name('user.admin.create');
     });
 
     Route::group([
@@ -78,6 +81,18 @@ Route::group([
         Route::post('store', [ClientController::class, 'store'])->name('user.client.store');
         Route::post('update/{id}', [ClientController::class, 'update'])->name('user.client.update');
         Route::post('destroy', [ClientController::class, 'destroy'])->name('user.client.destroy');
+        Route::get('create', [ClientController::class, 'create'])->name('user.client.create');
+    });
+
+    Route::group([
+        'prefix' => 'bank-details',
+    ], function () {
+        Route::get('index', [BankDetailsController::class, 'index'])->name('user.bank-details');
+        Route::post('store', [BankDetailsController::class, 'store'])->name('user.bank-details.store');
+        Route::get('show/{bankDetails}', [BankDetailsController::class, 'show'])->name('user.bank-details.show');
+        Route::post('update/{bankDetails}', [BankDetailsController::class, 'update'])->name('user.bank-details.update');
+        Route::post('destroy/{bankDetails}', [BankDetailsController::class, 'destroy'])->name('user.bank-details.destroy');
+        Route::get('create', [BankDetailsController::class, 'create'])->name('user.bank-details.create');
     });
 
 }
@@ -104,7 +119,7 @@ Route::group([
             Route::get('create', [StatusController::class, 'create'])->name('statuses.create');
             Route::post('store', [StatusController::class, 'store'])->name('statuses.store');
             Route::post('update/{status}', [StatusController::class, 'update'])->name('statuses.update');
-            Route::post('destroy', [StatusController::class, 'destroy'])->name('statuses.destroy');
+            Route::post('destroy/{status}', [StatusController::class, 'destroy'])->name('statuses.destroy');
         });
 
         Route::group([
@@ -114,7 +129,7 @@ Route::group([
             Route::get('create', [RolesController::class, 'create'])->name('role.create');
             Route::post('store', [RolesController::class, 'store'])->name('role.store');
             Route::post('update/{role}', [RolesController::class, 'update'])->name('role.update');
-            Route::post('destroy', [RolesController::class, 'destroy'])->name('role.destroy');
+            Route::post('destroy/{role}', [RolesController::class, 'destroy'])->name('role.destroy');
         });
 
 
@@ -125,7 +140,7 @@ Route::group([
             Route::get('create', [CustomerTypesController::class, 'create'])->name('customer.type.create');
             Route::post('store', [CustomerTypesController::class, 'store'])->name('customer.type.store');
             Route::post('update/{customer_types}', [CustomerTypesController::class, 'update'])->name('customer.type.update');
-            Route::post('destroy', [CustomerTypesController::class, 'destroy'])->name('customer.type.destroy');
+            Route::post('destroy/{customer_types}', [CustomerTypesController::class, 'destroy'])->name('customer.type.destroy');
         });
 
         Route::group([
@@ -135,7 +150,18 @@ Route::group([
             Route::get('create', [WorkStatusController::class, 'create'])->name('work.status.create');
             Route::post('store', [WorkStatusController::class, 'store'])->name('work.status.store');
             Route::post('update/{work_status}', [WorkStatusController::class, 'update'])->name('work.status.update');
-            Route::post('destroy', [WorkStatusController::class, 'destroy'])->name('work.status.destroy');
+            Route::post('destroy/{work_status}', [WorkStatusController::class, 'destroy'])->name('work.status.destroy');
+
+        });
+
+        Route::group([
+            'prefix' => 'loan-category',
+        ], function () {
+            Route::get('show/{loanCategory}', [LoanCategoryController::class, 'show'])->name('loan.category.show');
+            Route::get('create', [LoanCategoryController::class, 'create'])->name('loan.category.create');
+            Route::post('store', [LoanCategoryController::class, 'store'])->name('loan.category.store');
+            Route::post('update/{loanCategory}', [LoanCategoryController::class, 'update'])->name('loan.category.update');
+            Route::post('destroy/{loanCategory}', [LoanCategoryController::class, 'destroy'])->name('loan.category.destroy');
 
         });
 

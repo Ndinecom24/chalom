@@ -2,23 +2,23 @@
 
 namespace App\Models\Settings;
 
+use App\Models\Loans\LoanProducts;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Status extends Model
+class LoanCategory extends Model
 {
     use HasFactory;
-
-    //primary key
     protected $primaryKey = 'id';
     //fields fillable
     protected $fillable = [
         'name',
         'description',
-        'html',
         'created_by',
     ] ;
 
 
+    public function products(){
+        return $this->hasMany(LoanProducts::class, 'loan_category_id');
+    }
 }

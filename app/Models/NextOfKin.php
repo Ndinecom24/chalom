@@ -15,6 +15,7 @@ class NextOfKin extends Model
         'name',
         'phone',
         'email',
+        'nid',
         'address',
         'relationship',
         'work_status',

@@ -195,6 +195,30 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-12 col-sm-12">
+                                            <div class="form-group text-start">
+                                                <span  for="dept_service_ratio"> Dept Service Ratio (%)</span>
+                                                <input type="number" class="form-control" id="dept_service_ratio" name="dept_service_ratio"
+                                                       min="0" max="100"   value="{{$loanProducts->dept_service_ratio}}"  placeholder="Enter Dept Service Ratio" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12 col-sm-12">
+                                            <div class="form-group text-start">
+                                                <span  for="loan_category_id">Loan Category</span>
+                                                <select class="form-control" id="loan_category_id" name="loan_category_id"
+                                                        required>
+                                                    <option value="{{$loanProducts->loan_category_id ?? ""}}">{{$loanProducts->category->name ?? '--Choose--'}}</option>
+
+                                                @foreach($loanCategories as $loanCategory)
+                                                        <option value="{{$loanCategory->id}}">{{$loanCategory->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="row mb-4">
                                         <div class="col-lg-4 col-md-12 col-sm-12">
                                             <div class="form-group text-start">

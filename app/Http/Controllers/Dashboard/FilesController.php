@@ -61,6 +61,7 @@ class FilesController extends Controller
                 'modal_id' => $model->id ,
                 'modal_uuid' => $model->uuid ?? $model->id ,
                 'modal_type' =>  " ".get_class($model),
+                'name' => $fileNameToStore,
             ],
             [
                 'uuid' => $uuid,

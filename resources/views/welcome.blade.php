@@ -10,30 +10,32 @@
                         <div>
                             <!-- Nav tabs -->
                             <div class="tab-content bg-white p-6 rounded-top-md smooth-shadow-sm">
-                                @foreach($loanProducts as $key=>$loanProd)
-                                <div role="tabpanel" class="tab-pane fade show @if($key == 0) active  @endif " id="service{{$loanProd->id}}">
-                                    <form id="form-{{$loanProd->id}}" method="GET" action="{{route('loan.apply', $loanProd )}}" >
+                                @foreach($loanCategories as $key=>$loanCat)
+                                <div role="tabpanel" class="tab-pane fade show @if($key == 0) active  @endif " id="service{{$loanCat->id}}">
+                                    <form id="form-{{$loanCat->id}}" method="GET" action="{{route('loan.apply' )}}" >
                                         @csrf
                                         <div class="row g-2">
                                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                                <h2 class="fw-bold mb-3 text-capitalize ">Get {{$loanProd->name}} Loan Offers in Minutes</h2>
+                                                <h2 class="fw-bold mb-3 text-capitalize ">Get {{$loanCat->name}} Loan Offers in Minutes</h2>
                                             </div>
                                             <div class="col-md-9 col-sm-12 col-12">
                                                 <div>
 
                                                     <select class="form-select" name="loan_purpose" required >
-                                                        <option value="">Select Loan Purpose</option>
-                                                        <option value="Debt Consolidation">Debt Consolidation</option>
-                                                        <option value="Wedding Expenses">Wedding Expenses</option>
-                                                        <option value="Alternative Salary Advance">Alternative Salary Advance</option>
-                                                        <option value="Emergency Expenses">Emergency Expenses</option>
-                                                        <option value="School Fees">School Fees</option>
-                                                        <option value="Vehicle Financing Advance">Vehicle Financing Advance</option>
-                                                        <option value="Moving Expenses">Moving Expenses</option>
-                                                        <option value="Vehicle Repairs">Vehicle Repairs</option>
-                                                        <option value="Home Improvements">Home Improvements</option>
-                                                        <option value="Vacation">Vacation</option>
-                                                        <option value="Other">Other</option>
+                                                        <option value="">Select Loan Product</option>
+                                                        @foreach($loanCat->products as $key=>$loanProd)
+                                                        <option value="{{$loanProd->id}}">{{$loanProd->name}}</option>
+                                                        @endforeach
+{{--                                                        <option value="Wedding Expenses">Wedding Expenses</option>--}}
+{{--                                                        <option value="Alternative Salary Advance">Alternative Salary Advance</option>--}}
+{{--                                                        <option value="Emergency Expenses">Emergency Expenses</option>--}}
+{{--                                                        <option value="School Fees">School Fees</option>--}}
+{{--                                                        <option value="Vehicle Financing Advance">Vehicle Financing Advance</option>--}}
+{{--                                                        <option value="Moving Expenses">Moving Expenses</option>--}}
+{{--                                                        <option value="Vehicle Repairs">Vehicle Repairs</option>--}}
+{{--                                                        <option value="Home Improvements">Home Improvements</option>--}}
+{{--                                                        <option value="Vacation">Vacation</option>--}}
+{{--                                                        <option value="Other">Other</option>--}}
 
                                                     </select>
                                                 </div>
@@ -50,10 +52,10 @@
                                 @endforeach
                             </div>
                             <ul class="nav nav-pills nav-justified bg-white border-top flex-nowrap overflow-scroll overflow-md-hidden" id="myTab" role="tablist">
-                              @foreach($loanProducts as $key=>$loanProduct)
+                              @foreach($loanCategories as $key=>$loanCategory)
                                 <li class="nav-item">
-                                    <a class="nav-link @if($key == 0) active @endif rounded-0 d-grid py-3" id="tab-{{$loanProduct->id}}" data-bs-toggle="pill" href="#service{{$loanProduct->id}}" role="tab" aria-controls="{{$loanProduct->id}}" aria-selected="true"><i class="fas fa-money-bill fs-3"></i>
-                                        <p class="mb-0 mt-1 fs-5 text-lowercase"> {{$loanProduct->name}}</p>
+                                    <a class="nav-link @if($key == 0) active @endif rounded-0 d-grid py-3" id="tab-{{$loanCategory->id}}" data-bs-toggle="pill" href="#service{{$loanCategory->id}}" role="tab" aria-controls="{{$loanCategory->id}}" aria-selected="true"><i class="fas fa-money-bill fs-3"></i>
+                                        <p class="mb-0 mt-1 fs-5 text-lowercase"> {{$loanCategory->name}}</p>
                                     </a>
                                 </li>
                                 @endforeach

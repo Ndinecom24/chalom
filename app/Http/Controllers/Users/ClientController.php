@@ -47,7 +47,10 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        $types = CustomerTypes::where('id', '!=', config('constants.customer_type.employee'))->get();
+        $roles = Roles::where('id', '=', config('constants.role.client.id'))->get();
+        $user_types = ' Customers';
+        return view('dashboard.users.create')->with(compact('types', 'roles' ));
     }
 
     /**
@@ -81,7 +84,7 @@ class ClientController extends Controller
                 "mobile_number" => $request->mobile_number,
                 "customer_type_id" => $request->customer_type_id,
                 "role_id" => $request->role_id,
-                "password" => Hash::make('password'),
+                "password" => Hash::make('Chalom@123'),
                 "status_id" => config('constants.status.activated'),
                 "created_by" => $user->id,
             ]
@@ -91,13 +94,13 @@ class ClientController extends Controller
         $filesModel = new Files();
         $file = $request->file('avatar');
         $saved_file = $filesModel->upload($request, $file, config('constants.types.avatar'), $model);
-        $model->profile_img = $saved_file->id;
+        $model->avatar = $saved_file->id;
         $model->save();
 
-        if ($request->file('avatar')) {
-            $model->addMediaFromRequest('avatar')->toMediaCollection('avatars');
-            $model->update(['profile_img' => $request->file('avatar')]);
-        }
+//        if ($request->file('avatar')) {
+//            $model->addMediaFromRequest('avatar')->toMediaCollection('avatars');
+//            $model->update(['profile_img' => $request->file('avatar')]);
+//        }
 
         return Redirect::back()->with('message', $request->name . ' Account Created Successfully');
 

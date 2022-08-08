@@ -86,7 +86,7 @@
                     @if( (Auth::user()->avatar ?? "" ) == "" )
                         <img class="img-circle"  style="border-radius: 100%"  width="40px" src="{{asset('images/user.png')}}" alt="">
                     @else
-                        <img class="img-circle "  style="border-radius: 100%"  width="40px" src="{{Auth::user()->avatar ?? ""}}" alt="{{asset('images/user.png')}}">
+                        <img class="img-circle "  style="border-radius: 100%"  width="40px" src="{{Auth::user()->avatar ?? ""}}" alt="Upload profile pic">
                     @endif
                 </div>
 

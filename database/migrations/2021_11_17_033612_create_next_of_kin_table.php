@@ -18,6 +18,7 @@ class CreateNextOfKinTable extends Migration
             $table->string('name');
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
+            $table->string('nid')->nullable();
             $table->string('address')->nullable();
             $table->string('relationship')->nullable();
             $table->string('work_status')->nullable();

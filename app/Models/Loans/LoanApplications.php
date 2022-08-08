@@ -2,6 +2,7 @@
 
 namespace App\Models\Loans;
 
+use App\Models\BankDetails;
 use App\Models\Files;
 use App\Models\Settings\Status;
 use App\Models\User;
@@ -117,6 +118,11 @@ class LoanApplications extends Model
     public function schedules(){
         return $this->hasMany(LoanSchedule::class ) ;
     }
+
+    public function bankDetails(){
+        return $this->hasMany(BankDetails::class , 'user_id', 'customer_id') ;
+    }
+
 
 
     public function approvals(){

@@ -12,6 +12,7 @@ use App\Models\Loans\LoanProducts;
 use App\Models\Loans\LoanSchedule;
 use App\Models\NextOfKin;
 use App\Models\Settings\CustomerTypes;
+use App\Models\Settings\LoanCategory;
 use App\Models\Settings\Status;
 use App\Models\Settings\WorkStatus;
 use App\Models\User;
@@ -87,14 +88,15 @@ class LoanApplicationsController extends Controller
      *
      * @return Response
      */
-    public function apply(Request $request, LoanProducts $loanProd)
+    public function apply(Request $request )
     {
-        $loan_purpose = $request->loan_purpose;
+        $loanProd = LoanProducts::find($request->loan_purpose);
+        $loanProd->load('category');
         $user = Auth::user();
         $works = WorkStatus::all();
         $statuses = Status::all();
         $customer_types = CustomerTypes::where('id', '!=', config('constants.customer_type.employee'))->get();
-        return view('dashboard.loan.apply')->with(compact('user', 'works', 'loanProd', 'statuses', 'customer_types', 'loan_purpose'));
+        return view('dashboard.loan.apply')->with(compact('user', 'works', 'loanProd', 'statuses', 'customer_types' ));
     }
 
     public function finish(Request $request, LoanApplications $loan, User $user)
@@ -117,17 +119,31 @@ class LoanApplicationsController extends Controller
             }
         }
 
+
+      //  dd($request->all() );
         /** upload identity file */
-        $file = $request->file('identity');
-        if ($request->hasFile('identity')) {
+//        $file = $request->file('identity');
+//        if ($request->hasFile('identity')) {
+//            $filesController = new FilesController();
+//            $identity = $filesController->upload($request, $file, config('constants.types.identity'), $user);
+//            $user->identity = $identity->uuid ?? $identity->id;
+//        }
+
+        if( ($request->identity ?? "pica") != "pica"){
+        foreach ( $request->file('identity') as  $file ){
             $filesController = new FilesController();
             $identity = $filesController->upload($request, $file, config('constants.types.identity'), $user);
             $user->identity = $identity->uuid ?? $identity->id;
         }
+        }
 
         /** upload account_statement file */
-        $file = $request->file('account_statement');
-        if ($request->hasFile('account_statement')) {
+//        $file = $request->file('account_statement');
+//        if ($request->hasFile('account_statement')) {
+//            $filesController = new FilesController();
+//            $filesController->upload($request, $file, config('constants.types.account_statement'), $loan);
+//        }
+        foreach ( $request->file('account_statement') as  $file ){
             $filesController = new FilesController();
             $filesController->upload($request, $file, config('constants.types.account_statement'), $loan);
         }
@@ -146,9 +162,14 @@ class LoanApplicationsController extends Controller
             $filesController->upload($request, $file, config('constants.types.payslip'), $loan);
         }
 
+
         /** upload collateral file */
-        $file = $request->file('collateral');
-        if ($request->hasFile('collateral')) {
+//        $file = $request->file('collateral');
+//        if ($request->hasFile('collateral')) {
+//            $filesController = new FilesController();
+//            $filesController->upload($request, $file, config('constants.types.collateral'), $loan);
+//        }
+        foreach ( $request->file('collateral') as  $file ){
             $filesController = new FilesController();
             $filesController->upload($request, $file, config('constants.types.collateral'), $loan);
         }
@@ -156,21 +177,23 @@ class LoanApplicationsController extends Controller
         //save next of kin
         $kin = NextOfKin::UpdateOrCreate([
             'name' => $request->kin_name,
-            'phone' => $request->kin_phone,
-            'email' => $request->kin_email,
+            'nid' => $request->kin_nid,
             'relationship' => $request->kin_relationship,
             'user_id' => $user->id,
         ], [
             'name' => $request->kin_name,
             'phone' => $request->kin_phone,
             'email' => $request->kin_email,
-            'address' => $request->kin_work_place,
+            'address' => $request->kin_address,
+            'nid' => $request->kin_nid,
             'relationship' => $request->kin_relationship,
             'work_status' => $request->kin_work,
             'work_place' => $request->kin_work_place,
             'user_id' => $user->id,
             'created_by' => $logged_in->id,
         ]);
+
+
 
         //user
         $user->mobile_number = $request->mobile_number;
@@ -271,8 +294,8 @@ class LoanApplicationsController extends Controller
                 "loan_product_id" => $request->loan_prod,
                 "repayment_period" => $request->repayment_period,
                 "monthly_income" => $request->monthly_income,
-                "other_income" => $request->other_income,
-                "monthly_deduct" => $request->monthly_deduct,
+                "other_income" => $request->other_income ?? 0,
+                "monthly_deduct" => $request->monthly_deduct ?? 0,
                 "statuses_id" => $status
             ],
             [
@@ -281,12 +304,12 @@ class LoanApplicationsController extends Controller
                 "loan_amount" => $request->loan_amount,
                 "loan_product_id" => $request->loan_prod,
                 "repayment_period" => $request->repayment_period,
-                "monthly_income" => $request->monthly_income,
-                "other_income" => $request->other_income,
-                "monthly_deduct" => $request->monthly_deduct,
-                "loan_rate" => $loan->rate_per_month,
+                "monthly_income" => $request->monthly_income ?? 0,
+                "other_income" => $request->other_income ?? 0,
+                "monthly_deduct" => $request->monthly_deduct ?? 0,
+                "loan_rate" => $loan->rate_per_month ?? 0,
                 "loan_amount_due" => $request->total_repayment,
-                "loan_arrangement_fee" => $loan->arrangement_fee,
+                "loan_arrangement_fee" => $loan->arrangement_fee ?? 0,
                 'collateral_description' => $loan->collateral ?? "none",
                 "customer_id" => $user->id ?? 0,
                 "created_by" => $logged_in->id ?? 0,
@@ -592,6 +615,7 @@ class LoanApplicationsController extends Controller
     {
         $loan->load('loan', 'payslips', 'statements');
         $loan->load('customer.nrc', 'schedules', 'approvals' );
+        $loan->load('bankDetails' );
         $logged_in_user = Auth::user();
         $next_users = [] ;
 //        $approvals = LoanApproals::where('loan_applications_id' , $loan->id)->get();

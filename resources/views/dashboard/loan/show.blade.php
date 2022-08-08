@@ -291,7 +291,7 @@
                                                 @if( ($loan->customer->avatar ?? "" ) == "" )
                                                     <img class="img-circle" width="60px" src="{{asset('images/user.png')}}" alt="">
                                                 @else
-                                                    <img class="img-circle"  width="60%" src="{{$loan->customer->avatar ?? ""}}" alt="{{asset('images/user.png')}}">
+                                                    <img class="img-circle"  width="60%" src="{{$loan->customer->avatar ?? ""}}" alt="Upload profile pic">
                                                 @endif
 
 {{--                                                @if( ($loan->customer->avatar ?? "" ) == "" )--}}
@@ -985,16 +985,16 @@
                                                                     <td>{{$schedule->installment}}</td>
                                                                     <td> {{ number_format(($schedule->amount - ($schedule->paid ?? 0)),2)}}</td>
                                                                     <td>{{$schedule->date}}</td>
-{{--                                                                    @if( $schedule->date  > date('Y-m-d') &&  ($schedule->paid ?? 0) != $schedule->amount )--}}
-                                                                        @if( $schedule->date  < date('Y-m-d') )
+                                                                    {{--                                                                    @if( $schedule->date  > date('Y-m-d') &&  ($schedule->paid ?? 0) != $schedule->amount )--}}
+                                                                    @if( $schedule->date  < date('Y-m-d') )
                                                                         @if( ( $schedule->balance ?? -1 ) == 0)
                                                                             <td><span title="Paid after due date" class="text-success"><i
                                                                                         class="bi bi-check2-circle"></i> {{$schedule->paid ?? 0}}</span>
                                                                             </td>
                                                                         @else
-                                                                        <td><span title="Payment is overdue. Please make payment" class="label"><i
-                                                                                    class="bi bi-info-circle-fill text-danger"></i> {{$schedule->paid ?? 0}}</span>
-                                                                        </td>
+                                                                            <td><span title="Payment is overdue. Please make payment" class="label"><i
+                                                                                        class="bi bi-info-circle-fill text-danger"></i> {{$schedule->paid ?? 0}}</span>
+                                                                            </td>
                                                                         @endif
                                                                     @else
                                                                         @if( ( $schedule->balance ?? -1 ) == 0)
@@ -1008,6 +1008,56 @@
                                                                         @endif
                                                                     @endif
 
+                                                                </tr>
+                                                            @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
+                                        <h2 class="text-center"><strong>ACCOUNT DETAILS</strong></h2>
+                                        <div class="m-3 text-left">
+                                            <div class="card-body  border-top py-3">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <table  class="table table-striped table_wrapper">
+                                                            <thead>
+                                                            <tr>
+                                                                <td>#</td>
+                                                                <td>Type</td>
+                                                                <td>Account #</td>
+                                                                <td>Account Name</td>
+                                                                <td>Provider Name</td>
+                                                                <td>Provider Branch</td>
+                                                                <td>Branch Code</td>
+                                                                <td>Action</td>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @foreach($loan->bankDetails as $key=>$bankDetails)
+                                                                <tr>
+                                                                    <td> {{++$key}} </td>
+                                                                    <td>{{ $bankDetails->type  }}  </td>
+                                                                    <td>{{ $bankDetails->account_number  }}  </td>
+                                                                    <td>{{ $bankDetails->account_name  }}  </td>
+                                                                    <td>{{ $bankDetails->provider_name  }}  </td>
+                                                                    <td>{{ $bankDetails->provider_branch ?? ""  }}  </td>
+                                                                    <td>{{ $bankDetails->branch_code ?? ""  }}  </td>
+                                                                    <td>
+                                                                        <div class="row ">
+                                                                            <div class="col-3">
+                                                                                <a class="btn btn-sm btn-secondary" href="{{route('user.bank-details.show', $bankDetails)}}" >
+                                                                                    <i class="fa fa-eye"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
                                                                 </tr>
                                                             @endforeach
                                                             </tbody>

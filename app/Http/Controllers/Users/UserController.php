@@ -62,6 +62,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
         //get logged in user
         $user = Auth::user();
         //create
@@ -85,23 +86,31 @@ class UserController extends Controller
                 "mobile_number" => $request->mobile_number,
                 "customer_type_id" => $request->customer_type_id,
                 "role_id" => $request->role_id,
-                "password" => Hash::make('password'),
+                "password" => Hash::make('Chalom@123'),
                 "status_id" => config('constants.status.activated'),
                 "created_by" => $user->id,
             ]
         );
 
+       // dd($model);
         //save avatar
-        $filesModel = new FilesController();
-        $file = $request->file('avatar');
-        $saved_file = $filesModel->upload($request, $file, config('constants.types.avatar'), $model);
-        $model->avatar = $saved_file->id;
-        $model->save();
+//        $filesModel = new FilesController();
+//        $file = $request->file('avatar');
+//        $saved_file = $filesModel->upload($request, $file, config('constants.types.avatar'), $model);
+//        $model->avatar = $saved_file->id;
+//        $model->save();
 
-        if ($request->file('avatar')) {
-            $model->addMediaFromRequest('avatar')->toMediaCollection('avatars');
-            $model->update(['profile_img' => $request->file('avatar')]);
-        }
+        //save avatar
+//        $filesModel = new FilesController();
+//        $file = $request->file('avatar');
+//        $saved_file = $filesModel->upload($request, $file, config('constants.types.avatar'), $model);
+//        $model->avatar = $saved_file->path;
+//        $model->save();
+
+//        if ($request->file('avatar')) {
+//            $model->addMediaFromRequest('avatar')->toMediaCollection('avatars');
+//            $model->update(['profile_img' => $request->file('avatar')]);
+//        }
 
         return Redirect::back()->with('message', $request->name . ' Account Created Successfully');
 
@@ -177,8 +186,9 @@ class UserController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        User::destroy($user->id );
+        return redirect()->route('home')->with('message', ' User Deleted Successfully');
     }
 }

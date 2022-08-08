@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\Loans;
 
 use App\Http\Controllers\Controller;
 use App\Models\Loans\LoanProducts;
+use App\Models\Settings\LoanCategory;
 use App\Models\Settings\Status;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -19,7 +20,7 @@ class LoanProductsController extends Controller
      */
     public function index()
     {
-        $list = LoanProducts::all();
+        $list = LoanProducts::paginate(15);
         $list->load('status');
         $statuses = Status::all();
         return view('dashboard.loan_products.index')->with(compact('list', 'statuses'));
@@ -33,8 +34,9 @@ class LoanProductsController extends Controller
      */
     public function create()
     {
-        $statuses = Status::all();
-     return view('dashboard.loan_products.create')->with(compact('statuses'));
+        $loanCategories = LoanCategory::select('id', 'name')->get() ;
+        $statuses = Status::select('id', 'name')->get() ;
+     return view('dashboard.loan_products.create')->with(compact('statuses', 'loanCategories'));
     }
 
     /**
@@ -69,6 +71,8 @@ class LoanProductsController extends Controller
                 'lowest_tenure' => $request->lowest_tenure,
                 'highest_tenure' => $request->highest_tenure,
                 'collateral' => $request->collateral ,
+                'loan_category_id' => $request->loan_category_id ,
+                'dept_service_ratio' => $request->dept_service_ratio ,
                 'description' => $request->description,
                 'statuses_id' => $request->statuses_id,
                 'created_by' => $user->id,
@@ -86,8 +90,9 @@ class LoanProductsController extends Controller
     public function show(LoanProducts $loanProducts)
     {
         $loanProducts->load('faq', 'features', 'eligibility');
-        $statuses = Status::all();
-        return view('dashboard.loan_products.show')->with(compact('loanProducts', 'statuses'));
+        $loanCategories = LoanCategory::select('id', 'name')->get() ;
+        $statuses = Status::select('id', 'name')->get() ;
+        return view('dashboard.loan_products.show')->with(compact('loanCategories','loanProducts', 'statuses'));
     }
 
     /**
@@ -119,6 +124,8 @@ class LoanProductsController extends Controller
         $loanProducts->lowest_tenure = $request->lowest_tenure;     // 1
         $loanProducts->highest_tenure = $request->highest_tenure;     // 36
         $loanProducts->collateral = $request->collateral;     // 36
+        $loanProducts->dept_service_ratio = $request->dept_service_ratio;     // "BUSINESS LOANS"
+        $loanProducts->loan_category_id = $request->loan_category_id;     // "BUSINESS LOANS"
         $loanProducts->about = $request->about;     // "BUSINESS LOANS"
         $loanProducts->description = $request->description;     // "BUSINESS LOANS"
         $loanProducts->image = $request->image;     // "http://localhost/ndinecom/chalom/public/theme/borrow/assets/images/svg/piggy-bank.svg"

@@ -2,6 +2,7 @@
 
 namespace App\Models\Loans;
 
+use App\Models\Settings\LoanCategory;
 use App\Models\Settings\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +24,8 @@ class LoanProducts extends Model
         'lowest_tenure',
         'highest_tenure',
         'collateral',
+        'dept_service_ratio',
+        'loan_category_id',
         'about',
         'description',
         'image',
@@ -43,5 +46,8 @@ class LoanProducts extends Model
     }
     public function faq(){
         return $this->hasMany(LoanFQA::class);
+    }
+    public function category(){
+        return $this->belongsTo(LoanCategory::class, 'loan_category_id', 'id');
     }
 }

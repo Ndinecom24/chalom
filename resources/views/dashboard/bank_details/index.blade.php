@@ -7,12 +7,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h3 class="page-heading mb-4">Loan Application</h3>
+                        <h3 class="page-heading mb-4">Bank Details</h3>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-end">
                             <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                            <li class="breadcrumb-item active">Loan Application</li>
+                            <li class="breadcrumb-item active">Bank Details</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -50,28 +50,13 @@
                 <div id="accordion">
                     <div class="card">
                         <div class="card-header" id="headingOne">
-                            <form name="searh_loans" method="post" action="{{route('loan.product.search')}}">
-                                @csrf
                                 <div class="row">
                                     <div class="col-md-4 col-sm-12">
-                                        <select class="form-control" name="status" id="status">
-                                            <option value="" disabled >--Choose Status--</option>
-                                            <option value="0">All</option>
-                                            @foreach($statuses as $status)
-                                                <option value="{{$status->id}}">{{$status->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4 col-sm-12">
-                                        <input type="text" placeholder="Search Term - NRC/Name/Loan Type" class="form-control" name="search_term" id="search_term" >
-                                    </div>
-                                    <div class="col-md-4 col-sm-12">
-                                        <button class="btn btn-outline-primary " type="submit">
-                                            {{__('Search')}}
-                                        </button>
+                                        <a href="{{route('user.bank-details.create')}}" class="btn btn-outline-primary " >
+                                            {{__('New Details')}}
+                                        </a>
                                     </div>
                                 </div>
-                            </form>
                         </div>
                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
                              data-parent="#accordion">
@@ -82,45 +67,31 @@
                                             <thead>
                                             <tr>
                                                 <td>#</td>
-                                                <td>Customer</td>
                                                 <td>Type</td>
-                                                <td>Loan</td>
-                                                <td>Rate</td>
-                                                <td>Amount</td>
-                                                <td>Installments</td>
-                                                <td>Amount Repaid</td>
-                                                <td>Balance</td>
-                                                <td>Status</td>
+                                                <td>Account Name</td>
+                                                <td>Account #</td>
+                                                <td>Provider Name</td>
+                                                <td>Provider Branch</td>
+                                                <td>Branch Code</td>
                                                 <td>Last Action</td>
                                                 <td>Action</td>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($list as $key=>$loan)
+                                            @foreach($list as $key=>$bankDetails)
                                                 <tr>
                                                     <td> {{++$key}} </td>
-                                                    <td>@if( ($loan->customer->name ?? "pica" ) == "pica" )
-                                                      <span class="text-info">Pending User</span>
-                                                        @else
-                                                            {{$loan->customer->name }}
-                                                    @endif
-                                                    </td>
-                                                    <td>{{$loan->loan->name}} </td>
-                                                    <td>{{number_format( $loan->loan_amount , 2) }}  </td>
-                                                    <td>{{ $loan->loan_rate  }}%  </td>
-                                                    <td>{{number_format( $loan->loan_amount_due , 2) }}  </td>
-                                                    <td>{{$loan->repayment_period }}  </td>
-                                                    <td>{{$loan->schedules->sum('paid') }}  </td>
-                                                    <td>{{number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }}  </td>
-                                                    <td> <span class=" text-{{$loan->status->html ?? "info"}}">
-                                                            {{$loan->status->name ?? $loan->statuses_id }}
-                                                        </span>
-                                                    </td>
-                                                    <td>{{ \Carbon\Carbon::parse($loan->updated_at)->diffForhumans() }}</td>
+                                                    <td>{{ $bankDetails->type  }}  </td>
+                                                    <td>{{ $bankDetails->account_name  }}  </td>
+                                                    <td>{{ $bankDetails->account_number  }}  </td>
+                                                    <td>{{ $bankDetails->provider_name  }}  </td>
+                                                    <td>{{ $bankDetails->provider_branch ?? ""  }}  </td>
+                                                    <td>{{ $bankDetails->branch_code ?? ""  }}  </td>
+                                                    <td>{{ \Carbon\Carbon::parse($bankDetails->updated_at)->diffForhumans() }}</td>
                                                     <td>
                                                         <div class="row ">
                                                             <div class="col-3">
-                                                                <a class="btn btn-sm btn-secondary" href="{{route('loan.show', $loan)}}" >
+                                                                <a class="btn btn-sm btn-secondary" href="{{route('user.bank-details.show', $bankDetails)}}" >
                                                                     <i class="fa fa-eye"></i>
                                                                 </a>
                                                             </div>
@@ -130,9 +101,6 @@
                                             @endforeach
                                             </tbody>
                                         </table>
-                                    </div>
-                                    <div class="pagination-sm">
-                                        {{$list->links()}}
                                     </div>
                                 </div>
                             </div>

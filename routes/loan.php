@@ -42,7 +42,7 @@ Route::group([
 Route::group([
     'prefix' => 'loan/apply',
 ], function () {
-    Route::get('/{loanProd}', [LoanApplicationsController::class, 'apply'])->name('loan.apply');
+    Route::get('/', [LoanApplicationsController::class, 'apply'])->name('loan.apply');
     Route::post('/save/details', [LoanApplicationsController::class, 'save'])->name('loan.save');
     Route::post('/finish/{loan}/{user}', [LoanApplicationsController::class, 'finish'])->name('loan.finish');
     Route::post('/returning', [LoanApplicationsController::class, 'returningCustomer'])->name('loan.returning.customer');

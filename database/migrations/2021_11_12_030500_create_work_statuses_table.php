@@ -17,6 +17,7 @@ class CreateWorkStatusesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
+            $table->string('html');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->timestamp('deleted_at')->nullable();

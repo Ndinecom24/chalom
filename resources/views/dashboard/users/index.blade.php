@@ -61,7 +61,13 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12">
-                                        <a class="btn btn-sm btn-outline-success mb-2"  href="{{route('user.create')}}"  >
+                                        <a class="btn btn-sm btn-outline-success mb-2"
+                                           @if($user_types == "Customers")
+                                           href="{{route('user.client.create')}}"
+                                               @else
+                                           href="{{route('user.admin.create')}}"
+                                               @endif
+                                        >
                                             New {{$user_types}}
                                         </a>
                                     </div>
@@ -85,7 +91,7 @@
                                         @foreach($users as $user)
                                             <tr>
                                                 <td> {{$user->id}} </td>
-                                                <td>{{$user->name}} </td>
+                                                <td>{{$user->name }}  </td>
                                                 <td>{{$user->email }}  </td>
                                                 <td>{{$user->mobile_number ?? "" }}  </td>
                                                 <td>{{$user->gender ?? ""}}  </td>
@@ -96,15 +102,15 @@
                                                     <div class="row ">
                                                         <div class="col-3">
                                                             <a class="btn btn-sm btn-secondary" href="{{route('user.client.profile', $user)}}" >
-                                                                <i class="fa fa-edit"></i>
+                                                                <i class="fa fa-edit "></i>
                                                             </a>
                                                         </div>
-                                                        <div class="col-3 ">
-                                                            <button class="btn btn-sm btn-secondary text-left" data-toggle="modal" data-target="#modal-delete-user"
-                                                                    data-sent_data="{{$user}}" >
-                                                                <i class="fa fa-trash"></i>
-                                                            </button>
-                                                        </div>
+{{--                                                        <div class="col-3 ">--}}
+{{--                                                            <button class="btn btn-sm btn-secondary text-left" data-toggle="modal" data-target="#modal-delete-user"--}}
+{{--                                                                    data-sent_data="{{$user}}" >--}}
+{{--                                                                <i class="fa fa-trash"></i>--}}
+{{--                                                            </button>--}}
+{{--                                                        </div>--}}
                                                     </div>
                                                 </td>
                                             </tr>

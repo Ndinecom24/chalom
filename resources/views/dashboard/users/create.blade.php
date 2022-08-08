@@ -134,7 +134,7 @@
 
                                     </div>
                                     <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <span class="text-sm text-muted"> Default password  is Chalom@123</span>
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
                                 </form>

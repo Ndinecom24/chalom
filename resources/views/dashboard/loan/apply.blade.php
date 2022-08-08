@@ -83,7 +83,7 @@
 
         #msform .action-button {
             width: 100px;
-            background: skyblue;
+            background: #40d961;
             font-weight: bold;
             color: white;
             border: 0 none;
@@ -313,7 +313,7 @@
                                                                         <select readonly id="loan_type" name="loan_type"
                                                                                 onchange="loanPercent(event)"
                                                                                 class="form-control ">
-                                                                            <option value="{{$loanProd->id}}">{{$loanProd->name}}</option>
+                                                                            <option value="{{$loanProd->id}}">{{$loanProd->category->name }}</option>
                                                                         </select>
                                                                         <label id="loan_type_error"
                                                                                style="display: none"
@@ -325,32 +325,50 @@
                                                                 <div class="col-12">
                                                                     <div class="form-group mt-2">
                                                                         <label
-                                                                            for="payslip_three">Purpose</label>
+                                                                            for="payslip_three">Loan Product</label>
                                                                         <input type="text" readonly
                                                                                class="form-control "
                                                                                name="loan_purpose"
-                                                                               value="{{$loan_purpose}}"
+                                                                               value="{{$loanProd->name}}"
                                                                                id="loan_purpose">
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-12">
+                                                                <div class="col-lg-6 col-md-12 col-sm-12">
                                                                     <div class="form-group mt-2">
                                                                         <label
                                                                             for="payslip_three">Next Repayment Date</label>
                                                                         <input type="text" readonly
                                                                                class="form-control "
-                                                                               name="loan_purpose"
+                                                                               name="loan_date"
                                                                                value="{{date("D d M Y", strtotime("1 month"))}}"
-                                                                               id="loan_purpose">
+                                                                               id="loan_date">
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-12">
+                                                                <div class="col-lg-6 col-md-12 col-sm-12">
                                                                     <div class="form-group mt-2">
                                                                         <label
+                                                                            for="payslip_three">Collateral </label>
+                                                                        <input type="text" readonly
+                                                                               class="form-control "
+                                                                               name="loan_date"
+                                                                               value=" {{$loanProd->collateral}}"
+                                                                               id="loan_date">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-12">
+                                                                    <div class="form-group mt-4">
+                                                                        <label
                                                                             for="loan_amount">
-                                                                            Loan Amount in Kwacha</label>
+                                                                            Loan Amount (ZMW)</label> <br>
+                                                                        <span class="text-sm-center text-muted "
+                                                                            for="loan_amount">
+                                                                            A Min of zmw {{$loanProd->lowest_amount}} and a Max of zmw {{$loanProd->highest_amount}}</span>
                                                                         <input type="number" class="form-control "
                                                                                name="loan_amount" id="loan_amount"
+                                                                               min="{{$loanProd->lowest_amount}}"
+                                                                               max="{{$loanProd->highest_amount}}"
+                                                                               onchange="totalRepayment()"
                                                                                placeholder="How much? e.g 5000 ">
                                                                         <label id="loan_amount_error"
                                                                                style="display: none"
@@ -362,24 +380,28 @@
                                                                     <div class="form-group mt-2">
                                                                         <label
                                                                             for="repayment_period">
-                                                                            Repayment Period in Months</label>
+                                                                            Repayment Period in Months</label> <br>
+                                                                        <span class="text-sm-center text-muted ml-2"
+                                                                              for="loan_amount">
+                                                                            Min of {{$loanProd->lowest_tenure}} month/s  and Max of {{$loanProd->highest_tenure}} month/s</span>
                                                                         <input type="number" class="form-control "
                                                                                onchange="totalRepayment()"
                                                                                name="repayment_period"
                                                                                id="repayment_period"
+                                                                               min="{{$loanProd->lowest_tenure}}" max="{{$loanProd->highest_tenure}}"
                                                                                placeholder="How many months? e.g 2 ">
                                                                         <label id="repayment_period_error"
                                                                                style="display: none"
                                                                                class="text-danger"> Enter Repayment
-                                                                            Period </label>
+                                                                            Period (months)</label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-6 col-md-12 col-sm-12">
                                                                     <div class="form-group mt-2">
                                                                         <label
-                                                                            for="payslip_three">Percentage</label>
+                                                                            for="payslip_three">Rate %</label>
                                                                         <input type="number" readonly
-                                                                               class="form-control is-valid"
+                                                                               class="form-control-plaintext "
                                                                                name="loan_percentage"
                                                                                value="{{$loanProd->rate_per_month}}"
                                                                                id="loan_percentage"
@@ -389,21 +411,21 @@
                                                                 <div class="col-lg-6 col-md-12 col-sm-12">
                                                                     <div class="form-group mt-2">
                                                                         <label
-                                                                            for="payslip_three">Arrangement Fee</label>
+                                                                            for="payslip_three">Arrangement Fee (ZMW)</label>
                                                                         <input type="number" readonly
-                                                                               class="form-control is-valid"
+                                                                               class="form-control-plaintext "
                                                                                name="arrangement_fee"
                                                                                value="{{$loanProd->arrangement_fee}}"
                                                                                id="arrangement_fee">
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-lg-6 col-md-12 col-sm-12 ">
+                                                                <div class="col-lg-6 col-md-12 col-sm-12 mt-2 ">
                                                                     <div class="form-group mt-2 ">
                                                                         <label
                                                                             for="payslip_three">Monthly
-                                                                            Repayments</label>
+                                                                            Repayments (ZMW)</label>
                                                                         <input type="number" readonly
-                                                                               class="form-control is-valid"
+                                                                               class="form-control "
                                                                                name="monthly_amount" id="monthly_amount"
                                                                                placeholder="ZMW">
                                                                     </div>
@@ -413,7 +435,7 @@
                                                                         <label
                                                                             for="payslip_three">Total Repayment</label>
                                                                         <input type="number" readonly
-                                                                               class="form-control is-valid"
+                                                                               class="form-control "
                                                                                name="total_repayment"
                                                                                id="total_repayment"
                                                                                placeholder="ZMW">
@@ -431,13 +453,17 @@
 
                                                 </div>
 
-                                                <input type="button" name="next" class="next action-button"
-                                                       value="Next Step"/>
+{{--                                                <div  id="next_btn" style="display:none"    >--}}
+                                                    <input type="button" name="next" class="next action-button"
+                                                           value="Next Step"/>
+{{--                                                </div>--}}
+
                                             </fieldset>
                                             <fieldset>
                                                 <div class="form-card">
                                                     <h2 class="fs-title">Loan Eligibility</h2>
                                                     <div id="selected_loan_div"></div>
+                                                    <br>
                                                     <div class="row">
                                                         <div class="col-12 mt-2">
                                                             <div class="row gutters">
@@ -577,16 +603,18 @@
 
                                         <fieldset>
                                             <div class="form-card" id="success_div" style="display: none">
-                                                <h2 class="fs-title text-center">Success !</h2> <br><br>
+                                                <h2 class="fs-title text-center">Saved !</h2> <br><br>
                                                 <div class="row justify-content-center">
                                                     <div class="col-3"><img
-                                                            src="https://img.icons8.com/color/96/000000/ok--v2.png"
+                                                            src="https://img.icons8.com/fluency/344/ok.png"
                                                             class="fit-image"></div>
                                                 </div>
+
                                                 <br><br>
                                                 <div class="row justify-content-center">
                                                     <div class="col-7 text-center">
-                                                        <h5>You Have Successfully submitted your loan request!</h5>
+                                                        <h5>Your loan request is pending completion! </h5> <br>
+                                                        <span>Please create or login to your account in order to complete and submit your application for processing. Thank you.</span>
                                                     </div>
                                                 </div>
                                                 <br>
@@ -653,21 +681,21 @@
             var loan_percentage_val = (loan_percentage / 100);
             var monthly_interest_payable = parseFloat(loan_amount * loan_percentage_val);
             for (var i = 1; i < repayment_period; i++) {
-                monthly_interest_payable += parseFloat(loan_percentage_val) * parseFloat(loan_amount / 2);
+                monthly_interest_payable += parseFloat(loan_percentage_val  || 0 ) * parseFloat(loan_amount / 2);
             }
-            var total_loan_repayment = parseFloat(monthly_interest_payable) + parseFloat(loan_amount) + parseFloat(arrangement_fee);
-            var monthly = parseFloat(total_loan_repayment) / repayment_period;
+            var total_loan_repayment = parseFloat(monthly_interest_payable  || 0) + parseFloat(loan_amount || 0) + parseFloat(arrangement_fee  || 0);
+            var monthly = parseFloat(total_loan_repayment || 0) / (repayment_period || 0);
 
             //SET THE CALCULATED VALUES
             document.getElementById('total_repayment').value = round(total_loan_repayment, 2);
             document.getElementById('monthly_amount').value = round(monthly, 2);
 
-            var name = @json( $loanProd->name );
-            var purpose = @json( $loan_purpose );
+            var category = @json( $loanProd->category->name );
+            var product = @json( $loanProd->name );
             var loan_amount = document.getElementById('loan_amount').value;
 
             //set the text on next tab
-            var html_text = '<label>Iam Applying for a <b> K' + loan_amount + ' ' + name + '</b> loan for '+purpose+' .';
+            var html_text = '<label>You are Applying for a <b> K' + loan_amount + ' ' + product + '</b> loan under '+category+'. Your monthly installments will be K'+round(monthly, 2)+' for '+repayment_period+' months  </label>'  ;
             document.getElementById('selected_loan_div').innerHTML = html_text;
 
 
@@ -701,6 +729,7 @@
             if (calc == true) {
                 var calculate_btn = document.getElementById('calculate_btn');
                 calculate_btn.style.display = 'none';
+                document.getElementById('next_btn').style.display = 'block';
             }
 
         }
@@ -734,11 +763,19 @@
                 var monthly_income = document.getElementById('monthly_income').value;
                 var other_income = document.getElementById('other_income').value;
                 var monthly_deduct = document.getElementById('monthly_deduct').value;
+                var repayment_period = document.getElementById('repayment_period').value;
+                var dsr = @json( $loanProd->dept_service_ratio );
 
                 //calculate
-                var total_monthly = parseFloat(monthly_income) + parseFloat(other_income);
-                var deduct_from_limit = parseFloat(total_monthly) * (20 / 100);
-                var total_monthly_subtracted = parseFloat(deduct_from_limit) - parseFloat(monthly_deduct);
+                var total_monthly = parseFloat(monthly_income  || 0 ) + parseFloat(other_income  || 0 );
+                if( dsr > 0){
+                    var deduct_from_limit = parseFloat(total_monthly  || 0) * (dsr / 100);
+                }else{
+                    var deduct_from_limit = parseFloat(total_monthly  || 0) ;
+                }
+                var qualify_for = deduct_from_limit * repayment_period ;
+                var total_monthly_subtracted = parseFloat(deduct_from_limit  || 0) - parseFloat(monthly_deduct  || 0 );
+                var total_income = parseFloat(total_monthly  || 0) - parseFloat(monthly_deduct  || 0 );
 
                 //the checks
                 var citizen_check = document.getElementById('citizen_check').checked;
@@ -765,7 +802,9 @@
                 if (eligible == true) {
                     Swal.fire(
                         'Eligible',
-                        'You are Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan',
+                        'You are  Eligible for a ZMW ' + loan_amount + ' ' + loan_name + ' Loan. Your monthly repayment is (ZMW '+monthly_amount_repayment+') for '+repayment_period+' months',
+
+                    // 'You are Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan',
                         'success'
                     )
                  //   alert( 'You are Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan');
@@ -795,9 +834,12 @@
                 } else {
                     Swal.fire(
                         'Not Eligible',
-                        'You are not Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan',
+                        'You are not Eligible for a zmw ' + loan_amount + ' ' + loan_name + ' Loan. Your monthly repayment of zmw '+monthly_amount_repayment+' is more than '+dsr+'%  (DSR threshold) of your total monthly income (zmw '+total_income+'). For a repayment period of '+repayment_period+' months, you qualify for a maximum of zmw '+qualify_for+'.',
                         'warning'
+
                     )
+
+                    //monthly_amount_repayment
 
                     // alert('You are not Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan');
                 }
@@ -899,7 +941,7 @@
                         loan_prod: loan_prod,
                         repayment_period: repayment_period,
                         monthly_income: monthly_income,
-                        other_income: other_income,
+                        other_income: other_income ,
                         monthly_deduct: monthly_deduct,
                         customer_type: customer_type,
                         loan_purpose: loan_purpose,
@@ -919,7 +961,7 @@
                             "</div>" +
                             "" +
                             "<div class='col-12 text-center mt-1 mb-2' > " +
-                            "<button class='btn btn-outline-success'>Create Account </button> " +
+                            "<button class='btn btn-success'>Create Account </button> " +
                             "</div>";
 
                         var html_div1 = "<div class='col-12'>" +
@@ -930,7 +972,7 @@
                             "</div>" +
                             "" +
                             "<div class='col-12 text-center mt-1 mb-2' > " +
-                            "<button class='btn btn-outline-success'>Login to your Account </button> " +
+                            "<button class='btn btn-success'>Login to your Account </button> " +
                             "</div>";
 
                         if(response.customer_type == new_cus){
