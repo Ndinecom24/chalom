@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Settings\Roles;
 use App\Models\Dashboard\Logs\Notifications;
-use App\Models\dashboardTotals;
+use App\Models\DashboardTotals;
 use App\Models\Loans\LoanApplications;
 use App\Models\Settings\LoanCategory;
 use App\Models\Loans\LoanProducts;
@@ -71,7 +70,7 @@ class HomeController extends Controller
             || $user->role_id == config('constants.role.approver.id')
         ) {
             $loans = LoanApplications::orderBy('created_at');
-            $total = dashboardTotals::first();
+            $total = DashboardTotals::first();
             $notifications = Notifications::where('status_id', config('constants.status.unseen'))->orderBy('created_at', 'desc')->get();
             return view('dashboard.home')->with(compact('notifications', 'total', 'loans'));
         } else {
