@@ -274,7 +274,9 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-12 col-sm-12 mb-4 mt-4 p-0 mt-3 mb-2">
-                                <form id="finish_apply_form" action="{{ route('user.bank-details.update', $bankDetails ) }}" method="POST" enctype="multipart/form-data">
+                                <form id="finish_apply_form"
+                                      action="{{ route('user.bank-details.update', $bankDetails ) }}" method="POST"
+                                      enctype="multipart/form-data">
                                     @csrf
                                     <div class="card px-0 pt-4 pb-0 mt-3 mb-3  mr-2">
                                         <h2 class="text-center"><strong>Complete your Payment Details</strong></h2>
@@ -296,27 +298,45 @@
                                                         </tr>
                                                         <tr>
                                                             <td id="col0">
-                                                                <select class="form-control " name="type" id="type" required>
-                                                                    <option value="{{$bankDetails->type}}">{{$bankDetails->type}}</option>
+                                                                <select class="form-control " name="type" id="type"
+                                                                        required>
+                                                                    <option
+                                                                        value="{{$bankDetails->type}}">{{$bankDetails->type}}</option>
                                                                     <option value="mobile money">Mobile Money</option>
                                                                     <option value="bank account">Bank Account</option>
                                                                 </select>
                                                             </td>
-                                                            <td id="col1"><input required  class="form-control " type="text" name="account_name" value="{{$bankDetails->account_name}}" /></td>
-                                                            <td id="col2"><input required class="form-control " type="text" name="account_number" value="{{$bankDetails->account_number}}" /></td>
-                                                            <td id="col3"><input required class="form-control " type="text" name="provider_name" value="{{$bankDetails->provider_name}}" /></td>
-                                                            <td id="col4"><input  class="form-control "  type="text" name="provider_branch" value="{{$bankDetails->provider_branch}}" /></td>
-                                                            <td id="col5"><input  class="form-control "  type="text" name="branch_code" value="{{$bankDetails->branch_code}}" /></td>
+                                                            <td id="col1"><input required class="form-control "
+                                                                                 type="text" name="account_name"
+                                                                                 value="{{$bankDetails->account_name}}"/>
+                                                            </td>
+                                                            <td id="col2"><input required class="form-control "
+                                                                                 type="text" name="account_number"
+                                                                                 value="{{$bankDetails->account_number}}"/>
+                                                            </td>
+                                                            <td id="col3"><input required class="form-control "
+                                                                                 type="text" name="provider_name"
+                                                                                 value="{{$bankDetails->provider_name}}"/>
+                                                            </td>
+                                                            <td id="col4"><input class="form-control " type="text"
+                                                                                 name="provider_branch"
+                                                                                 value="{{$bankDetails->provider_branch}}"/>
+                                                            </td>
+                                                            <td id="col5"><input class="form-control " type="text"
+                                                                                 name="branch_code"
+                                                                                 value="{{$bankDetails->branch_code}}"/>
+                                                            </td>
 
                                                         </tr>
                                                     </table>
-                                                    @if( (( auth()->user()->id ?? 0 ) == $bankDetails->users_id ))
-                                                    <table class="mt-3">
-                                                        <tr>
-                                                            <td><input  class="btn   btn-sm btn-primary" type="submit" value="Update" /></td>
-                                                        </tr>
-                                                    </table>
-                                                        @endif
+                                                    @if( (( auth()->user()->id ?? 0 ) == $bankDetails->user_id ))
+                                                        <table class="mt-3">
+                                                            <tr>
+                                                                <td><input class="btn   btn-sm btn-primary"
+                                                                           type="submit" value="Update"/></td>
+                                                            </tr>
+                                                        </table>
+                                                    @endif
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -326,24 +346,23 @@
                             </div>
                         </div>
                         <div class="row">
-{{--                        @if(( auth()->user()->role_id ==  config('constants.role.admin.id') )--}}
-{{--|| (( auth()->user()->id ?? 0 ) != $bankDetails->users_id )--}}
-{{--|| ( auth()->user()->role_id ==  config('constants.role.developer.id')))--}}
-                            @if( (( auth()->user()->id ?? 0 ) == $bankDetails->users_id ))
-
+                            {{--                        @if(( auth()->user()->role_id ==  config('constants.role.admin.id') )--}}
+                            {{--|| (( auth()->user()->id ?? 0 ) != $bankDetails->users_id )--}}
+                            {{--|| ( auth()->user()->role_id ==  config('constants.role.developer.id')))--}}
+                            @if( (( auth()->user()->id ?? 0 ) == $bankDetails->user_id ))
                                 <div class="col-lg-12 col-sm-12 mb-4 p-0 mt-3 mb-2">
                                     <div class="card card-footer  mb-7">
-                                        <form role="form12" method="post" action="{{route('user.bank-details.destroy', $bankDetails)}}">
+                                        <form role="form12" method="post"
+                                              action="{{route('user.bank-details.destroy', $bankDetails)}}">
                                             @csrf
-                                           <div class="justify-content-between">
+                                            <div class="justify-content-between">
                                                 <span class="text-danger ">Do you want to delete this item ? Action will not be reversed : </span>
                                                 <button type="submit" class="btn btn-xs btn-danger">Delete</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-
-                        @endif
+                            @endif
                         </div>
                     </div>
                 </div>

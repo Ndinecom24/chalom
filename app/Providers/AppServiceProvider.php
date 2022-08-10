@@ -25,8 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $loan_products = LoanProducts::all() ;
-        \view()->share('loan_lists',$loan_products);
+//        $loan_products = LoanProducts::all() ;
+//        \view()->share('loan_lists',$loan_products);
         Paginator::useBootstrap();
     }
 }
