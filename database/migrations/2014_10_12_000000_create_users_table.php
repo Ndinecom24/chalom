@@ -38,7 +38,7 @@ class CreateUsersTable extends Migration
             $table->integer('password_change');
             $table->uuid('uuid');
             $table->integer('created_by')->nullable();
-            $table->integer('deleted_at')->nullable();
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -55,7 +55,7 @@
                               @foreach($loanCategories as $key=>$loanCategory)
                                 <li class="nav-item">
                                     <a class="nav-link @if($key == 0) active @endif rounded-0 d-grid py-3" id="tab-{{$loanCategory->id}}" data-bs-toggle="pill" href="#service{{$loanCategory->id}}" role="tab" aria-controls="{{$loanCategory->id}}" aria-selected="true"><i class="fas fa-money-bill fs-3"></i>
-                                        <p class="mb-0 mt-1 fs-5 text-lowercase"> {{$loanCategory->name}}</p>
+                                        <p title="{{$loanCategory->description ?? "" }}" class="mb-0 mt-1 fs-5 text-lowercase"> {{$loanCategory->name}}</p>
                                     </a>
                                 </li>
                                 @endforeach

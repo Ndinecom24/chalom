@@ -20,6 +20,8 @@ class CreateFilesTable extends Migration
             $table->string('size');
             $table->string('ext');
             $table->string('type');
+            $table->string('modal_uuid');
+            $table->string('uuid');
             $table->integer('modal_id')->nullable();
             $table->string('modal_type')->nullable();
             $table->string('author')->nullable();

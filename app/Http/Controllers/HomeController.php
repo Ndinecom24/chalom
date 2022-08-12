@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankDetails;
 use App\Models\Dashboard\Logs\Notifications;
 use App\Models\DashboardTotals;
 use App\Models\Loans\LoanApplications;
@@ -40,7 +41,7 @@ class HomeController extends Controller
     public function home(Request $request)
     {
         //check user types
-        $user = Auth::user();
+        $user = auth()->user();
         if ($user->role_id == config('constants.role.client.id')) {
             $loans = LoanApplications::orderBy('created_at');
 
@@ -54,13 +55,24 @@ class HomeController extends Controller
                 return view('dashboard.loan.finish_apply')->with(compact('user', 'loan', 'works', 'statuses' ));
             }
             else{
-                $loan_current = $loans->where('statuses_id', '!=' ,  config('constants.status.loan_rejected') );
-                $total =  $loan_current->first() ;
-                if($total != null ) {
-                    $total->load('schedules');
+
+                //check if you do not have bank details
+                $user->load('bankDetails');
+                $bank_details = $user->bankDetails ?? [] ;
+
+                if ( (sizeof($bank_details ) )  > 0 ) {
+                    $loan_current = $loans->where('statuses_id', '!=' ,  config('constants.status.loan_rejected') );
+                    $total =  $loan_current->first() ;
+                    if($total != null ) {
+                        $total->load('schedules');
+                    }
+                    $notifications = Notifications::where('customer_id', $user->id)->orderBy('created_at', 'DESC')->get();
+                    return view('dashboard.home')->with(compact('notifications', 'total'));
+                }else{
+                   session()->flash('message', 'please create your bank or mobile money details');
+                    return view('dashboard.bank_details.create')->with(compact('user' ));
                 }
-                $notifications = Notifications::where('customer_id', $user->id)->orderBy('created_at', 'DESC')->get();
-                return view('dashboard.home')->with(compact('notifications', 'total'));
+
             }
         }
 

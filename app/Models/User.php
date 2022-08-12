@@ -96,5 +96,9 @@ class User extends Authenticatable
         return $this->hasOne(Files::class, 'modal_uuid', 'uuid')
             ->where('type',  config('constants.types.identity') );
     }
+    public function bankDetails(){
+        return $this->hasMany(BankDetails::class , 'user_id', 'id') ;
+    }
+
 
 }

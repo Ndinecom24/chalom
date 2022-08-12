@@ -14,7 +14,13 @@ class BankDetailsController extends Controller
 {
 
     public function index(){
-        $list = BankDetails::get();
+        $user = Auth::user();
+        if ($user->role_id == config('constants.role.client.id')) {
+            $list = $user->bankDetails;
+        }
+        else{
+            $list = BankDetails::get();
+        }
         return view('dashboard.bank_details.index')->with(compact('list'));
     }
 
@@ -99,6 +105,31 @@ class BankDetailsController extends Controller
     {
         BankDetails::destroy($bankDetails->id);
         return Redirect::route('user.bank-details')->with('message','Bank Details Deleted Successfully');
+    }
+
+    public function search(Request $request){
+        $user = Auth::user();
+        $search_term = $request->search_term ;
+        if ($user->role_id == config('constants.role.client.id')) {
+            $list = BankDetails::where('user_id', $user->id)
+                ->orWhereRaw("LOWER(account_name) LIKE LOWER('%".$search_term."%')")
+                ->orWhereRaw("LOWER(account_number) LIKE LOWER('%".$search_term."%')")
+                ->orWhereRaw("LOWER(provider_name) LIKE LOWER('%".$search_term."%')")
+                ->orWhereRaw("LOWER(provider_branch) LIKE LOWER('%".$search_term."%')")
+                ->orWhereRaw("LOWER(branch_code) LIKE LOWER('%".$search_term."%')")
+                ->orWhereRaw("LOWER(type) LIKE LOWER('%".$search_term."%')")
+                ->get();
+        }
+        else{
+            $list = BankDetails::whereRaw("LOWER(account_name) LIKE LOWER('%".$search_term."%')")
+                ->orWhereRaw("LOWER(account_number) LIKE LOWER('%".$search_term."%')")
+                ->orWhereRaw("LOWER(provider_name) LIKE LOWER('%".$search_term."%')")
+                ->orWhereRaw("LOWER(provider_branch) LIKE LOWER('%".$search_term."%')")
+                ->orWhereRaw("LOWER(branch_code) LIKE LOWER('%".$search_term."%')")
+                ->orWhereRaw("LOWER(type) LIKE LOWER('%".$search_term."%')")
+                ->get();
+        }
+        return view('dashboard.bank_details.index')->with(compact('list'));
     }
 
 }

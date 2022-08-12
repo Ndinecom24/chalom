@@ -90,7 +90,7 @@
                                         {{$total->users}}
                                     </h4>
                                     <h4 class="bold-text text-muted">
-                                       Customers: {{ number_format($total->customers, 0)}} | Employees:  {{$total->employees}}
+                                       Customers: {{ number_format($total->customers, 0)}} | Staff:  {{$total->employees}}
                                     </h4>
                                 </div>
                                 <p class="text-muted">

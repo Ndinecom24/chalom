@@ -17,6 +17,7 @@ class CreateStatusesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
+            $table->string('html');
             $table->integer('created_by')->nullable();
             $table->integer('deleted_at')->nullable();
             $table->timestamps();

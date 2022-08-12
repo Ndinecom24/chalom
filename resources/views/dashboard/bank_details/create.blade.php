@@ -250,7 +250,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-md-8 col-sm-12 ">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-lg-12 col-sm-12  mt-4 p-0  ">
                         @if(session()->has('message'))
                             <div class="alert alert-success alert-dismissible">
                                 <p class="lead"> {{session()->get('message')}}</p>
@@ -272,6 +272,7 @@
                             </div>
                         @endif
                     </div>
+                </div>
                     <div class="row">
                         <div class="col-lg-12 col-sm-12 mb-4 mt-4 p-0 mt-3 mb-2">
                             <form id="finish_apply_form" action="{{ route('user.bank-details.store', compact( 'user')) }}" method="POST" enctype="multipart/form-data">
@@ -325,7 +326,6 @@
                             </form>
                         </div>
                     </div>
-                </div>
             </div>
             </div>
         </div>

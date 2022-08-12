@@ -93,6 +93,8 @@ Route::group([
         Route::post('update/{bankDetails}', [BankDetailsController::class, 'update'])->name('user.bank-details.update');
         Route::post('destroy/{bankDetails}', [BankDetailsController::class, 'destroy'])->name('user.bank-details.destroy');
         Route::get('create', [BankDetailsController::class, 'create'])->name('user.bank-details.create');
+        Route::post('search', [BankDetailsController::class, 'search'])->name('user.bank-details.search');
+
     });
 
 }

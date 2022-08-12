@@ -56,6 +56,24 @@
                                             {{__('New Details')}}
                                         </a>
                                     </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <form name="searh_loans" method="post" action="{{route('user.bank-details.search')}}">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="col-md-8 col-sm-12">
+                                                    <input type="text" placeholder="Search " class="form-control" name="search_term" id="search_term" >
+                                                </div>
+                                                <div class="col-md-4 col-sm-12">
+                                                    <button class="btn btn-outline-primary " type="submit">
+                                                        {{__('Search')}}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+
+
                                 </div>
                         </div>
                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"

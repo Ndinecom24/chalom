@@ -60,6 +60,13 @@
                             <span class="menu-title">Loan applications</span>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('user.bank-details')}}">
+                            <i class="text-danger text-primary-hover bi bi-wallet"></i>
+                            <span class="menu-title">Bank Details</span>
+                        </a>
+                    </li>
 {{--                    <li class="nav-item">--}}
 {{--                        <a class="nav-link" href="payloan.php">--}}
 {{--                            <i class="text-danger text-primary-hover bi bi-wallet"></i>--}}
