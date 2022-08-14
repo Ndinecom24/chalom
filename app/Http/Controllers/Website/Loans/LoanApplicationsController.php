@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Dashboard\FilesController;
 use App\Models\Dashboard\Logs\Notifications;
 use App\Models\dashboardTotals;
+use App\Models\LoanPayments;
 use App\Models\Loans\LoanApplications;
 use App\Models\Loans\LoanApproals;
 use App\Models\Loans\LoanProducts;
@@ -317,6 +318,8 @@ class LoanApplicationsController extends Controller
             ]
         );
 
+        session(['my_loan_request' => $model->id]);
+
         //return
         $data['uuid'] = $uuid;
         $data['customer_type'] = $customer_type;
@@ -430,13 +433,32 @@ class LoanApplicationsController extends Controller
             )){
 
 
-            $date = \Carbon\Carbon::now();
+            $date = now();
+
             $amt = $request->amount ;
-            $request->comment = $request->comment ." | ZMW ". $request->amount;
 
             //get the schedules
             $loan_schedules = LoanSchedule::where('loan_applications_id', $loan->id)->get();
 
+
+                //create payment
+                $loan_payments = LoanPayments::create(
+                    [
+                        'loan_applications_id' => $loan->id,
+                        'customer_id' => $loan->customer_id,
+                        'user_id' => auth()->user()->id,
+                        'amount' => $amt,
+                        'comment' => $request->comment,
+                        'uuid' => Str::uuid()->toString(),
+                        'date_paid' => $date,
+                    ]
+                );
+                foreach ($request->file('proof_of_payment') as $file) {
+                    $filesController = new FilesController();
+                    $filesController->upload($request, $file, config('constants.types.proof_of_payment'), $loan_payments);
+            }
+
+            $request->comment = $request->comment ." | ZMW ". $request->amount;
 
             //amount should be within balance
             if( $amt > ($loan->loan_amount_due - $loan->schedules->sum('paid')) ){
@@ -615,7 +637,10 @@ class LoanApplicationsController extends Controller
     {
         $loan->load('loan', 'payslips', 'statements');
         $loan->load('customer.nrc', 'schedules', 'approvals' );
-        $loan->load('bankDetails' );
+        $loan->load('bankDetails', 'payments.paymentProofs' );
+
+      //  dd($loan);
+
         $logged_in_user = Auth::user();
         $next_users = [] ;
 //        $approvals = LoanApproals::where('loan_applications_id' , $loan->id)->get();

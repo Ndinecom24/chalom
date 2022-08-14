@@ -68,8 +68,6 @@ class RegisterController extends Controller
     {
         $uuid_user = Str::uuid()->toString();
 
-      //  dd($data);
-
         $user = User::create([
             'name' => $data['name'],
             'uuid' => $uuid_user,
@@ -80,14 +78,24 @@ class RegisterController extends Controller
             'password_change' => config('constants.password_changed'),
             'password' => Hash::make($data['password']),
         ]);
-        if($data['uuid'] != 0){
 
-            // find the loan
-            $loan = LoanApplications::where('uuid', $data['uuid'])->first();
+//        if($data['uuid'] != 0){
+//            //find the loan
+//            $loan = LoanApplications::where('uuid', $data['uuid'])->first();
+//            $loan = LoanApplications::find( (int)session()->get('my_loan_request')  ) ;
+//            $loan->customer_id = $user->id ;
+//            $loan->statuses_id = config('constants.status.loan_request_login');
+//            $loan->save();
+//        }
+
+        $has_loan = session()->exists('my_loan_request');
+        if($has_loan != 0){
+            $loan = LoanApplications::find( (int)session()->get('my_loan_request')  ) ;
             $loan->customer_id = $user->id ;
             $loan->statuses_id = config('constants.status.loan_request_login');
             $loan->save();
         }
+
         return $user;
     }
 }

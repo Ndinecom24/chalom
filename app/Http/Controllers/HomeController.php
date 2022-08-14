@@ -44,22 +44,18 @@ class HomeController extends Controller
         $user = auth()->user();
         if ($user->role_id == config('constants.role.client.id')) {
             $loans = LoanApplications::orderBy('created_at');
-
             //check if there is a loan request
             $loans_req = $loans->where('statuses_id', config('constants.status.loan_request_login'))->get() ;
-
             if ( (sizeof($loans_req) )  > 0 ) {
                 $works = WorkStatus::all();
                 $statuses = Status::all();
                 $loan = $loans_req->first();
                 return view('dashboard.loan.finish_apply')->with(compact('user', 'loan', 'works', 'statuses' ));
-            }
-            else{
-
+            } else
+            {
                 //check if you do not have bank details
                 $user->load('bankDetails');
                 $bank_details = $user->bankDetails ?? [] ;
-
                 if ( (sizeof($bank_details ) )  > 0 ) {
                     $loan_current = $loans->where('statuses_id', '!=' ,  config('constants.status.loan_rejected') );
                     $total =  $loan_current->first() ;
@@ -72,7 +68,6 @@ class HomeController extends Controller
                    session()->flash('message', 'please create your bank or mobile money details');
                     return view('dashboard.bank_details.create')->with(compact('user' ));
                 }
-
             }
         }
 

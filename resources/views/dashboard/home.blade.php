@@ -121,15 +121,15 @@
                                 <div class="float-right">
                                     <p class="card-text text-dark">Pending Loan Applications</p>
                                     <h4 class="bold-text">
-                                         {{ number_format($total->pending_loans_amount, 2)}}
+                                        Loan: {{ number_format($total->pending_loans_amount, 2)}}
                                     </h4>
                                     <h4 class="bold-text text-muted">
-                                         {{ number_format($total->pending_loans_amount_due, 2)}}
+                                         Paid: {{ number_format($total->pending_loans_amount_due, 2)}}
                                     </h4>
                                 </div>
                             </div>
                             <p class="text-muted">
-                                <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Loan Count :  {{$total->pending_loans}}
+                                <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Count : {{$total->pending_loans}}
                             </p>
                         </div>
                     </div>
@@ -146,14 +146,14 @@
                                 <div class="float-right">
                                     <p class="card-text text-dark">Active Loans</p>
                                     <h4 class="bold-text">
-                                         {{ number_format($total->active_loans_amount, 2)}}
+                                        Loan: {{ number_format($total->active_loans_amount, 2)}}
                                     </h4>
                                     <h4 class="bold-text text-muted">
-                                        {{ number_format($total->active_loans_amount_due, 2)}}
+                                        Paid: {{ number_format($total->active_loans_amount_due, 2)}}
                                     </h4>
                                 </div>
                                 <p class="text-muted">
-                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Count Active Loans :   {{$total->active_loans}}
+                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Count : {{$total->active_loans}}
                                 </p>
                             </div>
                         </div>
@@ -171,14 +171,14 @@
                                 <div class="float-right">
                                     <p class="card-text text-dark">Total Paid Money</p>
                                     <h4 class="bold-text">
-                                         {{ number_format($total->paid_loans_amount,2)}}
+                                        Loan:  {{ number_format($total->paid_loans_amount,2)}}
                                     </h4>
                                     <h4 class="bold-text text-muted">
-                                         {{ number_format($total->paid_loans_amount_due, 2)}}
+                                        Paid: {{ number_format($total->paid_loans_amount_due, 2)}}
                                     </h4>
                                 </div>
                                 <p class="text-muted">
-                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i>Count Paid Loans :{{ number_format($total->paid_loans,0)}}
+                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i>Count : {{ number_format($total->paid_loans,0)}}
                                 </p>
                             </div>
 

@@ -4,6 +4,7 @@ namespace App\Models\Loans;
 
 use App\Models\BankDetails;
 use App\Models\Files;
+use App\Models\LoanPayments;
 use App\Models\Settings\Status;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -117,6 +118,9 @@ class LoanApplications extends Model
 
     public function schedules(){
         return $this->hasMany(LoanSchedule::class ) ;
+    }
+    public function payments(){
+        return $this->hasMany(LoanPayments::class ) ;
     }
 
     public function bankDetails(){

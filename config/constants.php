@@ -79,5 +79,6 @@ return [
         'account_statement' => 'account_statement',
         'payslip' => 'payslip',
         'collateral' => 'collateral',
+        'proof_of_payment' => 'proof_of_payment' ,
     ],
 ];

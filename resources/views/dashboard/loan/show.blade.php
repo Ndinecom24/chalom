@@ -472,12 +472,11 @@
                                 <div class="card  mt-2">
                                     <div class="card-header">
                                         <h6 class="mb-2 text-primary">PAYSLIPS
-                                            <a class="btn btn-sm float-sm-end " data-toggle="collapse"
-                                               href="#payslip_div">
+                                            <a class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('payslip_div')">
                                                 <i class="fa fa-arrow-down"></i></a>
                                         </h6>
                                     </div>
-                                    <div id="payslip_div" class="card-body ">
+                                    <div id="payslip_div" style="display:none" class="card-body ">
                                         <div class="row gutters">
                                             @if($loan->payslips != null)
                                                 @foreach($loan->payslips as $payslip)
@@ -502,9 +501,12 @@
                                 </div>
                                 <div class="card mt-2">
                                     <div class="card-header">
-                                        <h6 class="mb-2 text-primary">ACCOUNT STATEMENT</h6>
+                                        <h6 class="mb-2 text-primary">ACCOUNT STATEMENT
+                                            <a class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('account_statment_div')">
+                                                <i class="fa fa-arrow-down"></i></a>
+                                        </h6>
                                     </div>
-                                    <div class="card-body ">
+                                    <div class="card-body "  id="account_statment_div" style="display:none">
                                         <div class="row gutters">
                                             @if($loan->statements != null)
                                                 @foreach($loan->statements as $statement)
@@ -530,9 +532,12 @@
 
                                 <div class="card mt-2">
                                     <div class="card-header">
-                                        <h6 class="mb-2 text-primary">NRC</h6>
+                                        <h6 class="mb-2 text-primary">NRC
+                                            <a class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('nrc_div')">
+                                                <i class="fa fa-arrow-down"></i></a>
+                                        </h6>
                                     </div>
-                                    <div class="card-body  ">
+                                    <div class="card-body  " id="nrc_div" style="display:none" >
                                         <div class="row gutters">
                                             @if($loan->customer->nrc  ?? ""  != null)
                                                 <div class="col-12">
@@ -558,9 +563,12 @@
                                 @if($loan->loan->collateral == "Need Collateral")
                                 <div class="card mt-2">
                                     <div class="card-header">
-                                        <h6 class="mb-2 text-primary">Collateral</h6>
+                                        <h6 class="mb-2 text-primary">Collateral
+                                            <a class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('collateral_div')">
+                                                <i class="fa fa-arrow-down"></i></a>
+                                        </h6>
                                     </div>
-                                    <div class="card-body  ">
+                                    <div class="card-body  " id="collateral_div" style="display:none ">
                                         <div class="row gutters">
                                             @if($loan->collaterals != null)
                                                 @foreach($loan->collaterals as $collateral)
@@ -832,7 +840,14 @@
                                                                 class="ui-icon ui-icon-circle-check"></i>
                                                         </button>
                                                     </div>
-
+                                                    <div class="col-lg-8 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="eMail">Proof of payments<span class="text-danger">*</span></label>
+                                                            <input type="file" required multiple
+                                                                   title="Upload proof of payments"
+                                                                   class="form-control" id="proof_of_payments" name="proof_of_payment[]" >
+                                                        </div>
+                                                    </div>
                                                 @else
                                                     {{-- CLIENT --}}
                                                     <div class="col-12 text-center">
@@ -871,16 +886,21 @@
                                     <div class="card-footer">
                                             <div class="row-cols-12">
                                                 @if(sizeof($next_users) > 0 )
-                                            <h6 class="mb-2 text-primary">NEXT USER TO ACT</h6>
+                                            <h6 class="mb-2 text-primary">NEXT USER TO ACT
+                                                <button class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('next_users_div')">
+                                                    <i class="fa fa-arrow-down"></i></button>
+                                            </h6>
                                                     @endif
                                         </div>
-                                        @foreach( $next_users as $next_user)
-                                            <span class="text-xs text-danger text-muted">Name : {{$next_user->name ?? '--'}}</span> <br>
-                                            <span class="text-xs text-danger text-muted">Email :{{$next_user->email ?? '--'}}</span> <br>
-                                            <span class="text-xs text-danger text-muted">Phone : {{$next_user->mobile_number ?? '--'}}</span> <br>
-                                            <span class="text-xs text-danger text-muted">Role  : {{$next_user->role->name ?? '--'}}</span> <br>
-                                            <hr>
-                                        @endforeach
+                                        <div id="next_users_div" style="display:none">
+                                            @foreach( $next_users as $next_user)
+                                                <span class="text-xs text-danger text-muted">Name : {{$next_user->name ?? '--'}}</span> <br>
+                                                <span class="text-xs text-danger text-muted">Email :{{$next_user->email ?? '--'}}</span> <br>
+                                                <span class="text-xs text-danger text-muted">Phone : {{$next_user->mobile_number ?? '--'}}</span> <br>
+                                                <span class="text-xs text-danger text-muted">Role  : {{$next_user->role->name ?? '--'}}</span> <br>
+                                                <hr>
+                                            @endforeach
+                                        </div>
                                     </div>
                                         @endif
 
@@ -1014,7 +1034,6 @@
                                                         </table>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -1069,6 +1088,82 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
+                                        <div class="card-header">
+                                            <h6 class="mb-2 text-primary">PROOF OF PAYMENTS
+                                                <button class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('payment_prof_div')">
+                                                    <i class="fa fa-arrow-down"></i></button>
+                                            </h6>
+                                        </div>
+                                        <div class="card-body  " style="display: none"  id="payment_prof_div">
+                                            <div class="row gutters">
+                                                @if($loan->payments  ?? ""  != null)
+
+                                                    @foreach($loan->payments as $payment)
+                                                    <div class="row">
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="name">Amount : ZMW <span
+                                                                        class="text-dark "> {{$payment->amount  ?? "" }} </span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="eMail">Officer : <span
+                                                                        class="text-dark">{{$payment->officer->name  ?? "" }}</span></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="eMail">Comment : <span
+                                                                        class="text-dark">{{$payment->comment  ?? "" }}</span></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="eMail">Date Paid : <span
+                                                                        class="text-dark">{{$payment->date_paid  ?? "" }}</span></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                        <div class="row">
+                                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                                <h6 class="mb-2 text-primary"  >POP's
+                                                                    <button class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('pop'+{{$payment->id}}+'')">
+                                                                        <i class="fa fa-eye"></i></button>
+                                                                </h6>
+                                                            </div>
+                                                            <div id="pop{{$payment->id}}" style="display:none" class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                                @foreach($payment->paymentProofs as $paymentProof)
+                                                                    <div class="col-12">
+                                                                        <iframe id="{{$paymentProof->id  ?? "" }}"
+                                                                                src="{{$paymentProof->path  ?? ""  }}"
+                                                                                style="width:100%; height: 400px"
+                                                                                title="{{$paymentProof->name  ?? "" }}"></iframe>
+                                                                        <span>{{number_format( $paymentProof->file_size  ?? 0 , 2) }}MB {{$paymentProof->name  ?? "" }} </span>
+                                                                        <span> | </span>
+                                                                        <a href="{{$paymentProof->path  ?? "" }}"
+                                                                           target="_blank">View</a>
+                                                                        <span> | </span>
+                                                                        <a href="#" data-toggle="modal"
+                                                                           data-sent_data="{{$paymentProof  ?? "" }}"
+                                                                           data-target="#modal-change">Edit</a>
+
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                    @endforeach
+
+
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1084,5 +1179,15 @@
 
 
 @push('custom-scripts')
+<script >
+    function displayOrOpenForms(payment_prof_div){
 
+        var display = document.getElementById(payment_prof_div).style.display;
+        if(display == 'block'){
+            document.getElementById(payment_prof_div).style.display = 'none';
+        }else{
+              document.getElementById( payment_prof_div ).style.display = 'block';
+        }
+    }
+</script>
 @endpush
