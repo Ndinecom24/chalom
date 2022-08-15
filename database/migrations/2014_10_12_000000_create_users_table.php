@@ -33,7 +33,7 @@ class CreateUsersTable extends Migration
             $table->integer('work_status_id')->nullable();
             $table->integer('role_id');
             $table->integer('customer_type_id');
-            $table->integer('next_of_kin_id');
+            $table->integer('next_of_kin_id')->nullable();
             $table->integer('status_id');
             $table->integer('password_change');
             $table->uuid('uuid');

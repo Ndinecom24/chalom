@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
-                        <form class="form-signin" method="POST" action="{{ route('register') }}">
+                        <form class="form-signin" method="post" action="{{ route('register') }}">
                             @csrf
 
                             <div class="text-center mb-4">

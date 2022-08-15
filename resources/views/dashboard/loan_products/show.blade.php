@@ -277,7 +277,10 @@
                                     </div>
                                 </fieldset>
                                 <div class="modal-footer justify-content-start">
+                                    @if(\Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
+|| \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.admin.id') )
                                     <button type="submit" class="btn btn-primary">Update</button>
+                                        @endif
                                 </div>
                             </form>
                         </div>

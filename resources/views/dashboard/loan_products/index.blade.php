@@ -93,68 +93,71 @@
                     <div class="card">
                         <div class="card-header" id="headingOne">
 
-                            <div class="col-md-4 col-sm-12">
-                                <a href="{{route('loan.product.create')}}" class="btn btn-outline-primary "
-                                   type="submit">
-                                    {{__('New')}}
-                                </a>
-                            </div>
-                        </div>
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                             data-parent="#accordion">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <table class="table table-striped">
-                                            <thead>
-                                            <tr>
-                                                <td>#</td>
-                                                <td>Category</td>
-                                                <td>Name</td>
-                                                <td>Collateral</td>
-                                                <td>DSR</td>
-                                                <td>Rate</td>
-                                                <td>Last Action</td>
-                                                <td>Action</td>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach($list as $key=>$loan)
-                                                <tr>
-                                                    <td> {{++$key}} </td>
-                                                    <td>{{$loan->category->name ?? ""}}</td>
-                                                    <td>{{$loan->name}}</td>
-                                                    <td>{{$loan->collateral}}</td>
-                                                    <td>{{$loan->dept_service_ratio}}% </td>
-                                                    <td>{{$loan->rate_per_month}}%</td>
-                                                    <td>{{ \Carbon\Carbon::parse($loan->updated_at)->diffForhumans() }}</td>
-                                                    <td>
-                                                        <div class="row ">
-                                                            <div class="col-3">
-                                                                <a class="btn btn-sm btn-secondary"
-                                                                   href="{{route('loan.product.show', $loan)}}">
-                                                                    <i class="fa fa-eye"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="pagination-sm">
-                                        {{$list->links()}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    @if(\Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
+|| \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.admin.id') )
+  <div class="col-md-4 col-sm-12">
+      <a href="{{route('loan.product.create')}}" class="btn btn-outline-primary "
+         type="submit">
+          {{__('New')}}
+      </a>
+  </div>
+        @endif
+</div>
+<div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+   data-parent="#accordion">
+  <div class="card-body">
+      <div class="row">
+          <div class="col-12">
+              <table class="table table-striped">
+                  <thead>
+                  <tr>
+                      <td>#</td>
+                      <td>Category</td>
+                      <td>Name</td>
+                      <td>Collateral</td>
+                      <td>DSR</td>
+                      <td>Rate</td>
+                      <td>Last Action</td>
+                      <td>Action</td>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  @foreach($list as $key=>$loan)
+                      <tr>
+                          <td> {{++$key}} </td>
+                          <td>{{$loan->category->name ?? ""}}</td>
+                          <td>{{$loan->name}}</td>
+                          <td>{{$loan->collateral}}</td>
+                          <td>{{$loan->dept_service_ratio}}% </td>
+                          <td>{{$loan->rate_per_month}}%</td>
+                          <td>{{ \Carbon\Carbon::parse($loan->updated_at)->diffForhumans() }}</td>
+                          <td>
+                              <div class="row ">
+                                  <div class="col-3">
+                                      <a class="btn btn-sm btn-secondary"
+                                         href="{{route('loan.product.show', $loan)}}">
+                                          <i class="fa fa-eye"></i>
+                                      </a>
+                                  </div>
+                              </div>
+                          </td>
+                      </tr>
+                  @endforeach
+                  </tbody>
+              </table>
+          </div>
+          <div class="pagination-sm">
+              {{$list->links()}}
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
 
-        </div>
-    </div>
+</div>
+</div>
 
 
 

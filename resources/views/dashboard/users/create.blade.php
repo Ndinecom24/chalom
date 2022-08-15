@@ -134,8 +134,11 @@
 
                                     </div>
                                     <div class="modal-footer justify-content-between">
+                                        @if(\Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
+|| \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.admin.id') )
                                         <span class="text-sm text-muted"> Default password  is Chalom@123</span>
                                         <button type="submit" class="btn btn-primary">Submit</button>
+                                            @endif
                                     </div>
                                 </form>
                             </div>
