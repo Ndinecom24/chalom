@@ -81,29 +81,24 @@
                             <div class="clearfix">
                                 <div class="float-left">
                                     <h4 class="text-danger">
-                                        <i class="fa fa-bar-chart-o highlight-icon" aria-hidden="true"></i>
+                                        <i class="fa fa-users highlight-icon" aria-hidden="true"></i>
                                     </h4>
                                 </div>
                                 <div class="float-right">
-                                    <p class="card-text text-dark">Total Users</p>
-                                    <h4 class="bold-text">
-                                        {{$total->users}}
+                                    <p class="card-text text-dark">Users</p>
+                                    <h4 class="bold-text text-muted">
+                                        Total: {{$total->users}}
                                     </h4>
                                     <h4 class="bold-text text-muted">
-                                       Customers: {{ number_format($total->customers, 0)}} | Staff:  {{$total->employees}}
+                                        Employees: {{$total->employees}}
+                                    </h4>
+                                    <h4 class="bold-text text-muted">
+                                        Customers: {{ number_format($total->customers, 0)}}
                                     </h4>
                                 </div>
                                 <p class="text-muted">
-                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> With Active Loans :  {{sizeof($loans->where('statuses_id' , config('constants.status.loan_funds_disbursed') )
-
-                ->Orwhere('statuses_id',  config('constants.status.loan_overdue') )
-            ->get() )}}
+                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> With Active Loans :  {{sizeof($loans->where('statuses_id' , config('constants.status.loan_funds_disbursed') )->Orwhere('statuses_id',  config('constants.status.loan_overdue') )->get() )}}
                                 </p>
-{{--                                <p class="text-muted">--}}
-{{--                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Repaid Loans :  {{sizeof($loans->where('statuses_id' , config('constants.status.loan_paid') )--}}
-
-{{--            ->get() )}}--}}
-{{--                                </p>--}}
                             </div>
 
                         </div>
@@ -121,10 +116,13 @@
                                 <div class="float-right">
                                     <p class="card-text text-dark">Pending Loan Applications</p>
                                     <h4 class="bold-text">
-                                        Loan: {{ number_format($total->pending_loans_amount, 2)}}
+                                        Principle: {{ number_format($total->pending_loans_amount, 2)}}
                                     </h4>
                                     <h4 class="bold-text text-muted">
-                                         Paid: {{ number_format($total->pending_loans_amount_due, 2)}}
+                                         Payment: {{ number_format($total->pending_loans_amount_due, 2)}}
+                                    </h4>
+                                    <h4 class="bold-text text-muted">
+                                        Interest: {{ number_format($total->pending_loans_amount_due - $total->pending_loans_amount, 2)}}
                                     </h4>
                                 </div>
                             </div>
@@ -140,16 +138,19 @@
                             <div class="clearfix">
                                 <div class="float-left">
                                     <h4 class="text-warning">
-                                        <i class="fa fa-shopping-cart highlight-icon" aria-hidden="true"></i>
+                                        <i class="fa fa-stack highlight-icon" aria-hidden="true"></i>
                                     </h4>
                                 </div>
                                 <div class="float-right">
                                     <p class="card-text text-dark">Active Loans</p>
                                     <h4 class="bold-text">
-                                        Loan: {{ number_format($total->active_loans_amount, 2)}}
+                                        Principle: {{ number_format($total->active_loans_amount, 2)}}
                                     </h4>
                                     <h4 class="bold-text text-muted">
-                                        Paid: {{ number_format($total->active_loans_amount_due, 2)}}
+                                        Payment: {{ number_format($total->active_loans_amount_due, 2)}}
+                                    </h4>
+                                    <h4 class="bold-text text-muted">
+                                        Interest: {{ number_format($total->active_loans_amount_due - $total->active_loans_amount, 2)}}
                                     </h4>
                                 </div>
                                 <p class="text-muted">
@@ -165,16 +166,19 @@
                             <div class="clearfix">
                                 <div class="float-left">
                                     <h4 class="text-success">
-                                        <i class="fa fa-dollar highlight-icon" aria-hidden="true"></i>
+                                        <i class="fa fa-bank highlight-icon" aria-hidden="true"></i>
                                     </h4>
                                 </div>
                                 <div class="float-right">
                                     <p class="card-text text-dark">Total Paid Money</p>
                                     <h4 class="bold-text">
-                                        Loan:  {{ number_format($total->paid_loans_amount,2)}}
+                                        Principle: {{ number_format($total->paid_loans_amount,2)}}
                                     </h4>
                                     <h4 class="bold-text text-muted">
-                                        Paid: {{ number_format($total->paid_loans_amount_due, 2)}}
+                                        Payment: {{ number_format($total->paid_loans_amount_due, 2)}}
+                                    </h4>
+                                    <h4 class="bold-text text-muted">
+                                        Interest: {{ number_format($total->paid_loans_amount_due - $total->paid_loans_amount, 2)}}
                                     </h4>
                                 </div>
                                 <p class="text-muted">
