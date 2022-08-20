@@ -407,7 +407,7 @@
                                                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="role_id">Work Status : <span
-                                                                    class="text-dark">{{$loan->customer->work->name ?? "--Choose--" }}</span></label>
+                                                                    class="text-dark">{{$loan->customer->name ?? "--Choose--" }}</span></label>
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
