@@ -461,7 +461,7 @@
                                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="kin_relationship">Relationship : <span
-                                                            class="text-dark">{{$loan->customer->kin->kin_relationship ?? "" }}</span></label>
+                                                            class="text-dark">{{$loan->customer->kin->relationship ?? "" }}</span></label>
                                                 </div>
                                             </div>
                                         </div>
