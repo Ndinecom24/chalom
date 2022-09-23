@@ -67,7 +67,7 @@ Route::group([
         Route::get('/show/{loanProducts}', [LoanProductsController::class, 'show'])->name('loan.product.show');
         Route::get('/create', [LoanProductsController::class, 'create'])->name('loan.product.create');
         Route::post('/store', [LoanProductsController::class, 'store'])->name('loan.product.store');
-        Route::post('/search', [LoanApplicationsController::class, 'search'])->name('loan.product.search');
+        Route::get('/search', [LoanApplicationsController::class, 'search'])->name('loan.product.search');
         Route::post('/update/{loanProducts}', [LoanProductsController::class, 'update'])->name('loan.product.update');
         Route::post('/destroy/{loanProducts}', [LoanProductsController::class, 'destroy'])->name('loan.product.destroy');
 

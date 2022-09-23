@@ -46,6 +46,7 @@ class LoanApplicationsController extends Controller
 
     public function search(Request $request){
         $statuses = Status::all();
+        $state = $request->search_term ?? "" ;
         if ($request->status == 0) {
             if($request->search_term == null){
                 $list = LoanApplications::orderBy('created_at', 'desc')->paginate(10);
@@ -55,6 +56,7 @@ class LoanApplicationsController extends Controller
                 ->orderBy('created_at', 'desc')->paginate(10);
             }
         } else {
+            $state = Status::find($request->status);
             if($request->search_term == null){
                 $list = LoanApplications::where('statuses_id', $request->status )->orderBy('created_at')->paginate(10);
             }else{
@@ -68,7 +70,7 @@ class LoanApplicationsController extends Controller
         $list->load('loan', 'schedules');
 
 
-        return view('dashboard.loan.index')->with(compact('list', 'statuses'));
+        return view('dashboard.loan.index')->with(compact('list', 'statuses', 'state'));
     }
 
     /**

@@ -50,20 +50,20 @@
                 <div id="accordion">
                     <div class="card">
                         <div class="card-header" id="headingOne">
-                            <form name="searh_loans" method="post" action="{{route('loan.product.search')}}">
+                            <form name="searh_loans" method="get" action="{{route('loan.product.search')}}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-4 col-sm-12">
                                         <select class="form-control" name="status" id="status">
-                                            <option value="" disabled >--Choose Status--</option>
-                                            <option value="0">All</option>
+                                            <option value="{{$state->id ?? 0 }}">{{$state->name ?? "All" }}</option>
                                             @foreach($statuses as $status)
                                                 <option value="{{$status->id}}">{{$status->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-md-4 col-sm-12">
-                                        <input type="text" placeholder="Search Term - NRC/Name/Loan Type" class="form-control" name="search_term" id="search_term" >
+                                        <input type="text" placeholder="Search Term - NRC/Name/Loan Type"
+                                               class="form-control" name="search_term" id="search_term">
                                     </div>
                                     <div class="col-md-4 col-sm-12">
                                         <button class="btn btn-outline-primary " type="submit">
@@ -78,58 +78,62 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12">
-                                        <table  class="table table-striped">
-                                            <thead>
-                                            <tr>
-                                                <td>#</td>
-                                                <td>Customer</td>
-                                                <td>Type</td>
-                                                <td>Loan</td>
-                                                <td>Rate</td>
-                                                <td>Amount</td>
-                                                <td>Installments</td>
-                                                <td>Amount Repaid</td>
-                                                <td>Balance</td>
-                                                <td>Status</td>
-                                                <td>Last Action</td>
-                                                <td>Action</td>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach($list as $key=>$loan)
+                                        <div class="table">
+                                            <table class="table table-striped "
+                                                   style="overflow-x: auto; display: block; " >
+                                                <thead>
                                                 <tr>
-                                                    <td> {{++$key}} </td>
-                                                    <td>@if( ($loan->customer->name ?? "pica" ) == "pica" )
-                                                      <span class="text-info">Pending User</span>
-                                                        @else
-                                                            {{$loan->customer->name }}
-                                                    @endif
-                                                    </td>
-                                                    <td>{{$loan->loan->name}} </td>
-                                                    <td>{{number_format( $loan->loan_amount , 2) }}  </td>
-                                                    <td>{{ $loan->loan_rate  }}%  </td>
-                                                    <td>{{number_format( $loan->loan_amount_due , 2) }}  </td>
-                                                    <td>{{$loan->repayment_period }}  </td>
-                                                    <td>{{$loan->schedules->sum('paid') }}  </td>
-                                                    <td>{{number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }}  </td>
-                                                    <td> <span class=" text-{{$loan->status->html ?? "info"}}">
+                                                    <td>#</td>
+                                                    <td>Customer</td>
+                                                    <td>Type</td>
+                                                    <td>Loan</td>
+                                                    <td>Rate</td>
+                                                    <td>Amount</td>
+                                                    <td>Installments</td>
+                                                    <td>Amount Repaid</td>
+                                                    <td>Balance</td>
+                                                    <td>Status</td>
+                                                    <td>Last Action</td>
+                                                    <td>Action</td>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($list as $key=>$loan)
+                                                    <tr>
+                                                        <td> {{++$key}} </td>
+                                                        <td>@if( ($loan->customer->name ?? "pica" ) == "pica" )
+                                                                <span class="text-info">Pending User</span>
+                                                            @else
+                                                                {{$loan->customer->name }}
+                                                            @endif
+                                                        </td>
+                                                        <td>{{$loan->loan->name}} </td>
+                                                        <td>{{number_format( $loan->loan_amount , 2) }}  </td>
+                                                        <td>{{ $loan->loan_rate  }}%</td>
+                                                        <td>{{number_format( $loan->loan_amount_due , 2) }}  </td>
+                                                        <td>{{$loan->repayment_period }}  </td>
+                                                        <td>{{$loan->schedules->sum('paid') }}  </td>
+                                                        <td>{{number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }}  </td>
+                                                        <td> <span class=" text-{{$loan->status->html ?? "info"}}">
                                                             {{$loan->status->name ?? $loan->statuses_id }}
                                                         </span>
-                                                    </td>
-                                                    <td>{{ \Carbon\Carbon::parse($loan->updated_at)->diffForhumans() }}</td>
-                                                    <td>
-                                                        <div class="row ">
-                                                            <div class="col-3">
-                                                                <a class="btn btn-sm btn-secondary" href="{{route('loan.show', $loan)}}" >
-                                                                    <i class="fa fa-eye"></i>
-                                                                </a>
+                                                        </td>
+                                                        <td>{{ \Carbon\Carbon::parse($loan->updated_at)->diffForhumans() }}</td>
+                                                        <td>
+                                                            <div class="row ">
+                                                                <div class="col-3">
+                                                                    <a class="btn btn-sm btn-secondary"
+                                                                       href="{{route('loan.show', $loan)}}">
+                                                                        <i class="fa fa-eye"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <div class="pagination-sm">
                                         {{$list->links()}}

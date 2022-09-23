@@ -774,9 +774,10 @@
                     dsr = 100;
                     var deduct_from_limit = parseFloat(total_monthly  || 0)   ;
                 }
-                var qualify_for = deduct_from_limit * repayment_period ;
+
                 var total_monthly_subtracted = parseFloat(deduct_from_limit  || 0) - parseFloat(monthly_deduct  || 0 );
                 var total_income = parseFloat(total_monthly  || 0) - parseFloat(monthly_deduct  || 0 );
+                var qualify_for = total_monthly_subtracted * repayment_period ;
 
                 //the checks
                 var citizen_check = document.getElementById('citizen_check').checked;
