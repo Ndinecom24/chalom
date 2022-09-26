@@ -52,23 +52,50 @@
                         <div class="card-header" id="headingOne">
                             <form name="searh_loans" method="get" action="{{route('loan.product.search')}}">
                                 @csrf
+
                                 <div class="row">
-                                    <div class="col-md-4 col-sm-12">
-                                        <select class="form-control" name="status" id="status">
-                                            <option value="{{$state->id ?? 0 }}">{{$state->name ?? "All" }}</option>
-                                            @foreach($statuses as $status)
-                                                <option value="{{$status->id}}">{{$status->name}}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                        <div class="row">
+                                            <div class="col-md-5 col-sm-12">
+                                                <label class>Status</label>
+                                                <select class="form-control" name="status" id="status">
+                                                    <option value="{{$state->id ?? 0 }}">{{$state->name ?? "All" }}</option>
+                                                    <option value="0">All</option>
+                                                    @foreach($statuses as $status)
+                                                        <option value="{{$status->id}}">{{$status->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-5 col-sm-12">
+                                                <label class>Term</label>
+                                                <input type="text" placeholder="Search Term - NRC/Name/Loan Type"
+                                                       value="{{$search_term ?? "" }}"  class="form-control" name="search_term" id="search_term">
+                                            </div>
+                                            <div class="col-md-2 col-sm-12 ">
+                                                <div class="mt-4">
+                                                    <button class="btn btn-outline-primary " type="submit">
+                                                        {{__('Search')}}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-5 col-sm-12">
+                                                <label class>From</label>
+                                                <input type="date" placeholder="date_from" title="ENTER DATE FROM"
+                                                       value="{{$date_from ?? "" }}"      class="form-control" name="date_from" id="date_from">
+                                            </div>
+                                            <div class="col-md-5 col-sm-12">
+                                                <label class>To</label>
+                                                <input type="date" placeholder="date_to"  title="ENTER DATE TO"
+                                                       value="{{$date_to ?? "" }}"     class="form-control" name="date_to" id="date_to">
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-4 col-sm-12">
-                                        <input type="text" placeholder="Search Term - NRC/Name/Loan Type"
-                                               class="form-control" name="search_term" id="search_term">
-                                    </div>
-                                    <div class="col-md-4 col-sm-12">
-                                        <button class="btn btn-outline-primary " type="submit">
-                                            {{__('Search')}}
-                                        </button>
+                                    <div class="col-lg-2 col-md-2 col-sm-12">
+                                        <div class="row">
+                                            <span> Count : {{ $list->count()  }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -135,9 +162,9 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="pagination-sm">
-                                        {{$list->links()}}
-                                    </div>
+{{--                                    <div class="pagination-sm">--}}
+{{--                                        {{$list->links()}}--}}
+{{--                                    </div>--}}
                                 </div>
                             </div>
                         </div>

@@ -26,7 +26,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('loan.list', 0)}}">
+                        <a class="nav-link" href="{{route('loan.product.search')}}">
                             <i class="text-danger text-primary-hover bi bi-file-check"></i>
                             <span class="menu-title">Loan applications</span>
                         </a>
@@ -55,7 +55,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('loan.list', 0)}}">
+                        <a class="nav-link" href="{{route('loan.product.search')}}">
                             <i class="text-danger text-primary-hover bi bi-file-check"></i>
                             <span class="menu-title">Loan applications</span>
                         </a>

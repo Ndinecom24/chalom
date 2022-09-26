@@ -48,7 +48,7 @@ Route::group([
     Route::post('/returning', [LoanApplicationsController::class, 'returningCustomer'])->name('loan.returning.customer');
     Route::post('/new', [LoanApplicationsController::class, 'newCustomer'])->name('loan.new.customer');
     Route::get('/show/{loan}', [LoanApplicationsController::class, 'show'])->name('loan.show')->middleware('auth');
-    Route::get('/list/{status}', [LoanApplicationsController::class, 'index'])->name('loan.list')->middleware('auth');
+//    Route::get('/list/{status}', [LoanApplicationsController::class, 'index'])->name('loan.list')->middleware('auth');
     Route::post('/approve/{loan}', [LoanApplicationsController::class, 'approve'])->name('loan.approve');
     Route::get('/cancel/{loan_id}', [LoanApplicationsController::class, 'cancel'])->name('loan.cancel');
 }
@@ -63,7 +63,7 @@ Route::group([
     Route::group([
         'prefix' => 'loan',
     ], function () {
-        Route::get('/list', [LoanProductsController::class, 'index'])->name('loan.product.index');
+        Route::get('/list', [LoanProductsController::class, 'list'])->name('loan.product.index');
         Route::get('/show/{loanProducts}', [LoanProductsController::class, 'show'])->name('loan.product.show');
         Route::get('/create', [LoanProductsController::class, 'create'])->name('loan.product.create');
         Route::post('/store', [LoanProductsController::class, 'store'])->name('loan.product.store');

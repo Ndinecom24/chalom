@@ -47,30 +47,136 @@ class LoanApplicationsController extends Controller
     public function search(Request $request){
         $statuses = Status::all();
         $state = $request->search_term ?? "" ;
+        $search_term = $request->search_term ??  "" ;
+        $date_from =  $request->date_from ?? "" ;
+        $date_to =  $request->date_to ?? "" ;
+
         if ($request->status == 0) {
             if($request->search_term == null){
-                $list = LoanApplications::orderBy('created_at', 'desc')->paginate(10);
+
+                //filter by date
+                if( ($request->date_from == null) && ($request->date_to == null) ){
+                    //get the current year
+                    $list = LoanApplications::orderBy('created_at', 'desc')->get();
+                }
+                elseif( ($request->date_from != null) && ($request->date_to == null) ){
+                    $list = LoanApplications::where('created_at', '>=', $request->date_from )
+                        ->orderBy('created_at', 'desc')->get();
+                }
+                elseif( ($request->date_from == null) && ($request->date_to != null) ){
+                    $list = LoanApplications::where('created_at', '<=', $request->date_to )
+                        ->orderBy('created_at', 'desc')->get();
+                }
+                elseif( ($request->date_from != null) && ($request->date_to != null) ){
+                    $list = LoanApplications::where('created_at', '>=', $request->date_from )
+                        ->where('created_at', '<=', $request->date_to)
+                        ->orderBy('created_at', 'desc')->get();
+                }else{
+                    //
+                }
+
+
             }else{
                 $users = User::where('name', 'like', '%'.$request->search_term.'%' )->get();
-                $list = LoanApplications::whereIn('customer_id', $users->pluck('id')->toArray() )
-                ->orderBy('created_at', 'desc')->paginate(10);
+
+
+                //filter by date
+                if( ($request->date_from == null) && ($request->date_to == null) ){
+                    //get the current year
+                    $list = LoanApplications::whereIn('customer_id', $users->pluck('id')->toArray() )
+                        ->orderBy('created_at', 'desc')->get();
+                }
+                elseif( ($request->date_from != null) && ($request->date_to == null) ){
+                    $list = LoanApplications::whereIn('customer_id', $users->pluck('id')->toArray() )
+                        ->where('created_at', '>=', $request->date_from )
+                        ->orderBy('created_at', 'desc')->get();
+                }
+                elseif( ($request->date_from == null) && ($request->date_to != null) ){
+                    $list = LoanApplications::whereIn('customer_id', $users->pluck('id')->toArray() )
+                        ->where('created_at', '<=', $request->date_to )
+                        ->orderBy('created_at', 'desc')->get();
+                }
+                elseif( ($request->date_from != null) && ($request->date_to != null) ){
+                    $list = LoanApplications::whereIn('customer_id', $users->pluck('id')->toArray() )
+                    ->where('created_at', '>=', $request->date_from )
+                        ->where('created_at', '<=', $request->date_to)
+                        ->orderBy('created_at', 'desc')->get();
+                }else{
+                    //
+                }
             }
-        } else {
+        }
+        else {
             $state = Status::find($request->status);
             if($request->search_term == null){
-                $list = LoanApplications::where('statuses_id', $request->status )->orderBy('created_at')->paginate(10);
+
+
+                //filter by date
+                if( ($request->date_from == null) && ($request->date_to == null) ){
+                    //get the current year
+                    $list = LoanApplications::where('statuses_id', $request->status )
+                        ->orderBy('created_at', 'desc')->get();
+                }
+                elseif( ($request->date_from != null) && ($request->date_to == null) ){
+                    $list = LoanApplications::where('statuses_id', $request->status )
+                        ->where('created_at', '>=', $request->date_from )
+                        ->orderBy('created_at', 'desc')->get();
+                }
+                elseif( ($request->date_from == null) && ($request->date_to != null) ){
+                    $list = LoanApplications::where('statuses_id', $request->status )
+                        ->where('created_at', '<=', $request->date_to )
+                        ->orderBy('created_at', 'desc')->get();
+                }
+                elseif( ($request->date_from != null) && ($request->date_to != null) ){
+                    $list = LoanApplications::where('statuses_id', $request->status )
+                        ->where('created_at', '>=', $request->date_from )
+                        ->where('created_at', '<=', $request->date_to)
+                        ->orderBy('created_at', 'desc')->get();
+                }else{
+                    //
+                }
+
             }else{
                 $users = User::where('name', 'like', '%'.$request->search_term.'%' )->get();
-                $list = LoanApplications::where('statuses_id', $request->status )
-                    -> whereIn('customer_id', $users->pluck('id')->toArray() )
-                    ->orderBy('created_at', 'desc')->paginate(10);
+
+
+                //filter by date
+                if( ($request->date_from == null) && ($request->date_to == null) ){
+                    //get the current year
+                    $list = LoanApplications::where('statuses_id', $request->status )
+                        -> whereIn('customer_id', $users->pluck('id')->toArray() )
+                        ->orderBy('created_at', 'desc')->get();
+                }
+                elseif( ($request->date_from != null) && ($request->date_to == null) ){
+                    $list = LoanApplications::where('statuses_id', $request->status )
+                        -> whereIn('customer_id', $users->pluck('id')->toArray() )
+                        ->where('created_at', '>=', $request->date_from )
+                        ->orderBy('created_at', 'desc')->get();
+                }
+                elseif( ($request->date_from == null) && ($request->date_to != null) ){
+                    $list = LoanApplications::where('statuses_id', $request->status )
+                        -> whereIn('customer_id', $users->pluck('id')->toArray() )
+                        ->where('created_at', '<=', $request->date_to )
+                        ->orderBy('created_at', 'desc')->get();
+                }
+                elseif( ($request->date_from != null) && ($request->date_to != null) ){
+                    $list = LoanApplications::where('statuses_id', $request->status )
+                        -> whereIn('customer_id', $users->pluck('id')->toArray() )
+                        ->where('created_at', '>=', $request->date_from )
+                        ->where('created_at', '<=', $request->date_to)
+                        ->orderBy('created_at', 'desc')->get();
+                }else{
+                    //
+                }
+
             }
         }
 //search_term
         $list->load('loan', 'schedules');
 
 
-        return view('dashboard.loan.index')->with(compact('list', 'statuses', 'state'));
+        return view('dashboard.loan.index')->with(compact('list', 'date_to', 'date_from',
+            'statuses', 'search_term','state'));
     }
 
     /**
