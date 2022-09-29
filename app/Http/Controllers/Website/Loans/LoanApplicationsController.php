@@ -379,7 +379,7 @@ class LoanApplicationsController extends Controller
         );
 
         //return
-        return Redirect::route('loan.list', $status )->with('message', 'Your Loan has been submitted successfully');
+        return Redirect::route('loan.product.search', $status )->with('message', 'Your Loan has been submitted successfully');
 
     }
 
@@ -570,7 +570,7 @@ class LoanApplicationsController extends Controller
 
             //amount should be within balance
             if( $amt > ($loan->loan_amount_due - $loan->schedules->sum('paid')) ){
-                return Redirect::route('loan.list', $next_status)->with('error', 'Sorry the amount entered for repayment ('.$amt.') is larger than the balance' );
+                return Redirect::route('loan.product.search', $next_status)->with('error', 'Sorry the amount entered for repayment ('.$amt.') is larger than the balance' );
             }else{
                 $save = true;
             foreach($loan_schedules as $loan_schedule ){
@@ -683,7 +683,7 @@ class LoanApplicationsController extends Controller
         }
 
         //return
-        return Redirect::route('loan.list', $next_status)->with('message', $loan->customer->name . '\'s ' . $loan->loan_amount_due . 'ZMW Loan has been successfully ' . $action);
+        return Redirect::route('loan.product.search', $next_status)->with('message', $loan->customer->name . '\'s ' . $loan->loan_amount_due . 'ZMW Loan has been successfully ' . $action);
 
     }
 

@@ -887,15 +887,15 @@
                                             <div class="row-cols-12">
                                                 @if(sizeof($next_users) > 0 )
                                             <h6 class="mb-2 text-primary">NEXT USER TO ACT
-                                                <button class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('next_users_div')">
-                                                    <i class="fa fa-arrow-down"></i></button>
+                                                <a class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('next_users_div')">
+                                                    <i class="fa fa-arrow-down"></i></a>
                                             </h6>
                                                     @endif
                                         </div>
                                         <div id="next_users_div" style="display:none">
                                             @foreach( $next_users as $next_user)
-                                                <span class="text-xs text-danger text-muted">Name : {{$next_user->name ?? '--'}}</span> <br>
-                                                <span class="text-xs text-danger text-muted">Email :{{$next_user->email ?? '--'}}</span> <br>
+                                                <span class="text-xs text-danger text-muted">Name  : {{$next_user->name ?? '--'}}</span> <br>
+                                                <span class="text-xs text-danger text-muted">Email : {{$next_user->email ?? '--'}}</span> <br>
                                                 <span class="text-xs text-danger text-muted">Phone : {{$next_user->mobile_number ?? '--'}}</span> <br>
                                                 <span class="text-xs text-danger text-muted">Role  : {{$next_user->role->name ?? '--'}}</span> <br>
                                                 <hr>
