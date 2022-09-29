@@ -63,7 +63,7 @@ Route::group([
     Route::group([
         'prefix' => 'loan',
     ], function () {
-        Route::get('/list', [LoanProductsController::class, 'list'])->name('loan.product.index');
+        Route::get('/list', [LoanProductsController::class, 'index'])->name('loan.product.index');
         Route::get('/show/{loanProducts}', [LoanProductsController::class, 'show'])->name('loan.product.show');
         Route::get('/create', [LoanProductsController::class, 'create'])->name('loan.product.create');
         Route::post('/store', [LoanProductsController::class, 'store'])->name('loan.product.store');
