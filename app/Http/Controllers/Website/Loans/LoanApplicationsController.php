@@ -57,7 +57,7 @@ class LoanApplicationsController extends Controller
                 //filter by date
                 if( ($request->date_from == null) && ($request->date_to == null) ){
                     //get the current year
-                    $list = LoanApplications::orderBy('created_at', 'desc')->get();
+                    $list = LoanApplications::orderBy('created_at', 'desc')->take(10)->get();
                 }
                 elseif( ($request->date_from != null) && ($request->date_to == null) ){
                     $list = LoanApplications::where('created_at', '>=', $request->date_from )
@@ -84,7 +84,7 @@ class LoanApplicationsController extends Controller
                 if( ($request->date_from == null) && ($request->date_to == null) ){
                     //get the current year
                     $list = LoanApplications::whereIn('customer_id', $users->pluck('id')->toArray() )
-                        ->orderBy('created_at', 'desc')->get();
+                        ->orderBy('created_at', 'desc')->take(10)->get();
                 }
                 elseif( ($request->date_from != null) && ($request->date_to == null) ){
                     $list = LoanApplications::whereIn('customer_id', $users->pluck('id')->toArray() )
@@ -115,7 +115,7 @@ class LoanApplicationsController extends Controller
                 if( ($request->date_from == null) && ($request->date_to == null) ){
                     //get the current year
                     $list = LoanApplications::where('statuses_id', $request->status )
-                        ->orderBy('created_at', 'desc')->get();
+                        ->orderBy('created_at', 'desc')->take(10)->get();
                 }
                 elseif( ($request->date_from != null) && ($request->date_to == null) ){
                     $list = LoanApplications::where('statuses_id', $request->status )
