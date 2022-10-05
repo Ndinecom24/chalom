@@ -598,6 +598,12 @@
                                 @endif
 
 
+
+                            @if(  \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
+                               || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.admin.id')
+                               || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.verifier.id')
+                               || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.approver.id')
+                              )
                                 <!-- APPROVALS LIST -->
                                 <div class="card mt-2">
                                     <div class="card-body">
@@ -630,6 +636,7 @@
                                         </div>
                                     </div>
                                 </div>
+                            @endif
 
 
 
@@ -877,11 +884,11 @@
                                         </div>
                                     </div>
 
-                                    @if(\Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
-      || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.admin.id')
-       || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.verifier.id')
-  || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.approver.id')
-      )
+                                    @if(  \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
+                                       || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.admin.id')
+                                       || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.verifier.id')
+                                       || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.approver.id')
+                                      )
 
                                     <div class="card-footer">
                                             <div class="row-cols-12">
