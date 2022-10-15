@@ -53,7 +53,7 @@ class LoanApplications extends Model
 
             if($user->role_id  == config('constants.role.admin.id')){
                 static::addGlobalScope('staff_number', function (Builder $builder) {
-//                    $builder->where('claimant_staff_no', Auth::user()->staff_no);
+                    $builder->where('statuses_id','!=' ,  config('constants.status.loan_request_login') );
                 });
             }
             elseif ( $user->role_id  == config('constants.role.client.id') ){
@@ -63,17 +63,17 @@ class LoanApplications extends Model
             }
             elseif ( $user->role_id  == config('constants.role.verifier.id') ){
                 static::addGlobalScope('staff_number', function (Builder $builder) use ($user) {
-//                    $builder->where('customer_id', $user->id);
+                    $builder->where('statuses_id','!=' ,  config('constants.status.loan_request_login') );
                 });
             }
             elseif ( $user->role_id  == config('constants.role.approver.id') ){
                 static::addGlobalScope('staff_number', function (Builder $builder) use ($user) {
-//                    $builder->where('customer_id', $user->id);
+                    $builder->where('statuses_id','!=' ,  config('constants.status.loan_request_login') );
                 });
             }
             elseif ( $user->role_id  == config('constants.role.developer.id') ){
                 static::addGlobalScope('staff_number', function (Builder $builder) use ($user) {
-//                    $builder->where('customer_id', $user->id);
+                    $builder->where('statuses_id','!=' ,  config('constants.status.loan_request_login') );
                 });
             }
             else{
