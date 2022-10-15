@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Website\Loans;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Dashboard\FilesController;
 use App\Models\Dashboard\Logs\Notifications;
-use App\Models\dashboardTotals;
 use App\Models\LoanPayments;
 use App\Models\Loans\LoanApplications;
 use App\Models\Loans\LoanApproals;
@@ -13,7 +12,6 @@ use App\Models\Loans\LoanProducts;
 use App\Models\Loans\LoanSchedule;
 use App\Models\NextOfKin;
 use App\Models\Settings\CustomerTypes;
-use App\Models\Settings\LoanCategory;
 use App\Models\Settings\Status;
 use App\Models\Settings\WorkStatus;
 use App\Models\User;
@@ -44,128 +42,125 @@ class LoanApplicationsController extends Controller
         return view('dashboard.loan.index')->with(compact('list', 'statuses'));
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $statuses = Status::all();
-        $state = $request->search_term ?? "" ;
-        $search_term = $request->search_term ??  "" ;
-        $date_from =  $request->date_from ?? "" ;
-        $date_to =  $request->date_to ?? "" ;
+        $state = $request->search_term ?? "";
+        $search_term = $request->search_term ?? "";
+        $date_from = $request->date_from ?? "";
+        $date_to = $request->date_to ?? "";
 
         if ($request->status == 0) {
-            if($request->search_term == null){
+            if ($request->search_term == null) {
 
                 //filter by date
-                if( ($request->date_from == null) && ($request->date_to == null) ){
+                if (($request->date_from == null) && ($request->date_to == null)) {
                     //get the current year
-                    $list = LoanApplications::orderBy('created_at', 'desc')->get();
-                }
-                elseif( ($request->date_from != null) && ($request->date_to == null) ){
-                    $list = LoanApplications::where('created_at', '>=', $request->date_from )
+                    $list = LoanApplications::whereMonth('created_at', date('m'))
+                        ->whereYear('created_at', date('Y'))
+                    ->orderBy('created_at', 'desc')->take(10)->get();
+
+                } elseif (($request->date_from != null) && ($request->date_to == null)) {
+                    $list = LoanApplications::where('created_at', '>=', $request->date_from)
                         ->orderBy('created_at', 'desc')->get();
-                }
-                elseif( ($request->date_from == null) && ($request->date_to != null) ){
-                    $list = LoanApplications::where('created_at', '<=', $request->date_to )
+                } elseif (($request->date_from == null) && ($request->date_to != null)) {
+                    $list = LoanApplications::where('created_at', '<=', $request->date_to)
                         ->orderBy('created_at', 'desc')->get();
-                }
-                elseif( ($request->date_from != null) && ($request->date_to != null) ){
-                    $list = LoanApplications::where('created_at', '>=', $request->date_from )
+                } elseif (($request->date_from != null) && ($request->date_to != null)) {
+                    $list = LoanApplications::where('created_at', '>=', $request->date_from)
                         ->where('created_at', '<=', $request->date_to)
                         ->orderBy('created_at', 'desc')->get();
-                }else{
+                } else {
                     //
                 }
 
 
-            }else{
-                $users = User::where('name', 'like', '%'.$request->search_term.'%' )->get();
+            }
+
+            else {
+                $users = User::where('name', 'like', '%' . $request->search_term . '%')
+                    ->orWhere('nid', 'like', '%' . $request->search_term . '%')
+                    ->orWhere('mobile_number', 'like', '%' . $request->search_term . '%')
+                    ->orWhere('email', 'like', '%' . $request->search_term . '%')
+                    ->get();
 
 
                 //filter by date
-                if( ($request->date_from == null) && ($request->date_to == null) ){
+                if (($request->date_from == null) && ($request->date_to == null)) {
                     //get the current year
-                    $list = LoanApplications::whereIn('customer_id', $users->pluck('id')->toArray() )
+                    $list = LoanApplications::whereIn('customer_id', $users->pluck('id')->toArray())
+                        ->orderBy('created_at', 'desc')->take(10)->get();
+                } elseif (($request->date_from != null) && ($request->date_to == null)) {
+                    $list = LoanApplications::whereIn('customer_id', $users->pluck('id')->toArray())
+                        ->where('created_at', '>=', $request->date_from)
                         ->orderBy('created_at', 'desc')->get();
-                }
-                elseif( ($request->date_from != null) && ($request->date_to == null) ){
-                    $list = LoanApplications::whereIn('customer_id', $users->pluck('id')->toArray() )
-                        ->where('created_at', '>=', $request->date_from )
-                        ->orderBy('created_at', 'desc')->get();
-                }
-                elseif( ($request->date_from == null) && ($request->date_to != null) ){
-                    $list = LoanApplications::whereIn('customer_id', $users->pluck('id')->toArray() )
-                        ->where('created_at', '<=', $request->date_to )
-                        ->orderBy('created_at', 'desc')->get();
-                }
-                elseif( ($request->date_from != null) && ($request->date_to != null) ){
-                    $list = LoanApplications::whereIn('customer_id', $users->pluck('id')->toArray() )
-                    ->where('created_at', '>=', $request->date_from )
+                } elseif (($request->date_from == null) && ($request->date_to != null)) {
+                    $list = LoanApplications::whereIn('customer_id', $users->pluck('id')->toArray())
                         ->where('created_at', '<=', $request->date_to)
                         ->orderBy('created_at', 'desc')->get();
-                }else{
+                } elseif (($request->date_from != null) && ($request->date_to != null)) {
+                    $list = LoanApplications::whereIn('customer_id', $users->pluck('id')->toArray())
+                        ->where('created_at', '>=', $request->date_from)
+                        ->where('created_at', '<=', $request->date_to)
+                        ->orderBy('created_at', 'desc')->get();
+                } else {
                     //
                 }
             }
-        }
-        else {
+        } else {
             $state = Status::find($request->status);
-            if($request->search_term == null){
+            if ($request->search_term == null) {
 
 
                 //filter by date
-                if( ($request->date_from == null) && ($request->date_to == null) ){
+                if (($request->date_from == null) && ($request->date_to == null)) {
                     //get the current year
-                    $list = LoanApplications::where('statuses_id', $request->status )
+                    $list = LoanApplications::where('statuses_id', $request->status)
+                        ->orderBy('created_at', 'desc')->take(10)->get();
+                } elseif (($request->date_from != null) && ($request->date_to == null)) {
+                    $list = LoanApplications::where('statuses_id', $request->status)
+                        ->where('created_at', '>=', $request->date_from)
                         ->orderBy('created_at', 'desc')->get();
-                }
-                elseif( ($request->date_from != null) && ($request->date_to == null) ){
-                    $list = LoanApplications::where('statuses_id', $request->status )
-                        ->where('created_at', '>=', $request->date_from )
-                        ->orderBy('created_at', 'desc')->get();
-                }
-                elseif( ($request->date_from == null) && ($request->date_to != null) ){
-                    $list = LoanApplications::where('statuses_id', $request->status )
-                        ->where('created_at', '<=', $request->date_to )
-                        ->orderBy('created_at', 'desc')->get();
-                }
-                elseif( ($request->date_from != null) && ($request->date_to != null) ){
-                    $list = LoanApplications::where('statuses_id', $request->status )
-                        ->where('created_at', '>=', $request->date_from )
+                } elseif (($request->date_from == null) && ($request->date_to != null)) {
+                    $list = LoanApplications::where('statuses_id', $request->status)
                         ->where('created_at', '<=', $request->date_to)
                         ->orderBy('created_at', 'desc')->get();
-                }else{
+                } elseif (($request->date_from != null) && ($request->date_to != null)) {
+                    $list = LoanApplications::where('statuses_id', $request->status)
+                        ->where('created_at', '>=', $request->date_from)
+                        ->where('created_at', '<=', $request->date_to)
+                        ->orderBy('created_at', 'desc')->get();
+                } else {
                     //
                 }
 
-            }else{
-                $users = User::where('name', 'like', '%'.$request->search_term.'%' )->get();
+            } else {
+                $users = User::where('name', 'like', '%' . $request->search_term . '%')->get();
 
 
                 //filter by date
-                if( ($request->date_from == null) && ($request->date_to == null) ){
+                if (($request->date_from == null) && ($request->date_to == null)) {
                     //get the current year
-                    $list = LoanApplications::where('statuses_id', $request->status )
-                        -> whereIn('customer_id', $users->pluck('id')->toArray() )
+                    $list = LoanApplications::where('statuses_id', $request->status)
+                        ->whereIn('customer_id', $users->pluck('id')->toArray())
                         ->orderBy('created_at', 'desc')->get();
-                }
-                elseif( ($request->date_from != null) && ($request->date_to == null) ){
-                    $list = LoanApplications::where('statuses_id', $request->status )
-                        -> whereIn('customer_id', $users->pluck('id')->toArray() )
-                        ->where('created_at', '>=', $request->date_from )
+                } elseif (($request->date_from != null) && ($request->date_to == null)) {
+                    $list = LoanApplications::where('statuses_id', $request->status)
+                        ->whereIn('customer_id', $users->pluck('id')->toArray())
+                        ->where('created_at', '>=', $request->date_from)
                         ->orderBy('created_at', 'desc')->get();
-                }
-                elseif( ($request->date_from == null) && ($request->date_to != null) ){
-                    $list = LoanApplications::where('statuses_id', $request->status )
-                        -> whereIn('customer_id', $users->pluck('id')->toArray() )
-                        ->where('created_at', '<=', $request->date_to )
-                        ->orderBy('created_at', 'desc')->get();
-                }
-                elseif( ($request->date_from != null) && ($request->date_to != null) ){
-                    $list = LoanApplications::where('statuses_id', $request->status )
-                        -> whereIn('customer_id', $users->pluck('id')->toArray() )
-                        ->where('created_at', '>=', $request->date_from )
+                } elseif (($request->date_from == null) && ($request->date_to != null)) {
+                    $list = LoanApplications::where('statuses_id', $request->status)
+                        ->whereIn('customer_id', $users->pluck('id')->toArray())
                         ->where('created_at', '<=', $request->date_to)
                         ->orderBy('created_at', 'desc')->get();
-                }else{
+                } elseif (($request->date_from != null) && ($request->date_to != null)) {
+                    $list = LoanApplications::where('statuses_id', $request->status)
+                        ->whereIn('customer_id', $users->pluck('id')->toArray())
+                        ->where('created_at', '>=', $request->date_from)
+                        ->where('created_at', '<=', $request->date_to)
+                        ->orderBy('created_at', 'desc')->get();
+                } else {
                     //
                 }
 
@@ -176,7 +171,7 @@ class LoanApplicationsController extends Controller
 
 
         return view('dashboard.loan.index')->with(compact('list', 'date_to', 'date_from',
-            'statuses', 'search_term','state'));
+            'statuses', 'search_term', 'state'));
     }
 
     /**
@@ -197,7 +192,7 @@ class LoanApplicationsController extends Controller
      *
      * @return Response
      */
-    public function apply(Request $request )
+    public function apply(Request $request)
     {
         $loanProd = LoanProducts::find($request->loan_purpose);
         $loanProd->load('category');
@@ -205,7 +200,7 @@ class LoanApplicationsController extends Controller
         $works = WorkStatus::all();
         $statuses = Status::all();
         $customer_types = CustomerTypes::where('id', '!=', config('constants.customer_type.employee'))->get();
-        return view('dashboard.loan.apply')->with(compact('user', 'works', 'loanProd', 'statuses', 'customer_types' ));
+        return view('dashboard.loan.apply')->with(compact('user', 'works', 'loanProd', 'statuses', 'customer_types'));
     }
 
     public function finish(Request $request, LoanApplications $loan, User $user)
@@ -220,16 +215,16 @@ class LoanApplicationsController extends Controller
         $loan->loan('loan');
 
         //validate if it needs a collateral
-        if($loan->loan->collateral == "Need Collateral"){
-            if ( $request->hasFile('collateral') ) {
+        if ($loan->loan->collateral == "Need Collateral") {
+            if ($request->hasFile('collateral')) {
                 //file attached
-            }else{
+            } else {
                 return redirect()->back()->with('error', 'This loan needs collateral documentation. Please attach documentation and enter collateral description');
             }
         }
 
 
-      //  dd($request->all() );
+        //  dd($request->all() );
         /** upload identity file */
 //        $file = $request->file('identity');
 //        if ($request->hasFile('identity')) {
@@ -238,12 +233,12 @@ class LoanApplicationsController extends Controller
 //            $user->identity = $identity->uuid ?? $identity->id;
 //        }
 
-        if( ($request->identity ?? "pica") != "pica"){
-        foreach ( $request->file('identity') as  $file ){
-            $filesController = new FilesController();
-            $identity = $filesController->upload($request, $file, config('constants.types.identity'), $user);
-            $user->identity = $identity->uuid ?? $identity->id;
-        }
+        if (($request->identity ?? "pica") != "pica") {
+            foreach ($request->file('identity') as $file) {
+                $filesController = new FilesController();
+                $identity = $filesController->upload($request, $file, config('constants.types.identity'), $user);
+                $user->identity = $identity->uuid ?? $identity->id;
+            }
         }
 
         /** upload account_statement file */
@@ -252,7 +247,7 @@ class LoanApplicationsController extends Controller
 //            $filesController = new FilesController();
 //            $filesController->upload($request, $file, config('constants.types.account_statement'), $loan);
 //        }
-        foreach ( $request->file('account_statement') as  $file ){
+        foreach ($request->file('account_statement') as $file) {
             $filesController = new FilesController();
             $filesController->upload($request, $file, config('constants.types.account_statement'), $loan);
         }
@@ -278,7 +273,7 @@ class LoanApplicationsController extends Controller
 //            $filesController = new FilesController();
 //            $filesController->upload($request, $file, config('constants.types.collateral'), $loan);
 //        }
-        foreach ( $request->file('collateral') as  $file ){
+        foreach ($request->file('collateral') as $file) {
             $filesController = new FilesController();
             $filesController->upload($request, $file, config('constants.types.collateral'), $loan);
         }
@@ -289,7 +284,9 @@ class LoanApplicationsController extends Controller
             'nid' => $request->kin_nid,
             'relationship' => $request->kin_relationship,
             'user_id' => $user->id,
-        ], [
+        ]
+            ,
+            [
             'name' => $request->kin_name,
             'phone' => $request->kin_phone,
             'email' => $request->kin_email,
@@ -303,7 +300,6 @@ class LoanApplicationsController extends Controller
         ]);
 
 
-
         //user
         $user->mobile_number = $request->mobile_number;
         $user->dob = $request->dob;
@@ -312,7 +308,7 @@ class LoanApplicationsController extends Controller
         $user->address = $request->plot_street;
         $user->country = $request->country;
         $user->city = $request->city;
-        $user->customer_type_id = $user_type ;
+        $user->customer_type_id = $user_type;
         $user->plot_street = $request->plot_street;
         $user->zip_code = $request->zip_code;
         $user->work_status_id = $request->work_status_id;
@@ -321,23 +317,25 @@ class LoanApplicationsController extends Controller
         //loan
         $loan->statuses_id = $status;
         $loan->date_submitted = date('Y-m-d');
-        $loan->collateral_description = $request->collateral_description ?? $loan->loan->collateral ;
+        $loan->collateral_description = $request->collateral_description ?? $loan->loan->collateral;
         $loan->save();
 
         //schedule
         for ($i = 1; $i <= $loan->repayment_period; $i++) {
-            $schedule = LoanSchedule::UpdateOrCreate(
+            $schedule = LoanSchedule::firstOrCreate(
                 [
-                    'loan_applications_id' => $loan->first()->id,
-                    'customer_id' => $user->first()->id,
+                    'loan_applications_id' => $loan->id,
+                    'modal_uuid' => $loan->uuid,
+                    'customer_id' => $loan->customer_id,
                     'status' => $status,
                     'installment' => 'Installment ' . $i,
-                    'date' => date("Y-m-d", strtotime($i . " month")),
+//                    'date' => date("Y-m-d", strtotime($i . " month")),
                     'amount' => $schedule_amount,
                 ],
                 [
-                    'loan_applications_id' => $loan->first()->id,
-                    'customer_id' => $user->first()->id,
+                    'loan_applications_id' => $loan->id,
+                    'modal_uuid' => $loan->uuid,
+                    'customer_id' => $loan->customer_id,
                     'status' => $status,
                     'installment' => 'Installment ' . $i,
                     'date' => date("Y-m-d", strtotime($i . " month")),
@@ -379,7 +377,7 @@ class LoanApplicationsController extends Controller
         );
 
         //return
-        return Redirect::route('loan.product.search', $status )->with('message', 'Your Loan has been submitted successfully');
+        return Redirect::route('loan.product.search', $status)->with('message', 'Your Loan has been submitted successfully');
 
     }
 
@@ -436,22 +434,22 @@ class LoanApplicationsController extends Controller
 
     public function returningCustomer(Request $request)
     {
-        $user = auth()->user() ;
-        $uuid =  $request->uuid ;
+        $user = auth()->user();
+        $uuid = $request->uuid;
 
-        if( auth()->check() ){
+        if (auth()->check()) {
             $loan = DB::table('loan_applications')
                 ->where('uuid', $uuid)
                 ->update([
-                    'customer_id' =>  $user->id,
-                    'statuses_id' => config('constants.status.loan_request_login') ,
-                    ]);
+                    'customer_id' => $user->id,
+                    'statuses_id' => config('constants.status.loan_request_login'),
+                ]);
             $loan = LoanApplications::where('uuid', $uuid)->first();
 
-          //  dd($loan);
-            return Redirect::route('home') ;
+            //  dd($loan);
+            return Redirect::route('home');
 
-        }else{
+        } else {
             return view('auth.login')->with(compact('uuid'));
         }
     }
@@ -491,14 +489,12 @@ class LoanApplicationsController extends Controller
                 $save = true;
 
                 //add or subtract from dashboard totals
-               // $dashboard = dashboardTotals::get()->first();
+                // $dashboard = dashboardTotals::get()->first();
             } else {
                 $next_status = config('constants.status.loan_submission');
             }
 
-        }
-
-        //SECOND APPROVAL
+        } //SECOND APPROVAL
         elseif ($current_status == config('constants.status.loan_reviewed')
             && $logged_in->role_id == config('constants.role.approver.id')
         ) {
@@ -512,13 +508,10 @@ class LoanApplicationsController extends Controller
             } else {
                 $next_status = config('constants.status.loan_reviewed');
             }
-        }
-
-
-        //THIRD APPROVAL
+        } //THIRD APPROVAL
         elseif ($current_status == config('constants.status.loan_approved')
-            &&   ( ($logged_in->role_id == config('constants.role.verifier.id') )
-            ||   ( $logged_in->role_id == config('constants.role.approver.id') )
+            && (($logged_in->role_id == config('constants.role.verifier.id'))
+                || ($logged_in->role_id == config('constants.role.approver.id'))
             )
         ) {
             //actions
@@ -531,23 +524,23 @@ class LoanApplicationsController extends Controller
             } else {
                 $next_status = config('constants.status.loan_approved');
             }
-        }
-
-        //LOAN REPAYMENT PROCESS
-        elseif( $loan->statuses_id == config('constants.status.loan_funds_disbursed')
+        } //LOAN REPAYMENT PROCESS
+        elseif ($loan->statuses_id == config('constants.status.loan_funds_disbursed')
             && (
-                ($logged_in->role_id == config('constants.role.verifier.id') )
-              ||  ($logged_in->role_id == config('constants.role.approver.id') )
-            )){
+                ($logged_in->role_id == config('constants.role.verifier.id'))
+                || ($logged_in->role_id == config('constants.role.approver.id'))
+            )) {
 
 
             $date = now();
 
-            $amt = $request->amount ;
+            $amt = $request->amount;
 
             //get the schedules
             $loan_schedules = LoanSchedule::where('loan_applications_id', $loan->id)->get();
 
+
+            if (sizeof($loan_schedules) > 0) {
 
                 //create payment
                 $loan_payments = LoanPayments::create(
@@ -564,52 +557,56 @@ class LoanApplicationsController extends Controller
                 foreach ($request->file('proof_of_payment') as $file) {
                     $filesController = new FilesController();
                     $filesController->upload($request, $file, config('constants.types.proof_of_payment'), $loan_payments);
-            }
-
-            $request->comment = $request->comment ." | ZMW ". $request->amount;
-
-            //amount should be within balance
-            if( $amt > ($loan->loan_amount_due - $loan->schedules->sum('paid')) ){
-                return Redirect::route('loan.product.search', $next_status)->with('error', 'Sorry the amount entered for repayment ('.$amt.') is larger than the balance' );
-            }else{
-                $save = true;
-            foreach($loan_schedules as $loan_schedule ){
-
-              //  dd($loan_schedule );
-                $amount_due = $loan_schedule->balance ?? 0  ;
-                if($amount_due == 0 ){
-                    $amount_due = $loan_schedule->amount  ;
                 }
 
-                if($loan_schedule->amount != $loan_schedule->paid ){
-                    //  dd(compact('loan_schedules','loan_schedule', 'amount_due'));
-                    if (  ($amt > 0 ) &&  ($amount_due > 0 )  ){
+                $request->comment = $request->comment . " | ZMW " . $request->amount;
 
-                        if($amt > $amount_due ){ // of amount is larger than schedule
-                            $pay =  $amount_due ;
-                            $amt = $amt - $pay ;
-                            $loan_schedule->status =   config('constants.status.loan_paid') ;
-                        }else{ // if amount is smaller than schedule
-                            $pay =  $amt ;
-                            $amt = $amt - $amt ;
+                //amount should be within balance
+                if ($amt > ($loan->loan_amount_due - $loan->schedules->sum('paid'))) {
+                    return Redirect::route('loan.product.search', $next_status)->with('error', 'Sorry the amount entered for repayment (' . $amt . ') is larger than the balance');
+                } else {
+                    $save = true;
+                    foreach ($loan_schedules as $loan_schedule) {
+
+                        //  dd($loan_schedule );
+                        $amount_due = $loan_schedule->balance ?? 0;
+                        if ($amount_due == 0) {
+                            $amount_due = $loan_schedule->amount;
                         }
-                        $pay =  $loan_schedule->paid + $pay;
-                        $loan_schedule->paid =  $pay ;
-                        $loan_schedule->date_paid = $date  ;
-                        $loan_schedule->balance = $loan_schedule->amount - $pay  ;
-                        $loan_schedule->save() ;
+
+                        if ($loan_schedule->amount != $loan_schedule->paid) {
+                            //  dd(compact('loan_schedules','loan_schedule', 'amount_due'));
+                            if (($amt > 0) && ($amount_due > 0)) {
+
+                                if ($amt > $amount_due) { // of amount is larger than schedule
+                                    $pay = $amount_due;
+                                    $amt = $amt - $pay;
+                                    $loan_schedule->status = config('constants.status.loan_paid');
+                                } else { // if amount is smaller than schedule
+                                    $pay = $amt;
+                                    $amt = $amt - $amt;
+                                }
+                                $pay = $loan_schedule->paid + $pay;
+                                $loan_schedule->paid = $pay;
+                                $loan_schedule->date_paid = $date;
+                                $loan_schedule->balance = $loan_schedule->amount - $pay;
+                                $loan_schedule->save();
+                            }
+                        }
+
+
+                    }
+
+                    //check if i have finished paying
+                    if (($loan->loan_amount_due - $loan_schedules->sum('paid')) == 0) {
+                        $next_status = config('constants.status.loan_paid');
+                    } else {
+                        $next_status = config('constants.status.loan_funds_disbursed');
                     }
                 }
 
-
-            }
-
-            //check if i have finished paying
-            if(($loan->loan_amount_due - $loan_schedules->sum('paid')) == 0 ){
-                $next_status = config('constants.status.loan_paid');
-            }else{
-                $next_status = config('constants.status.loan_funds_disbursed');
-            }
+            } else {
+                return Redirect::route('loan.product.search', $next_status)->with('error', 'Schedule Error - Sorry no changes were made to this loan, please contact system admin.');
             }
 
         }
@@ -645,11 +642,12 @@ class LoanApplicationsController extends Controller
 
             //old notification
             $old_not = Notifications::where('model_id', $loan->id,)
-                ->where( 'url' , $url,)
+               // ->where('url', $url,)
                 ->update(
-                ['status_id' => $seen ,
+                    [
+                        'status_id' => $seen,
                     ]
-            );
+                );
 
             $notification = Notifications::UpdateOrCreate(
                 [
@@ -671,7 +669,7 @@ class LoanApplicationsController extends Controller
                     'type' => config('constants.notifications.loan'),
                     'model_id' => $loan->id,
                     'url' => $url,
-                    'customer_id' =>$loan->customer->id ,
+                    'customer_id' => $loan->customer->id,
                     'status_id' => $status_unseen,
                     'created_by' => $logged_in->id
                 ]
@@ -744,33 +742,29 @@ class LoanApplicationsController extends Controller
     public function show(LoanApplications $loan)
     {
         $loan->load('loan', 'payslips', 'statements');
-        $loan->load('customer.nrc', 'schedules', 'approvals' );
-        $loan->load('bankDetails', 'payments.paymentProofs' );
+        $loan->load('customer.nrc', 'schedules', 'approvals');
+        $loan->load('bankDetails', 'payments.paymentProofs');
 
-      //  dd($loan);
+        //  dd($loan);
 
         $logged_in_user = Auth::user();
-        $next_users = [] ;
+        $next_users = [];
 //        $approvals = LoanApproals::where('loan_applications_id' , $loan->id)->get();
-        $approvals = $loan->approvals ;
-      //  dd($approvals);
+        $approvals = $loan->approvals;
+        //  dd($approvals);
 
-        if( $loan->statuses_id == config('constants.status.loan_request_login') ){
-            $next_users = User::where('id',$loan->customer_id  )->get();
-        }
-        elseif(  $loan->statuses_id == config('constants.status.loan_submission') ){
-            $next_users = User::where('role_id',config('constants.role.verifier.id')  )->get();
-        }
-        elseif(  $loan->statuses_id == config('constants.status.loan_reviewed') ){
-            $next_users = User::where('role_id',config('constants.role.approver.id')  )->get();
-        }
-        elseif(  $loan->statuses_id == config('constants.status.loan_approved') ){
-            $next_users = User::where('role_id',config('constants.role.verifier.id')  )
-                ->orWhere('role_id',config('constants.role.approver.id') )->get();
-        }
-        elseif(  $loan->statuses_id == config('constants.status.loan_funds_disbursed') ){
-            $next_users = User::where('id',$loan->customer_id  )->get();
-        }else{
+        if ($loan->statuses_id == config('constants.status.loan_request_login')) {
+            $next_users = User::where('id', $loan->customer_id)->get();
+        } elseif ($loan->statuses_id == config('constants.status.loan_submission')) {
+            $next_users = User::where('role_id', config('constants.role.verifier.id'))->get();
+        } elseif ($loan->statuses_id == config('constants.status.loan_reviewed')) {
+            $next_users = User::where('role_id', config('constants.role.approver.id'))->get();
+        } elseif ($loan->statuses_id == config('constants.status.loan_approved')) {
+            $next_users = User::where('role_id', config('constants.role.verifier.id'))
+                ->orWhere('role_id', config('constants.role.approver.id'))->get();
+        } elseif ($loan->statuses_id == config('constants.status.loan_funds_disbursed')) {
+            $next_users = User::where('id', $loan->customer_id)->get();
+        } else {
 
         }
 

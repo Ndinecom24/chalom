@@ -57,7 +57,7 @@
                                 @csrf
 
                                 <div class="row">
-                                    <div class="col-lg-10 col-md-10 col-sm-12">
+                                    <div class="col-lg-9 col-md-9 col-sm-12">
                                         <div class="row">
                                             <div class="col-md-5 col-sm-12">
                                                 <label class>Status</label>
@@ -95,10 +95,19 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-12">
+                                    <div class="col-lg-3 col-md-3 col-sm-12">
                                         <div class="row">
                                             <span> Count : {{ $list->count()  }}</span>
                                         </div>
+{{--                                        <div class="row">--}}
+{{--                                            <a href="" > <span> Installments <span class="text-success">Due this month : {{ date('M Y')  }}</span></span> </a>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="row">--}}
+{{--                                            <a  href="" >  <span> Installments  <span class="text-danger">Defaulted</span> </span> </a>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="row">--}}
+{{--                                            <a  href="" >  <span> Installments  <span class="text-info">Due Next month : {{ date('M Y', strtotime('+1 month'))  }}</span></span> </a>--}}
+{{--                                        </div>--}}
                                     </div>
                                 </div>
                             </form>
@@ -124,6 +133,7 @@
                                                     <td>Amount Repaid</td>
                                                     <td>Balance</td>
                                                     <td>Status</td>
+                                                    <td>Created At</td>
                                                     <td>Last Action</td>
                                                     <td>Action</td>
                                                 </tr>
@@ -149,6 +159,7 @@
                                                             {{$loan->status->name ?? $loan->statuses_id }}
                                                         </span>
                                                         </td>
+                                                        <td>{{ \Carbon\Carbon::parse($loan->date_submitted)->toFormattedDateString() }}</td>
                                                         <td>{{ \Carbon\Carbon::parse($loan->updated_at)->diffForhumans() }}</td>
                                                         <td>
                                                             <div class="row ">
@@ -163,6 +174,23 @@
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
+                                                <footer>
+                                                    <tr class="tfoot text-bold">
+                                                    <td> {{ $list->count() }}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>{{ number_format(  $list->sum('loan_amount') , 2)}}</td>
+                                                    <td></td>
+                                                    <td>{{ number_format(  $list->sum('loan_amount_due') , 2)}}</td>
+                                                    <td></td>
+                                                    <td>{{ number_format(   $list->plucK('schedules')->flatten()->sum('paid')  , 2)}}</td>
+                                                    <td>{{ number_format( ( $list->sum('loan_amount_due') -  $list->plucK('schedules')->flatten()->sum('paid') )  , 2)}}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    </tr>
+                                                </footer>
                                             </table>
                                         </div>
                                     </div>

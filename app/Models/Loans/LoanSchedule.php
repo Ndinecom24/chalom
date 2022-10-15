@@ -15,6 +15,7 @@ class LoanSchedule extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'loan_applications_id',
+        'modal_uuid',
         'customer_id',
         'status',
         'installment',

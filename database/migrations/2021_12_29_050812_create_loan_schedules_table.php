@@ -19,6 +19,7 @@ class CreateLoanSchedulesTable extends Migration
             $table->integer('customer_id');
             $table->integer('status');
             $table->string('installment');
+            $table->string('modal_uuid');
             $table->date('date');
             $table->double('amount');
             $table->double('paid')->nullable();
