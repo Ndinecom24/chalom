@@ -2,6 +2,9 @@
 
 @section('content')
     <!-- partial -->
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css"/>
     <div class="content-wrapper">
         <div class="row">
             <div class="container-fluid">
@@ -100,14 +103,15 @@
                                 </div>
                             </form>
                         </div>
+
+                        <script src="{{ asset('theme/borrow/plugins/jquery/jquery.min.js')}}"></script>
                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
                              data-parent="#accordion">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="table">
-                                            <table class="table table-striped "
-                                                   style="overflow-x: auto; display: block; " >
+                                            <table id="table" class="table table-striped table-bordered" style="width:100%">
                                                 <thead>
                                                 <tr>
                                                     <td>#</td>
@@ -181,6 +185,18 @@
 
 
 @push('custom-scripts')
+
+    <script src="//code.jquery.com/jquery-1.12.3.js"></script>
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script
+        src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#table').DataTable();
+        } );
+    </script>
 
 
 

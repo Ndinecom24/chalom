@@ -12,6 +12,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('theme/borrow/assets/images/favicon-32x32.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('theme/borrow/assets/images/favicon-16x16.png')}}">
 
+
+
 {{--    <link rel="stylesheet" href="{{asset('theme/bootstrap/css/bootstrap-theme.css')}}">--}}
 {{--    <link rel="stylesheet" href="{{asset('theme/bootstrap/css/bootstrap.css')}}">--}}
 
@@ -111,6 +113,10 @@
 <script src="{{asset('theme/borrow/assets/libs/imagesloaded/imagesloaded.pkgd.min.js')}}"></script>
 <script src="{{asset('theme/borrow/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
 <script src="{{asset('theme/borrow/assets/libs/prismjs/prism.js')}}"></script>
+
+
+
+
 @stack('custom-scripts')
 
 
