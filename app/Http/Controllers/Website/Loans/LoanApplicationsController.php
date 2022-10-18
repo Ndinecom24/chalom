@@ -29,6 +29,7 @@ class LoanApplicationsController extends Controller
      *
      * @return Response
      */
+
     public function index($status)
     {
         $statuses = Status::all();
@@ -42,8 +43,8 @@ class LoanApplicationsController extends Controller
         return view('dashboard.loan.index')->with(compact('list', 'statuses'));
     }
 
-    public function search(Request $request)
-    {
+    public function search(Request $request){
+
         $statuses = Status::all();
         $state = $request->search_term ?? "";
         $search_term = $request->search_term ?? "";
@@ -51,10 +52,12 @@ class LoanApplicationsController extends Controller
         $date_to = $request->date_to ?? "";
 
         if ($request->status == 0) {
+
             if ($request->search_term == null) {
 
                 //filter by date
                 if (($request->date_from == null) && ($request->date_to == null)) {
+
                     //get the current year
                     $list = LoanApplications::whereMonth('created_at', date('m'))
                         ->whereYear('created_at', date('Y'))
@@ -134,7 +137,8 @@ class LoanApplicationsController extends Controller
                     //
                 }
 
-            } else {
+            }
+            else {
                 $users = User::where('name', 'like', '%' . $request->search_term . '%')->get();
 
 
@@ -166,6 +170,7 @@ class LoanApplicationsController extends Controller
 
             }
         }
+
 //search_term
         $list->load('loan', 'schedules');
 
@@ -353,7 +358,7 @@ class LoanApplicationsController extends Controller
                 'name' => 'Loan Submission',
                 'subject' => 'New Loan Submission',
                 'message' => $user->name . ' has submitted a ZMW ' . $loan->loan_amount . ' ' . $loan->loan->name . ' Loan for '
-                    . $loan->loan_purpose . 'to be repayed in ' . $loan->repayment_period . ' installments.',
+                    . $loan->loan_purpose . ' to be repayed in ' . $loan->repayment_period . ' installments.',
                 'comment' => 'Loan submitted by ' . $logged_in->name,
                 'type' => config('constants.notifications.loan'),
                 'model_id' => $loan->id,
@@ -365,7 +370,7 @@ class LoanApplicationsController extends Controller
                 'name' => 'Loan Submission',
                 'subject' => 'New Loan Submission',
                 'message' => $user->name . ' has submitted a ZMW ' . $loan->loan_amount . ' ' . $loan->loan->name . ' Loan for '
-                    . $loan->loan_purpose . 'to be repayed in ' . $loan->repayment_period . ' installments.',
+                    . $loan->loan_purpose . ' to be repayed in ' . $loan->repayment_period . ' installments.',
                 'comment' => 'Loan submitted by ' . $logged_in->name,
                 'type' => config('constants.notifications.loan'),
                 'model_id' => $loan->id,
@@ -525,7 +530,10 @@ class LoanApplicationsController extends Controller
                 $next_status = config('constants.status.loan_approved');
             }
         } //LOAN REPAYMENT PROCESS
-        elseif ($loan->statuses_id == config('constants.status.loan_funds_disbursed')
+        elseif (
+
+        ( $loan->statuses_id == config('constants.status.loan_funds_disbursed')  ||
+            ($loan->statuses_id == config('constants.status.loan_payment') ) )
             && (
                 ($logged_in->role_id == config('constants.role.verifier.id'))
                 || ($logged_in->role_id == config('constants.role.approver.id'))
@@ -601,11 +609,12 @@ class LoanApplicationsController extends Controller
                     if (($loan->loan_amount_due - $loan_schedules->sum('paid')) == 0) {
                         $next_status = config('constants.status.loan_paid');
                     } else {
-                        $next_status = config('constants.status.loan_funds_disbursed');
+                        $next_status = config('constants.status.loan_payment');
                     }
                 }
 
-            } else {
+            }
+            else {
                 return Redirect::route('loan.product.search', $next_status)->with('error', 'Schedule Error - Sorry no changes were made to this loan, please contact system admin.');
             }
 

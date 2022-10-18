@@ -811,7 +811,7 @@
 
 
                                                 {{--  FUNDS NEEDS TO BE REPAYEMENT--}}
-                                            @elseif( ($loan->statuses_id == config('constants.status.loan_funds_disbursed') )
+                                            @elseif( ($loan->statuses_id == config('constants.status.loan_funds_disbursed') ) ||  ($loan->statuses_id == config('constants.status.loan_payment') )
                                                )
                                                 {{-- VERIFIER / ADMIN / APPROVER --}}
                                                 @if( ($logged_in_user->role_id ==  config('constants.role.verifier.id')) ||

@@ -56,6 +56,7 @@ return [
         'unseen' => 13,
 
         'loan_funds_disbursed' => 14 ,
+        'loan_payment' => 15 ,
     ],
     'work_status' => [
         '1' => 'Student',
