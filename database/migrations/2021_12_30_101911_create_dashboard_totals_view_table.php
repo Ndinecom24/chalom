@@ -31,9 +31,9 @@ class CreateDashboardTotalsViewTable extends Migration
             (SELECT sum(loan_amount) as total FROM `loan_applications` WHERE statuses_id = '6' or  statuses_id = '7' ) as pending_loans_amount ,
             (SELECT sum(loan_amount_due) as total FROM `loan_applications` WHERE statuses_id = '6' or  statuses_id = '7' ) as pending_loans_amount_due ,
 
-            (SELECT count(id) as total FROM `loan_applications` WHERE statuses_id = '10' or  statuses_id = '14'  ) as active_loans,
-            (SELECT sum(loan_amount) as total FROM `loan_applications` WHERE statuses_id = '10' or  statuses_id = '14'  ) as active_loans_amount,
-            (SELECT sum(loan_amount_due) as total FROM `loan_applications` WHERE statuses_id = '10' or  statuses_id = '14'  ) as active_loans_amount_due
+            (SELECT count(id) as total FROM `loan_applications` WHERE statuses_id = '10' or  statuses_id = '14' or  statuses_id = '15'   ) as active_loans,
+            (SELECT sum(loan_amount) as total FROM `loan_applications` WHERE statuses_id = '10' or  statuses_id = '14' or  statuses_id = '15'  ) as active_loans_amount,
+            (SELECT sum(loan_amount_due) as total FROM `loan_applications` WHERE statuses_id = '10' or  statuses_id = '14'  or  statuses_id = '15'  ) as active_loans_amount_due
 
             FROM `users` WHERE role_id = '1'
 
