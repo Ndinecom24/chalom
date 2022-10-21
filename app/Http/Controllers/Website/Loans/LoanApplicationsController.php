@@ -30,17 +30,44 @@ class LoanApplicationsController extends Controller
      * @return Response
      */
 
-    public function index($status)
+    public function index()
     {
         $statuses = Status::all();
-        if ($status == 0) {
-            $list = LoanApplications::orderBy('created_at', 'desc')->paginate(10);
-        } else {
-            $list = LoanApplications::where('statuses_id', $status)->orderBy('created_at')->paginate(10);
-        }
-        $list->load('loan', 'schedules');
+            $list2 = DB::select(
+                DB::raw("select * from loan_applications where id not in
+                                      ( select DISTINCT loan_applications_id from loan_schedules)
+                                        and statuses_id != 4 ")  ) ;
 
-        return view('dashboard.loan.index')->with(compact('list', 'statuses'));
+            $list = LoanApplications::with('loan', 'schedules')->hydrate($list2);
+
+            foreach ($list as $item){
+
+                $istallments = LoanSchedule::where('amount', $item->getMonthlyInstallmentsAttribute2()  )->get() ;
+
+//                if(   $istallments->count() == $item->repayment_period &&
+//                    ($item->id ==27)
+//                ){
+                    foreach($istallments as $istallmentpl ){
+                        $istallmentpl->loan_applications_id = $item->id ;
+                        $istallmentpl->modal_uuid = $item->uuid ;
+                        $istallmentpl->customer_id = $item->customer_id ;
+                        $istallmentpl->status = $item->statuses_id ;
+                        $istallmentpl->save();
+                 //   }
+
+                 //   dd( $item->id );
+                }
+
+              //  dd(3);
+
+
+            }
+
+         //   dd($list2) ;
+//
+//        $list->load('loan', 'schedules');
+
+        return view('dashboard.loan.list')->with(compact('list', 'statuses'));
     }
 
     public function search(Request $request){

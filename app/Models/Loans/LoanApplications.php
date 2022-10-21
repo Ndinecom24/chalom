@@ -46,6 +46,7 @@ class LoanApplications extends Model
 
     protected static function booted()
     {
+
         //check if authenticated user
         if ( auth()->check()) {
             //get the profile for this user
@@ -89,6 +90,10 @@ class LoanApplications extends Model
     {
         return (  number_format($this->loan_amount_due / $this->repayment_period, 2) );
     }
+    public function getMonthlyInstallmentsAttribute2()
+    {
+        return ( $this->loan_amount_due / $this->repayment_period  );
+    }
 
     public function loan(){
         return $this->belongsTo(LoanProducts::class , 'loan_product_id');
@@ -101,7 +106,6 @@ class LoanApplications extends Model
     public function status(){
         return $this->belongsTo(Status::class , 'statuses_id');
     }
-
 
     public function collaterals(){
         return $this->hasMany(Files::class , 'modal_uuid' , 'uuid')
