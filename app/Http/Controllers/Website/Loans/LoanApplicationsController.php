@@ -44,16 +44,15 @@ class LoanApplicationsController extends Controller
 
                 $istallments = LoanSchedule::where('amount', $item->getMonthlyInstallmentsAttribute2()  )->get() ;
 
-//                if(   $istallments->count() == $item->repayment_period &&
-//                    ($item->id ==27)
-//                ){
+                if(   $istallments->count() == $item->repayment_period   ($item->id ==27)
+                ){
                     foreach($istallments as $istallmentpl ){
-//                        $istallmentpl->loan_applications_id = $item->id ;
-//                        $istallmentpl->modal_uuid = $item->uuid ;
-//                        $istallmentpl->customer_id = $item->customer_id ;
-//                        $istallmentpl->status = $item->statuses_id ;
-                     //   $istallmentpl->save();
-                 //   }
+                        $istallmentpl->loan_applications_id = $item->id ;
+                        $istallmentpl->modal_uuid = $item->uuid ;
+                        $istallmentpl->customer_id = $item->customer_id ;
+                        $istallmentpl->status = $item->statuses_id ;
+                        $istallmentpl->save();
+                    }
 
                  //   dd( $item->id );
                 }
