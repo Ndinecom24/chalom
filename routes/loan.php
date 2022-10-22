@@ -50,6 +50,8 @@ Route::group([
     Route::get('/show/{loan}', [LoanApplicationsController::class, 'show'])->name('loan.show')->middleware('auth');
     Route::post('/approve/{loan}', [LoanApplicationsController::class, 'approve'])->name('loan.approve');
     Route::get('/cancel/{loan_id}', [LoanApplicationsController::class, 'cancel'])->name('loan.cancel');
+    Route::post('/state/change/{loan}', [LoanApplicationsController::class, 'stateChange'])->name('loan.state.change');
+
 }
 );
 

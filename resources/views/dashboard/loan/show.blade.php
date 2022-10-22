@@ -1171,6 +1171,49 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+                                <!--  DEVELOPER CHANGE LOAN STATUS -->
+                                @if(  \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
+                                                           )
+                                <div class="col-12">
+                                    <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
+                                        <div class="card-header">
+                                            <h6 class="mb-2 text-primary">CHANGE STATUS
+                                                <button class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('payment_prof_div')">
+                                                    <i class="fa fa-arrow-down"></i></button>
+                                            </h6>
+                                        </div>
+                                        <form id="finish_apply_form_state_change" method="POST" action="{{ route('loan.state.change', compact('loan' )) }}">
+                                          @csrf
+                                            <div class="card-body  "  id="payment_prof_div_3">
+                                                <div class="row gutters">
+                                                    <div class="row">
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                <select name="change_state"  >
+                                                                    @foreach($statuses as $state)
+                                                                        <option value="{{$state->id}}">{{$state->name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer">
+                                                <button class="btn btn-sm btn-secondary" type="submit" >
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </form>
+
+
+                                    </div>
+                                </div>
+                                @endif
+
                             </div>
                         </div>
                     </div>

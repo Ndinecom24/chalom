@@ -70,6 +70,19 @@ class LoanApplicationsController extends Controller
         return view('dashboard.loan.list')->with(compact('list', 'statuses'));
     }
 
+    public function stateChange(LoanApplications $loan, Request $request){
+
+        $loan->statuses_id =  $request->change_state ;
+        foreach( $loan->schedules as $schedule){
+            $schedule->status =  $request->change_state ;
+            $schedule->save();
+        }
+        $loan->save();
+
+        return redirect()->back()->with('message', 'state changed');
+
+    }
+
     public function search(Request $request){
 
         $statuses = Status::all();
@@ -804,7 +817,9 @@ class LoanApplicationsController extends Controller
 
         }
 
-        return view('dashboard.loan.show')->with(compact('loan', 'approvals', 'logged_in_user', 'next_users'));
+        $statuses = Status::all();
+
+        return view('dashboard.loan.show')->with(compact( 'statuses','loan', 'approvals', 'logged_in_user', 'next_users'));
     }
 
     /**

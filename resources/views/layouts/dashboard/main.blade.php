@@ -121,9 +121,6 @@
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js')}}/1.5.12/clipboard.min.js')}}"></script>
-
-
 <!-- Theme JS -->
 <script src="{{asset('theme/borrow/assets/js/theme.min.js')}}"></script>
 
