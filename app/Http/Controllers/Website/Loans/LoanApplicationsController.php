@@ -44,7 +44,7 @@ class LoanApplicationsController extends Controller
 
                 $istallments = LoanSchedule::where('amount', $item->getMonthlyInstallmentsAttribute2()  )->get() ;
 
-                if(   $istallments->count() == $item->repayment_period   ($item->id ==27)
+                if(   $istallments->count() == $item->repayment_period
                 ){
                     foreach($istallments as $istallmentpl ){
                         $istallmentpl->loan_applications_id = $item->id ;
