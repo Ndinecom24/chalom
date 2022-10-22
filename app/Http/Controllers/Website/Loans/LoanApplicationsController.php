@@ -48,11 +48,11 @@ class LoanApplicationsController extends Controller
 //                    ($item->id ==27)
 //                ){
                     foreach($istallments as $istallmentpl ){
-                        $istallmentpl->loan_applications_id = $item->id ;
-                        $istallmentpl->modal_uuid = $item->uuid ;
-                        $istallmentpl->customer_id = $item->customer_id ;
-                        $istallmentpl->status = $item->statuses_id ;
-                        $istallmentpl->save();
+//                        $istallmentpl->loan_applications_id = $item->id ;
+//                        $istallmentpl->modal_uuid = $item->uuid ;
+//                        $istallmentpl->customer_id = $item->customer_id ;
+//                        $istallmentpl->status = $item->statuses_id ;
+                     //   $istallmentpl->save();
                  //   }
 
                  //   dd( $item->id );
@@ -75,6 +75,11 @@ class LoanApplicationsController extends Controller
         $loan->statuses_id =  $request->change_state ;
         foreach( $loan->schedules as $schedule){
             $schedule->status =  $request->change_state ;
+            if(  $request->change_state == config('constants.status.loan_paid') ){
+                $schedule->status =  $request->change_state ;
+                $schedule->paid =   $schedule->amount ;
+                $schedule->balance =  0;
+            }
             $schedule->save();
         }
         $loan->save();
