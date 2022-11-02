@@ -40,48 +40,73 @@ class LoanApplicationsController extends Controller
 
             $list = LoanApplications::with('loan', 'schedules')->hydrate($list2);
 
-            foreach ($list as $item){
-
-                $istallments = LoanSchedule::where('amount', $item->getMonthlyInstallmentsAttribute2()  )->get() ;
-
-                if(   $istallments->count() == $item->repayment_period
-                ){
-                    foreach($istallments as $istallmentpl ){
-                        $istallmentpl->loan_applications_id = $item->id ;
-                        $istallmentpl->modal_uuid = $item->uuid ;
-                        $istallmentpl->customer_id = $item->customer_id ;
-                        $istallmentpl->status = $item->statuses_id ;
-                        $istallmentpl->save();
-                    }
-
-                 //   dd( $item->id );
-                }
-
-              //  dd(3);
 
 
-            }
-
-         //   dd($list2) ;
+//            foreach ($list as $item){
 //
-//        $list->load('loan', 'schedules');
+//
+//
+//                $istallments = LoanSchedule::where('amount', $item->getMonthlyInstallmentsAttribute2()  )->get() ;
+//                $time = strtotime($item->date_submitted );
+//                foreach($istallments as $i=>$istallmentpl ){
+//                    $i =  $i + 1 ;
+//                    $final_date = date("Y-m-d", strtotime($i . "  month", $time));
+//
+//                    if(   $final_date == $istallmentpl->date ){
+//                        $istallmentpl->loan_applications_id = $item->id ;
+//                        $istallmentpl->modal_uuid = $item->uuid ;
+//                        $istallmentpl->customer_id = $item->customer_id ;
+//                        $istallmentpl->status = $item->statuses_id ;
+//                        $istallmentpl->save();
+//                    }
+//                }
+//            }
+
 
         return view('dashboard.loan.list')->with(compact('list', 'statuses'));
     }
 
     public function stateChange(LoanApplications $loan, Request $request){
 
-        $loan->statuses_id =  $request->change_state ;
-        foreach( $loan->schedules as $schedule){
-            $schedule->status =  $request->change_state ;
-            if(  $request->change_state == config('constants.status.loan_paid') ){
-                $schedule->status =  $request->change_state ;
-                $schedule->paid =   $schedule->amount ;
-                $schedule->balance =  0;
-            }
-            $schedule->save();
+
+        // find the schedules
+        $date1 = $loan->date_submitted ;
+        for ($i = 1; $i <= $loan->repayment_period; $i++) {
+            $installment_number = 'Installment ' . $i;
+            $date  =     date("Y-m-d", strtotime($i . " month",  strtotime($date1) )) ;
+
+            $istallments = LoanSchedule::where('amount', $loan->getMonthlyInstallmentsAttribute2())
+                ->where('installment', $installment_number)
+                ->whereDate('date', $date )
+                ->get();
+
+            foreach ($istallments as  $istallmentpl) {
+            $istallmentpl->loan_applications_id = $loan->id;
+            $istallmentpl->modal_uuid = $loan->uuid;
+            $istallmentpl->customer_id = $loan->customer_id;
+            $istallmentpl->status = $loan->statuses_id;
+                    $istallmentpl->save();
+                }
+
         }
-        $loan->save();
+
+
+        //update status if changed
+
+        if(  isset($request->change_state)){
+            $loan->statuses_id =  $request->change_state ;
+            foreach( $loan->schedules as $schedule){
+                $schedule->status =  $request->change_state ;
+                if(  $request->change_state == config('constants.status.loan_paid') ){
+                    $schedule->status =  $request->change_state ;
+                    $schedule->paid =   $schedule->amount ;
+                    $schedule->balance =  0;
+                }
+                $schedule->save();
+            }
+            $loan->save();
+        }
+
 
         return redirect()->back()->with('message', 'state changed');
 

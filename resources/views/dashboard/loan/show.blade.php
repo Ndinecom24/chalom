@@ -1191,7 +1191,8 @@
                                                     <div class="row">
                                                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                             <div class="form-group">
-                                                                <select name="change_state"  >
+                                                                <select name="change_state" class="form-control" >
+                                                                    <option value = "" >--Select--</option>
                                                                     @foreach($statuses as $state)
                                                                         <option value="{{$state->id}}">{{$state->name}}</option>
                                                                     @endforeach
@@ -1212,7 +1213,7 @@
 
                                     </div>
                                 </div>
-                                @endif
+                                @endif+
 
                             </div>
                         </div>

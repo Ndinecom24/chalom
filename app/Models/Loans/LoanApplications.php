@@ -13,11 +13,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
+
 class LoanApplications extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $appends = ['monthly_installments'];
+    protected $appends = [
+        'monthly_installments'
+    ];
 
     protected $table = 'loan_applications';
     protected $primaryKey = 'id';
@@ -37,7 +40,6 @@ class LoanApplications extends Model
         'statuses_id',
         'date_submitted',
         'customer_id',
-
         'created_at',
         'created_by',
         'updated_by',
