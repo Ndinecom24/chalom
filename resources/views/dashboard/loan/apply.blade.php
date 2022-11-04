@@ -559,6 +559,15 @@
                                                                             for="guarantor_check">Guarantor</label>
                                                                     </div>
                                                                 </div>
+                                                                <div class="col-12">
+                                                                    <div class="form-group mt-1">
+                                                                        <input type="checkbox" class="custom-checkbox"
+                                                                               id="crb_check"
+                                                                               name="crb_check">
+                                                                        <label
+                                                                            for="crb_check">I Authorize Chalom Investments to check my CRB statement</label>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
