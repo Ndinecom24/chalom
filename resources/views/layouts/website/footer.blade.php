@@ -17,7 +17,7 @@
             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
                 <div class="text-white-50 mb-3">
                     <!-- widget text -->
-                    <p>Our goal at Borrow Loan Company is to provide access to personal loans and education loan, car loan, home loan at insight competitive interest rates. We are the loan provider, you can use our loan product.</p>
+                    <p>Our goal at Chalom Investments is to provide access to personal loans and education loan, car loan, home loan at insight competitive interest rates. We are the loan provider, you can use our loan product.</p>
                     <div class="row mt-6">
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="d-flex"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-geo-alt text-white mt-1" viewBox="0 0 16 16">
