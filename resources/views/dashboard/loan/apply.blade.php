@@ -534,7 +534,7 @@
                                                                 <div class="col-12">
                                                                     <div class="form-group mt-1">
                                                                         <input type="checkbox" class="custom-checkbox"
-                                                                               id="account_statement_check"
+                                                                               id="account_statement_check" required
                                                                                name="account_statement_check">
                                                                         <label
                                                                             for="account_statement_check"> i have a Latest
@@ -544,7 +544,7 @@
                                                                 <div class="col-12">
                                                                     <div class="form-group mt-1">
                                                                         <input type="checkbox" class="custom-checkbox"
-                                                                               id="payslip_check" name="payslip_check">
+                                                                               id="payslip_check" name="payslip_check" required>
                                                                         <label
                                                                             for="payslip_check">i have Latest 2 months
                                                                             payslips</label>
@@ -563,7 +563,7 @@
                                                                     <div class="form-group mt-1">
                                                                         <input type="checkbox" class="custom-checkbox"
                                                                                id="crb_check"
-                                                                               name="crb_check">
+                                                                               name="crb_check" required>
                                                                         <label
                                                                             for="crb_check">I Authorize Chalom Investments to check my CRB statement</label>
                                                                     </div>
