@@ -840,7 +840,7 @@
                                                     <div class="col-lg-4 col-sm-12">
                                                         <label for="approve"><span
                                                                 class="text-success ">Submit Payment</span></label>
-                                                        <button type="submit" name="approve"
+                                                        <button type="submit" name="approve" step="0.01"
                                                                 title="Click to approve that you have verified this loan"
                                                                 value="{{config('constants.action.loan_payment')}}"
                                                                 class="btn btn-outline-success"><i
