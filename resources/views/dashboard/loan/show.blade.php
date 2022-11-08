@@ -820,6 +820,8 @@
                                                         <div class="form-group">
                                                             <label for="eMail">Amount<span class="text-danger">*</span></label>
                                                             <input type="number" required
+                                                                   step='0.01'
+                                                                   value='0.00'
                                                                    title="Enter Amount being repaid"
                                                                    class="form-control" id="amount" name="amount"
                                                                    placeholder="Enter Amount Repaid">
@@ -840,7 +842,7 @@
                                                     <div class="col-lg-4 col-sm-12">
                                                         <label for="approve"><span
                                                                 class="text-success ">Submit Payment</span></label>
-                                                        <button type="number" name="approve" step="0.01"
+                                                        <button type="submit" name="approve"
                                                                 title="Click to approve that you have verified this loan"
                                                                 value="{{config('constants.action.loan_payment')}}"
                                                                 class="btn btn-outline-success"><i
