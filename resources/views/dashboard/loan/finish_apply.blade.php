@@ -333,7 +333,7 @@
                                                             <label for="gender">Gender <span class="text-danger">*</span></label>
                                                             <select id="inputGender" name="gender" required
                                                                     class="form-control">
-                                                                <option value="{{$user->gender ?? ""}}">{{$user->gender ?? "--Choose--"}}</option>
+                                                                <option value="{{$user->gender ?? '' }}">{{$user->gender ?? "--Choose--"}}</option>
                                                                 <option value="Male">Male</option>
                                                                 <option value="Female">Female</option>
 {{--                                                                <option value="Other">Other</option>--}}

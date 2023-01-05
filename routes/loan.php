@@ -6,6 +6,7 @@ use App\Http\Controllers\Dashboard\Loans\LoanFQAController;
 use App\Http\Controllers\Dashboard\Loans\LoanProductsController;
 use App\Http\Controllers\Website\Loans\LoanApplicationsController;
 use App\Http\Controllers\Website\Loans\LoanController;
+use App\Http\Livewire\Loans\Reports;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,8 +25,10 @@ use Illuminate\Support\Facades\Route;
 | LOANS
 */
 
+
 Route::group([
     'prefix' => 'chalom/loan',
+
 ], function () {
     Route::get('/list', [LoanController::class, 'index'])->name('loan.index');
     Route::get('/calculator', [LoanController::class, 'calculator'])->name('loan.calculator');
@@ -37,8 +40,6 @@ Route::group([
 /*
 | ADMIN
 */
-
-
 Route::group([
     'prefix' => 'loan/apply',
 ], function () {
@@ -51,7 +52,7 @@ Route::group([
     Route::post('/approve/{loan}', [LoanApplicationsController::class, 'approve'])->name('loan.approve');
     Route::get('/cancel/{loan_id}', [LoanApplicationsController::class, 'cancel'])->name('loan.cancel');
     Route::post('/state/change/{loan}', [LoanApplicationsController::class, 'stateChange'])->name('loan.state.change');
-
+    Route::get('/sync/schedules/{loan}', [LoanApplicationsController::class, 'syncSchedules'])->name('loan.sync.schedules');
 }
 );
 
@@ -71,10 +72,7 @@ Route::group([
         Route::get('/search', [LoanApplicationsController::class, 'search'])->name('loan.product.search');
         Route::post('/update/{loanProducts}', [LoanProductsController::class, 'update'])->name('loan.product.update');
         Route::post('/destroy/{loanProducts}', [LoanProductsController::class, 'destroy'])->name('loan.product.destroy');
-
         Route::get('/check', [LoanApplicationsController::class, 'index'])->name('loan.list')->middleware('auth');
-
-
 
         Route::group([
             'prefix' => 'feature',
@@ -108,6 +106,19 @@ Route::group([
             Route::post('/store', [LoanEligibilityController::class, 'store'])->name('loan.eligibility.store');
             Route::post('/update/{LoanEligibility}', [LoanEligibilityController::class, 'update'])->name('loan.eligibility.update');
             Route::post('/destroy/{LoanEligibility}', [LoanEligibilityController::class, 'destroy'])->name('loan.eligibility.destroy');
+        }
+        );
+
+        Route::group([
+            'prefix' => 'reports',
+        ], function () {
+//            Route::get('/', [LoanReportsController::class, 'index'])->name('loan.reports.index');
+            Route::get('/', Reports::class)->name('loan.reports.index');
+            Route::get('/installments', \App\Http\Livewire\Loans\Installments::class)->name('loan.installments.index');
+
+//            Route::get('/show/{LoanEligibility}', [LoanReportsController::class, 'show'])->name('loan.reports.show');
+//            Route::get('/create', [LoanReportsController::class, 'create'])->name('loan.reports.create');
+//            Route::post('/store', [LoanReportsController::class, 'store'])->name('loan.reports.store');
         }
         );
 

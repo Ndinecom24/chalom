@@ -45,83 +45,132 @@
                 @endif
             </div>
 
-            <!-- USERS ACCORDION-->
+            <div class="col-sm-2 mb-4">
+                <div class="card card-body text-center">
+                    <h2>{{$users->count() }}</h2> <h4>{{$user_types}}</h4>
+                </div>
+            </div>
+
+            @if($user_types == "Customers")
+                <div class="col-sm-4 mb-4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <span>{{$users->where('customer_type_id', config('constants.customer_type.new'))->count() }} New Customers</span>
+                        </div>
+                        <div class="col-sm-12">
+                            <span>{{$users->where('customer_type_id',  config('constants.customer_type.returning') )->count() }} Returning Customers</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 mb-4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <span>{{$users->where('gender', 'Male')->count() }} Males</span>
+                        </div>
+                        <div class="col-sm-12">
+                            <span>{{$users->where('gender',  'Female' )->count() }} Females</span>
+                        </div>
+                        <div class="col-sm-12">
+                            <span>{{$users->where('gender',  '' )->count() }} None</span>
+                        </div>
+                    </div>
+                </div>
+            @else
+                <div class="col-sm-4 mb-4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <span>{{$users->where('role_id', config('constants.role.developer.id'))->count() }} {{config('constants.role.developer.name')}}</span>
+                        </div>
+                        <div class="col-sm-12">
+                            <span>{{$users->where('role_id', config('constants.role.admin.id'))->count() }} {{config('constants.role.admin.name')}}</span>
+                        </div>
+                        <div class="col-sm-12">
+                            <span>{{$users->where('role_id',  config('constants.role.verifier.id') )->count() }} {{config('constants.role.verifier.name')}}</span>
+                        </div>
+                        <div class="col-sm-12">
+                            <span>{{$users->where('role_id',  config('constants.role.approver.id') )->count() }} {{config('constants.role.approver.name')}}</span>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
-                <div id="accordion">
-                    <div class="card">
-{{--                        <div class="card-header" id="headingOne">--}}
-{{--                            <h5 class="mb-0">--}}
-{{--                                <a class="btn btn-link" href="{{route('user.create')}}" >--}}
-{{--                                    {{$user_types}} --}}
-{{--                                </a>--}}
-{{--                            </h5>--}}
-{{--                        </div>--}}
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                             data-parent="#accordion">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <a class="btn btn-sm btn-outline-success mb-2"
-                                           @if($user_types == "Customers")
-                                           href="{{route('user.client.create')}}"
-                                               @else
-                                           href="{{route('user.admin.create')}}"
-                                               @endif
-                                        >
-                                            New {{$user_types}}
-                                        </a>
-                                    </div>
-                                </div>
+
+                <div class="card">
+                    {{--                        <div class="card-header" id="headingOne">--}}
+                    {{--                            <h5 class="mb-0">--}}
+                    {{--                                <a class="btn btn-link" href="{{route('user.create')}}" >--}}
+                    {{--                                    {{$user_types}} --}}
+                    {{--                                </a>--}}
+                    {{--                            </h5>--}}
+                    {{--                        </div>--}}
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                         data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row">
                                 <div class="col-12">
-                                    <table  class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <td>#</td>
-                                            <td>Name</td>
-                                            <td>Email</td>
-                                            <td>Phone</td>
-                                            <td>Gender</td>
-                                            <td>Type</td>
-                                            <td>Role</td>
-                                            <td>Status</td>
-                                            <td>Action</td>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($users as $user)
-                                            <tr>
-                                                <td> {{$user->id}} </td>
-                                                <td>{{$user->name }}  </td>
-                                                <td>{{$user->email }}  </td>
-                                                <td>{{$user->mobile_number ?? "" }}  </td>
-                                                <td>{{$user->gender ?? ""}}  </td>
-                                                <td>{{$user->customerType->name ?? $user->customer_types_id}}  </td>
-                                                <td>{{$user->role->name ?? $user->roles_id}}  </td>
-                                                <td>{{$user->status->name ?? ""}}  </td>
-                                                <td>
-                                                    <div class="row ">
-                                                        <div class="col-3">
-                                                            <a class="btn btn-sm btn-secondary" href="{{route('user.client.profile', $user)}}" >
-                                                                <i class="fa fa-edit "></i>
-                                                            </a>
-                                                        </div>
-{{--                                                        <div class="col-3 ">--}}
-{{--                                                            <button class="btn btn-sm btn-secondary text-left" data-toggle="modal" data-target="#modal-delete-user"--}}
-{{--                                                                    data-sent_data="{{$user}}" >--}}
-{{--                                                                <i class="fa fa-trash"></i>--}}
-{{--                                                            </button>--}}
-{{--                                                        </div>--}}
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
+                                    <a class="btn btn-sm btn-outline-success mb-2"
+                                       @if($user_types == "Customers")
+                                           href="{{route('user.client.create')}}"
+                                       @else
+                                           href="{{route('user.admin.create')}}"
+                                        @endif
+                                    >
+                                        New {{$user_types}}
+                                    </a>
                                 </div>
+                            </div>
+                            <div class="col-12">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <td>#</td>
+                                        <td>Name</td>
+                                        <td>Email</td>
+                                        <td>Phone</td>
+                                        <td>Gender</td>
+                                        <td>Type</td>
+                                        <td>Role</td>
+                                        <td>Status</td>
+                                        <td>Action</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($users as $user)
+                                        <tr>
+                                            <td> {{$user->id}} </td>
+                                            <td>{{$user->name }}  </td>
+                                            <td>{{$user->email }}  </td>
+                                            <td>{{$user->mobile_number ?? "" }}  </td>
+                                            <td>{{$user->gender ?? ""}}  </td>
+                                            <td>{{$user->customerType->name ?? $user->customer_types_id}}  </td>
+                                            <td>{{$user->role->name ?? $user->roles_id}}  </td>
+                                            <td>{{$user->status->name ?? ""}}  </td>
+                                            <td>
+                                                <div class="row ">
+                                                    <div class="col-3">
+                                                        <a class="btn btn-sm btn-secondary"
+                                                           href="{{route('user.client.profile', $user)}}">
+                                                            <i class="fa fa-edit "></i>
+                                                        </a>
+                                                    </div>
+                                                    {{--                                                        <div class="col-3 ">--}}
+                                                    {{--                                                            <button class="btn btn-sm btn-secondary text-left" data-toggle="modal" data-target="#modal-delete-user"--}}
+                                                    {{--                                                                    data-sent_data="{{$user}}" >--}}
+                                                    {{--                                                                <i class="fa fa-trash"></i>--}}
+                                                    {{--                                                            </button>--}}
+                                                    {{--                                                        </div>--}}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
@@ -228,7 +277,7 @@
                                 <div class="form-group">
                                     <label for="inputImage"> Profile Image</label>
                                     <input type="file" class="form-control" id="inputImage" name="image_id"
-                                           placeholder="Enter Image" >
+                                           placeholder="Enter Image">
                                 </div>
                             </div>
                         </div>
@@ -267,7 +316,7 @@
                                     <input type="text" class="form-control" id="delete-user-name" name="name"
                                            placeholder="Enter Name" readonly required>
                                 </div>
-                                <input hidden  type="text" class="form-control" id="delete-user-id" name="id"
+                                <input hidden type="text" class="form-control" id="delete-user-id" name="id"
                                        required>
                             </div>
 
@@ -284,9 +333,6 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.DELETE USER MODAL -->
-
-
-
 
 @endsection
 

@@ -17,25 +17,30 @@ class CreateDashboardTotalsViewTable extends Migration
         DB::statement("
         CREATE OR REPLACE VIEW dashboard_totals_view AS
         (
-            SELECT
+           SELECT
 
-            count(id) as users,
-            (SELECT count(id) as total FROM `users` WHERE customer_type_id = '2'  ) as employees ,
-            (SELECT count(id) as total FROM `users` WHERE customer_type_id = '1'  ) as customers ,
+            count(id)  as users ,
+            (SELECT count(id) as total FROM `users` WHERE customer_type_id = '4' AND deleted_at is null) as employees ,
+            (SELECT count(id) as total FROM `users` WHERE customer_type_id = '2' AND deleted_at is null) as return_customers ,
+            (SELECT count(id) as total FROM `users` WHERE customer_type_id = '1' AND deleted_at is null ) as new_customers ,
+
             (SELECT count(id) as total FROM `loan_applications` WHERE statuses_id = '9'  ) as paid_loans ,
             (SELECT sum(loan_amount) as total FROM `loan_applications` WHERE statuses_id = '9'  ) as paid_loans_amount ,
             (SELECT sum(loan_amount_due) as total FROM `loan_applications` WHERE statuses_id = '9'  ) as paid_loans_amount_due ,
 
+            (SELECT count(id) as total FROM `loan_applications` WHERE statuses_id  IN ('2' ,'8', '11')  ) as rejected_loans ,
+            (SELECT sum(loan_amount) as total FROM `loan_applications` WHERE statuses_id  IN  ('2' ,'8', '11')  ) as rejected_loans_amount ,
+            (SELECT sum(loan_amount_due) as total FROM `loan_applications` WHERE statuses_id   IN  ('2' ,'8', '11')  ) as rejected_loans_amount_due ,
 
-            (SELECT count(id) as total FROM `loan_applications` WHERE statuses_id = '6' or  statuses_id = '7' ) as pending_loans ,
-            (SELECT sum(loan_amount) as total FROM `loan_applications` WHERE statuses_id = '6' or  statuses_id = '7' ) as pending_loans_amount ,
-            (SELECT sum(loan_amount_due) as total FROM `loan_applications` WHERE statuses_id = '6' or  statuses_id = '7' ) as pending_loans_amount_due ,
+            (SELECT count(id) as total FROM `loan_applications` WHERE statuses_id  IN ('5' ,'6', '7')  ) as pending_loans ,
+            (SELECT sum(loan_amount) as total FROM `loan_applications` WHERE statuses_id  IN ('5' ,'6', '7')  ) as pending_loans_amount ,
+            (SELECT sum(loan_amount_due) as total FROM `loan_applications` WHERE statuses_id   IN ('5' ,'6', '7')  ) as pending_loans_amount_due ,
 
-            (SELECT count(id) as total FROM `loan_applications` WHERE statuses_id = '10' or  statuses_id = '14' or  statuses_id = '15'   ) as active_loans,
-            (SELECT sum(loan_amount) as total FROM `loan_applications` WHERE statuses_id = '10' or  statuses_id = '14' or  statuses_id = '15'  ) as active_loans_amount,
-            (SELECT sum(loan_amount_due) as total FROM `loan_applications` WHERE statuses_id = '10' or  statuses_id = '14'  or  statuses_id = '15'  ) as active_loans_amount_due
+            (SELECT count(id) as total FROM `loan_applications` WHERE statuses_id IN ('10' ,'14', '15')  ) as active_loans,
+            (SELECT sum(loan_amount) as total FROM `loan_applications` WHERE statuses_id  IN ('10' ,'14', '15')  ) as active_loans_amount,
+            (SELECT sum(loan_amount_due) as total FROM `loan_applications` WHERE statuses_id  IN ('10' ,'14', '15')  ) as active_loans_amount_due
 
-            FROM `users` WHERE role_id = '1'
+            FROM `users` WHERE deleted_at is null
 
         )
         ");

@@ -79,26 +79,26 @@
                     <div class="card card-statistics">
                         <div class="card-body">
                             <div class="clearfix">
-                                <div class="float-left">
-                                    <h4 class="text-danger">
-                                        <i class="fa fa-users highlight-icon" aria-hidden="true"></i>
-                                    </h4>
+                                <div class="text-center">
+                                    <p class="card-text text-bold text-decoration-underline">
+                                        Users</p>
                                 </div>
                                 <div class="float-right">
-                                    <p class="card-text text-dark">Users</p>
-                                    <h4 class="bold-text text-muted">
+
+                                    <h4 class="bold-text">
                                         Total: {{$total->users}}
                                     </h4>
                                     <h4 class="bold-text text-muted">
                                         Employees: {{$total->employees}}
                                     </h4>
-                                    <h4 class="bold-text text-muted">
-                                        Customers: {{ number_format($total->customers, 0)}}
+                                    <h4 class="bold-text text-muted" title=" New - {{ number_format($total->new_customers, 0)}} | Return - {{ number_format($total->return_customers, 0)}} ">
+                                        Customers:  {{ number_format( ($total->new_customers ?? 0) + ($total->return_customers ?? 0), 0)}}
                                     </h4>
-                                </div>
+
                                 <p class="text-muted">
-                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> With Active Loans :  {{sizeof($loans->where('statuses_id' , config('constants.status.loan_funds_disbursed') )->Orwhere('statuses_id',  config('constants.status.loan_overdue') )->get() )}}
+                                     With Active Loans :  {{sizeof($loans->where('statuses_id' , config('constants.status.loan_funds_disbursed') )->Orwhere('statuses_id',  config('constants.status.loan_overdue') )->get() )}}
                                 </p>
+                                </div>
                             </div>
 
                         </div>
@@ -108,13 +108,11 @@
                     <div class="card card-statistics">
                         <div class="card-body">
                             <div class="clearfix">
-                                <div class="float-left">
-                                    <h4 class="text-primary">
-                                        <i class="fa fa-bell highlight-icon" aria-hidden="true"></i>
-                                    </h4>
+                                <div class="text-center">
+                                    <p class="card-text text-bold text-decoration-underline">
+                                        Pending Loans</p>
                                 </div>
                                 <div class="float-right">
-                                    <p class="card-text text-dark">Pending Loan Applications</p>
                                     <h4 class="bold-text">
                                         Principle: {{ number_format($total->pending_loans_amount, 2)}}
                                     </h4>
@@ -127,7 +125,7 @@
                                 </div>
                             </div>
                             <p class="text-muted">
-                                <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Count : {{$total->pending_loans}}
+                                 Count : {{$total->pending_loans}}
                             </p>
                         </div>
                     </div>
@@ -136,13 +134,10 @@
                     <div class="card card-statistics">
                         <div class="card-body">
                             <div class="clearfix">
-                                <div class="float-left">
-                                    <h4 class="text-warning">
-                                        <i class="fa fa-stack highlight-icon" aria-hidden="true"></i>
-                                    </h4>
+                                <div class="text-center">
+                                    <p class="card-text text-bold text-decoration-underline">Active Loans</p>
                                 </div>
                                 <div class="float-right">
-                                    <p class="card-text text-dark">Active Loans</p>
                                     <h4 class="bold-text">
                                         Principle: {{ number_format($total->active_loans_amount, 2)}}
                                     </h4>
@@ -154,7 +149,7 @@
                                     </h4>
                                 </div>
                                 <p class="text-muted">
-                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Count : {{$total->active_loans}}
+                                     Count : {{$total->active_loans}}
                                 </p>
                             </div>
                         </div>
@@ -164,13 +159,11 @@
                     <div class="card card-statistics">
                         <div class="card-body">
                             <div class="clearfix">
-                                <div class="float-left">
-                                    <h4 class="text-success">
-                                        <i class="fa fa-bank highlight-icon" aria-hidden="true"></i>
-                                    </h4>
+                                <div class="text-center">
+                                    <p class="card-text text-bold text-decoration-underline">
+                                        Closed Loans</p>
                                 </div>
                                 <div class="float-right">
-                                    <p class="card-text text-dark">Total Paid Money</p>
                                     <h4 class="bold-text">
                                         Principle: {{ number_format($total->paid_loans_amount,2)}}
                                     </h4>
@@ -182,7 +175,7 @@
                                     </h4>
                                 </div>
                                 <p class="text-muted">
-                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i>Count : {{ number_format($total->paid_loans,0)}}
+                                    Count : {{ number_format($total->paid_loans,0)}}
                                 </p>
                             </div>
 
@@ -214,7 +207,7 @@
                                 </div>
                             </div>
                             <p class="text-muted">
-                                <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Status : Updated
+                                 Status : Updated
                             </p>
                         </div>
                     </div>
@@ -242,9 +235,9 @@
                             </div>
                             <p class="text-muted">
                                 @if($total != null)
-                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Last Payment : {{$total->schedules->where('status',  config('constants.status.loan_paid'))->last()->paid_date ?? "none"}}
+                                     Last Payment : {{$total->schedules->where('status',  config('constants.status.loan_paid'))->last()->paid_date ?? "none"}}
                                 @else
-                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Last Payment : None
+                                     Last Payment : None
                                 @endif
                             </p>
                         </div>
@@ -272,9 +265,9 @@
                             </div>
                             <p class="text-muted">
                                 @if($total != null)
-                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Remaining Installments : {{sizeof($total->schedules->where('status', '!=' ,config('constants.status.loan_paid')) ?? 0 )}}
+                                     Remaining Installments : {{sizeof($total->schedules->where('status', '!=' ,config('constants.status.loan_paid')) ?? 0 )}}
                                 @else
-                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Remaining Installments : 0.00
+                                     Remaining Installments : 0.00
                                 @endif
                             </p>
                         </div>
@@ -302,9 +295,9 @@
                             </div>
                             <p class="text-muted">
                                 @if($total != null)
-                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Next Payment : {{ $total->schedules->where('status', '!=' ,config('constants.status.loan_paid'))->first()->date ?? "none" }}
+                                     Next Payment : {{ $total->schedules->where('status', '!=' ,config('constants.status.loan_paid'))->first()->date ?? "none" }}
                                 @else
-                                    <i class="fa fa-repeat mr-0" aria-hidden="true"></i> Next Payment : None
+                                     Next Payment : None
                                 @endif
                             </p>
                         </div>

@@ -13,6 +13,7 @@ class LoanSchedule extends Model
 
     protected $table = 'loan_schedules';
     protected $primaryKey = 'id';
+
     protected $fillable = [
         'loan_applications_id',
         'modal_uuid',
@@ -26,4 +27,10 @@ class LoanSchedule extends Model
         'date_paid',
         'deleted_at',
     ];
+
+
+    public function loan(){
+        return $this->belongsTo(LoanApplications::class, 'loan_applications_id' , 'id' );
+    }
+
 }

@@ -33,74 +33,138 @@ class LoanApplicationsController extends Controller
     public function index()
     {
         $statuses = Status::all();
-            $list2 = DB::select(
-                DB::raw("select * from loan_applications where id not in
+        $list2 = DB::select(
+            DB::raw("select * from loan_applications where id not in
                                       ( select DISTINCT loan_applications_id from loan_schedules)
-                                        and statuses_id != 4 ")  ) ;
-
-            $list = LoanApplications::with('loan', 'schedules')->hydrate($list2);
-
-
-
-//            foreach ($list as $item){
-//
-//
-//
-//                $istallments = LoanSchedule::where('amount', $item->getMonthlyInstallmentsAttribute2()  )->get() ;
-//                $time = strtotime($item->date_submitted );
-//                foreach($istallments as $i=>$istallmentpl ){
-//                    $i =  $i + 1 ;
-//                    $final_date = date("Y-m-d", strtotime($i . "  month", $time));
-//
-//                    if(   $final_date == $istallmentpl->date ){
-//                        $istallmentpl->loan_applications_id = $item->id ;
-//                        $istallmentpl->modal_uuid = $item->uuid ;
-//                        $istallmentpl->customer_id = $item->customer_id ;
-//                        $istallmentpl->status = $item->statuses_id ;
-//                        $istallmentpl->save();
-//                    }
-//                }
-//            }
-
+                                        and statuses_id != 4 "));
+        $list = LoanApplications::with('loan', 'schedules')->hydrate($list2);
 
         return view('dashboard.loan.list')->with(compact('list', 'statuses'));
     }
 
-    public function stateChange(LoanApplications $loan, Request $request){
+    public function syncSchedules(LoanApplications $loan, Request $request)
+    {
 
-
-        // find the schedules
-        $date1 = $loan->date_submitted ;
+                // find the schedules
+        $date1 = $loan->date_submitted;
         for ($i = 1; $i <= $loan->repayment_period; $i++) {
-            $installment_number = 'Installment ' . $i;
-            $date  =     date("Y-m-d", strtotime($i . " month",  strtotime($date1) )) ;
+            $installment_number = $i;
+            $date = date("Y-m-d", strtotime($i . " month", strtotime($date1)));
 
             $istallments = LoanSchedule::where('amount', $loan->getMonthlyInstallmentsAttribute2())
-                ->where('installment', $installment_number)
-                ->whereDate('date', $date )
+                ->where('installment', 'Installment '.$installment_number)
+                ->whereDate('date', $date)
                 ->get();
 
-            foreach ($istallments as  $istallmentpl) {
-            $istallmentpl->loan_applications_id = $loan->id;
-            $istallmentpl->modal_uuid = $loan->uuid;
-            $istallmentpl->customer_id = $loan->customer_id;
-            $istallmentpl->status = $loan->statuses_id;
+            foreach ($istallments as $istallmentpl) {
+                $loan_check = LoanApplications::with('schedules')->find($loan->id);
+
+                if( $loan_check->schedules->count() == $istallments->count()){
+                    //do nothing
+                }else{
+                    $istallmentpl->loan_applications_id = $loan->id;
+                    $istallmentpl->modal_uuid = $loan->uuid;
+                    $istallmentpl->customer_id = $loan->customer_id;
+                    $istallmentpl->status = $loan->statuses_id;
                     $istallmentpl->save();
                 }
+
+            }
 
         }
 
 
+        return redirect()->back()->with('message', 'Schedules changed');
+
+    }
+
+    public function save(Request $request, User $user)
+    {
+        //
+        $status = config('constants.status.loan_request_login');
+        $logged_in = Auth::user();
+        //
+        $uuid = Str::uuid()->toString();
+        $customer_type = $request->customer_type;
+
+        //get the loan
+        $loan = LoanProducts::find($request->loan_prod);
+
+        //loan applications
+        $model = LoanApplications::UpdateOrCreate(
+            [
+                "uuid" => $uuid,
+                "loan_amount" => $request->loan_amount,
+                "loan_product_id" => $request->loan_prod,
+                "repayment_period" => $request->repayment_period,
+                "monthly_income" => $request->monthly_income,
+                "other_income" => $request->other_income ?? 0,
+                "monthly_deduct" => $request->monthly_deduct ?? 0,
+                "statuses_id" => $status
+            ],
+            [
+                "uuid" => $uuid,
+                "loan_purpose" => $request->loan_purpose,
+                "loan_amount" => $request->loan_amount,
+                "loan_product_id" => $request->loan_prod,
+                "repayment_period" => $request->repayment_period,
+                "monthly_income" => $request->monthly_income ?? 0,
+                "other_income" => $request->other_income ?? 0,
+                "monthly_deduct" => $request->monthly_deduct ?? 0,
+                "loan_rate" => $loan->rate_per_month ?? 0,
+                "loan_amount_due" => $request->total_repayment,
+                "loan_arrangement_fee" => $loan->arrangement_fee ?? 0,
+                'collateral_description' => $loan->collateral ?? "none",
+                "customer_id" => $user->id ?? 0,
+                "created_by" => $logged_in->id ?? 0,
+                "statuses_id" => $status
+            ]
+        );
+
+        session(['my_loan_request' => $model->id]);
+
+        //return
+        $data['uuid'] = $uuid;
+        $data['customer_type'] = $customer_type;
+        return json_encode($data);
+    }
+
+    public function stateChange(LoanApplications $loan, Request $request)
+    {
+
+
+//        // find the schedules
+//        $date1 = $loan->date_submitted;
+//        for ($i = 1; $i <= $loan->repayment_period; $i++) {
+//            $installment_number = $i;
+//            $date = date("Y-m-d", strtotime($i . " month", strtotime($date1)));
+//
+//            $istallments = LoanSchedule::where('amount', $loan->getMonthlyInstallmentsAttribute2())
+//                ->where('installment', $installment_number)
+//                ->whereDate('date', $date)
+//                ->get();
+//
+//            foreach ($istallments as $istallmentpl) {
+//                $istallmentpl->loan_applications_id = $loan->id;
+//                $istallmentpl->modal_uuid = $loan->uuid;
+//                $istallmentpl->customer_id = $loan->customer_id;
+//                $istallmentpl->status = $loan->statuses_id;
+//                $istallmentpl->save();
+//            }
+//
+//        }
+
+
         //update status if changed
 
-        if(  isset($request->change_state)){
-            $loan->statuses_id =  $request->change_state ;
-            foreach( $loan->schedules as $schedule){
-                $schedule->status =  $request->change_state ;
-                if(  $request->change_state == config('constants.status.loan_paid') ){
-                    $schedule->status =  $request->change_state ;
-                    $schedule->paid =   $schedule->amount ;
-                    $schedule->balance =  0;
+        if (isset($request->change_state)) {
+            $loan->statuses_id = $request->change_state;
+            foreach ($loan->schedules as $schedule) {
+                $schedule->status = $request->change_state;
+                if ($request->change_state == config('constants.status.loan_paid')) {
+                    $schedule->status = $request->change_state;
+                    $schedule->paid = $schedule->amount;
+                    $schedule->balance = 0;
                 }
                 $schedule->save();
             }
@@ -112,7 +176,8 @@ class LoanApplicationsController extends Controller
 
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
 
         $statuses = Status::all();
         $state = $request->search_term ?? "";
@@ -130,7 +195,7 @@ class LoanApplicationsController extends Controller
                     //get the current year
                     $list = LoanApplications::whereMonth('created_at', date('m'))
                         ->whereYear('created_at', date('Y'))
-                    ->orderBy('created_at', 'desc')->take(10)->get();
+                        ->orderBy('created_at', 'desc')->take(10)->get();
 
                 } elseif (($request->date_from != null) && ($request->date_to == null)) {
                     $list = LoanApplications::where('created_at', '>=', $request->date_from)
@@ -147,9 +212,7 @@ class LoanApplicationsController extends Controller
                 }
 
 
-            }
-
-            else {
+            } else {
                 $users = User::where('name', 'like', '%' . $request->search_term . '%')
                     ->orWhere('nid', 'like', '%' . $request->search_term . '%')
                     ->orWhere('mobile_number', 'like', '%' . $request->search_term . '%')
@@ -206,8 +269,7 @@ class LoanApplicationsController extends Controller
                     //
                 }
 
-            }
-            else {
+            } else {
                 $users = User::where('name', 'like', '%' . $request->search_term . '%')->get();
 
 
@@ -246,19 +308,6 @@ class LoanApplicationsController extends Controller
 
         return view('dashboard.loan.index')->with(compact('list', 'date_to', 'date_from',
             'statuses', 'search_term', 'state'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        $user = Auth::user();
-        $works = WorkStatus::all();
-
-        return view('dashboard.loan.create')->with(compact('user', 'works'));
     }
 
     /**
@@ -354,24 +403,24 @@ class LoanApplicationsController extends Controller
 
         //save next of kin
         $kin = NextOfKin::UpdateOrCreate([
-            'name' => $request->kin_name,
-            'nid' => $request->kin_nid,
-            'relationship' => $request->kin_relationship,
-            'user_id' => $user->id,
-        ]
+                'name' => $request->kin_name,
+                'nid' => $request->kin_nid,
+                'relationship' => $request->kin_relationship,
+                'user_id' => $user->id,
+            ]
             ,
             [
-            'name' => $request->kin_name,
-            'phone' => $request->kin_phone,
-            'email' => $request->kin_email,
-            'address' => $request->kin_address,
-            'nid' => $request->kin_nid,
-            'relationship' => $request->kin_relationship,
-            'work_status' => $request->kin_work,
-            'work_place' => $request->kin_work_place,
-            'user_id' => $user->id,
-            'created_by' => $logged_in->id,
-        ]);
+                'name' => $request->kin_name,
+                'phone' => $request->kin_phone,
+                'email' => $request->kin_email,
+                'address' => $request->kin_address,
+                'nid' => $request->kin_nid,
+                'relationship' => $request->kin_relationship,
+                'work_status' => $request->kin_work,
+                'work_place' => $request->kin_work_place,
+                'user_id' => $user->id,
+                'created_by' => $logged_in->id,
+            ]);
 
 
         //user
@@ -402,7 +451,7 @@ class LoanApplicationsController extends Controller
                     'modal_uuid' => $loan->uuid,
                     'customer_id' => $loan->customer_id,
                     'status' => $status,
-                    'installment' => 'Installment ' . $i,
+                    'installment' => $i,
 //                    'date' => date("Y-m-d", strtotime($i . " month")),
                     'amount' => $schedule_amount,
                 ],
@@ -411,7 +460,7 @@ class LoanApplicationsController extends Controller
                     'modal_uuid' => $loan->uuid,
                     'customer_id' => $loan->customer_id,
                     'status' => $status,
-                    'installment' => 'Installment ' . $i,
+                    'installment' => $i,
                     'date' => date("Y-m-d", strtotime($i . " month")),
                     'amount' => $schedule_amount,
                 ]
@@ -455,57 +504,6 @@ class LoanApplicationsController extends Controller
 
     }
 
-    public function save(Request $request, User $user)
-    {
-        //
-        $status = config('constants.status.loan_request_login');
-        $logged_in = Auth::user();
-        //
-        $uuid = Str::uuid()->toString();
-        $customer_type = $request->customer_type;
-
-        //get the loan
-        $loan = LoanProducts::find($request->loan_prod);
-
-        //loan applications
-        $model = LoanApplications::UpdateOrCreate(
-            [
-                "uuid" => $uuid,
-                "loan_amount" => $request->loan_amount,
-                "loan_product_id" => $request->loan_prod,
-                "repayment_period" => $request->repayment_period,
-                "monthly_income" => $request->monthly_income,
-                "other_income" => $request->other_income ?? 0,
-                "monthly_deduct" => $request->monthly_deduct ?? 0,
-                "statuses_id" => $status
-            ],
-            [
-                "uuid" => $uuid,
-                "loan_purpose" => $request->loan_purpose,
-                "loan_amount" => $request->loan_amount,
-                "loan_product_id" => $request->loan_prod,
-                "repayment_period" => $request->repayment_period,
-                "monthly_income" => $request->monthly_income ?? 0,
-                "other_income" => $request->other_income ?? 0,
-                "monthly_deduct" => $request->monthly_deduct ?? 0,
-                "loan_rate" => $loan->rate_per_month ?? 0,
-                "loan_amount_due" => $request->total_repayment,
-                "loan_arrangement_fee" => $loan->arrangement_fee ?? 0,
-                'collateral_description' => $loan->collateral ?? "none",
-                "customer_id" => $user->id ?? 0,
-                "created_by" => $logged_in->id ?? 0,
-                "statuses_id" => $status
-            ]
-        );
-
-        session(['my_loan_request' => $model->id]);
-
-        //return
-        $data['uuid'] = $uuid;
-        $data['customer_type'] = $customer_type;
-        return json_encode($data);
-    }
-
     public function returningCustomer(Request $request)
     {
         $user = auth()->user();
@@ -528,6 +526,17 @@ class LoanApplicationsController extends Controller
         }
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
+     * @param \App\Models\LoanApplications $loanApplications
+     * @return Response
+     */
+    public function update(Request $request, LoanApplications $loanApplications)
+    {
+        //
+    }
 
     public function newCustomer(Request $request)
     {
@@ -601,8 +610,8 @@ class LoanApplicationsController extends Controller
         } //LOAN REPAYMENT PROCESS
         elseif (
 
-        ( $loan->statuses_id == config('constants.status.loan_funds_disbursed')  ||
-            ($loan->statuses_id == config('constants.status.loan_payment') ) )
+            ($loan->statuses_id == config('constants.status.loan_funds_disbursed') ||
+                ($loan->statuses_id == config('constants.status.loan_payment')))
             && (
                 ($logged_in->role_id == config('constants.role.verifier.id'))
                 || ($logged_in->role_id == config('constants.role.approver.id'))
@@ -682,8 +691,7 @@ class LoanApplicationsController extends Controller
                     }
                 }
 
-            }
-            else {
+            } else {
                 return Redirect::route('loan.product.search', $next_status)->with('error', 'Schedule Error - Sorry no changes were made to this loan, please contact system admin.');
             }
 
@@ -720,7 +728,7 @@ class LoanApplicationsController extends Controller
 
             //old notification
             $old_not = Notifications::where('model_id', $loan->id,)
-               // ->where('url', $url,)
+                // ->where('url', $url,)
                 ->update(
                     [
                         'status_id' => $seen,
@@ -761,6 +769,19 @@ class LoanApplicationsController extends Controller
         //return
         return Redirect::route('loan.product.search', $next_status)->with('message', $loan->customer->name . '\'s ' . $loan->loan_amount_due . 'ZMW Loan has been successfully ' . $action);
 
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        $user = Auth::user();
+        $works = WorkStatus::all();
+
+        return view('dashboard.loan.create')->with(compact('user', 'works'));
     }
 
     /**
@@ -848,7 +869,7 @@ class LoanApplicationsController extends Controller
 
         $statuses = Status::all();
 
-        return view('dashboard.loan.show')->with(compact( 'statuses','loan', 'approvals', 'logged_in_user', 'next_users'));
+        return view('dashboard.loan.show')->with(compact('statuses', 'loan', 'approvals', 'logged_in_user', 'next_users'));
     }
 
     /**
@@ -858,18 +879,6 @@ class LoanApplicationsController extends Controller
      * @return Response
      */
     public function edit(LoanApplications $loanApplications)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param \App\Models\LoanApplications $loanApplications
-     * @return Response
-     */
-    public function update(Request $request, LoanApplications $loanApplications)
     {
         //
     }

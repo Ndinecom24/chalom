@@ -76,6 +76,9 @@
 
     <link rel="stylesheet" href="{{asset('theme/borrow/assets/css/theme.min.css')}}">
 
+    @livewireStyles
+
+
     <title>Chaloam</title>
 
 </head>
@@ -92,7 +95,12 @@
     <!-- wrapper -->
     <div class="docs-wrapper">
         <div class="container-fluid pl-0">
-           @yield('content')
+
+            @if(isset(  $slot ))
+                {{ $slot }}
+            @else
+                @yield('content')
+            @endif
         </div>
     </div>
 </div>
@@ -100,7 +108,7 @@
 @include('layouts.dashboard.footer')
 <!-- scripts -->
 
-{{--<script  src="{{asset('theme/bootstrap/js/bootstrap.js')}}"></script>--}}
+@livewireScripts
 
 <!-- Libs JS -->
 <script src="{{asset('theme/borrow/assets/libs/jquery/dist/jquery.min.js')}}"></script>
@@ -113,8 +121,6 @@
 <script src="{{asset('theme/borrow/assets/libs/imagesloaded/imagesloaded.pkgd.min.js')}}"></script>
 <script src="{{asset('theme/borrow/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
 <script src="{{asset('theme/borrow/assets/libs/prismjs/prism.js')}}"></script>
-
-
 
 
 @stack('custom-scripts')

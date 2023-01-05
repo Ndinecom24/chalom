@@ -1002,37 +1002,38 @@
                                                         <table class="table table-striped table_wrapper">
                                                             <thead>
                                                             <tr>
-                                                                <td>Installment</td>
+                                                                <td>#</td>
                                                                 <td>Amount ZMK</td>
                                                                 <td>Due Date</td>
                                                                 <td>Paid</td>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                            @foreach($loan->schedules as $schedule)
+                                                            @foreach($loan->schedules as $key => $schedule)
                                                                 <tr>
-                                                                    <td>{{$schedule->installment}}</td>
+{{--                                                                    <td>{{$schedule->installment}}</td>--}}
+                                                                    <td>{{++$key}}</td>
                                                                     <td> {{ number_format(($schedule->amount - ($schedule->paid ?? 0)),2)}}</td>
                                                                     <td>{{$schedule->date}}</td>
                                                                     {{--                                                                    @if( $schedule->date  > date('Y-m-d') &&  ($schedule->paid ?? 0) != $schedule->amount )--}}
                                                                     @if( $schedule->date  < date('Y-m-d') )
                                                                         @if( ( $schedule->balance ?? -1 ) == 0)
                                                                             <td><span title="Paid after due date" class="text-success"><i
-                                                                                        class="bi bi-check2-circle"></i> {{$schedule->paid ?? 0}}</span>
+                                                                                        class="bi bi-check2-circle"></i> {{ number_format(($schedule->paid ?? 0),2)}}</span>
                                                                             </td>
                                                                         @else
                                                                             <td><span title="Payment is overdue. Please make payment" class="label"><i
-                                                                                        class="bi bi-info-circle-fill text-danger"></i> {{$schedule->paid ?? 0}}</span>
+                                                                                        class="bi bi-info-circle-fill text-danger"></i> {{ number_format(($schedule->paid ?? 0),2)}}</span>
                                                                             </td>
                                                                         @endif
                                                                     @else
                                                                         @if( ( $schedule->balance ?? -1 ) == 0)
                                                                             <td><span title="Paid in time" class="text-success"><i
-                                                                                        class="bi bi-check2-circle"></i> {{$schedule->paid ?? 0}}</span>
+                                                                                        class="bi bi-check2-circle"></i> {{ number_format(($schedule->paid ?? 0),2)}}</span>
                                                                             </td>
                                                                         @else
                                                                             <td><span title="Pending payment" class="text-info"><i
-                                                                                        class="bi bi-dash-circle"></i> {{$schedule->paid ?? 0}}</span>
+                                                                                        class="bi bi-dash-circle"></i> {{ number_format(($schedule->paid ?? 0),2)}}</span>
                                                                             </td>
                                                                         @endif
                                                                     @endif
@@ -1044,6 +1045,14 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @if(  \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
+                                                     )
+                                            <div class="card-footer">
+                                                 <span > <a class="btn btn-sm float-sm-end btn-outline-warning"
+                                                            href="{{ route('loan.sync.schedules', compact('loan' ))}}">
+                                                        <i class="fa fa-sync"></i> Sync</a></span>
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -1182,16 +1191,16 @@
                                     <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
                                         <div class="card-header">
                                             <h6 class="mb-2 text-primary">CHANGE STATUS
-                                                <button class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('payment_prof_div')">
-                                                    <i class="fa fa-arrow-down"></i></button>
+                                                <button class="btn btn-sm float-sm-end btn-outline-secondary ml-2 " onclick="displayOrOpenForms('finish_apply_form_state_change')">
+                                                    <i class="fa fa-arrow-down"></i> </button>
                                             </h6>
                                         </div>
-                                        <form id="finish_apply_form_state_change" method="POST" action="{{ route('loan.state.change', compact('loan' )) }}">
+                                        <form id="finish_apply_form_state_change" style="display: none" method="POST" action="{{ route('loan.state.change', compact('loan' )) }}">
                                           @csrf
                                             <div class="card-body  "  id="payment_prof_div_3">
                                                 <div class="row gutters">
                                                     <div class="row">
-                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                                             <div class="form-group">
                                                                 <select name="change_state" class="form-control" >
                                                                     <option value = "" >--Select--</option>
@@ -1215,7 +1224,7 @@
 
                                     </div>
                                 </div>
-                                @endif+
+                                @endif
 
                             </div>
                         </div>

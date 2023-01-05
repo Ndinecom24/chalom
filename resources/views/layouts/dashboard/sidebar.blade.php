@@ -54,12 +54,12 @@
                             <span class="menu-title">Apply for loan</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('loan.product.search')}}">
-                            <i class="text-danger text-primary-hover bi bi-file-check"></i>
-                            <span class="menu-title">Loan applications</span>
-                        </a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link" href="{{route('loan.product.search')}}">--}}
+{{--                            <i class="text-danger text-primary-hover bi bi-file-check"></i>--}}
+{{--                            <span class="menu-title">Loan applications</span>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
 
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('user.bank-details')}}">
@@ -67,18 +67,18 @@
                             <span class="menu-title">Bank Details</span>
                         </a>
                     </li>
-{{--                    <li class="nav-item">--}}
-{{--                        <a class="nav-link" href="payloan.php">--}}
-{{--                            <i class="text-danger text-primary-hover bi bi-wallet"></i>--}}
-{{--                            <span class="menu-title">Loan Payment</span>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--                    <li class="nav-item">--}}
-{{--                        <a class="nav-link" href="loanverify.php">--}}
-{{--                            <i class="text-danger text-primary-hover bi bi-binoculars"></i>--}}
-{{--                            <span class="menu-title">Loan Verification</span>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('loan.reports.index')}}">
+                            <i class="text-danger text-primary-hover bi bi-wallet"></i>
+                            <span class="menu-title">Loan applications</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('loan.installments.index')}}">
+                            <i class="text-danger text-primary-hover bi bi-binoculars"></i>
+                            <span class="menu-title">Loan Installments</span>
+                        </a>
+                    </li>
 
 {{--                    <!-- liability option -->--}}
 
