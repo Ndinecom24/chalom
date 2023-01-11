@@ -62,7 +62,7 @@ class HomeController extends Controller
                     if($total != null ) {
                         $total->load('schedules');
                     }
-                    $notifications = Notifications::where('customer_id', $user->id)->orderBy('created_at', 'DESC')->get();
+                    $notifications = Notifications::where('customer_id', $user->id)->orderBy('created_at', 'DESC')->paginate(15);
                     return view('dashboard.home')->with(compact('notifications', 'total'));
                 }else{
                    session()->flash('message', 'please create your bank or mobile money details');
@@ -78,7 +78,7 @@ class HomeController extends Controller
         ) {
             $loans = LoanApplications::orderBy('created_at');
             $total = DashboardTotals::first();
-            $notifications = Notifications::where('status_id', config('constants.status.unseen'))->orderBy('created_at', 'desc')->get();
+            $notifications = Notifications::where('status_id', config('constants.status.unseen'))->orderBy('created_at', 'desc')->paginate(15);
             return view('dashboard.home')->with(compact('notifications', 'total', 'loans'));
         } else {
             Auth::logout();

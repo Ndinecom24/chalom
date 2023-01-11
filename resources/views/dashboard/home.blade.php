@@ -331,71 +331,43 @@
         <hr>
 
         <h5 id="bell" class="card-title p-3 bg-info text-white rounded">Notifications
-            <span>{{$notifications->count('*')}}</span></h5> <br>
+            <span>{{$notifications->total()}}</span></h5> <br>
 
-
-        {{--        <div class="row">--}}
-        {{--            <div class="col-12">--}}
-        {{--                @foreach($notifications as $notification)--}}
-        {{--                    <div class="col-12 mb-4">--}}
-        {{--                        <div id="accordion">--}}
-        {{--                            <div class="card">--}}
-        {{--                                <div class="card-header" id="headingOne">--}}
-        {{--                                    <h5 class="mb-0">--}}
-        {{--                                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"--}}
-        {{--                                                aria-expanded="true" aria-controls="collapseOne">--}}
-        {{--                                            {{ $notification['name'] }} - {{ $notification['subject'] }}--}}
-        {{--                                        </button>--}}
-        {{--                                    </h5>--}}
-        {{--                                </div>--}}
-
-        {{--                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"--}}
-        {{--                                     data-parent="#accordion">--}}
-        {{--                                    <div class="card-body">--}}
-        {{--                                        <div class="list-group">--}}
-        {{--                                            <a class="list-group-item">Name: {{ $notification['message'] }}</a>--}}
-        {{--                                            <a class="list-group-item">NID: {{ $notification['comment'] }}</a>--}}
-        {{--                                            <a class="list-group-item">Phone: {{ $notification['type'] }}</a>--}}
-        {{--                                            <a class="list-group-item">Address: {{ $notification['url'] }}</a>--}}
-        {{--                                            <a class="list-group-item">Last pay--}}
-        {{--                                                date: {{ $notification['status_id'] }}</a>--}}
-        {{--                                        </div>--}}
-        {{--                                    </div>--}}
-        {{--                                </div>--}}
-        {{--                            </div>--}}
-
-
-        {{--                        </div>--}}
-        {{--                    </div>--}}
-        {{--                @endforeach--}}
-
-        {{--            </div>--}}
-        {{--        </div>--}}
-
-        <div class="row" >
-            <div class="col-12">
-                <div class="notifications mt-lg-8 ml-lg-4 bg-secondary-gradient" id="box">
-                    @foreach($notifications as $notification)
-                        <a href="{{$notification->url}} ">
-
-
-                            <div class="notifications-item">
-                                @if( ($notification->user->avatar ?? "" ) == "" )
-                                    <img class="img-circle" width="40px" src="{{asset('images/user.png')}}" alt="">
-                                @else
-                                    <img class="img-circle"  width="40px" src="{{$notification->user->avatar ?? ""}}" alt="{{asset('images/user.png')}}">
-                                @endif
-                                <div class="text">
-                                    <h4> {{$notification->name}}</h4>
-                                    <h6>{{$notification->user->name}} | {{$notification->subject}} </h6>
-                                    <p>{{$notification->message}}</p>
-                                    <p class="text-xs text-muted">{{ \Carbon\Carbon::parse($notification->created_at)->diffForhumans() }} </p>
+        <div class="row">
+            {{ $notifications->links() }}
+        </div>
+        <div class="row">
+            <div class="table">
+                <table id="table_one" class="table table-striped table-bordered"
+                       style="width:100%">
+                    <tbody>
+                    <div class="card card-body">
+                        @foreach($notifications as $notification)
+                            <a href="{{$notification->url}} ">
+                                <div class="notifications-item">
+                                    @if( ($notification->user->avatar ?? "" ) == "" )
+                                        <img class="img-circle" width="40px" src="{{asset('images/user.png')}}" alt="">
+                                    @else
+                                        <img class="img-circle"  width="40px" src="{{$notification->user->avatar ?? ""}}" alt="{{asset('images/user.png')}}">
+                                    @endif
+                                    <div class="text">
+                                        <h4> {{$notification->name}}</h4>
+                                        <h6>{{$notification->user->name}} | {{$notification->subject}} </h6>
+                                        <p>{{$notification->message}}</p>
+                                        <p class="text-xs text-muted">{{ \Carbon\Carbon::parse($notification->created_at)->diffForhumans() }} </p>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
+                            </a>
+                        @endforeach
+                    </div>
+
+                    </tbody>
+                </table>
+
             </div>
+        </div>
+
+
         </div>
 
 

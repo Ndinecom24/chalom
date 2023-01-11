@@ -52,16 +52,17 @@ class LoanApplicationsController extends Controller
             $date = date("Y-m-d", strtotime($i . " month", strtotime($date1)));
 
             $istallments = LoanSchedule::where('amount', $loan->getMonthlyInstallmentsAttribute2())
-                ->where('installment', 'Installment '.$installment_number)
-                ->whereDate('date', $date)
-                ->get();
+                ->where( 'installment' , 'Installment '.$installment_number)
+                ->whereDate( 'date' , $date )
+                ->get( );
 
             foreach ($istallments as $istallmentpl) {
                 $loan_check = LoanApplications::with('schedules')->find($loan->id);
 
-                if( $loan_check->schedules->count() == $istallments->count()){
+                if ( $loan_check->schedules->count() == $istallments->count()){
                     //do nothing
-                }else{
+                }
+                else {
                     $istallmentpl->loan_applications_id = $loan->id;
                     $istallmentpl->modal_uuid = $loan->uuid;
                     $istallmentpl->customer_id = $loan->customer_id;

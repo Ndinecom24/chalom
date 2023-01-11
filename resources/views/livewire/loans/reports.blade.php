@@ -181,6 +181,10 @@
                                         <tr>
                                             <td>#</td>
                                             <td>Customer</td>
+                                            <td>NRC</td>
+                                            <td>Phone</td>
+                                            <td>DOB</td>
+                                            <td>Work</td>
                                             <td>Type</td>
                                             <td>Loan</td>
                                             <td>Rate</td>
@@ -204,14 +208,20 @@
                                                         {{$loan->customer->name }}
                                                     @endif
                                                 </td>
-                                                <td>{{$loan->loan->name}} </td>
-                                                <td>{{number_format( $loan->loan_amount , 2) }}  </td>
-                                                <td>{{ $loan->loan_rate  }}%</td>
-                                                <td>{{number_format( $loan->loan_amount_due , 2) }}  </td>
-                                                <td>{{$loan->repayment_period }}  </td>
-                                                <td>{{$loan->schedules->sum('paid') }}  </td>
-                                                <td>{{number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }}  </td>
-                                                <td> <span class=" text-{{$loan->status->html ?? "info"}}">
+                                                <td>  {{ $loan->customer->nid }} </td>
+                                                <td>  {{ $loan->customer->mobile_number }} </td>
+                                                <td>  {{ $loan->customer->dob }} </td>
+                                                <td>  {{ $loan->customer->work->name ?? "" }} </td>
+                                                <td>  {{ $loan->loan->name }} </td>
+
+                                                <td>  {{ number_format( $loan->loan_amount , 2) }}  </td>
+                                                <td>  {{ $loan->loan_rate  }}%</td>
+                                                <td>  {{ number_format( $loan->loan_amount_due , 2) }}  </td>
+                                                <td>  {{ $loan->repayment_period }}  </td>
+                                                <td>  {{ $loan->schedules->sum('paid') }}  </td>
+                                                <td>  {{ number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }}  </td>
+                                                <td>
+                                                    <span class=" text-{{$loan->status->html ?? "info"}}">
                                                             {{$loan->status->name ?? $loan->statuses_id }}
                                                         </span>
                                                 </td>
@@ -235,6 +245,10 @@
                                         @if(sizeof($loans) > 0)
                                             <tr class="tfoot text-bold text-uppercase">
                                                 <td> TOTALS</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td>{{ number_format(  $loans->sum('loan_amount') , 2)}}</td>
