@@ -43,7 +43,7 @@ Route::group([
 Auth::routes();
 
 Route::group([
-    'middleware' => 'auth'
+    'middleware' => ['auth', 'active.user']
 ], function () {
     Route::get('/home', [HomeController::class, 'home'])->name('home');
 }
@@ -56,7 +56,7 @@ Route::group([
 
 Route::group([
     'prefix' => 'users',
-    'middleware' => 'auth'
+    'middleware' => ['auth', 'active.user']
 ], function () {
     Route::get('profile/{user}', [UserController::class, 'profile'])->name('user.profile');
     Route::post('destroy/{user}', [UserController::class, 'destroy'])->name('user.destroy');
@@ -107,10 +107,9 @@ Route::group([
 
 Route::group([
     'prefix' => 'settings',
-    'middleware' => 'auth'
+    'middleware' => ['auth', 'active.user']
 ],
     function () {
-
 
         Route::get('/', [HomeController::class, 'settings'])->name('settings');
 

@@ -59,6 +59,14 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected static function booted()
+    {
+        $active = config('constants.status.deactivated');
+//        static::addGlobalScope('active_user', function (Builder $builder) use ($active) {
+//            $builder->where('status_id','!=', $active);
+//        });
+    }
+
     /**
      * The attributes that should be cast to native types.
      *

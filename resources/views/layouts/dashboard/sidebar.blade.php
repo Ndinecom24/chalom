@@ -80,22 +80,15 @@
                         </a>
                     </li>
 
-{{--                    <!-- liability option -->--}}
 
-{{--                    <li class="nav-header text-dark fw-bold">Liability</li>--}}
-{{--                    <li class="nav-item">--}}
+                @endif
 
-{{--                        <a class="nav-link" href="recordsellinfo.php">--}}
-{{--                            <i class="text-danger text-primary-hover bi bi-gear"></i>--}}
-{{--                            <span class="menu-title">Record property sell</span>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--                    <li class="nav-item">--}}
-{{--                        <a class="nav-link" href="showsellinfo.php">--}}
-{{--                            <i class="text-danger text-primary-hover bi bi-archive"></i>--}}
-{{--                            <span class="menu-title">View Property info</span>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
+                @if(\Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
+                || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.admin.id')
+//                 || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.verifier.id')
+//            || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.approver.id')
+                )
+
 
                     <li class="nav-header text-dark fw-bold">Maintenance</li>
                     <li class="nav-item">

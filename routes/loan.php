@@ -48,7 +48,8 @@ Route::group([
     Route::post('/finish/{loan}/{user}', [LoanApplicationsController::class, 'finish'])->name('loan.finish');
     Route::post('/returning', [LoanApplicationsController::class, 'returningCustomer'])->name('loan.returning.customer');
     Route::post('/new', [LoanApplicationsController::class, 'newCustomer'])->name('loan.new.customer');
-    Route::get('/show/{loan}', [LoanApplicationsController::class, 'show'])->name('loan.show')->middleware('auth');
+//    Route::get('/show/{loan}', [LoanApplicationsController::class, 'show'])->name('loan.show')->middleware('auth');
+    Route::get('/show/{loan}', [LoanApplicationsController::class, 'show'])->name('loan.show');
     Route::post('/approve/{loan}', [LoanApplicationsController::class, 'approve'])->name('loan.approve');
     Route::get('/cancel/{loan_id}', [LoanApplicationsController::class, 'cancel'])->name('loan.cancel');
     Route::post('/state/change/{loan}', [LoanApplicationsController::class, 'stateChange'])->name('loan.state.change');
@@ -59,7 +60,7 @@ Route::group([
 
 Route::group([
     'prefix' => 'chalom/admin',
-    'middleware' => 'auth'
+    'middleware' => ['auth', 'active.user']
 ], function () {
 
     Route::group([

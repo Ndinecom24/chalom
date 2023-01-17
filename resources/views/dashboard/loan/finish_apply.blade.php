@@ -407,7 +407,7 @@
                                                     <div class="form-group">
                                                         <label for="role_id">Work Status<span class="text-danger">*</span></label>
                                                         <select class="form-control" required name="work_status_id">
-{{--                                                            <option  value="{{$user->work->id ?? "" }}">{{$user->work->name ?? "--Choose--" }}</option>--}}
+                                                            {{--                                                            <option  value="{{$user->work->id ?? "" }}">{{$user->work->name ?? "--Choose--" }}</option>--}}
                                                             @foreach($works as $work)
                                                                 <option
                                                                     value="{{$work->id ?? "" }}">{{$work->name ?? "" }}</option>
@@ -427,6 +427,39 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="row gutters">
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="role_id">Employer Name<span class="text-danger">*</span></label>
+                                                        <select class="form-control" required name="work_status_id">
+                                                            {{--                                                            <option  value="{{$user->work->id ?? "" }}">{{$user->work->name ?? "--Choose--" }}</option>--}}
+                                                            @foreach($works as $work)
+                                                                <option
+                                                                    value="{{$work->id ?? "" }}">{{$work->name ?? "" }}</option>
+                                                            @endforeach
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="role_id">Employer Address<span class="text-danger">*</span></label>
+                                                        <select class="form-control" required name="work_status_id">
+                                                            {{--                                                            <option  value="{{$user->work->id ?? "" }}">{{$user->work->name ?? "--Choose--" }}</option>--}}
+                                                            @foreach($works as $work)
+                                                                <option
+                                                                    value="{{$work->id ?? "" }}">{{$work->name ?? "" }}</option>
+                                                            @endforeach
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
 
                                 <div class="card-header">

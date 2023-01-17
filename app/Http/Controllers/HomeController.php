@@ -42,49 +42,52 @@ class HomeController extends Controller
     {
         //check user types
         $user = auth()->user();
-        if ($user->role_id == config('constants.role.client.id')) {
-            $loans = LoanApplications::orderBy('created_at');
-            //check if there is a loan request
-            $loans_req = $loans->where('statuses_id', config('constants.status.loan_request_login'))->get() ;
-            if ( (sizeof($loans_req) )  > 0 ) {
-                $works = WorkStatus::all();
-                $statuses = Status::all();
-                $loan = $loans_req->first();
-                return view('dashboard.loan.finish_apply')->with(compact('user', 'loan', 'works', 'statuses' ));
-            } else
-            {
-                //check if you do not have bank details
-                $user->load('bankDetails');
-                $bank_details = $user->bankDetails ?? [] ;
-                if ( (sizeof($bank_details ) )  > 0 ) {
-                    $loan_current = $loans->where('statuses_id', '!=' ,  config('constants.status.loan_rejected') );
-                    $total =  $loan_current->first() ;
-                    if($total != null ) {
-                        $total->load('schedules');
-                    }
-                    $notifications = Notifications::where('customer_id', $user->id)->orderBy('created_at', 'DESC')->paginate(15);
-                    return view('dashboard.home')->with(compact('notifications', 'total'));
-                }else{
-                   session()->flash('message', 'please create your bank or mobile money details');
-                    return view('dashboard.bank_details.create')->with(compact('user' ));
-                }
-            }
-        }
 
-        else if ($user->role_id == config('constants.role.admin.id')
-            || $user->role_id == config('constants.role.developer.id')
-            || $user->role_id == config('constants.role.verifier.id')
-            || $user->role_id == config('constants.role.approver.id')
-        ) {
-            $loans = LoanApplications::orderBy('created_at');
-            $total = DashboardTotals::first();
-            $notifications = Notifications::where('status_id', config('constants.status.unseen'))->orderBy('created_at', 'desc')->paginate(15);
-            return view('dashboard.home')->with(compact('notifications', 'total', 'loans'));
-        } else {
-            Auth::logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            return redirect('/login')->with('error', 'Your user type is not defined, please call system admin');
+        if( $user->status_id == config('constants.status.deactivated')){
+         //   return redirect()->back()->with('error', 'sorry this user is deactivated' );
+        }else {
+
+            if ($user->role_id == config('constants.role.client.id')) {
+                $loans = LoanApplications::orderBy('created_at');
+                //check if there is a loan request
+                $loans_req = $loans->where('statuses_id', config('constants.status.loan_request_login'))->get();
+                if ((sizeof($loans_req)) > 0) {
+                    $works = WorkStatus::all();
+                    $statuses = Status::all();
+                    $loan = $loans_req->first();
+                    return view('dashboard.loan.finish_apply')->with(compact('user', 'loan', 'works', 'statuses'));
+                } else {
+                    //check if you do not have bank details
+                    $user->load('bankDetails');
+                    $bank_details = $user->bankDetails ?? [];
+                    if ((sizeof($bank_details)) > 0) {
+                        $loan_current = $loans->where('statuses_id', '!=', config('constants.status.loan_rejected'));
+                        $total = $loan_current->first();
+                        if ($total != null) {
+                            $total->load('schedules');
+                        }
+                        $notifications = Notifications::where('customer_id', $user->id)->orderBy('created_at', 'DESC')->paginate(15);
+                        return view('dashboard.home')->with(compact('notifications', 'total'));
+                    } else {
+                        session()->flash('message', 'please create your bank or mobile money details');
+                        return view('dashboard.bank_details.create')->with(compact('user'));
+                    }
+                }
+            } else if ($user->role_id == config('constants.role.admin.id')
+                || $user->role_id == config('constants.role.developer.id')
+                || $user->role_id == config('constants.role.verifier.id')
+                || $user->role_id == config('constants.role.approver.id')
+            ) {
+                $loans = LoanApplications::orderBy('created_at');
+                $total = DashboardTotals::first();
+                $notifications = Notifications::where('status_id', config('constants.status.unseen'))->orderBy('created_at', 'desc')->paginate(15);
+                return view('dashboard.home')->with(compact('notifications', 'total', 'loans'));
+            } else {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return redirect('/login')->with('error', 'Your user type is not defined, please call system admin');
+            }
         }
 
     }
