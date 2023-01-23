@@ -25,11 +25,10 @@ class User extends Authenticatable
     protected $primaryKey = 'id';
     protected $fillable = [
         'uuid',
-        'mobileno',
         'title',
+        'mobile_number',
         'name',
         'password',
-        'mobile_number',
         'dob',
         'email',
         'nid',
