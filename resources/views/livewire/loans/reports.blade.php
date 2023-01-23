@@ -5,8 +5,10 @@
     @push('custom-scripts')
         <!-- partial -->
 
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"/>
+{{--        <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">--}}
+{{--        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"/>--}}
+            <link href="{{asset('dashboard/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}"    type="text/css"  rel="stylesheet" />
+            <link href="{{asset('dashboard/plugins/datatables-bs4/css/responsive.bootstrap4.min.css')}}"    type="text/css"  rel="stylesheet" />
     @endpush
 
     <div class="content-wrapper">
@@ -175,16 +177,13 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="table">
-                                    <table id="table_one" class="table table-striped table-bordered"
-                                           style="width:100%">
+                                    <table class="table table-bordered" id="example1" border="1" >
+
                                         <thead>
                                         <tr>
                                             <td>#</td>
                                             <td>Customer</td>
-                                            <td>NRC</td>
                                             <td>Phone</td>
-                                            <td>DOB</td>
-                                            <td>Work</td>
                                             <td>Type</td>
                                             <td>Loan</td>
                                             <td>Rate</td>
@@ -202,18 +201,15 @@
                                         @foreach($loans as $key=>$loan)
                                             <tr>
                                                 <td> {{++$key}} </td>
-                                                <td>@if( ($loan->customer->name ?? "pica" ) == "pica" )
+                                                <td>
+                                                    @if( ($loan->customer->name ?? "pica" ) == "pica" )
                                                         <span class="text-info">Pending User</span>
                                                     @else
                                                         {{$loan->customer->name }}
                                                     @endif
                                                 </td>
-                                                <td>  {{ $loan->customer->nid }} </td>
                                                 <td>  {{ $loan->customer->mobile_number }} </td>
-                                                <td>  {{ $loan->customer->dob }} </td>
-                                                <td>  {{ $loan->customer->work->name ?? "" }} </td>
                                                 <td>  {{ $loan->loan->name }} </td>
-
                                                 <td>  {{ number_format( $loan->loan_amount , 2) }}  </td>
                                                 <td>  {{ $loan->loan_rate  }}%</td>
                                                 <td>  {{ number_format( $loan->loan_amount_due , 2) }}  </td>
@@ -258,9 +254,6 @@
                                                 <td>{{ number_format(   $loans->plucK('schedules')->flatten()->sum('paid')  , 2)}}</td>
                                                 <td>{{ number_format( ( $loans->sum('loan_amount_due') -  $loans->plucK('schedules')->flatten()->sum('paid') )  , 2)}}</td>
                                                 <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
                                             </tr>
                                         @endif
                                         </tfoot>
@@ -278,29 +271,43 @@
 
     @push('custom-scripts')
 
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-        <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+            <script src="{{ asset('dashboard/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+            <script src="{{ asset('dashboard/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+            <script src="{{ asset('dashboard/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+            <script src="{{ asset('dashboard/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+            <script src="{{ asset('dashboard/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+            <script src="{{ asset('dashboard/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+            <script src="{{ asset('dashboard/plugins/jszip/jszip.min.js')}}"></script>
+            <script src="{{ asset('dashboard/plugins/pdfmake/pdfmake.min.js')}}"></script>
+            <script src="{{ asset('dashboard/plugins/pdfmake/vfs_fonts.js')}}"></script>
+            <script src="{{ asset('dashboard/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+            <script src="{{ asset('dashboard/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+            <script src="{{ asset('dashboard/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 
-        <script>
 
-            $(document).ready(function () {
-                $('#table_one').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'copyHtml5',
-                        'excelHtml5',
-                        'csvHtml5',
-                        'pdfHtml5'
-                    ]
+            <!-- page script -->
+            <script>
+                window.addEventListener('contentChanged', event =>{
+                    $(function () {
+                        $("#example1").DataTable({
+                            "responsive": true, "lengthChange": false, "autoWidth": false,
+                            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                        $('#example2').DataTable({
+                            "paging": true,
+                            "lengthChange": false,
+                            "searching": false,
+                            "ordering": true,
+                            "info": true,
+                            "autoWidth": false,
+                            "responsive": true,
+                        });
+                    });
                 });
-            });
 
-        </script>
+            </script>
+
+
 
     @endpush
 

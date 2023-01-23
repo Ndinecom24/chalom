@@ -18,11 +18,15 @@ class Reports extends Component
 
     use WithPagination;
 
+    protected $listeners = ['search' => 'search', 'defaulted' => 'defaulted', 'dueNextMonth' => 'dueNextMonth', 'dueThisMonth'=>'dueThisMonth'];
+
+
     public function render()
     {
         $this->statuses = Status::all();
         return view('livewire.loans.reports');
     }
+
 
     public function search()
     {
@@ -203,10 +207,10 @@ class Reports extends Component
 
 //search_term
         $this->loans->load('loan', 'schedules');
+        $this->dispatchBrowserEvent('contentChanged');
 
 
     }
-
 
     public function defaulted()
     {
@@ -225,6 +229,7 @@ class Reports extends Component
                     config('constants.status.loan_payment'),
                 ])
             ->orderBy('created_at', 'desc')->get();
+        $this->dispatchBrowserEvent('contentChanged');
     }
 
     public function dueNextMonth()
@@ -246,6 +251,7 @@ class Reports extends Component
                     config('constants.status.loan_payment'),
                 ])
             ->orderBy('created_at', 'desc')->get();
+        $this->dispatchBrowserEvent('contentChanged');
 
     }
 
@@ -267,6 +273,7 @@ class Reports extends Component
                     config('constants.status.loan_payment'),
                 ])
             ->orderBy('created_at', 'desc')->get();
+        $this->dispatchBrowserEvent('contentChanged');
 
     }
 
