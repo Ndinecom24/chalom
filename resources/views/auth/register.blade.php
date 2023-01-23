@@ -17,12 +17,50 @@
                                 {{ __('Register Account') }}
                             </div>
 
+                            <div class="row mb-3">
+                                <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Title') }}</label>
+
+                                <div class="col-md-12">
+
+                                    <select class="form-control  @error('title') is-invalid @enderror " id="title" name="title" required>
+                                        <option selected disabled >--Title--</option>
+                                        <option>Mr.</option>
+                                        <option>Mrs.</option>
+                                        <option>Miss.</option>
+                                        <option>Dr.</option>
+                                        <option>Rev</option>
+                                        <option>Dr.</option>
+                                        <option>SC.</option>
+
+                                    </select>
+
+                                    @error('title')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+
                             <div class="form-label-group">
                                 <input type="text" id="inputFullName"
                                        class="form-control  @error('name') is-invalid @enderror" name="name"
                                        placeholder="Full Name" required autofocus>
                                 <label for="inputFullName">{{ __('Full Name') }}</label>
                                 @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="form-label-group">
+                                <input type="text" id="inputMobileNo"
+                                       class="form-control  @error('mobileno') is-invalid @enderror" name="mobileno"
+                                       placeholder="Mobile No" required autofocus>
+                                <label for="inputMobileNo">{{ __('Mobile No') }}</label>
+                                @error('mobileno')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
