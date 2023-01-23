@@ -79,6 +79,14 @@
                             <span class="menu-title">Loan Installments</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('crb.summary.report')}}">
+                            <i class="text-danger text-primary-hover bi bi-file"></i>
+                            <span class="menu-title">CRB Summary Report</span>
+                        </a>
+                    </li>
+
+
 
 
                 @endif

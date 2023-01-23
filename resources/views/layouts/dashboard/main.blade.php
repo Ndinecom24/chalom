@@ -121,12 +121,12 @@
 <script src="{{asset('theme/borrow/assets/libs/imagesloaded/imagesloaded.pkgd.min.js')}}"></script>
 <script src="{{asset('theme/borrow/assets/libs/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
 <script src="{{asset('theme/borrow/assets/libs/prismjs/prism.js')}}"></script>
-
+<!-- Theme JS -->
+<script src="{{asset('theme/borrow/assets/js/theme.min.js')}}"></script>
 
 @stack('custom-scripts')
 
 
 
-<!-- Theme JS -->
-<script src="{{asset('theme/borrow/assets/js/theme.min.js')}}"></script>
+
 

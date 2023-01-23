@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\Reports\CRBSummaryReportController;
 use App\Http\Controllers\Users\BankDetailsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Dashboard\Settings\CustomerTypesController;
@@ -26,6 +27,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
+Route::get('crb/summary/report', [CRBSummaryReportController::class,'summaryReport'])->name('crb.summary.report');
+
+// TODO change route to actual value
+Route::get('/reportShow', [CRBSummaryReportController::class, 'index'])->name('crbs.show');
 Route::group([
     'prefix' => 'chalom/company',
 ], function () {
@@ -167,5 +172,7 @@ Route::group([
         });
 
     });
+
+
 
 

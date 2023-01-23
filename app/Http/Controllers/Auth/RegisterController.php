@@ -52,6 +52,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+
+
+            'mobileno' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -69,6 +73,9 @@ class RegisterController extends Controller
         $uuid_user = Str::uuid()->toString();
 
         $user = User::create([
+
+            'mobileno' => $data['mobileno'],
+            'title' => $data['title'],
             'name' => $data['name'],
             'uuid' => $uuid_user,
             'email' => $data['email'],
