@@ -433,27 +433,23 @@
                                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                     <div class="form-group">
                                                         <label for="role_id">Employer Name<span class="text-danger">*</span></label>
-                                                        <select class="form-control" required name="work_status_id">
-                                                            {{--                                                            <option  value="{{$user->work->id ?? "" }}">{{$user->work->name ?? "--Choose--" }}</option>--}}
-                                                            @foreach($works as $work)
+                                                        <input list="employer_list" type="work_name" value="{{$user->kin->name ?? "" }}"
+                                                               class="form-control" id="work_name" required
+                                                               name="work_name" placeholder="Enter Employer Name">
+                                                        <datalist id="employer_list">
+                                                            @foreach($work_places as $work_place)
                                                                 <option
-                                                                    value="{{$work->id ?? "" }}">{{$work->name ?? "" }}</option>
+                                                                    value="{{$work_place->id ?? "" }}">{{      ->name ?? "" }}</option>
                                                             @endforeach
-                                                        </select>
-
+                                                        </datalist>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                     <div class="form-group">
                                                         <label for="role_id">Employer Address<span class="text-danger">*</span></label>
-                                                        <select class="form-control" required name="work_status_id">
-                                                            {{--                                                            <option  value="{{$user->work->id ?? "" }}">{{$user->work->name ?? "--Choose--" }}</option>--}}
-                                                            @foreach($works as $work)
-                                                                <option
-                                                                    value="{{$work->id ?? "" }}">{{$work->name ?? "" }}</option>
-                                                            @endforeach
-                                                        </select>
-
+                                                        <input type="work_address" value="{{$user->kin->name ?? "" }}"
+                                                               class="form-control" id="work_address" required
+                                                               name="work_address" placeholder="Enter Employer Address">
                                                     </div>
                                                 </div>
                                             </div>
