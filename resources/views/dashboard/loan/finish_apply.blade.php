@@ -439,7 +439,7 @@
                                                         <datalist id="employer_list">
                                                             @foreach($work_places as $work_place)
                                                                 <option
-                                                                    value="{{$work_place->id ?? "" }}">{{      ->name ?? "" }}</option>
+                                                                    value="{{$work_place->id ?? "" }}">{{ $work_place->name ?? "" }}</option>
                                                             @endforeach
                                                         </datalist>
                                                     </div>
