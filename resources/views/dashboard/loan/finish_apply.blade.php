@@ -437,10 +437,10 @@
                                                                class="form-control" id="work_name" required
                                                                name="work_name" placeholder="Enter Employer Name">
                                                         <datalist id="employer_list">
-                                                            @foreach($work_places as $work_place)
-                                                                <option
-                                                                    value="{{$work_place->id ?? "" }}">{{ $work_place->name ?? "" }}</option>
-                                                            @endforeach
+{{--                                                            @foreach($work_places as $work_place)--}}
+{{--                                                                <option--}}
+{{--                                                                    value="{{$work_place->id ?? "" }}">{{ $work_place->name ?? "" }}</option>--}}
+{{--                                                            @endforeach--}}
                                                         </datalist>
                                                     </div>
                                                 </div>
