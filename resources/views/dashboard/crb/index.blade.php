@@ -102,7 +102,12 @@
                                 <tr>
 
                                     <td>{{ $loop->index +1 }}</td>
-                                    <td> {{ $loanApplication->customer->title ?? "" }} {{ $loanApplication->customer->name }}</td>
+                                    <td>
+                                        <a
+                                           href="{{route('loan.show', $loan)}}">
+                                            {{ $loanApplication->customer->title ?? "" }} {{ $loanApplication->customer->name }}
+                                        </a>
+                                    </td>
                                     <td>{{ $loanApplication->customer->marital_status ?? "--" }}</td>
                                     <td>
                                     @if(  $loanApplication->customer->workplace)

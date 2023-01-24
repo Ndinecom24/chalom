@@ -149,7 +149,10 @@
                                                         <td>@if( ($loan->customer->name ?? "pica" ) == "pica" )
                                                                 <span class="text-info">Pending User</span>
                                                             @else
-                                                                {{$loan->customer->title }}  {{$loan->customer->name }}
+                                                                <a
+                                                                   href="{{route('loan.show', $loan)}}">
+                                                                    {{$loan->customer->title }}  {{$loan->customer->name }}
+                                                                </a>
                                                             @endif
                                                         </td>
                                                         <td>{{$loan->loan->name}} </td>

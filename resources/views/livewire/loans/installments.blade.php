@@ -189,7 +189,9 @@
                                             @if( ($installment->loan->customer->name ?? "pica" ) == "pica" )
                                                 <span class="text-info">Pending User</span>
                                             @else
-                                                {{$installment->loan->customer->title }} {{$installment->loan->customer->name }}
+                                                <a href="{{route('loan.show', $loan)}}">
+                                                    {{$installment->loan->customer->title }} {{$installment->loan->customer->name }}
+                                                </a>
                                             @endif
                                         </td>
                                         <td>{{$installment->loan->loan->name}} </td>

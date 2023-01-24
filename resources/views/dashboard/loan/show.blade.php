@@ -2,7 +2,7 @@
 
 @push('custom-stylesheets')
     <style>
-        .table_wrapper{
+        .table_wrapper {
             display: block;
             overflow-x: auto;
             white-space: nowrap;
@@ -254,818 +254,431 @@
     <div class="py-2"
          style="background:url({{asset('theme/borrow/assets/images/slider/slider-2.jpg')}})no-repeat; background-position: center; background-size: cover;">
         <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 col-md-8 col-sm-12 ">
-                <div class="row justify-content-lg-center">
-                    <div class="col-12">
-                        @if(session()->has('message'))
-                            <div class="alert alert-success alert-dismissible">
-                                <p class="lead"> {{session()->get('message')}}</p>
-                            </div>
-                        @endif
-                        @if(session()->has('error'))
-                            <div class="alert alert-danger alert-dismissible">
-                                <p class="lead"> {{session()->get('error')}}</p>
-                            </div>
-                        @endif
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-8 col-sm-12 ">
+                    <div class="row justify-content-lg-center">
+                        <div class="col-12">
+                            @if(session()->has('message'))
+                                <div class="alert alert-success alert-dismissible">
+                                    <p class="lead"> {{session()->get('message')}}</p>
+                                </div>
+                            @endif
+                            @if(session()->has('error'))
+                                <div class="alert alert-danger alert-dismissible">
+                                    <p class="lead"> {{session()->get('error')}}</p>
+                                </div>
+                            @endif
 
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 mb-4 mt-4 p-0 mt-3 mb-2">
-                            <form id="finish_apply_form" action="{{ route('loan.approve', compact('loan' )) }}"
-                                  method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="card px-0 pt-4 pb-0 mt-3 mb-3  mr-2">
-                                    <div class="row">
-                                        <div class="col-sm-3 ">
-                                            <div class=" text-end">
-                                                @if( ($loan->customer->avatar ?? "" ) == "" )
-                                                    <img class="img-circle" width="60px" src="{{asset('images/user.png')}}" alt="">
-                                                @else
-                                                    <img class="img-circle"  width="60%" src="{{$loan->customer->avatar ?? ""}}" alt="Upload profile pic">
-                                                @endif
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 mb-4 mt-4 p-0 mt-3 mb-2">
+                                <form id="finish_apply_form" action="{{ route('loan.approve', compact('loan' )) }}"
+                                      method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="card px-0 pt-4 pb-0 mt-3 mb-3  mr-2">
+                                        <div class="row">
+                                            <div class="col-sm-3 ">
+                                                <div class=" text-end">
+                                                    @if( ($loan->customer->avatar ?? "" ) == "" )
+                                                        <img class="img-circle" width="60px"
+                                                             src="{{asset('images/user.png')}}" alt="">
+                                                    @else
+                                                        <img class="img-circle" width="60%"
+                                                             src="{{$loan->customer->avatar ?? ""}}"
+                                                             alt="Upload profile pic">
+                                                    @endif
 
-{{--                                                @if( ($loan->customer->avatar ?? "" ) == "" )--}}
-{{--                                                    <img class="nav-item " width="60%"--}}
-{{--                                                         src="{{asset('images/user.png')}}" alt="">--}}
-{{--                                                @else--}}
-{{--                                                    <img class="nav-item " width="60%"--}}
-{{--                                                         src="{{$loan->customer->avatar ?? ""}}"--}}
-{{--                                                         alt="{{asset('images/user.png')}}">--}}
-{{--                                                @endif--}}
+                                                    {{--                                                @if( ($loan->customer->avatar ?? "" ) == "" )--}}
+                                                    {{--                                                    <img class="nav-item " width="60%"--}}
+                                                    {{--                                                         src="{{asset('images/user.png')}}" alt="">--}}
+                                                    {{--                                                @else--}}
+                                                    {{--                                                    <img class="nav-item " width="60%"--}}
+                                                    {{--                                                         src="{{$loan->customer->avatar ?? ""}}"--}}
+                                                    {{--                                                         alt="{{asset('images/user.png')}}">--}}
+                                                    {{--                                                @endif--}}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <h2 class="text-center"><strong>LOAN APPLICATION</strong></h2>
                                             </div>
                                         </div>
-                                        <div class="col-sm-9">
-                                            <h2 class="text-center"><strong>LOAN APPLICATION</strong></h2>
-                                        </div>
-                                    </div>
 
-                                    <div class="card-header">
-                                        <h6 class=" text-primary">PERSONAL DETAILS</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <fieldset>
+                                        <div class="card-header">
+                                            <h6 class=" text-primary">PERSONAL DETAILS</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <fieldset>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="row gutters">
+
+                                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="name">Full Name : <span
+                                                                            class="text-dark "> {{$loan->customer->title  ?? "" }}  {{$loan->customer->name  ?? "" }} </span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="eMail">Email : <span
+                                                                            class="text-dark">{{$loan->customer->email  ?? "" }}</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="phone">Phone : <span
+                                                                            class="text-dark">{{$loan->customer->mobile_number  ?? ""  }}</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="dob">Date of Birth : <span
+                                                                            class="text-dark">{{$loan->customer->dob  ?? "" }}</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="nid">National Identity : <span
+                                                                            class="text-dark">{{$loan->customer->nid  ?? ""  }}</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="gender">Gender : <span
+                                                                            class="text-dark">{{$loan->customer->gender  ?? ""  }}</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="gender">Marital Status : <span
+                                                                            class="text-dark">{{$loan->customer->marital_status  ?? ""  }}</span></label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="district"> District : <span
+                                                                            class="text-dark">{{$loan->customer->district  ?? ""  }}</span></label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+
+                                        <div class="card-header">
+                                            <h6 class=" text-primary">ADDRESS DETAILS</h6>
+                                        </div>
+                                        <div class="card-body">
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="row gutters">
-
                                                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                             <div class="form-group">
-                                                                <label for="name">Full Name : <span
-                                                                        class="text-dark "> {{$loan->customer->title  ?? "" }}  {{$loan->customer->name  ?? "" }} </span>
+                                                                <label for="Street">Plot and Street : <span
+                                                                        class="text-dark">{{$loan->customer->plot_street ?? "" }}</span></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="ciTy">City : <span
+                                                                        class="text-dark">{{$loan->customer->city ?? "" }}</span></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="sTate">Country : <span
+                                                                        class="text-dark">{{$loan->customer->country ?? "Zambia" }}</span></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="zIp">Zip Code : <span
+                                                                        class="text-dark">{{$loan->customer->zip_code ?? "10101" }}</span></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-header">
+                                            <h6 class=" text-primary">WORK STATUS</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="row gutters">
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="role_id">Work Status : <span
+                                                                        class="text-dark">{{$loan->customer->work->name ?? "--Choose--" }}</span></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="customer_type_id">User-Type : <span
+                                                                        class="text-dark">{{$loan->customer->customerType->name  ?? "" }}</span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="row gutters">
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="role_id">Employer Name : <span
+                                                                        class="text-dark">
+                                                                     @if(  $loan->customer->workplace)
+                                                                            {{ $loan->customer->workplace->first()->name ?? "--" }}
+                                                                        @else
+                                                                            --
+                                                                        @endif
+                                                                </span>
                                                                 </label>
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                             <div class="form-group">
-                                                                <label for="eMail">Email : <span
-                                                                        class="text-dark">{{$loan->customer->email  ?? "" }}</span></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label for="phone">Phone : <span
-                                                                        class="text-dark">{{$loan->customer->mobile_number  ?? ""  }}</span></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label for="dob">Date of Birth : <span
-                                                                        class="text-dark">{{$loan->customer->dob  ?? "" }}</span></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label for="nid">National Identity : <span
-                                                                        class="text-dark">{{$loan->customer->nid  ?? ""  }}</span></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label for="gender">Gender : <span
-                                                                        class="text-dark">{{$loan->customer->gender  ?? ""  }}</span></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label for="gender">Marital Status : <span
-                                                                        class="text-dark">{{$loan->customer->marital_status  ?? ""  }}</span></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label for="district"> District : <span
-                                                                        class="text-dark">{{$loan->customer->district  ?? ""  }}</span></label>
+                                                                <label for="customer_type_id">Employer Address: <span
+                                                                        class="text-dark">
+                                                                      @if(  $loan->customer->workplace)
+                                                                            {{$loan->customer->workplace->first()->address  ?? "" }}
+                                                                        @else
+                                                                            --
+                                                                        @endif
+                                                                </span>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </fieldset>
-                                    </div>
+                                        </div>
 
-                                    <div class="card-header">
-                                        <h6 class=" text-primary">ADDRESS DETAILS</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="row gutters">
-                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label for="Street">Plot and Street : <span
-                                                                    class="text-dark">{{$loan->customer->plot_street ?? "" }}</span></label>
-                                                        </div>
+                                        <div class="card-header">
+                                            <h6 class="text-primary">NEXT OF KIN</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row gutters">
+                                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="kin_name">Full Name : <span
+                                                                class="text-dark">{{$loan->customer->kin->name ?? "" }}</span></label>
                                                     </div>
-                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label for="ciTy">City : <span
-                                                                    class="text-dark">{{$loan->customer->city ?? "" }}</span></label>
-                                                        </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="kin_phone">Phone : <span
+                                                                class="text-dark">{{$loan->customer->kin->phone ?? "" }}</span></label>
                                                     </div>
-                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label for="sTate">Country : <span
-                                                                    class="text-dark">{{$loan->customer->country ?? "Zambia" }}</span></label>
-                                                        </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="kin_email">Email : <span
+                                                                class="text-dark">{{$loan->customer->kin->email ?? "" }}</span></label>
                                                     </div>
-                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label for="zIp">Zip Code : <span
-                                                                    class="text-dark">{{$loan->customer->zip_code ?? "10101" }}</span></label>
-                                                        </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="kin_work">Work Status : <span
+                                                                class="text-dark">{{$loan->customer->kin->work_status ?? "" }}</span></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="kin_work_place">Work/School/Institution/Home : <span
+                                                                class="text-dark">{{$loan->customer->kin->work_place ?? "" }}</span></label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="kin_relationship">Relationship : <span
+                                                                class="text-dark">{{$loan->customer->kin->relationship ?? "" }}</span></label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="card-header">
-                                        <h6 class=" text-primary">WORK STATUS</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="row gutters">
-                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label for="role_id">Work Status : <span
-                                                                    class="text-dark">{{$loan->customer->work->name ?? "--Choose--" }}</span></label>
+
+                                    <div class="card  mt-2">
+                                        <div class="card-header">
+                                            <h6 class="mb-2 text-primary">PAYSLIPS
+                                                <a class="btn btn-sm float-sm-end btn-outline-secondary "
+                                                   onclick="displayOrOpenForms('payslip_div')">
+                                                    <i class="fa fa-arrow-down"></i></a>
+                                            </h6>
+                                        </div>
+                                        <div id="payslip_div" style="display:none" class="card-body ">
+                                            <div class="row gutters">
+                                                @if($loan->payslips != null)
+                                                    @foreach($loan->payslips as $payslip)
+                                                        <div class="col-12">
+                                                            <iframe id="{{$payslip->id}}"
+                                                                    src="{{$payslip->path }}"
+                                                                    style="width:100%; height: 800px"
+                                                                    title="{{$payslip->name}}"></iframe>
+                                                            <span>{{number_format( $payslip->file_size, 2) }}MB {{$payslip->name}} </span>
+                                                            <span> | </span>
+                                                            <a href="{{$payslip->path}}"
+                                                               target="_blank">View</a>
+                                                            <span> | </span>
+                                                            <a href="#" data-toggle="modal"
+                                                               data-sent_data="{{$payslip}}"
+                                                               data-target="#modal-change">Edit</a>
+
                                                         </div>
-                                                    </div>
-                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label for="customer_type_id">User-Type : <span
-                                                                    class="text-dark">{{$loan->customer->customerType->name  ?? "" }}</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                    @endforeach
+                                                @endif
                                             </div>
-                                            <div class="col-12">
-                                                <div class="row gutters">
-                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label for="role_id">Employer Name : <span
-                                                                    class="text-dark">{{$loan->customer->workplace->first()->name  ?? "" }}</span></label>
+                                        </div>
+                                    </div>
+                                    <div class="card mt-2">
+                                        <div class="card-header">
+                                            <h6 class="mb-2 text-primary">ACCOUNT STATEMENT
+                                                <a class="btn btn-sm float-sm-end btn-outline-secondary "
+                                                   onclick="displayOrOpenForms('account_statment_div')">
+                                                    <i class="fa fa-arrow-down"></i></a>
+                                            </h6>
+                                        </div>
+                                        <div class="card-body " id="account_statment_div" style="display:none">
+                                            <div class="row gutters">
+                                                @if($loan->statements != null)
+                                                    @foreach($loan->statements as $statement)
+                                                        <div class="col-12">
+                                                            <iframe id="{{$statement->id}}"
+                                                                    src="{{$statement->path }}"
+                                                                    style="width:100%; height: 800px"
+                                                                    title="{{$statement->name}}"></iframe>
+                                                            <span>{{number_format( $statement->file_size, 2) }}MB {{$statement->name}} </span>
+                                                            <span> | </span>
+                                                            <a href="{{$statement->path}}"
+                                                               target="_blank">View</a>
+                                                            <span> | </span>
+                                                            <a href="#" data-toggle="modal"
+                                                               data-sent_data="{{$statement}}"
+                                                               data-target="#modal-change">Edit</a>
+
                                                         </div>
-                                                    </div>
-                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label for="customer_type_id">Employer Address: <span
-                                                                    class="text-dark">{{$loan->customer->workplace->first()->address  ?? "" }}</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                    @endforeach
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="card-header">
-                                        <h6 class="text-primary">NEXT OF KIN</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row gutters">
-                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="kin_name">Full Name : <span
-                                                            class="text-dark">{{$loan->customer->kin->name ?? "" }}</span></label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="kin_phone">Phone : <span
-                                                            class="text-dark">{{$loan->customer->kin->phone ?? "" }}</span></label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="kin_email">Email : <span
-                                                            class="text-dark">{{$loan->customer->kin->email ?? "" }}</span></label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="kin_work">Work Status : <span
-                                                            class="text-dark">{{$loan->customer->kin->work_status ?? "" }}</span></label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="kin_work_place">Work/School/Institution/Home : <span
-                                                            class="text-dark">{{$loan->customer->kin->work_place ?? "" }}</span></label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="kin_relationship">Relationship : <span
-                                                            class="text-dark">{{$loan->customer->kin->relationship ?? "" }}</span></label>
-                                                </div>
-                                            </div>
+                                    <div class="card mt-2">
+                                        <div class="card-header">
+                                            <h6 class="mb-2 text-primary">NRC
+                                                <a class="btn btn-sm float-sm-end btn-outline-secondary "
+                                                   onclick="displayOrOpenForms('nrc_div')">
+                                                    <i class="fa fa-arrow-down"></i></a>
+                                            </h6>
                                         </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="card  mt-2">
-                                    <div class="card-header">
-                                        <h6 class="mb-2 text-primary">PAYSLIPS
-                                            <a class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('payslip_div')">
-                                                <i class="fa fa-arrow-down"></i></a>
-                                        </h6>
-                                    </div>
-                                    <div id="payslip_div" style="display:none" class="card-body ">
-                                        <div class="row gutters">
-                                            @if($loan->payslips != null)
-                                                @foreach($loan->payslips as $payslip)
+                                        <div class="card-body  " id="nrc_div" style="display:none">
+                                            <div class="row gutters">
+                                                @if($loan->customer->nrc  ?? ""  != null)
                                                     <div class="col-12">
-                                                        <iframe id="{{$payslip->id}}"
-                                                                src="{{$payslip->path }}"
+                                                        <iframe id="{{$loan->customer->nrc->id  ?? "" }}"
+                                                                src="{{$loan->customer->nrc->path  ?? ""  }}"
                                                                 style="width:100%; height: 800px"
-                                                                title="{{$payslip->name}}"></iframe>
-                                                        <span>{{number_format( $payslip->file_size, 2) }}MB {{$payslip->name}} </span>
+                                                                title="{{$loan->customer->nrc->name  ?? "" }}"></iframe>
+                                                        <span>{{number_format( $loan->customer->nrc->file_size  ?? 0 , 2) }}MB {{$loan->customer->nrc->name  ?? "" }} </span>
                                                         <span> | </span>
-                                                        <a href="{{$payslip->path}}"
+                                                        <a href="{{$loan->customer->nrc->path  ?? "" }}"
                                                            target="_blank">View</a>
                                                         <span> | </span>
-                                                        <a href="#" data-toggle="modal" data-sent_data="{{$payslip}}"
+                                                        <a href="#" data-toggle="modal"
+                                                           data-sent_data="{{$loan->customer->nrc  ?? "" }}"
                                                            data-target="#modal-change">Edit</a>
 
                                                     </div>
-                                                @endforeach
-                                            @endif
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card mt-2">
-                                    <div class="card-header">
-                                        <h6 class="mb-2 text-primary">ACCOUNT STATEMENT
-                                            <a class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('account_statment_div')">
-                                                <i class="fa fa-arrow-down"></i></a>
-                                        </h6>
-                                    </div>
-                                    <div class="card-body "  id="account_statment_div" style="display:none">
-                                        <div class="row gutters">
-                                            @if($loan->statements != null)
-                                                @foreach($loan->statements as $statement)
-                                                    <div class="col-12">
-                                                        <iframe id="{{$statement->id}}"
-                                                                src="{{$statement->path }}"
-                                                                style="width:100%; height: 800px"
-                                                                title="{{$statement->name}}"></iframe>
-                                                        <span>{{number_format( $statement->file_size, 2) }}MB {{$statement->name}} </span>
-                                                        <span> | </span>
-                                                        <a href="{{$statement->path}}"
-                                                           target="_blank">View</a>
-                                                        <span> | </span>
-                                                        <a href="#" data-toggle="modal" data-sent_data="{{$statement}}"
-                                                           data-target="#modal-change">Edit</a>
 
-                                                    </div>
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
+                                    @if($loan->loan->collateral == "Need Collateral")
+                                        <div class="card mt-2">
+                                            <div class="card-header">
+                                                <h6 class="mb-2 text-primary">Collateral
+                                                    <a class="btn btn-sm float-sm-end btn-outline-secondary "
+                                                       onclick="displayOrOpenForms('collateral_div')">
+                                                        <i class="fa fa-arrow-down"></i></a>
+                                                </h6>
+                                            </div>
+                                            <div class="card-body  " id="collateral_div" style="display:none ">
+                                                <div class="row gutters">
+                                                    @if($loan->collaterals != null)
+                                                        @foreach($loan->collaterals as $collateral)
+                                                            <div class="col-12">
+                                                                <iframe id="{{$collateral->id}}"
+                                                                        src="{{$collateral->path }}"
+                                                                        style="width:100%; height: 800px"
+                                                                        title="{{$collateral->name}}"></iframe>
+                                                                <span>{{number_format( $collateral->file_size, 2) }}MB {{$collateral->name}} </span>
+                                                                <span> | </span>
+                                                                <a href="{{$collateral->path}}"
+                                                                   target="_blank">View</a>
+                                                                <span> | </span>
+                                                                <a href="#" data-toggle="modal"
+                                                                   data-sent_data="{{$collateral}}"
+                                                                   data-target="#modal-change">Edit</a>
 
-                                <div class="card mt-2">
-                                    <div class="card-header">
-                                        <h6 class="mb-2 text-primary">NRC
-                                            <a class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('nrc_div')">
-                                                <i class="fa fa-arrow-down"></i></a>
-                                        </h6>
-                                    </div>
-                                    <div class="card-body  " id="nrc_div" style="display:none" >
-                                        <div class="row gutters">
-                                            @if($loan->customer->nrc  ?? ""  != null)
-                                                <div class="col-12">
-                                                    <iframe id="{{$loan->customer->nrc->id  ?? "" }}"
-                                                            src="{{$loan->customer->nrc->path  ?? ""  }}"
-                                                            style="width:100%; height: 800px"
-                                                            title="{{$loan->customer->nrc->name  ?? "" }}"></iframe>
-                                                    <span>{{number_format( $loan->customer->nrc->file_size  ?? 0 , 2) }}MB {{$loan->customer->nrc->name  ?? "" }} </span>
-                                                    <span> | </span>
-                                                    <a href="{{$loan->customer->nrc->path  ?? "" }}"
-                                                       target="_blank">View</a>
-                                                    <span> | </span>
-                                                    <a href="#" data-toggle="modal"
-                                                       data-sent_data="{{$loan->customer->nrc  ?? "" }}"
-                                                       data-target="#modal-change">Edit</a>
-
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
                                                 </div>
-                                            @endif
+                                            </div>
+                                            <div class="card-footer">
+                                                <span class="text-bold">Description : </span>
+                                                <span>{{$loan->collateral_description}}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-
-                                @if($loan->loan->collateral == "Need Collateral")
-                                <div class="card mt-2">
-                                    <div class="card-header">
-                                        <h6 class="mb-2 text-primary">Collateral
-                                            <a class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('collateral_div')">
-                                                <i class="fa fa-arrow-down"></i></a>
-                                        </h6>
-                                    </div>
-                                    <div class="card-body  " id="collateral_div" style="display:none ">
-                                        <div class="row gutters">
-                                            @if($loan->collaterals != null)
-                                                @foreach($loan->collaterals as $collateral)
-                                                    <div class="col-12">
-                                                        <iframe id="{{$collateral->id}}"
-                                                                src="{{$collateral->path }}"
-                                                                style="width:100%; height: 800px"
-                                                                title="{{$collateral->name}}"></iframe>
-                                                        <span>{{number_format( $collateral->file_size, 2) }}MB {{$collateral->name}} </span>
-                                                        <span> | </span>
-                                                        <a href="{{$collateral->path}}"
-                                                           target="_blank">View</a>
-                                                        <span> | </span>
-                                                        <a href="#" data-toggle="modal" data-sent_data="{{$collateral}}"
-                                                           data-target="#modal-change">Edit</a>
-
-                                                    </div>
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <span class="text-bold">Description : </span>
-                                        <span>{{$loan->collateral_description}}</span>
-                                    </div>
-                                </div>
                                 @endif
 
 
 
-                            @if(  \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
-                               || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.admin.id')
-                               || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.verifier.id')
-                               || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.approver.id')
-                              )
-                                <!-- APPROVALS LIST -->
-                                <div class="card mt-2">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <table class="table table-striped table_wrapper" >
-                                                    <thead>
-                                                    <tr>
-                                                        <td>By</td>
-                                                        <td>From</td>
-                                                        <td>To</td>
-                                                        <td>Comment</td>
-                                                        <td>Date</td>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @foreach($approvals as $approval)
-                                                        <tr>
-                                                            <td>{{$approval->by->name ?? '--'}}</td>
-                                                            <td>{{$approval->from->name ?? '--'}}</td>
-                                                            <td>{{$approval->to->name ?? '--'}}</td>
-                                                            <td>{{$approval->comment ?? '--'}}</td>
-                                                            <td>{{ \Carbon\Carbon::parse($approval->created_at)->diffForhumans() }}</td>
-
-                                                        </tr>
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-
-
-
-                                <!-- APPROVE ACTIONS -->
-                                <div class="card mt-2">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-12 mt-1 mb-3">
-                                                <label> <b>Current Status : {{$loan->status->name ?? $loan->statuses_id }}</b></label>
-                                            </div>
-
-                                                {{-- [1] : LOAN APPLICATION NEEDS TO BE COMPLETED--}}
-                                            @if($loan->statuses_id == config('constants.status.loan_request_login'))
-
-                                                {{-- ADMIN --}}
-                                                @if(
-    ($logged_in_user->role_id ==  config('constants.role.admin.id'))
-   || ($logged_in_user->role_id ==  config('constants.role.verifier.id'))
-   || ($logged_in_user->role_id ==  config('constants.role.approver.id'))
-    )
-                                                {{-- CLIENT --}}
-                                                <div class="col-12 text-center">
-                                                    <span class=" bg-gradient-green"
-                                                            title="Client ({{$loan->customer->name  ?? "" }}) needs to complete this loan application and submit for verification" >
-                                                        Pending Loan Submission
-                                                    </span>
-                                                </div>
-                                                @else
-                                                    <div class="col-12 text-center">
-                                                        <a class="btn btn-outline-primary"
-                                                           title="{{$loan->customer->name  ?? ""  }} needs to complete this loan application and then submit for verification"
-                                                           href="">
-                                                            Complete Loan Application
-                                                        </a>
-                                                    </div>
-                                                @endif
-
-
-                                                {{--  LOAN HAS BEEN SUBMITTED --}}
-                                            @elseif($loan->statuses_id == config('constants.status.loan_submission'))
-
-                                                {{-- VERIFIER --}}
-                                                @if($logged_in_user->role_id ==  config('constants.role.verifier.id'))
-                                                    <div class="col-lg-8 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label for="eMail">Comment <span class="text-danger">*</span></label>
-                                                            <input type="text" required
-                                                                   title="You need to add a reason/comments for your decision"
-                                                                   class="form-control" id="comment" name="comment"
-                                                                   placeholder="Enter comment for your action">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-2 col-sm-12">
-                                                        <label for="approve"><span
-                                                                class="text-success ">Approve</span></label>
-                                                        <button type="submit" name="approve"
-                                                                title="Click to approve that you have verified this loan"
-                                                                value="{{config('constants.action.review')}}"
-                                                                class="btn btn-outline-success"><i
-                                                                class="ui-icon ui-icon-circle-check"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="col-lg-2 col-sm-12">
-                                                        <label for="reject"><span
-                                                                class="text-danger">Reject</span></label>
-                                                        <button type="submit" name="reject"
-                                                                title="Click to reject this loan application e.g because you have not verified the details"
-                                                                value="{{config('constants.action.reject')}}"
-                                                                class="btn btn-outline-danger"><i
-                                                                class="ui-icon ui-icon-circle-close "></i>
-                                                        </button>
-                                                    </div>
-                                                @else
-                                                    {{-- CLIENT --}}
-                                                    <div class="col-12 text-center">
-                                                        <span class="btn btn-outline-primary"
-                                                                title="Client ({{$loan->customer->name  ?? ""  }}) has completed and submitted loan application, it now needs to be verified by admins" >
-                                                            Pending Loan Verification
-                                                        </span>
-                                                    </div>
-                                                @endif
-
-
-                                            {{--  LOAN HAS BEEN VERIFIED / PENDING APPROVAL --}}
-                                            @elseif($loan->statuses_id == config('constants.status.loan_reviewed'))
-
-                                                {{-- VERIFIER --}}
-                                                @if($logged_in_user->role_id ==  config('constants.role.approver.id'))
-                                                    <div class="col-lg-8 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label for="eMail">Comment<span class="text-danger">*</span></label>
-                                                            <input type="text" required
-                                                                   title="You need to add a reason/comments for your decision"
-                                                                   class="form-control" id="comment" name="comment"
-                                                                   placeholder="Enter comment for your action">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-2 col-sm-12">
-                                                        <label for="approve"><span
-                                                                class="text-success ">Approve</span></label>
-                                                        <button type="submit" name="approve"
-                                                                title="Click to approve that you have verified this loan"
-                                                                value="{{config('constants.action.approve')}}"
-                                                                class="btn btn-outline-success"><i
-                                                                class="ui-icon ui-icon-circle-check"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="col-lg-2 col-sm-12">
-                                                        <label for="reject"><span
-                                                                class="text-danger">Reject</span></label>
-                                                        <button type="submit" name="reject"
-                                                                title="Click to reject this loan application e.g because you have not verified the details"
-                                                                value="{{config('constants.action.reject')}}"
-                                                                class="btn btn-outline-danger"><i
-                                                                class="ui-icon ui-icon-circle-close "></i>
-                                                        </button>
-                                                    </div>
-                                                @else
-                                                    {{-- CLIENT --}}
-                                                    <div class="col-12 text-center">
-                                                        <span class="btn btn-outline-primary"
-                                                              title=" {{$loan->customer->name  ?? ""  }} Loan has been verified and now needs to be approved" >
-                                                            Pending Loan Approval
-                                                        </span>
-                                                    </div>
-                                                @endif
-
-                                                {{--  APPROVED / FUNDS NEEDS TO BE DISBURSED--}}
-                                            @elseif($loan->statuses_id == config('constants.status.loan_approved'))
-                                                {{-- VERIFIER --}}
-{{--                                                @if( $logged_in_user->role_id ==  config('constants.role.verifier.id'))--}}
-                                                    @if( ($logged_in_user->role_id ==  config('constants.role.verifier.id')) ||
-                                               ($logged_in_user->role_id ==  config('constants.role.approver.id')))
-                                                    <div class="col-lg-8 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label for="eMail">Comment<span class="text-danger">*</span></label>
-                                                            <input type="text" required
-                                                                   title="You need to add a reason/comments for your decision"
-                                                                   class="form-control" id="comment" name="comment"
-                                                                   placeholder="Enter comment for your action">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-2 col-sm-12">
-                                                        <label for="approve"><span
-                                                                class="text-success ">Approve</span></label>
-                                                        <button type="submit" name="approve"
-                                                                title="Click to approve that you have verified this loan"
-                                                                value="{{config('constants.action.funds_disbursed')}}"
-                                                                class="btn btn-outline-success"><i
-                                                                class="ui-icon ui-icon-circle-check"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="col-lg-2 col-sm-12">
-                                                        <label for="reject"><span
-                                                                class="text-danger">Reject</span></label>
-                                                        <button type="submit" name="reject"
-                                                                title="Click to reject this loan application e.g because you have not verified the details"
-                                                                value="{{config('constants.action.reject')}}"
-                                                                class="btn btn-outline-danger"><i
-                                                                class="ui-icon ui-icon-circle-close "></i>
-                                                        </button>
-                                                    </div>
-                                                @else
-                                                    {{-- CLIENT --}}
-                                                    <div class="col-12 text-center">
-                                                        <span class="btn btn-outline-primary"
-                                                              title="{{$loan->customer->name  ?? ""  }} Loan has been approved, waiting for funds to be disbursed now." >
-                                                            Pending Funds Disbursement
-                                                        </span>
-                                                    </div>
-                                                @endif
-
-
-                                                {{--  FUNDS NEEDS TO BE REPAYEMENT--}}
-                                            @elseif( ($loan->statuses_id == config('constants.status.loan_funds_disbursed') ) ||  ($loan->statuses_id == config('constants.status.loan_payment') )
-                                               )
-                                                {{-- VERIFIER / ADMIN / APPROVER --}}
-                                                @if( ($logged_in_user->role_id ==  config('constants.role.verifier.id')) ||
-                                                 ($logged_in_user->role_id ==  config('constants.role.approver.id')))
-                                                    <div class="col-lg-8 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label for="eMail">Amount<span class="text-danger">*</span></label>
-                                                            <input type="number" required
-                                                                   step='0.01'
-                                                                   value='0.00'
-                                                                   title="Enter Amount being repaid"
-                                                                   class="form-control" id="amount" name="amount"
-                                                                   placeholder="Enter Amount Repaid">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-sm-12">
-                                                        <label>Total Balance :<br> <b>ZMK {{number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }}</b> </label>
-                                                    </div>
-                                                    <div class="col-lg-8 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label for="eMail">Comment<span class="text-danger">*</span></label>
-                                                            <input type="text" required
-                                                                   title="You need to add a reason/comments for your decision"
-                                                                   class="form-control" id="comment" name="comment"
-                                                                   placeholder="Enter comment for your action">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-sm-12">
-                                                        <label for="approve"><span
-                                                                class="text-success ">Submit Payment</span></label>
-                                                        <button type="submit" name="approve"
-                                                                title="Click to approve that you have verified this loan"
-                                                                value="{{config('constants.action.loan_payment')}}"
-                                                                class="btn btn-outline-success"><i
-                                                                class="ui-icon ui-icon-circle-check"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="col-lg-8 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label for="eMail">Proof of payments<span class="text-danger">*</span></label>
-                                                            <input type="file" required multiple
-                                                                   title="Upload proof of payments"
-                                                                   class="form-control" id="proof_of_payments" name="proof_of_payment[]" >
-                                                        </div>
-                                                    </div>
-                                                @else
-                                                    {{-- CLIENT --}}
-                                                    <div class="col-12 text-center">
-                                                        <span class="btn btn-outline-primary"
-                                                              title="{{$loan->customer->name  ?? ""  }} Loan has been approved, waiting for funds to be repaid now." >
-                                                            Pending Loan Repayment
-                                                        </span>
-                                                    </div>
-                                                @endif
-
-
-                                                {{--  NEXT ACTION  --}}
-                                            @else
-                                                <div class="row-cols-12">
-{{--                                                    <span type="submit" name="Submit"--}}
-{{--                                                          title="ummmm devs"--}}
-{{--                                                          class="btn btn-outline-success">--}}
-{{--                                                        PENDING NEXT ACTION--}}
-{{--                                                    </span>--}}
-                                                </div>
-                                            @endif
-
-
-
-
-
-                                        </div>
-                                    </div>
-
-                                    @if(  \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
-                                       || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.admin.id')
-                                       || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.verifier.id')
-                                       || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.approver.id')
-                                      )
-
-                                    <div class="card-footer">
-                                            <div class="row-cols-12">
-                                                @if(sizeof($next_users) > 0 )
-                                            <h6 class="mb-2 text-primary">NEXT USER TO ACT
-                                                <a class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('next_users_div')">
-                                                    <i class="fa fa-arrow-down"></i></a>
-                                            </h6>
-                                                    @endif
-                                        </div>
-                                        <div id="next_users_div" style="display:none">
-                                            @foreach( $next_users as $next_user)
-                                                <span class="text-xs text-danger text-muted">Name  : {{$next_user->name ?? '--'}}</span> <br>
-                                                <span class="text-xs text-danger text-muted">Email : {{$next_user->email ?? '--'}}</span> <br>
-                                                <span class="text-xs text-danger text-muted">Phone : {{$next_user->mobile_number ?? '--'}}</span> <br>
-                                                <span class="text-xs text-danger text-muted">Role  : {{$next_user->role->name ?? '--'}}</span> <br>
-                                                <hr>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                        @endif
-
-                                </div>
-
-
-
-                            </form>
-
-                        </div>
-                        <div class="col-xl-5 col-lg-5  col-md-5  col-sm-12   mb-4 mt-4  p-0 mt-3 mb-2 ">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
-                                        <h2 class="text-center"><strong>LOAN DETAILS</strong></h2>
-                                        <div class="m-3 text-left">
-                                            <div class="card-body  border-top py-3">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        Purpose : <span
-                                                            class="mb-0"> <b>{{$loan->loan_purpose}}</b></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-body  border-top py-3">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        Loan Type : <span
-                                                            class="mb-0"> <b>{{$loan->loan->name ?? ""}}</b></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-body  border-top py-3">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        Amount : <span
-                                                            class="mb-0"> <b>ZMW {{$loan->loan_amount}}</b></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-body  border-top py-3">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        Interest Percentage : <span class="mb-0"> <b>{{$loan->loan->rate_per_month}} %</b></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-body  border-top py-3">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        Total Payable :<span
-                                                            class="mb-0"> <b>ZMW {{$loan->loan_amount_due}}</b> </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-body  border-top py-3">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        Period : <span
-                                                            class="mb-0"> <b>{{$loan->repayment_period}} Months</b></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-body  border-top py-3">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        Monthly Installments : <span
-                                                            class="mb-0"> <b>ZMW {{$loan->monthly_installments}}</b></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
-                                        <h2 class="text-center"><strong>SCHEDULE</strong></h2>
-                                        <div class="m-3 text-left">
-                                            <div class="card-body  border-top py-3">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        Balance : <span
-                                                            class="mb-0"> <b>ZMW {{number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }} </b></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-body  border-top py-3">
+                                @if(  \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
+                                   || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.admin.id')
+                                   || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.verifier.id')
+                                   || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.approver.id')
+                                  )
+                                    <!-- APPROVALS LIST -->
+                                        <div class="card mt-2">
+                                            <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <table class="table table-striped table_wrapper">
                                                             <thead>
                                                             <tr>
-                                                                <td>#</td>
-                                                                <td>Amount ZMK</td>
-                                                                <td>Due Date</td>
-                                                                <td>Paid</td>
+                                                                <td>By</td>
+                                                                <td>From</td>
+                                                                <td>To</td>
+                                                                <td>Comment</td>
+                                                                <td>Date</td>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                            @foreach($loan->schedules as $key => $schedule)
+                                                            @foreach($approvals as $approval)
                                                                 <tr>
-{{--                                                                    <td>{{$schedule->installment}}</td>--}}
-                                                                    <td>{{++$key}}</td>
-                                                                    <td> {{ number_format(($schedule->amount - ($schedule->paid ?? 0)),2)}}</td>
-                                                                    <td>{{$schedule->date}}</td>
-                                                                    {{--                                                                    @if( $schedule->date  > date('Y-m-d') &&  ($schedule->paid ?? 0) != $schedule->amount )--}}
-                                                                    @if( $schedule->date  < date('Y-m-d') )
-                                                                        @if( ( $schedule->balance ?? -1 ) == 0)
-                                                                            <td><span title="Paid after due date" class="text-success"><i
-                                                                                        class="bi bi-check2-circle"></i> {{ number_format(($schedule->paid ?? 0),2)}}</span>
-                                                                            </td>
-                                                                        @else
-                                                                            <td><span title="Payment is overdue. Please make payment" class="label"><i
-                                                                                        class="bi bi-info-circle-fill text-danger"></i> {{ number_format(($schedule->paid ?? 0),2)}}</span>
-                                                                            </td>
-                                                                        @endif
-                                                                    @else
-                                                                        @if( ( $schedule->balance ?? -1 ) == 0)
-                                                                            <td><span title="Paid in time" class="text-success"><i
-                                                                                        class="bi bi-check2-circle"></i> {{ number_format(($schedule->paid ?? 0),2)}}</span>
-                                                                            </td>
-                                                                        @else
-                                                                            <td><span title="Pending payment" class="text-info"><i
-                                                                                        class="bi bi-dash-circle"></i> {{ number_format(($schedule->paid ?? 0),2)}}</span>
-                                                                            </td>
-                                                                        @endif
-                                                                    @endif
+                                                                    <td>{{$approval->by->name ?? '--'}}</td>
+                                                                    <td>{{$approval->from->name ?? '--'}}</td>
+                                                                    <td>{{$approval->to->name ?? '--'}}</td>
+                                                                    <td>{{$approval->comment ?? '--'}}</td>
+                                                                    <td>{{ \Carbon\Carbon::parse($approval->created_at)->diffForhumans() }}</td>
 
                                                                 </tr>
                                                             @endforeach
@@ -1074,193 +687,634 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @if(  \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
-                                                     )
+                                        </div>
+                                @endif
+
+
+
+                                <!-- APPROVE ACTIONS -->
+                                    <div class="card mt-2">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12 mt-1 mb-3">
+                                                    <label> <b>Current Status
+                                                            : {{$loan->status->name ?? $loan->statuses_id }}</b></label>
+                                                </div>
+
+                                                {{-- [1] : LOAN APPLICATION NEEDS TO BE COMPLETED--}}
+                                                @if($loan->statuses_id == config('constants.status.loan_request_login'))
+
+                                                    {{-- ADMIN --}}
+                                                    @if(
+        ($logged_in_user->role_id ==  config('constants.role.admin.id'))
+       || ($logged_in_user->role_id ==  config('constants.role.verifier.id'))
+       || ($logged_in_user->role_id ==  config('constants.role.approver.id'))
+        )
+                                                        {{-- CLIENT --}}
+                                                        <div class="col-12 text-center">
+                                                    <span class=" bg-gradient-green"
+                                                          title="Client ({{$loan->customer->name  ?? "" }}) needs to complete this loan application and submit for verification">
+                                                        Pending Loan Submission
+                                                    </span>
+                                                        </div>
+                                                    @else
+                                                        <div class="col-12 text-center">
+                                                            <a class="btn btn-outline-primary"
+                                                               title="{{$loan->customer->name  ?? ""  }} needs to complete this loan application and then submit for verification"
+                                                               href="">
+                                                                Complete Loan Application
+                                                            </a>
+                                                        </div>
+                                                    @endif
+
+
+                                                    {{--  LOAN HAS BEEN SUBMITTED --}}
+                                                @elseif($loan->statuses_id == config('constants.status.loan_submission'))
+
+                                                    {{-- VERIFIER --}}
+                                                    @if($logged_in_user->role_id ==  config('constants.role.verifier.id'))
+                                                        <div class="col-lg-8 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="eMail">Comment <span
+                                                                        class="text-danger">*</span></label>
+                                                                <input type="text" required
+                                                                       title="You need to add a reason/comments for your decision"
+                                                                       class="form-control" id="comment" name="comment"
+                                                                       placeholder="Enter comment for your action">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-12">
+                                                            <label for="approve"><span
+                                                                    class="text-success ">Approve</span></label>
+                                                            <button type="submit" name="approve"
+                                                                    title="Click to approve that you have verified this loan"
+                                                                    value="{{config('constants.action.review')}}"
+                                                                    class="btn btn-outline-success"><i
+                                                                    class="ui-icon ui-icon-circle-check"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-12">
+                                                            <label for="reject"><span
+                                                                    class="text-danger">Reject</span></label>
+                                                            <button type="submit" name="reject"
+                                                                    title="Click to reject this loan application e.g because you have not verified the details"
+                                                                    value="{{config('constants.action.reject')}}"
+                                                                    class="btn btn-outline-danger"><i
+                                                                    class="ui-icon ui-icon-circle-close "></i>
+                                                            </button>
+                                                        </div>
+                                                    @else
+                                                        {{-- CLIENT --}}
+                                                        <div class="col-12 text-center">
+                                                        <span class="btn btn-outline-primary"
+                                                              title="Client ({{$loan->customer->name  ?? ""  }}) has completed and submitted loan application, it now needs to be verified by admins">
+                                                            Pending Loan Verification
+                                                        </span>
+                                                        </div>
+                                                    @endif
+
+
+                                                    {{--  LOAN HAS BEEN VERIFIED / PENDING APPROVAL --}}
+                                                @elseif($loan->statuses_id == config('constants.status.loan_reviewed'))
+
+                                                    {{-- VERIFIER --}}
+                                                    @if($logged_in_user->role_id ==  config('constants.role.approver.id'))
+                                                        <div class="col-lg-8 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="eMail">Comment<span
+                                                                        class="text-danger">*</span></label>
+                                                                <input type="text" required
+                                                                       title="You need to add a reason/comments for your decision"
+                                                                       class="form-control" id="comment" name="comment"
+                                                                       placeholder="Enter comment for your action">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-12">
+                                                            <label for="approve"><span
+                                                                    class="text-success ">Approve</span></label>
+                                                            <button type="submit" name="approve"
+                                                                    title="Click to approve that you have verified this loan"
+                                                                    value="{{config('constants.action.approve')}}"
+                                                                    class="btn btn-outline-success"><i
+                                                                    class="ui-icon ui-icon-circle-check"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-12">
+                                                            <label for="reject"><span
+                                                                    class="text-danger">Reject</span></label>
+                                                            <button type="submit" name="reject"
+                                                                    title="Click to reject this loan application e.g because you have not verified the details"
+                                                                    value="{{config('constants.action.reject')}}"
+                                                                    class="btn btn-outline-danger"><i
+                                                                    class="ui-icon ui-icon-circle-close "></i>
+                                                            </button>
+                                                        </div>
+                                                    @else
+                                                        {{-- CLIENT --}}
+                                                        <div class="col-12 text-center">
+                                                        <span class="btn btn-outline-primary"
+                                                              title=" {{$loan->customer->name  ?? ""  }} Loan has been verified and now needs to be approved">
+                                                            Pending Loan Approval
+                                                        </span>
+                                                        </div>
+                                                    @endif
+
+                                                    {{--  APPROVED / FUNDS NEEDS TO BE DISBURSED--}}
+                                                @elseif($loan->statuses_id == config('constants.status.loan_approved'))
+                                                    {{-- VERIFIER --}}
+                                                    {{--                                                @if( $logged_in_user->role_id ==  config('constants.role.verifier.id'))--}}
+                                                    @if( ($logged_in_user->role_id ==  config('constants.role.verifier.id')) ||
+                                               ($logged_in_user->role_id ==  config('constants.role.approver.id')))
+                                                        <div class="col-lg-8 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="eMail">Comment<span
+                                                                        class="text-danger">*</span></label>
+                                                                <input type="text" required
+                                                                       title="You need to add a reason/comments for your decision"
+                                                                       class="form-control" id="comment" name="comment"
+                                                                       placeholder="Enter comment for your action">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-12">
+                                                            <label for="approve"><span
+                                                                    class="text-success ">Approve</span></label>
+                                                            <button type="submit" name="approve"
+                                                                    title="Click to approve that you have verified this loan"
+                                                                    value="{{config('constants.action.funds_disbursed')}}"
+                                                                    class="btn btn-outline-success"><i
+                                                                    class="ui-icon ui-icon-circle-check"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-12">
+                                                            <label for="reject"><span
+                                                                    class="text-danger">Reject</span></label>
+                                                            <button type="submit" name="reject"
+                                                                    title="Click to reject this loan application e.g because you have not verified the details"
+                                                                    value="{{config('constants.action.reject')}}"
+                                                                    class="btn btn-outline-danger"><i
+                                                                    class="ui-icon ui-icon-circle-close "></i>
+                                                            </button>
+                                                        </div>
+                                                    @else
+                                                        {{-- CLIENT --}}
+                                                        <div class="col-12 text-center">
+                                                        <span class="btn btn-outline-primary"
+                                                              title="{{$loan->customer->name  ?? ""  }} Loan has been approved, waiting for funds to be disbursed now.">
+                                                            Pending Funds Disbursement
+                                                        </span>
+                                                        </div>
+                                                    @endif
+
+
+                                                    {{--  FUNDS NEEDS TO BE REPAYEMENT--}}
+                                                @elseif( ($loan->statuses_id == config('constants.status.loan_funds_disbursed') ) ||  ($loan->statuses_id == config('constants.status.loan_payment') )
+                                                   )
+                                                    {{-- VERIFIER / ADMIN / APPROVER --}}
+                                                    @if( ($logged_in_user->role_id ==  config('constants.role.verifier.id')) ||
+                                                     ($logged_in_user->role_id ==  config('constants.role.approver.id')))
+                                                        <div class="col-lg-8 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="eMail">Amount<span
+                                                                        class="text-danger">*</span></label>
+                                                                <input type="number" required
+                                                                       step='0.01'
+                                                                       value='0.00'
+                                                                       title="Enter Amount being repaid"
+                                                                       class="form-control" id="amount" name="amount"
+                                                                       placeholder="Enter Amount Repaid">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-sm-12">
+                                                            <label>Total Balance :<br>
+                                                                <b>ZMK {{number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }}</b>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-8 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="eMail">Comment<span
+                                                                        class="text-danger">*</span></label>
+                                                                <input type="text" required
+                                                                       title="You need to add a reason/comments for your decision"
+                                                                       class="form-control" id="comment" name="comment"
+                                                                       placeholder="Enter comment for your action">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-sm-12">
+                                                            <label for="approve"><span
+                                                                    class="text-success ">Submit Payment</span></label>
+                                                            <button type="submit" name="approve"
+                                                                    title="Click to approve that you have verified this loan"
+                                                                    value="{{config('constants.action.loan_payment')}}"
+                                                                    class="btn btn-outline-success"><i
+                                                                    class="ui-icon ui-icon-circle-check"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-lg-8 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="eMail">Proof of payments<span
+                                                                        class="text-danger">*</span></label>
+                                                                <input type="file" required multiple
+                                                                       title="Upload proof of payments"
+                                                                       class="form-control" id="proof_of_payments"
+                                                                       name="proof_of_payment[]">
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        {{-- CLIENT --}}
+                                                        <div class="col-12 text-center">
+                                                        <span class="btn btn-outline-primary"
+                                                              title="{{$loan->customer->name  ?? ""  }} Loan has been approved, waiting for funds to be repaid now.">
+                                                            Pending Loan Repayment
+                                                        </span>
+                                                        </div>
+                                                    @endif
+
+
+                                                    {{--  NEXT ACTION  --}}
+                                                @else
+                                                    <div class="row-cols-12">
+                                                        {{--                                                    <span type="submit" name="Submit"--}}
+                                                        {{--                                                          title="ummmm devs"--}}
+                                                        {{--                                                          class="btn btn-outline-success">--}}
+                                                        {{--                                                        PENDING NEXT ACTION--}}
+                                                        {{--                                                    </span>--}}
+                                                    </div>
+                                                @endif
+
+
+                                            </div>
+                                        </div>
+
+                                        @if(  \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
+                                           || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.admin.id')
+                                           || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.verifier.id')
+                                           || \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.approver.id')
+                                          )
+
                                             <div class="card-footer">
-                                                 <span > <a class="btn btn-sm float-sm-end btn-outline-warning"
-                                                            href="{{ route('loan.sync.schedules', compact('loan' ))}}">
-                                                        <i class="fa fa-sync"></i> Sync</a></span>
-                                            </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
-                                        <h2 class="text-center"><strong>ACCOUNT DETAILS</strong></h2>
-                                        <div class="m-3 text-left">
-                                            <div class="card-body  border-top py-3">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <table  class="table table-striped table_wrapper">
-                                                            <thead>
-                                                            <tr>
-                                                                <td>#</td>
-                                                                <td>Type</td>
-                                                                <td>Account #</td>
-                                                                <td>Account Name</td>
-                                                                <td>Provider Name</td>
-                                                                <td>Provider Branch</td>
-                                                                <td>Branch Code</td>
-                                                                <td>Action</td>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            @foreach($loan->bankDetails as $key=>$bankDetails)
-                                                                <tr>
-                                                                    <td> {{++$key}} </td>
-                                                                    <td>{{ $bankDetails->type  }}  </td>
-                                                                    <td>{{ $bankDetails->account_number  }}  </td>
-                                                                    <td>{{ $bankDetails->account_name  }}  </td>
-                                                                    <td>{{ $bankDetails->provider_name  }}  </td>
-                                                                    <td>{{ $bankDetails->provider_branch ?? ""  }}  </td>
-                                                                    <td>{{ $bankDetails->branch_code ?? ""  }}  </td>
-                                                                    <td>
-                                                                        <div class="row ">
-                                                                            <div class="col-3">
-                                                                                <a class="btn btn-sm btn-secondary" href="{{route('user.bank-details.show', $bankDetails)}}" >
-                                                                                    <i class="fa fa-eye"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
+                                                <div class="row-cols-12">
+                                                    @if(sizeof($next_users) > 0 )
+                                                        <h6 class="mb-2 text-primary">NEXT USER TO ACT
+                                                            <a class="btn btn-sm float-sm-end btn-outline-secondary "
+                                                               onclick="displayOrOpenForms('next_users_div')">
+                                                                <i class="fa fa-arrow-down"></i></a>
+                                                        </h6>
+                                                    @endif
                                                 </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
-                                        <div class="card-header">
-                                            <h6 class="mb-2 text-primary">PROOF OF PAYMENTS
-                                                <button class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('payment_prof_div')">
-                                                    <i class="fa fa-arrow-down"></i></button>
-                                            </h6>
-                                        </div>
-                                        <div class="card-body  " style="display: none"  id="payment_prof_div">
-                                            <div class="row gutters">
-                                                @if($loan->payments  ?? ""  != null)
-
-                                                    @foreach($loan->payments as $payment)
-                                                    <div class="row">
-                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label for="name">Amount : ZMW <span
-                                                                        class="text-dark "> {{$payment->amount  ?? "" }} </span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label for="eMail">Officer : <span
-                                                                        class="text-dark">{{$payment->officer->name  ?? "" }}</span></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label for="eMail">Comment : <span
-                                                                        class="text-dark">{{$payment->comment  ?? "" }}</span></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                            <div class="form-group">
-                                                                <label for="eMail">Date Paid : <span
-                                                                        class="text-dark">{{$payment->date_paid  ?? "" }}</span></label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                        <div class="row">
-                                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                                                <h6 class="mb-2 text-primary"  >POP's
-                                                                    <button class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('pop'+{{$payment->id}}+'')">
-                                                                        <i class="fa fa-eye"></i></button>
-                                                                </h6>
-                                                            </div>
-                                                            <div id="pop{{$payment->id}}" style="display:none" class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                                                @foreach($payment->paymentProofs as $paymentProof)
-                                                                    <div class="col-12">
-                                                                        <iframe id="{{$paymentProof->id  ?? "" }}"
-                                                                                src="{{$paymentProof->path  ?? ""  }}"
-                                                                                style="width:100%; height: 400px"
-                                                                                title="{{$paymentProof->name  ?? "" }}"></iframe>
-                                                                        <span>{{number_format( $paymentProof->file_size  ?? 0 , 2) }}MB {{$paymentProof->name  ?? "" }} </span>
-                                                                        <span> | </span>
-                                                                        <a href="{{$paymentProof->path  ?? "" }}"
-                                                                           target="_blank">View</a>
-                                                                        <span> | </span>
-                                                                        <a href="#" data-toggle="modal"
-                                                                           data-sent_data="{{$paymentProof  ?? "" }}"
-                                                                           data-target="#modal-change">Edit</a>
-
-                                                                    </div>
-                                                                @endforeach
-                                                            </div>
-                                                        </div>
+                                                <div id="next_users_div" style="display:none">
+                                                    @foreach( $next_users as $next_user)
+                                                        <span
+                                                            class="text-xs text-danger text-muted">Name  : {{$next_user->name ?? '--'}}</span>
+                                                        <br>
+                                                        <span
+                                                            class="text-xs text-danger text-muted">Email : {{$next_user->email ?? '--'}}</span>
+                                                        <br>
+                                                        <span
+                                                            class="text-xs text-danger text-muted">Phone : {{$next_user->mobile_number ?? '--'}}</span>
+                                                        <br>
+                                                        <span
+                                                            class="text-xs text-danger text-muted">Role  : {{$next_user->role->name ?? '--'}}</span>
+                                                        <br>
                                                         <hr>
                                                     @endforeach
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                    </div>
 
 
+                                </form>
+
+                            </div>
+                            <div class="col-xl-5 col-lg-5  col-md-5  col-sm-12   mb-4 mt-4  p-0 mt-3 mb-2 ">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
+                                            <h2 class="text-center"><strong>LOAN DETAILS</strong></h2>
+                                            <div class="m-3 text-left">
+                                                <div class="card-body  border-top py-3">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            Purpose : <span
+                                                                class="mb-0"> <b>{{$loan->loan_purpose}}</b></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body  border-top py-3">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            Loan Type : <span
+                                                                class="mb-0"> <b>{{$loan->loan->name ?? ""}}</b></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body  border-top py-3">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            Amount : <span
+                                                                class="mb-0"> <b>ZMW {{$loan->loan_amount}}</b></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body  border-top py-3">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            Interest Percentage : <span class="mb-0"> <b>{{$loan->loan->rate_per_month}} %</b></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body  border-top py-3">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            Total Payable :<span
+                                                                class="mb-0"> <b>ZMW {{$loan->loan_amount_due}}</b> </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body  border-top py-3">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            Period : <span
+                                                                class="mb-0"> <b>{{$loan->repayment_period}} Months</b></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body  border-top py-3">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            Monthly Installments : <span
+                                                                class="mb-0"> <b>ZMW {{$loan->monthly_installments}}</b></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
+                                            <h2 class="text-center"><strong>SCHEDULE</strong></h2>
+                                            <div class="m-3 text-left">
+                                                <div class="card-body  border-top py-3">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            Balance : <span
+                                                                class="mb-0"> <b>ZMW {{number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }} </b></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body  border-top py-3">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <table class="table table-striped table_wrapper">
+                                                                <thead>
+                                                                <tr>
+                                                                    <td>#</td>
+                                                                    <td>Amount ZMK</td>
+                                                                    <td>Due Date</td>
+                                                                    <td>Paid</td>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                @foreach($loan->schedules as $key => $schedule)
+                                                                    <tr>
+                                                                        {{--                                                                    <td>{{$schedule->installment}}</td>--}}
+                                                                        <td>{{++$key}}</td>
+                                                                        <td> {{ number_format(($schedule->amount - ($schedule->paid ?? 0)),2)}}</td>
+                                                                        <td>{{$schedule->date}}</td>
+                                                                        {{--                                                                    @if( $schedule->date  > date('Y-m-d') &&  ($schedule->paid ?? 0) != $schedule->amount )--}}
+                                                                        @if( $schedule->date  < date('Y-m-d') )
+                                                                            @if( ( $schedule->balance ?? -1 ) == 0)
+                                                                                <td><span title="Paid after due date"
+                                                                                          class="text-success"><i
+                                                                                            class="bi bi-check2-circle"></i> {{ number_format(($schedule->paid ?? 0),2)}}</span>
+                                                                                </td>
+                                                                            @else
+                                                                                <td><span
+                                                                                        title="Payment is overdue. Please make payment"
+                                                                                        class="label"><i
+                                                                                            class="bi bi-info-circle-fill text-danger"></i> {{ number_format(($schedule->paid ?? 0),2)}}</span>
+                                                                                </td>
+                                                                            @endif
+                                                                        @else
+                                                                            @if( ( $schedule->balance ?? -1 ) == 0)
+                                                                                <td><span title="Paid in time"
+                                                                                          class="text-success"><i
+                                                                                            class="bi bi-check2-circle"></i> {{ number_format(($schedule->paid ?? 0),2)}}</span>
+                                                                                </td>
+                                                                            @else
+                                                                                <td><span title="Pending payment"
+                                                                                          class="text-info"><i
+                                                                                            class="bi bi-dash-circle"></i> {{ number_format(($schedule->paid ?? 0),2)}}</span>
+                                                                                </td>
+                                                                            @endif
+                                                                        @endif
+
+                                                                    </tr>
+                                                                @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @if(  \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
+                                                         )
+                                                    <div class="card-footer">
+                                                 <span> <a class="btn btn-sm float-sm-end btn-outline-warning"
+                                                           href="{{ route('loan.sync.schedules', compact('loan' ))}}">
+                                                        <i class="fa fa-sync"></i> Sync</a></span>
+                                                    </div>
                                                 @endif
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-
-                                <!--  DEVELOPER CHANGE LOAN STATUS -->
-                                @if(  \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
-                                                           )
-                                <div class="col-12">
-                                    <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
-                                        <div class="card-header">
-                                            <h6 class="mb-2 text-primary">CHANGE STATUS
-                                                <button class="btn btn-sm float-sm-end btn-outline-secondary ml-2 " onclick="displayOrOpenForms('finish_apply_form_state_change')">
-                                                    <i class="fa fa-arrow-down"></i> </button>
-                                            </h6>
-                                        </div>
-                                        <form id="finish_apply_form_state_change" style="display: none" method="POST" action="{{ route('loan.state.change', compact('loan' )) }}">
-                                          @csrf
-                                            <div class="card-body  "  id="payment_prof_div_3">
-                                                <div class="row gutters">
+                                    <div class="col-12">
+                                        <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
+                                            <h2 class="text-center"><strong>ACCOUNT DETAILS</strong></h2>
+                                            <div class="m-3 text-left">
+                                                <div class="card-body  border-top py-3">
                                                     <div class="row">
-                                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                                            <div class="form-group">
-                                                                <select name="change_state" class="form-control" >
-                                                                    <option value = "" >--Select--</option>
-                                                                    @foreach($statuses as $state)
-                                                                        <option value="{{$state->id}}">{{$state->name}}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
+                                                        <div class="col-12">
+                                                            <table class="table table-striped table_wrapper">
+                                                                <thead>
+                                                                <tr>
+                                                                    <td>#</td>
+                                                                    <td>Type</td>
+                                                                    <td>Account #</td>
+                                                                    <td>Account Name</td>
+                                                                    <td>Provider Name</td>
+                                                                    <td>Provider Branch</td>
+                                                                    <td>Branch Code</td>
+                                                                    <td>Action</td>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                @foreach($loan->bankDetails as $key=>$bankDetails)
+                                                                    <tr>
+                                                                        <td> {{++$key}} </td>
+                                                                        <td>{{ $bankDetails->type  }}  </td>
+                                                                        <td>{{ $bankDetails->account_number  }}  </td>
+                                                                        <td>{{ $bankDetails->account_name  }}  </td>
+                                                                        <td>{{ $bankDetails->provider_name  }}  </td>
+                                                                        <td>{{ $bankDetails->provider_branch ?? ""  }}  </td>
+                                                                        <td>{{ $bankDetails->branch_code ?? ""  }}  </td>
+                                                                        <td>
+                                                                            <div class="row ">
+                                                                                <div class="col-3">
+                                                                                    <a class="btn btn-sm btn-secondary"
+                                                                                       href="{{route('user.bank-details.show', $bankDetails)}}">
+                                                                                        <i class="fa fa-eye"></i>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                                </tbody>
+                                                            </table>
                                                         </div>
                                                     </div>
-                                                    <hr>
+
                                                 </div>
                                             </div>
-                                            <div class="card-footer">
-                                                <button class="btn btn-sm btn-secondary" type="submit" >
-                                                    Submit
-                                                </button>
-                                            </div>
-                                        </form>
-
-
+                                        </div>
                                     </div>
-                                </div>
-                                @endif
+                                    <div class="col-12">
+                                        <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
+                                            <div class="card-header">
+                                                <h6 class="mb-2 text-primary">PROOF OF PAYMENTS
+                                                    <button class="btn btn-sm float-sm-end btn-outline-secondary "
+                                                            onclick="displayOrOpenForms('payment_prof_div')">
+                                                        <i class="fa fa-arrow-down"></i></button>
+                                                </h6>
+                                            </div>
+                                            <div class="card-body  " style="display: none" id="payment_prof_div">
+                                                <div class="row gutters">
+                                                    @if($loan->payments  ?? ""  != null)
 
+                                                        @foreach($loan->payments as $payment)
+                                                            <div class="row">
+                                                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                                    <div class="form-group">
+                                                                        <label for="name">Amount : ZMW <span
+                                                                                class="text-dark "> {{$payment->amount  ?? "" }} </span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                                    <div class="form-group">
+                                                                        <label for="eMail">Officer : <span
+                                                                                class="text-dark">{{$payment->officer->name  ?? "" }}</span></label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                                    <div class="form-group">
+                                                                        <label for="eMail">Comment : <span
+                                                                                class="text-dark">{{$payment->comment  ?? "" }}</span></label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                                    <div class="form-group">
+                                                                        <label for="eMail">Date Paid : <span
+                                                                                class="text-dark">{{$payment->date_paid  ?? "" }}</span></label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                                    <h6 class="mb-2 text-primary">POP's
+                                                                        <button
+                                                                            class="btn btn-sm float-sm-end btn-outline-secondary "
+                                                                            onclick="displayOrOpenForms('pop'+{{$payment->id}}+'')">
+                                                                            <i class="fa fa-eye"></i></button>
+                                                                    </h6>
+                                                                </div>
+                                                                <div id="pop{{$payment->id}}" style="display:none"
+                                                                     class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                                    @foreach($payment->paymentProofs as $paymentProof)
+                                                                        <div class="col-12">
+                                                                            <iframe id="{{$paymentProof->id  ?? "" }}"
+                                                                                    src="{{$paymentProof->path  ?? ""  }}"
+                                                                                    style="width:100%; height: 400px"
+                                                                                    title="{{$paymentProof->name  ?? "" }}"></iframe>
+                                                                            <span>{{number_format( $paymentProof->file_size  ?? 0 , 2) }}MB {{$paymentProof->name  ?? "" }} </span>
+                                                                            <span> | </span>
+                                                                            <a href="{{$paymentProof->path  ?? "" }}"
+                                                                               target="_blank">View</a>
+                                                                            <span> | </span>
+                                                                            <a href="#" data-toggle="modal"
+                                                                               data-sent_data="{{$paymentProof  ?? "" }}"
+                                                                               data-target="#modal-change">Edit</a>
+
+                                                                        </div>
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                        @endforeach
+
+
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!--  DEVELOPER CHANGE LOAN STATUS -->
+                                    @if(  \Illuminate\Support\Facades\Auth::user()->role_id  ==  config('constants.role.developer.id')
+                                                               )
+                                        <div class="col-12">
+                                            <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
+                                                <div class="card-header">
+                                                    <h6 class="mb-2 text-primary">CHANGE STATUS
+                                                        <button
+                                                            class="btn btn-sm float-sm-end btn-outline-secondary ml-2 "
+                                                            onclick="displayOrOpenForms('finish_apply_form_state_change')">
+                                                            <i class="fa fa-arrow-down"></i></button>
+                                                    </h6>
+                                                </div>
+                                                <form id="finish_apply_form_state_change" style="display: none"
+                                                      method="POST"
+                                                      action="{{ route('loan.state.change', compact('loan' )) }}">
+                                                    @csrf
+                                                    <div class="card-body  " id="payment_prof_div_3">
+                                                        <div class="row gutters">
+                                                            <div class="row">
+                                                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                                                    <div class="form-group">
+                                                                        <select name="change_state"
+                                                                                class="form-control">
+                                                                            <option value="">--Select--</option>
+                                                                            @foreach($statuses as $state)
+                                                                                <option
+                                                                                    value="{{$state->id}}">{{$state->name}}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <button class="btn btn-sm btn-secondary" type="submit">
+                                                            Submit
+                                                        </button>
+                                                    </div>
+                                                </form>
+
+
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
 
@@ -1270,15 +1324,15 @@
 
 
 @push('custom-scripts')
-<script >
-    function displayOrOpenForms(payment_prof_div){
+    <script>
+        function displayOrOpenForms(payment_prof_div) {
 
-        var display = document.getElementById(payment_prof_div).style.display;
-        if(display == 'block'){
-            document.getElementById(payment_prof_div).style.display = 'none';
-        }else{
-              document.getElementById( payment_prof_div ).style.display = 'block';
+            var display = document.getElementById(payment_prof_div).style.display;
+            if (display == 'block') {
+                document.getElementById(payment_prof_div).style.display = 'none';
+            } else {
+                document.getElementById(payment_prof_div).style.display = 'block';
+            }
         }
-    }
-</script>
+    </script>
 @endpush
