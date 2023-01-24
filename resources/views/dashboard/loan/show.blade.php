@@ -321,7 +321,7 @@
                                                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                             <div class="form-group">
                                                                 <label for="name">Full Name : <span
-                                                                        class="text-dark "> {{$loan->customer->name  ?? "" }} </span>
+                                                                        class="text-dark "> {{$loan->customer->title  ?? "" }}  {{$loan->customer->name  ?? "" }} </span>
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -345,7 +345,7 @@
                                                         </div>
                                                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                             <div class="form-group">
-                                                                <label for="nid">National Identity<span
+                                                                <label for="nid">National Identity : <span
                                                                         class="text-dark">{{$loan->customer->nid  ?? ""  }}</span></label>
                                                             </div>
                                                         </div>
@@ -353,6 +353,18 @@
                                                             <div class="form-group">
                                                                 <label for="gender">Gender : <span
                                                                         class="text-dark">{{$loan->customer->gender  ?? ""  }}</span></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="gender">Marital Status : <span
+                                                                        class="text-dark">{{$loan->customer->marital_status  ?? ""  }}</span></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label for="district"> District : <span
+                                                                        class="text-dark">{{$loan->customer->district  ?? ""  }}</span></label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -407,13 +419,30 @@
                                                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="role_id">Work Status : <span
-                                                                    class="text-dark">{{$loan->customer->name ?? "--Choose--" }}</span></label>
+                                                                    class="text-dark">{{$loan->customer->work->name ?? "--Choose--" }}</span></label>
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                         <div class="form-group">
-                                                            <label for="customer_type_id">User-Type <span
+                                                            <label for="customer_type_id">User-Type : <span
                                                                     class="text-dark">{{$loan->customer->customerType->name  ?? "" }}</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="row gutters">
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="role_id">Employer Name : <span
+                                                                    class="text-dark">{{$loan->customer->workplace->first()->name  ?? "" }}</span></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="customer_type_id">Employer Address: <span
+                                                                    class="text-dark">{{$loan->customer->workplace->first()->address  ?? "" }}</span>
                                                             </label>
                                                         </div>
                                                     </div>

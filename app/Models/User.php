@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Settings\CustomerTypes;
 use App\Models\Settings\Roles;
 use App\Models\Settings\Status;
+use App\Models\Settings\WorkPlace;
 use App\Models\Settings\WorkStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -33,7 +34,9 @@ class User extends Authenticatable
         'email',
         'nid',
         'gender',
+        'marital_status',
         'address',
+        'district',
         'avatar',
         'identity',
         'country',
@@ -93,10 +96,13 @@ class User extends Authenticatable
         return $this->belongsTo(CustomerTypes::class);
     }
     public function status(){
-        return $this->belongsTo(Status::class);
+        return $this->belongsTo(Status::class  );
     }
     public function work(){
         return $this->belongsTo(WorkStatus::class, 'work_status_id', 'id');
+    }
+    public function workplace(){
+        return $this->belongsTo(WorkPlace::class, 'id', 'user_id');
     }
     public function kin(){
         return $this->hasOne(NextOfKin::class);

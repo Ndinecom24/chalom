@@ -205,7 +205,7 @@
                                                     @if( ($loan->customer->name ?? "pica" ) == "pica" )
                                                         <span class="text-info">Pending User</span>
                                                     @else
-                                                        {{$loan->customer->name }}
+                                                        {{$loan->customer->title }}  {{$loan->customer->name }}
                                                     @endif
                                                 </td>
                                                 <td>  {{ $loan->customer->mobile_number }} </td>

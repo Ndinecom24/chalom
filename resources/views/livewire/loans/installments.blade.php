@@ -189,7 +189,7 @@
                                             @if( ($installment->loan->customer->name ?? "pica" ) == "pica" )
                                                 <span class="text-info">Pending User</span>
                                             @else
-                                                {{$installment->loan->customer->name }}
+                                                {{$installment->loan->customer->title }} {{$installment->loan->customer->name }}
                                             @endif
                                         </td>
                                         <td>{{$installment->loan->loan->name}} </td>

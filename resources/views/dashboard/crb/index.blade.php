@@ -89,7 +89,6 @@
                                 <th width="280px" style="text-align: center">NRC No</th>
                                 <th width="280px" style="text-align: center">Gender</th>
                                 <th width="280px" style="text-align: center">Town</th>
-                                <th width="280px" style="text-align: center">Province</th>
                                 <th width="280px" style="text-align: center">District</th>
                                 <th width="280px" style="text-align: center">Address</th>
                                 <th width="280px" style="text-align: center">Date Applied</th>
@@ -103,17 +102,22 @@
                                 <tr>
 
                                     <td>{{ $loop->index +1 }}</td>
-                                    <td>{{ $loanApplication->customer->name }}</td>
-                                    <td>{{ $loanApplication->customer->nid }}</td>
-                                    <td></td>
+                                    <td> {{ $loanApplication->customer->title ?? "" }} {{ $loanApplication->customer->name }}</td>
+                                    <td>{{ $loanApplication->customer->marital_status ?? "--" }}</td>
+                                    <td>
+                                    @if(  $loanApplication->customer->workplace)
+                                            {{ $loanApplication->customer->workplace->first()->name ?? "--" }}
+                                        @else
+                                        --
+                                        @endif
+                                    </td>
                                     <td>{{ $loanApplication->customer->nid }}</td>
                                     <td>{{ $loanApplication->customer->gender  }}</td>
                                     <td>
-                                        {{ $loanApplication->customer->city  }} -
+                                        {{ $loanApplication->customer->city  }},
                                         {{ $loanApplication->customer->country  }}
                                     </td>
-                                    <td>Province</td>
-                                    <td>District</td>
+                                    <td> {{ $loanApplication->customer->district  }}</td>
                                     <td>
                                         {{ $loanApplication->customer->zip_code  }},
                                         {{ $loanApplication->customer->address ?? '' }}

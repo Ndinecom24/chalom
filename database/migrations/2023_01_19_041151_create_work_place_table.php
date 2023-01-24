@@ -16,12 +16,8 @@ class CreateWorkPlaceTable extends Migration
         Schema::create('work_place', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
             $table->string('address');
-            $table->string('city')->nullable();
-            $table->string('country')->nullable();
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
+            $table->integer('user_id');
             $table->timestamps();
             $table->softDeletes();
         });

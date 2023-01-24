@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Website\Loans;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Dashboard\FilesController;
+use App\Http\Requests\LoanApplicationRequest;
 use App\Models\Dashboard\Logs\Notifications;
 use App\Models\LoanPayments;
 use App\Models\Loans\LoanApplications;
@@ -13,6 +14,7 @@ use App\Models\Loans\LoanSchedule;
 use App\Models\NextOfKin;
 use App\Models\Settings\CustomerTypes;
 use App\Models\Settings\Status;
+use App\Models\Settings\WorkPlace;
 use App\Models\Settings\WorkStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -327,7 +329,7 @@ class LoanApplicationsController extends Controller
         return view('dashboard.loan.apply')->with(compact('user', 'works', 'loanProd', 'statuses', 'customer_types'));
     }
 
-    public function finish(Request $request, LoanApplications $loan, User $user)
+    public function finish(LoanApplicationRequest $request, LoanApplications $loan, User $user)
     {
 
         $status_unseen = config('constants.status.unseen');
@@ -337,6 +339,20 @@ class LoanApplicationsController extends Controller
         $schedule_amount = ($loan->loan_amount_due / $loan->repayment_period);
 
         $loan->loan('loan');
+
+        //save workplace details
+
+        $work_place = WorkPlace::updateOrCreate(
+            [
+                'name' => strtoupper( trim($request->workplace_name)),
+                'user_id' => $user->id
+            ],
+            [
+                'name' => strtoupper( trim($request->workplace_name)),
+                'address' => strtoupper( trim($request->workplace_address)),
+                'user_id' => $user->id
+            ]
+        );
 
         //validate if it needs a collateral
         if ($loan->loan->collateral == "Need Collateral") {
@@ -436,6 +452,9 @@ class LoanApplicationsController extends Controller
         $user->plot_street = $request->plot_street;
         $user->zip_code = $request->zip_code;
         $user->work_status_id = $request->work_status_id;
+        $user->marital_status = $request->marital_status;
+        $user->district = $request->district;
+
         $user->save();
 
         //loan
