@@ -40,6 +40,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function username()
+    {
+        return 'mobile_number';
+    }
+
     /**
      * The user has been authenticated.
      *

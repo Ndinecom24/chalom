@@ -35,8 +35,8 @@
 
                             <div class="text-center mb-4">
                                 <a href="{{ route('welcome') }}">
-                                    <h1 style="font-family:'Arial Rounded MT Bold'">CHALOM</h1>
-{{--                                    <img class="mb-2" src="{{asset('images/brac.jpg')}}" alt="" width="220" height="72">--}}
+                                    <h1 style="font-family:'Arial Rounded MT Bold'">Chalom Investments</h1>
+                                    {{--                                    <img class="mb-2" src="{{asset('images/brac.jpg')}}" alt="" width="220" height="72">--}}
                                 </a>
                             </div>
                             <div class="text-center mb-4">
@@ -44,11 +44,11 @@
                             </div>
 
                             <div class="form-label-group">
-                                <input type="email" id="inputEmail"
-                                       class="form-control  @error('email') is-invalid @enderror" name="email"
-                                       placeholder="Email address" required autofocus>
-                                <label for="inputEmail">{{ __('E-Mail Address') }}</label>
-                                @error('email')
+                                <input type="phone" id="inputMobileNo"
+                                       class="form-control  @error('mobile_number') is-invalid @enderror" name="mobile_number"
+                                       placeholder="Phone Number" required autofocus>
+                                <label for="inputPhoneNo">{{ __('Mobile No') }}</label>
+                                @error('mobile_number')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
