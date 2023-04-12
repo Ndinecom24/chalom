@@ -57,10 +57,10 @@
 
                             <div class="form-label-group">
                                 <input type="text" id="inputMobileNo"
-                                       class="form-control  @error('mobileno') is-invalid @enderror" name="mobileno"
+                                       class="form-control  @error('mobile_number') is-invalid @enderror" name="mobile_number"
                                        placeholder="Mobile No" required autofocus>
                                 <label for="inputMobileNo">{{ __('Mobile No') }}</label>
-                                @error('mobileno')
+                                @error('mobile_number')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

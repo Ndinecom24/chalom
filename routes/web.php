@@ -51,6 +51,9 @@ Route::group([
     'middleware' => ['auth', 'active.user']
 ], function () {
     Route::get('/home', [HomeController::class, 'home'])->name('home');
+    Route::get('2fa', [App\Http\Controllers\TwoFAController::class, 'index'])->name('2fa.index');
+    Route::post('2fa', [App\Http\Controllers\TwoFAController::class, 'store'])->name('2fa.post');
+    Route::get('2fa/reset', [App\Http\Controllers\TwoFAController::class, 'resend'])->name('2fa.resend');
 }
 );
 

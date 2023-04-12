@@ -40,6 +40,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function username()
+    {
+        return 'mobile_number';
+    }
+
     /**
      * The user has been authenticated.
      *
@@ -59,6 +64,16 @@ class LoginController extends Controller
                     'customer_id' => $user->id,
                     'statuses_id' => config('constants.status.loan_request_login'),
                 ]);
+            $credentials = $request->only('email', 'password');
+            if (Auth::attempt($credentials)) {
+
+                auth()->user()->generateCode();
+
+                return redirect()->route('2fa.index');
+            }
+
+            return redirect("login")->withSuccess('Oppes! You have entered invalid credentials');
+
         }
     }
 }

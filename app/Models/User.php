@@ -26,16 +26,17 @@ class User extends Authenticatable
     protected $primaryKey = 'id';
     protected $fillable = [
         'uuid',
-        'mobileno',
         'title',
+        'mobile_number',
         'name',
         'password',
-        'mobile_number',
         'dob',
         'email',
         'nid',
         'gender',
+        'marital_status',
         'address',
+        'district',
         'avatar',
         'identity',
         'country',
@@ -84,6 +85,38 @@ class User extends Authenticatable
         'role',
         'customerType'
     ];
+// 2FATOR AUTH
+    public function generateCode()
+    {
+        $code = rand(1000, 9999);
+
+        UserCode::updateOrCreate(
+            [ 'user_id' => auth()->user()->id ],
+            [ 'code' => $code ]
+        );
+
+        $receiverNumber = auth()->user()->phone;
+        $message = "2FA login code is ". $code;
+
+        try {
+
+            $account_sid = getenv("TWILIO_SID");
+            $auth_token = getenv("TWILIO_TOKEN");
+            $twilio_number = getenv("TWILIO_FROM");
+
+            $client = new Client($account_sid, $auth_token);
+            $client->messages->create($receiverNumber, [
+                'from' => $twilio_number,
+                'body' => $message]);
+
+        } catch (Exception $e) {
+            info("Error: ". $e->getMessage());
+        }
+    }
+
+//2 FACTOR AUTH END
+
+
 
     public function role(){
         return $this->belongsTo(Roles::class);
@@ -94,18 +127,15 @@ class User extends Authenticatable
     }
 
     public function status(){
-        return $this->belongsTo(Status::class);
+        return $this->belongsTo(Status::class  );
     }
 
     public function work(){
         return $this->belongsTo(WorkStatus::class, 'work_status_id', 'id');
     }
-    public function workPlace(){
-        return $this->belongsTo(WorkPlace::class, 'work_place_id', 'id');
+    public function workplace(){
+        return $this->belongsTo(WorkPlace::class, 'id', 'user_id');
     }
-
-
-
     public function kin(){
         return $this->hasOne(NextOfKin::class);
     }

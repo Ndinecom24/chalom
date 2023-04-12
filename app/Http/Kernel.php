@@ -85,5 +85,6 @@ class Kernel extends HttpKernel
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
         'active.user' => ActiveUserMiddleware::class,
+        '2fa' => \App\Http\Middleware\Check2FA::class,
     ];
 }

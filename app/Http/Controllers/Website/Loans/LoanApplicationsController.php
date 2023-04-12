@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Website\Loans;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Dashboard\FilesController;
+use App\Http\Requests\LoanApplicationRequest;
 use App\Models\Dashboard\Logs\Notifications;
 use App\Models\LoanPayments;
 use App\Models\Loans\LoanApplications;
@@ -352,7 +353,7 @@ class LoanApplicationsController extends Controller
         return view('dashboard.loan.apply')->with(compact('user', 'works', 'loanProd', 'statuses', 'customer_types'));
     }
 
-    public function finish(Request $request, LoanApplications $loan, User $user)
+    public function finish(LoanApplicationRequest $request, LoanApplications $loan, User $user)
     {
 
         $status_unseen = config('constants.status.unseen');
@@ -478,6 +479,9 @@ class LoanApplicationsController extends Controller
         $user->plot_street = $request->plot_street;
         $user->zip_code = $request->zip_code;
         $user->work_status_id = $request->work_status_id;
+        $user->marital_status = $request->marital_status;
+        $user->district = $request->district;
+
         $user->save();
 
         //loan
