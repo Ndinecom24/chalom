@@ -54,9 +54,11 @@ class HomeController extends Controller
                 $loans_req = $loans->where('statuses_id', config('constants.status.loan_request_login'))->get();
                 if ((sizeof($loans_req)) > 0) {
                     $works = WorkStatus::all();
+                    $work_places = WorkPlace::all();
                     $statuses = Status::all();
                     $loan = $loans_req->first();
-                    $work_places = WorkPlace::get();
+
+//                    dd($loan);
                     return view('dashboard.loan.finish_apply')->with(compact('user', 'loan', 'works', 'statuses', 'work_places'));
                 } else {
                     //check if you do not have bank details

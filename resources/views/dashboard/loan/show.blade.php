@@ -425,6 +425,7 @@
                                                                         class="text-dark">{{$loan->customer->work->name ?? "--Choose--" }}</span></label>
                                                             </div>
                                                         </div>
+
                                                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                             <div class="form-group">
                                                                 <label for="customer_type_id">User-Type : <span
@@ -460,6 +461,20 @@
                                                                         @endif
                                                                 </span>
                                                                 </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="role_id">Employee : <span
+                                                                    class="text-dark">{{$loan->workPlace->name ?? "--Choose--" }}</span></label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="role_id">Employee : <span
+                                                                    class="text-dark">{{$loan->workPlace->address ?? "--Choose--" }}</span></label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -514,63 +529,57 @@
                                     </div>
 
 
-                                    <div class="card  mt-2">
-                                        <div class="card-header">
-                                            <h6 class="mb-2 text-primary">PAYSLIPS
-                                                <a class="btn btn-sm float-sm-end btn-outline-secondary "
-                                                   onclick="displayOrOpenForms('payslip_div')">
-                                                    <i class="fa fa-arrow-down"></i></a>
-                                            </h6>
-                                        </div>
-                                        <div id="payslip_div" style="display:none" class="card-body ">
-                                            <div class="row gutters">
-                                                @if($loan->payslips != null)
-                                                    @foreach($loan->payslips as $payslip)
-                                                        <div class="col-12">
-                                                            <iframe id="{{$payslip->id}}"
-                                                                    src="{{$payslip->path }}"
-                                                                    style="width:100%; height: 800px"
-                                                                    title="{{$payslip->name}}"></iframe>
-                                                            <span>{{number_format( $payslip->file_size, 2) }}MB {{$payslip->name}} </span>
-                                                            <span> | </span>
-                                                            <a href="{{$payslip->path}}"
-                                                               target="_blank">View</a>
-                                                            <span> | </span>
-                                                            <a href="#" data-toggle="modal"
-                                                               data-sent_data="{{$payslip}}"
-                                                               data-target="#modal-change">Edit</a>
-
-                                                        </div>
-                                                    @endforeach
-                                                @endif
-                                            </div>
+                                <div class="card  mt-2">
+                                    <div class="card-header">
+                                        <h6 class="mb-2 text-primary">PAYSLIPS
+                                            <a class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('payslip_div')">
+                                                <i class="fa fa-arrow-down"></i></a>
+                                        </h6>
+                                    </div>
+                                    <div id="payslip_div" style="display:none" class="card-body ">
+                                        <div class="row gutters">
+                                            @if($loan->payslips != null)
+                                                @foreach($loan->payslips as $payslip)
+                                                    <div class="col-12">
+                                                        <iframe id="{{$payslip->id}}"
+                                                                src="{{$payslip->path }}"
+                                                                style="width:100%; height: 800px"
+                                                                title="{{$payslip->name}}"></iframe>
+                                                        <span>{{number_format( $payslip->file_size, 2) }}MB {{$payslip->name}} </span>
+                                                        <span> | </span>
+                                                        <a href="{{$payslip->path}}"
+                                                           target="_blank">View</a>
+                                                        <span> | </span>
+                                                        <a href="#" data-toggle="modal" data-sent_data="{{$payslip}}" data-target="#modal-change">Edit</a>
+                                                    </div>
+                                                @endforeach
+                                            @endif
                                         </div>
                                     </div>
-                                    <div class="card mt-2">
-                                        <div class="card-header">
-                                            <h6 class="mb-2 text-primary">ACCOUNT STATEMENT
-                                                <a class="btn btn-sm float-sm-end btn-outline-secondary "
-                                                   onclick="displayOrOpenForms('account_statment_div')">
-                                                    <i class="fa fa-arrow-down"></i></a>
-                                            </h6>
-                                        </div>
-                                        <div class="card-body " id="account_statment_div" style="display:none">
-                                            <div class="row gutters">
-                                                @if($loan->statements != null)
-                                                    @foreach($loan->statements as $statement)
-                                                        <div class="col-12">
-                                                            <iframe id="{{$statement->id}}"
-                                                                    src="{{$statement->path }}"
-                                                                    style="width:100%; height: 800px"
-                                                                    title="{{$statement->name}}"></iframe>
-                                                            <span>{{number_format( $statement->file_size, 2) }}MB {{$statement->name}} </span>
-                                                            <span> | </span>
-                                                            <a href="{{$statement->path}}"
-                                                               target="_blank">View</a>
-                                                            <span> | </span>
-                                                            <a href="#" data-toggle="modal"
-                                                               data-sent_data="{{$statement}}"
-                                                               data-target="#modal-change">Edit</a>
+                                </div>
+                                <div class="card mt-2">
+                                    <div class="card-header">
+                                        <h6 class="mb-2 text-primary">ACCOUNT STATEMENT
+                                            <a class="btn btn-sm float-sm-end btn-outline-secondary " onclick="displayOrOpenForms('account_statment_div')">
+                                                <i class="fa fa-arrow-down"></i></a>
+                                        </h6>
+                                    </div>
+                                    <div class="card-body "  id="account_statment_div" style="display:none">
+                                        <div class="row gutters">
+                                            @if($loan->statements != null)
+                                                @foreach($loan->statements as $statement)
+                                                    <div class="col-12">
+                                                        <iframe id="{{$statement->id}}"
+                                                                src="{{$statement->path }}"
+                                                                style="width:100%; height: 800px"
+                                                                title="{{$statement->name}}"></iframe>
+                                                        <span>{{number_format( $statement->file_size, 2) }}MB {{$statement->name}} </span>
+                                                        <span> | </span>
+                                                        <a href="{{$statement->path}}"
+                                                           target="_blank">View</a>
+                                                        <span> | </span>
+                                                        <a href="#" data-toggle="modal" data-sent_data="{{$statement}}"
+                                                           data-target="#modal-change">Edit</a>
 
                                                         </div>
                                                     @endforeach
@@ -1028,7 +1037,7 @@
                                                     <div class="row">
                                                         <div class="col-12">
                                                             Total Payable :<span
-                                                                class="mb-0"> <b>ZMW {{$loan->loan_amount_due}}</b> </span>
+                                                                class="mb-0"> <b>ZMW {{$loan->schedules->sum('amount')}}</b> </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1044,7 +1053,13 @@
                                                     <div class="row">
                                                         <div class="col-12">
                                                             Monthly Installments : <span
-                                                                class="mb-0"> <b>ZMW {{$loan->monthly_installments}}</b></span>
+                                                                class="mb-0"> <b>ZMW
+                                                                @if($loan->payment_plan == 1)
+                                                                {{$loan->monthly_installments}}
+                                                                @else
+                                                                    {{$loan->monthly_installments1}}
+                                                                @endif
+                                                            </b></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1059,7 +1074,7 @@
                                                     <div class="row">
                                                         <div class="col-12">
                                                             Balance : <span
-                                                                class="mb-0"> <b>ZMW {{number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }} </b></span>
+                                                                class="mb-0"> <b>ZMW {{number_format( ($loan->schedules->sum('balance')), 2) }} </b></span>
                                                         </div>
                                                     </div>
                                                 </div>

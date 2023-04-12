@@ -91,45 +91,69 @@ class LoanApplicationsController extends Controller
         $customer_type = $request->customer_type;
 
         //get the loan
-        $loan = LoanProducts::find($request->loan_prod);
+        $loan = LoanProducts::find( $request->loan_prod );
 
-        //loan applications
-        $model = LoanApplications::UpdateOrCreate(
-            [
-                "uuid" => $uuid,
-                "loan_amount" => $request->loan_amount,
-                "loan_product_id" => $request->loan_prod,
-                "repayment_period" => $request->repayment_period,
-                "monthly_income" => $request->monthly_income,
-                "other_income" => $request->other_income ?? 0,
-                "monthly_deduct" => $request->monthly_deduct ?? 0,
-                "statuses_id" => $status
-            ],
-            [
-                "uuid" => $uuid,
-                "loan_purpose" => $request->loan_purpose,
-                "loan_amount" => $request->loan_amount,
-                "loan_product_id" => $request->loan_prod,
-                "repayment_period" => $request->repayment_period,
-                "monthly_income" => $request->monthly_income ?? 0,
-                "other_income" => $request->other_income ?? 0,
-                "monthly_deduct" => $request->monthly_deduct ?? 0,
-                "loan_rate" => $loan->rate_per_month ?? 0,
-                "loan_amount_due" => $request->total_repayment,
-                "loan_arrangement_fee" => $loan->arrangement_fee ?? 0,
-                'collateral_description' => $loan->collateral ?? "none",
-                "customer_id" => $user->id ?? 0,
-                "created_by" => $logged_in->id ?? 0,
-                "statuses_id" => $status
-            ]
-        );
+        if($request->loan_amount >= $loan->lowest_amount  &&  $request->loan_amount <= $loan->highest_amount ){
+            if($request->repayment_period >= $loan->lowest_tenure  &&  $request->repayment_period <= $loan->highest_tenure ){
 
-        session(['my_loan_request' => $model->id]);
+                //loan applications
+                $model = LoanApplications::UpdateOrCreate(
+                    [
+                        "uuid" => $uuid,
+                        "loan_amount" => $request->loan_amount,
+                        "loan_product_id" => $request->loan_prod,
+                        "repayment_period" => $request->repayment_period,
+                        "monthly_income" => $request->monthly_income,
+                        "other_income" => $request->other_income ?? 0,
+                        "monthly_deduct" => $request->monthly_deduct ?? 0,
+                        "statuses_id" => $status
+                    ],
+                    [
+                        "uuid" => $uuid,
+                        "loan_purpose" => $request->loan_purpose,
+                        "loan_amount" => $request->loan_amount,
+                        "loan_product_id" => $request->loan_prod,
+                        "repayment_period" => $request->repayment_period,
+                        "monthly_income" => $request->monthly_income ?? 0,
+                        "other_income" => $request->other_income ?? 0,
+                        "monthly_deduct" => $request->monthly_deduct ?? 0,
+                        "loan_rate" => $loan->rate_per_month ?? 0,
+                        "loan_amount_due" => $request->total_repayment,
+                        "loan_arrangement_fee" => $loan->arrangement_fee ?? 0,
+                        'collateral_description' => $loan->collateral ?? "none",
+                        "customer_id" => $user->id ?? 0,
+                        "created_by" => $logged_in->id ?? 0,
+                        "statuses_id" => $status,
+                        "work_place_id" => 0,
+                        "payment_plan" => 0
+                    ]
+                );
+                session(['my_loan_request' => $model->id]);
 
-        //return
-        $data['uuid'] = $uuid;
-        $data['customer_type'] = $customer_type;
-        return json_encode($data);
+                //return
+                $data['error'] = false;
+                $data['message'] = "No Error";
+                $data['uuid'] = $uuid;
+                $data['customer_type'] = $customer_type ?? config('constants.customer_type.new');
+                return json_encode($data);
+
+            }else{
+                //return
+                $data['error'] = true;
+                $data['message'] = "The selected repayment period (".$request->repayment_period.") should be between ".$loan->lowest_tenure ." and ".$loan->highest_tenure .".";
+                $data['uuid'] = $uuid;
+                $data['customer_type'] = $customer_type;
+                return json_encode($data);
+            }
+        }else{
+            //return
+            $data['error'] = true;
+            $data['message'] = "The selected amount (".$request->loan_amount.") should be between ".$loan->lowest_amount ." and ".$loan->highest_amount .".";
+            $data['uuid'] = $uuid;
+            $data['customer_type'] = $customer_type;
+            return json_encode($data);
+        }
+
     }
 
     public function stateChange(LoanApplications $loan, Request $request)
@@ -340,19 +364,23 @@ class LoanApplicationsController extends Controller
 
         $loan->loan('loan');
 
-        //save workplace details
-
         $work_place = WorkPlace::updateOrCreate(
             [
-                'name' => strtoupper( trim($request->workplace_name)),
-                'user_id' => $user->id
-            ],
+                'name' => strtoupper($request->work_name ),
+                'description'=> strtoupper($request->work_name ),
+                'address'=> strtoupper($request->work_address ),
+                ],
             [
-                'name' => strtoupper( trim($request->workplace_name)),
-                'address' => strtoupper( trim($request->workplace_address)),
-                'user_id' => $user->id
+                'name' => strtoupper($request->work_name ),
+                'description'=> strtoupper($request->work_name ),
+                'address'=> strtoupper($request->work_address ),
+                'created_by' => \auth()->user()->id
             ]
         );
+
+        $loan->work_place_id = $work_place->id ;
+        $loan->payment_plan = $request->payment_plan ;
+        $user->work_place_id = $work_place->id ;
 
         //validate if it needs a collateral
         if ($loan->loan->collateral == "Need Collateral") {
@@ -443,8 +471,7 @@ class LoanApplicationsController extends Controller
         //user
         $user->mobile_number = $request->mobile_number;
         $user->dob = $request->dob;
-        $user->nid = $request->nid;
-        $user->gender = $request->gender;
+        $user->nid = $request->nid;        $user->gender = $request->gender;
         $user->address = $request->plot_street;
         $user->country = $request->country;
         $user->city = $request->city;
@@ -464,28 +491,78 @@ class LoanApplicationsController extends Controller
         $loan->save();
 
         //schedule
-        for ($i = 1; $i <= $loan->repayment_period; $i++) {
-            $schedule = LoanSchedule::firstOrCreate(
-                [
-                    'loan_applications_id' => $loan->id,
-                    'modal_uuid' => $loan->uuid,
-                    'customer_id' => $loan->customer_id,
-                    'status' => $status,
-                    'installment' => $i,
+
+        if($request->payment_plan == 1){
+            for ($i = 1; $i <= $loan->repayment_period; $i++) {
+                LoanSchedule::firstOrCreate(
+                    [
+                        'loan_applications_id' => $loan->id,
+                        'modal_uuid' => $loan->uuid,
+                        'customer_id' => $loan->customer_id,
+                        'status' => $status,
+                        'installment' => $i,
 //                    'date' => date("Y-m-d", strtotime($i . " month")),
-                    'amount' => $schedule_amount,
-                ],
-                [
-                    'loan_applications_id' => $loan->id,
-                    'modal_uuid' => $loan->uuid,
-                    'customer_id' => $loan->customer_id,
-                    'status' => $status,
-                    'installment' => $i,
-                    'date' => date("Y-m-d", strtotime($i . " month")),
-                    'amount' => $schedule_amount,
-                ]
-            );
+                        'amount' => $schedule_amount,
+                    ],
+                    [
+                        'loan_applications_id' => $loan->id,
+                        'modal_uuid' => $loan->uuid,
+                        'customer_id' => $loan->customer_id,
+                        'status' => $status,
+                        'installment' => $i,
+                        'date' => date("Y-m-d", strtotime($i . " month")),
+                        'amount' => $schedule_amount,
+                    ]
+                );
+            }
+        }else{
+            $monthly_interest = $loan->loan_amount * ($loan->loan_rate / 100 )   ;
+            for ($i = 1; $i <= $loan->repayment_period; $i++) {
+                if( $i == $loan->repayment_period ){
+                    LoanSchedule::firstOrCreate(
+                        [
+                            'loan_applications_id' => $loan->id,
+                            'modal_uuid' => $loan->uuid,
+                            'customer_id' => $loan->customer_id,
+                            'status' => $status,
+                            'installment' => $i,
+//                    'date' => date("Y-m-d", strtotime($i . " month")),
+                            'amount' => $monthly_interest +  $loan->loan_amount  ,
+                        ],
+                        [
+                            'loan_applications_id' => $loan->id,
+                            'modal_uuid' => $loan->uuid,
+                            'customer_id' => $loan->customer_id,
+                            'status' => $status,
+                            'installment' => $i,
+                            'date' => date("Y-m-d", strtotime($i . " month")),
+                            'amount' => $monthly_interest +  $loan->loan_amount ,
+                        ]
+                    );
+                }else{
+                   LoanSchedule::firstOrCreate(
+                        [
+                            'loan_applications_id' => $loan->id,
+                            'modal_uuid' => $loan->uuid,
+                            'customer_id' => $loan->customer_id,
+                            'status' => $status,
+                            'installment' => $i,
+                            'amount' => $monthly_interest,
+                        ],
+                        [
+                            'loan_applications_id' => $loan->id,
+                            'modal_uuid' => $loan->uuid,
+                            'customer_id' => $loan->customer_id,
+                            'status' => $status,
+                            'installment' => $i,
+                            'date' => date("Y-m-d", strtotime($i . " month")),
+                            'amount' => $monthly_interest,
+                        ]
+                    );
+                }
+            }
         }
+
 
         //url
         $url = route('loan.show', $loan);

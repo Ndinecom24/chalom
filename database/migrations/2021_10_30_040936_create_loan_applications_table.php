@@ -31,6 +31,7 @@ class CreateLoanApplicationsTable extends Migration
             $table->string('collateral_description', 1000);
             $table->integer('customer_id')->nullable();
             $table->integer('created_by')->nullable();
+            $table->integer('work_place_id')->nullable();
             $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
         });

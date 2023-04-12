@@ -50,6 +50,7 @@ class User extends Authenticatable
         'next_of_kin_id',
         'status_id',
         'password_change',
+        'work_place_id',
         'created_by',
     ];
 
@@ -117,9 +118,6 @@ class User extends Authenticatable
 
 
 
-//    public function image(){
-//        return $this->belongsTo(Files::class , 'avatar', 'id');
-//    }
     public function role(){
         return $this->belongsTo(Roles::class);
     }
@@ -127,9 +125,11 @@ class User extends Authenticatable
     public function customerType(){
         return $this->belongsTo(CustomerTypes::class);
     }
+
     public function status(){
         return $this->belongsTo(Status::class  );
     }
+
     public function work(){
         return $this->belongsTo(WorkStatus::class, 'work_status_id', 'id');
     }
@@ -139,6 +139,7 @@ class User extends Authenticatable
     public function kin(){
         return $this->hasOne(NextOfKin::class);
     }
+
     public function nrc(){
         return $this->hasOne(Files::class, 'modal_uuid', 'uuid')
             ->where('type',  config('constants.types.identity') );

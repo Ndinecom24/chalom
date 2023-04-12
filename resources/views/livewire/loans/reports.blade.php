@@ -205,9 +205,8 @@
                                                     @if( ($loan->customer->name ?? "pica" ) == "pica" )
                                                         <span class="text-info">Pending User</span>
                                                     @else
-                                                        <a
-                                                           href="{{route('loan.show', $loan)}}">
-                                                            {{$loan->customer->title }}  {{$loan->customer->name }}
+                                                        <a href="{{route('loan.show', $loan)}}">
+                                                           {{$loan->customer->name }}
                                                         </a>
                                                     @endif
                                                 </td>
@@ -220,9 +219,7 @@
                                                 <td>  {{ $loan->schedules->sum('paid') }}  </td>
                                                 <td>  {{ number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }}  </td>
                                                 <td>
-                                                    <span class=" text-{{$loan->status->html ?? "info"}}">
-                                                            {{$loan->status->name ?? $loan->statuses_id }}
-                                                        </span>
+                                                    <span class=" text-{{$loan->status->html ?? "info"}}"> {{$loan->status->name ?? $loan->statuses_id }} </span>
                                                 </td>
                                                 <td>{{ Carbon::parse($loan->date_submitted)->toFormattedDateString() }}</td>
                                                 <td>{{ Carbon::parse($loan->updated_at)->diffForhumans() }}</td>
@@ -243,7 +240,7 @@
 
                                         @if(sizeof($loans) > 0)
                                             <tr class="tfoot text-bold text-uppercase">
-                                                <td> TOTALS</td>
+                                                <td> TOTALS </td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -287,7 +284,6 @@
             <script src="{{ asset('dashboard/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
             <script src="{{ asset('dashboard/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 
-
             <!-- page script -->
             <script>
                 window.addEventListener('contentChanged', event =>{
@@ -296,15 +292,6 @@
                             "responsive": true, "lengthChange": false, "autoWidth": false,
                             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
                         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-                        $('#example2').DataTable({
-                            "paging": true,
-                            "lengthChange": false,
-                            "searching": false,
-                            "ordering": true,
-                            "info": true,
-                            "autoWidth": false,
-                            "responsive": true,
-                        });
                     });
                 });
 

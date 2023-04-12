@@ -74,7 +74,7 @@ class RegisterController extends Controller
 
         $user = User::create([
 
-            'mobile_number' => $data['mobile_number'],
+            'mobile_number' => $data['mobileno'],
             'title' => $data['title'],
             'name' => $data['name'],
             'uuid' => $uuid_user,
@@ -84,6 +84,7 @@ class RegisterController extends Controller
             'status_id' => $data['status_id'] ?? 1,
             'password_change' => config('constants.password_changed'),
             'password' => Hash::make($data['password']),
+            "work_place_id" => 0,
         ]);
 
 //        if($data['uuid'] != 0){
