@@ -407,14 +407,29 @@
                                                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="role_id">Work Status : <span
-                                                                    class="text-dark">{{$loan->customer->name ?? "--Choose--" }}</span></label>
+                                                                    class="text-dark">{{$loan->customer->work->name ?? "--Choose--" }}</span></label>
                                                         </div>
                                                     </div>
+
                                                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                                         <div class="form-group">
                                                             <label for="customer_type_id">User-Type <span
                                                                     class="text-dark">{{$loan->customer->customerType->name  ?? "" }}</span>
                                                             </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="role_id">Employee : <span
+                                                                    class="text-dark">{{$loan->workPlace->name ?? "--Choose--" }}</span></label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="role_id">Employee : <span
+                                                                    class="text-dark">{{$loan->workPlace->address ?? "--Choose--" }}</span></label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -490,9 +505,7 @@
                                                         <a href="{{$payslip->path}}"
                                                            target="_blank">View</a>
                                                         <span> | </span>
-                                                        <a href="#" data-toggle="modal" data-sent_data="{{$payslip}}"
-                                                           data-target="#modal-change">Edit</a>
-
+                                                        <a href="#" data-toggle="modal" data-sent_data="{{$payslip}}" data-target="#modal-change">Edit</a>
                                                     </div>
                                                 @endforeach
                                             @endif
@@ -961,7 +974,7 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         Total Payable :<span
-                                                            class="mb-0"> <b>ZMW {{$loan->loan_amount_due}}</b> </span>
+                                                            class="mb-0"> <b>ZMW {{$loan->schedules->sum('amount')}}</b> </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -977,7 +990,13 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         Monthly Installments : <span
-                                                            class="mb-0"> <b>ZMW {{$loan->monthly_installments}}</b></span>
+                                                            class="mb-0"> <b>ZMW
+                                                                @if($loan->payment_plan == 1)
+                                                                {{$loan->monthly_installments}}
+                                                                @else
+                                                                    {{$loan->monthly_installments1}}
+                                                                @endif
+                                                            </b></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -992,7 +1011,7 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         Balance : <span
-                                                            class="mb-0"> <b>ZMW {{number_format( ($loan->loan_amount_due - $loan->schedules->sum('paid')), 2) }} </b></span>
+                                                            class="mb-0"> <b>ZMW {{number_format( ($loan->schedules->sum('balance')), 2) }} </b></span>
                                                     </div>
                                                 </div>
                                             </div>

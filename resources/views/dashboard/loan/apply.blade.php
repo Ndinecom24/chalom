@@ -640,6 +640,10 @@
                                                         <div class="row" id="uuid_div_2">
                                                         </div>
                                                     </form>
+
+                                                    <div class="row" id="uuid_div_3">
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -795,8 +799,17 @@
                 var guarantor_check = document.getElementById('guarantor_check').checked;
                 var payslip_check = document.getElementById('payslip_check').checked;
 
+
+                var lowest_amount = @json( $loanProd->lowest_amount ?? "0" );
+                var highest_amount = @json( $loanProd->highest_amount ?? "0" );
+                var lowest_tenure = @json( $loanProd->lowest_tenure ?? "0" );
+                var highest_tenure = @json( $loanProd->highest_tenure ?? "0" );
+                var loan_type = @json( $loanProd->category->name ?? "0" );
+
+
                 //validation rules
                 var eligible = false;
+
                 if (
                     (total_monthly_subtracted >= monthly_amount_repayment) &&
                     (citizen_check == true) &&
@@ -809,51 +822,89 @@
                 }
 
 
-                //response
-                if (eligible == true) {
-                    Swal.fire(
-                        'Eligible',
-                        'You are  Eligible for a ZMW ' + loan_amount + ' ' + loan_name + ' Loan. Your monthly repayment is (ZMW '+monthly_amount_repayment+') for '+repayment_period+' months',
+                if(loan_amount >= lowest_amount  &&  loan_amount <= highest_amount ){
+                    if( repayment_period >= lowest_tenure  && repayment_period <= highest_tenure ){
 
-                    // 'You are Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan',
-                        'success'
-                    )
-                 //   alert( 'You are Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan');
+                        //response
+                        if (eligible == true) {
+                            try {
+                                Swal.fire(
+                                    'Eligible',
+                                    'You are Eligible for a ZMW ' + loan_amount + ' ' + loan_name + ' Loan. Your monthly repayment is ZMW '+monthly_amount_repayment+' for '+repayment_period+' months',
+                                    'success'
+                                )
+                            } catch (e) {
+                               alert('You are Eligible for a ZMW ' + loan_amount + ' ' + loan_name + ' Loan. Your monthly repayment is ZMW '+monthly_amount_repayment+' for '+repayment_period+' months' ) ;
+                            }
 
-                    current_fs = $(this).parent();
-                    next_fs = $(this).parent().next();
-                    //Add Class Active
-                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                            //   alert( 'You are Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan');
 
-                    //show the next fieldset
-                    next_fs.show();
-                    //hide the current fieldset with style
-                    current_fs.animate({opacity: 0}, {
-                        step: function (now) {
-                            // for making fielset appear animation
-                            opacity = 1 - now;
+                            current_fs = $(this).parent();
+                            next_fs = $(this).parent().next();
+                            //Add Class Active
+                            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
-                            current_fs.css({
-                                'display': 'none',
-                                'position': 'relative'
+                            //show the next fieldset
+                            next_fs.show();
+                            //hide the current fieldset with style
+                            current_fs.animate({opacity: 0}, {
+                                step: function (now) {
+                                    // for making fielset appear animation
+                                    opacity = 1 - now;
+
+                                    current_fs.css({
+                                        'display': 'none',
+                                        'position': 'relative'
+                                    });
+                                    next_fs.css({'opacity': opacity});
+                                },
+                                duration: 600
                             });
-                            next_fs.css({'opacity': opacity});
-                        },
-                        duration: 600
-                    });
 
-                } else {
-                    Swal.fire(
-                        'Not Eligible',
-                        'You are not Eligible for a zmw ' + loan_amount + ' ' + loan_name + ' Loan. Your monthly repayment of zmw '+monthly_amount_repayment+' is more than '+dsr+'%  (DSR threshold) of your total monthly income (zmw '+total_income+'). For a repayment period of '+repayment_period+' months, you qualify for a maximum of zmw '+qualify_for+'.',
-                        'warning'
+                        }
+                        else {
 
-                    )
+                            try {
+                                Swal.fire(
+                                    'Not Eligible',
+                                    'You are not Eligible for a zmw ' + loan_amount + ' ' + loan_name + ' Loan. Your monthly repayment of zmw '+monthly_amount_repayment+' is more than '+dsr+'%  (DSR threshold) of your total monthly income (zmw '+total_income+'). For a repayment period of '+repayment_period+' months, you qualify for a maximum of zmw '+qualify_for+'.',
+                                    'warning'
 
-                    //monthly_amount_repayment
+                                )
+                            } catch (e) {
+                                alert('You are not Eligible for a zmw ' + loan_amount + ' ' + loan_name + ' Loan. Your monthly repayment of zmw '+monthly_amount_repayment+' is more than '+dsr+'%  (DSR threshold) of your total monthly income (zmw '+total_income+'). For a repayment period of '+repayment_period+' months, you qualify for a maximum of zmw '+qualify_for+'.');
+                            }
 
-                    // alert('You are not Eligible for a K' + loan_amount + ' ' + loan_name + ' Loan');
+                        }
+
+                    }else{
+                        try {
+                            Swal.fire(
+                                'Not Eligible',
+                                'Your repayment period (' + repayment_period + ' months ) should be between ' + lowest_tenure + ' months and '+highest_tenure+' months, for this type of loan ('+loan_name+' under '+loan_type+')',
+                                'warning'
+
+                            )
+                        } catch (e) {
+                            alert('Your repayment period (' + repayment_period + ' months ) should be between ' + lowest_tenure + ' months and '+highest_tenure+' months, for this type of loan ('+loan_name+' under '+loan_type+')');
+                        }
+
+                    }
+                }else{
+                    try {
+                        Swal.fire(
+                            'Not Eligible',
+                            'Your Loan Amount (K' + loan_amount + ') should be between K' + lowest_amount + ' and K'+highest_amount+'  for this type of loan ('+loan_name+' under '+loan_type+')',
+                            'warning'
+                        )
+                    } catch (e) {
+                        alert(
+                            'Your Loan Amount (K' + loan_amount + ') should be between K' + lowest_amount + ' and K'+highest_amount+'  for this type of loan ('+loan_name+' under '+loan_type+')');
+                    }
+
                 }
+
+
 
 
             });
@@ -986,14 +1037,28 @@
                             "<button class='btn btn-success'>Login to your Account </button> " +
                             "</div>";
 
-                        if(response.customer_type == new_cus){
-                            $('#uuid_div_2').html(html_div2);
-                        }else if (response.customer_type == returning){
-                            $('#uuid_div_1').html(html_div1);
-                        }
-                        else {
+                        var html_div3 = "<div class='col-12'>" +
+                            " <div class='text-center'>" +
+                            "<p  > <b>" + response.message + "</b> </p> " +
+                            "</div>"+
+                            "</div>" +
+                            "<div class='col-12 text-center mt-1 mb-2' > " +
+                            "<a href='' class='btn btn-success'>Restart </a> " +
+                            "</div>";
 
+                        if(response.error){
+                            $('#uuid_div_3').html(html_div3);
+                        }else{
+                            if(response.customer_type == new_cus){
+                                $('#uuid_div_2').html(html_div2);
+                            }else if (response.customer_type == returning){
+                                $('#uuid_div_1').html(html_div1);
+                            }
+                            else {
+
+                            }
                         }
+
 
 
 

@@ -272,10 +272,11 @@
                             </div>
                         @endif
                     </div>
+                    <form id="finish_apply_form" action="{{ route('loan.finish', compact('loan', 'user')) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                     <div class="row">
                         <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-12 mb-4 mt-4 p-0 mt-3 mb-2">
-                            <form id="finish_apply_form" action="{{ route('loan.finish', compact('loan', 'user')) }}" method="POST" enctype="multipart/form-data">
-                           @csrf
+
                             <div class="card px-0 pt-4 pb-0 mt-3 mb-3  mr-2">
                                 <h2 class="text-center"><strong>Complete your Loan Application</strong></h2>
 
@@ -407,10 +408,9 @@
                                                     <div class="form-group">
                                                         <label for="role_id">Work Status<span class="text-danger">*</span></label>
                                                         <select class="form-control" required name="work_status_id">
-                                                            {{--                                                            <option  value="{{$user->work->id ?? "" }}">{{$user->work->name ?? "--Choose--" }}</option>--}}
-                                                            @foreach($works as $work)
-                                                                <option
-                                                                    value="{{$work->id ?? "" }}">{{$work->name ?? "" }}</option>
+                                                            <option>--Choose--</option>
+                                                             @foreach($works as $work)
+                                                                <option value="{{$work->id ?? "" }}" > {{ $work->name ?? "" }} </option>
                                                             @endforeach
                                                         </select>
 
@@ -439,7 +439,7 @@
                                                         <datalist id="employer_list">
                                                             @foreach($work_places as $work_place)
                                                                 <option
-                                                                    value="{{$work_place->id ?? "" }}">{{      ->name ?? "" }}</option>
+                                                                    value="{{$work_place->id ?? "" }}">{{      $work_place->name ?? "" }}</option>
                                                             @endforeach
                                                         </datalist>
                                                     </div>
@@ -655,8 +655,8 @@
                                     </div>
                                 </div>
                             </div>
-                            </form>
                         </div>
+
                         <div class="col-xl-5 col-lg-5  col-md-5  col-sm-5  col-12   mb-4 mt-4  p-0 mt-3 mb-2 ">
                             <div class="row">
                                 <div class="col-12">
@@ -664,7 +664,7 @@
                                         <h2 class="text-center"><strong>LOAN DETAILS</strong></h2>
                                         <div class="m-3 text-left">
                                             <div class="card-body  border-top py-3">
-                                                <div class="row">
+                                               <div class="row">
                                                     <div class="col-12">
                                                         Purpose  : <span class="mb-0"> <b>{{$loan->loan_purpose}}</b></span>
                                                     </div>
@@ -691,13 +691,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card-body  border-top py-3">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        Total Payable :<span class="mb-0"> <b>ZMW {{$loan->loan_amount_due}}</b> </span>
-                                                    </div>
-                                                </div>
-                                            </div>
+{{--                                            <div class="card-body  border-top py-3">--}}
+{{--                                                <div class="row">--}}
+{{--                                                    <div class="col-12">--}}
+{{--                                                        Total Payable :<span class="mb-0"> <b>ZMW {{$loan->loan_amount_due}}</b> </span>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
                                             <div class="card-body  border-top py-3">
                                                 <div class="row">
                                                     <div class="col-12">
@@ -705,44 +705,101 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card-body  border-top py-3">
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        Monthly Installments : <span class="mb-0"> <b>ZMW {{$loan->monthly_installments}}</b></span>
-                                                    </div>
-                                                </div>
-                                            </div>
+{{--                                            <div class="card-body  border-top py-3">--}}
+{{--                                                <div class="row">--}}
+{{--                                                    <div class="col-12">--}}
+{{--                                                        Monthly Installments : <span class="mb-0"> <b>ZMW {{$loan->monthly_installments}}</b></span>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
-                                        <h2 class="text-center"><strong>SCHEDULE</strong></h2>
+                                        <h2 class="text-center"><strong>SCHEDULE OPTION 1</strong></h2>
                                         <div class="m-3 text-left">
                                             <div class="card-body  border-top py-3">
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <table class="table table-striped">
-                                                                <thead>
-                                                                <tr>
-                                                                    <td>Installment</td>
-                                                                    <td>Amount</td>
-                                                                    <td>Date</td>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                @for($i=1 ; $i <= $loan->repayment_period; $i++)
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                            <tr>
+                                                                <td>Installment</td>
+                                                                <td>Amount</td>
+                                                                <td>Date</td>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @for($i=1 ; $i <= $loan->repayment_period; $i++)
                                                                 <tr>
                                                                     <td>Installment {{$i}}</td>
                                                                     <td>ZMW {{$loan->monthly_installments}}</td>
                                                                     <td>{{date("D d M Y", strtotime( $i." month"))}}</td>
                                                                 </tr>
-                                                                @endfor
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
+                                                            @endfor
+                                                            </tbody>
+                                                        </table>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
+                                        <h2 class="text-center"><strong>SCHEDULE OPTION 2</strong></h2>
+                                        <div class="m-3 text-left">
+                                            <div class="card-body  border-top py-3">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                            <tr>
+                                                                <td>Installment</td>
+                                                                <td>Amount</td>
+                                                                <td>Date</td>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @for($i=1 ; $i <= $loan->repayment_period; $i++)
 
+                                                                @if($i == $loan->repayment_period)
+                                                                <tr>
+                                                                    <td>Installment {{$i}}</td>
+                                                                    <td>ZMW {{ number_format( ($loan->loan_amount * ($loan->loan_rate / 100 ) ) + $loan->loan_amount , 2)}}</td>
+                                                                    <td>{{date("D d M Y", strtotime( $i." month"))}}</td>
+                                                                </tr>
+                                                                @else
+                                                                    <tr>
+                                                                        <td> Installment {{$i}}</td>
+                                                                        <td>ZMW {{ number_format( ($loan->loan_amount * ($loan->loan_rate / 100 ) ) , 2)}}</td>
+                                                                        <td>{{date("D d M Y", strtotime( $i." month"))}}</td>
+                                                                    </tr>
+                                                                @endif
+                                                            @endfor
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card px-0 pt-4 pb-0 mt-3 mb-3 " style="margin-left: 5%">
+                                        <h2 class="text-center"><strong>Payment Plan</strong></h2>
+                                        <div class="m-3 text-left">
+                                            <div class="card-body  border-top py-3">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <label>Select Your Preferred Payment Schedule/Plan <span class="text-danger">*</span></label> <br>
+                                                        <label>
+                                                            <input type="radio" value="1" name="payment_plan" required>
+                                                            Schedule Option 1
+                                                        </label> <br>
+                                                        <label>
+                                                            <input type="radio" value="2" name="payment_plan">
+                                                            Schedule Option 2
+                                                        </label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -750,6 +807,7 @@
                             </div>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
             </div>

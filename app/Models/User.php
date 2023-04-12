@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Settings\CustomerTypes;
 use App\Models\Settings\Roles;
 use App\Models\Settings\Status;
+use App\Models\Settings\WorkPlace;
 use App\Models\Settings\WorkStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -48,6 +49,7 @@ class User extends Authenticatable
         'next_of_kin_id',
         'status_id',
         'password_change',
+        'work_place_id',
         'created_by',
     ];
 
@@ -83,9 +85,6 @@ class User extends Authenticatable
         'customerType'
     ];
 
-//    public function image(){
-//        return $this->belongsTo(Files::class , 'avatar', 'id');
-//    }
     public function role(){
         return $this->belongsTo(Roles::class);
     }
@@ -93,15 +92,24 @@ class User extends Authenticatable
     public function customerType(){
         return $this->belongsTo(CustomerTypes::class);
     }
+
     public function status(){
         return $this->belongsTo(Status::class);
     }
+
     public function work(){
         return $this->belongsTo(WorkStatus::class, 'work_status_id', 'id');
     }
+    public function workPlace(){
+        return $this->belongsTo(WorkPlace::class, 'work_place_id', 'id');
+    }
+
+
+
     public function kin(){
         return $this->hasOne(NextOfKin::class);
     }
+
     public function nrc(){
         return $this->hasOne(Files::class, 'modal_uuid', 'uuid')
             ->where('type',  config('constants.types.identity') );

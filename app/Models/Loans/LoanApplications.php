@@ -6,6 +6,7 @@ use App\Models\BankDetails;
 use App\Models\Files;
 use App\Models\LoanPayments;
 use App\Models\Settings\Status;
+use App\Models\Settings\WorkPlace;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,7 +20,8 @@ class LoanApplications extends Model
     use HasFactory;
     use SoftDeletes;
     protected $appends = [
-        'monthly_installments'
+        'monthly_installments',
+        'monthly_installments1'
     ];
 
     protected $table = 'loan_applications';
@@ -42,6 +44,8 @@ class LoanApplications extends Model
         'customer_id',
         'created_at',
         'created_by',
+        'work_place_id',
+        'payment_plan',
         'updated_by',
         'deleted_at',
     ];
@@ -92,9 +96,9 @@ class LoanApplications extends Model
     {
         return (  number_format($this->loan_amount_due / $this->repayment_period, 2) );
     }
-    public function getMonthlyInstallmentsAttribute2()
+    public function getMonthlyInstallments1Attribute()
     {
-        return ( $this->loan_amount_due / $this->repayment_period  );
+        return ( $this->loan_amount *(  $this->loan_rate / 100) );
     }
 
     public function loan(){
@@ -133,6 +137,9 @@ class LoanApplications extends Model
         return $this->hasMany(BankDetails::class , 'user_id', 'customer_id') ;
     }
 
+    public function workPlace(){
+        return $this->belongsTo(WorkPlace::class, 'work_place_id', 'id');
+    }
 
 
     public function approvals(){

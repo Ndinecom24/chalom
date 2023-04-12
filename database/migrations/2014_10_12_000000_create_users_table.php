@@ -40,6 +40,8 @@ class CreateUsersTable extends Migration
             $table->integer('password_change');
             $table->uuid('uuid');
             $table->integer('created_by')->nullable();
+            $table->integer('work_place_id')->nullable() ;
+            $table->integer('payment_plan')->nullable() ;
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

@@ -10,6 +10,7 @@ use App\Models\Settings\LoanCategory;
 use App\Models\Loans\LoanProducts;
 use App\Models\Settings\CustomerTypes;
 use App\Models\Settings\Status;
+use App\Models\Settings\WorkPlace;
 use App\Models\Settings\WorkStatus;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
@@ -53,9 +54,12 @@ class HomeController extends Controller
                 $loans_req = $loans->where('statuses_id', config('constants.status.loan_request_login'))->get();
                 if ((sizeof($loans_req)) > 0) {
                     $works = WorkStatus::all();
+                    $work_places = WorkPlace::all();
                     $statuses = Status::all();
                     $loan = $loans_req->first();
-                    return view('dashboard.loan.finish_apply')->with(compact('user', 'loan', 'works', 'statuses'));
+
+//                    dd($loan);
+                    return view('dashboard.loan.finish_apply')->with(compact('user', 'loan', 'works', 'statuses', 'work_places'));
                 } else {
                     //check if you do not have bank details
                     $user->load('bankDetails');
