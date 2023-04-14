@@ -36,15 +36,14 @@
                             <div class="text-center mb-4">
                                 <a href="{{ route('welcome') }}">
                                     <h1 style="font-family:'Arial Rounded MT Bold'">Chalom Investments</h1>
-                                    {{--                                    <img class="mb-2" src="{{asset('images/brac.jpg')}}" alt="" width="220" height="72">--}}
                                 </a>
                             </div>
                             <div class="text-center mb-4">
                                 {{ __('Login') }}
                             </div>
 
-                            <div class="form-label-group">
-                                <input type="phone" id="inputMobileNo"
+                            <div class="form-label-group fa-solid fa-user">
+                                <input type="tel" id="inputMobileNo" pattern="[+]{1}[0-9]{11,13}"
                                        class="form-control  @error('mobile_number') is-invalid @enderror" name="mobile_number"
                                        placeholder="Phone Number" required autofocus>
                                 <label for="inputPhoneNo">{{ __('Mobile No') }}</label>

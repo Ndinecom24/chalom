@@ -74,7 +74,8 @@ class RegisterController extends Controller
 
         $user = User::create([
 
-            'mobile_number' => $data['mobileno'],
+
+            'mobile_number' => $data['mobile_number'],
             'title' => $data['title'],
             'name' => $data['name'],
             'uuid' => $uuid_user,
@@ -85,8 +86,11 @@ class RegisterController extends Controller
             'password_change' => config('constants.password_changed'),
             'password' => Hash::make($data['password']),
             "work_place_id" => 0,
+
+
         ]);
 
+//        dd($user);
 //        if($data['uuid'] != 0){
 //            //find the loan
 //            $loan = LoanApplications::where('uuid', $data['uuid'])->first();

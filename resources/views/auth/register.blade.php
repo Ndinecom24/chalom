@@ -56,7 +56,7 @@
                             </div>
 
                             <div class="form-label-group">
-                                <input type="text" id="inputMobileNo"
+                                <input type="tel" id="inputMobileNo" pattern="[+]{1}[0-9]{11,13}"
                                        class="form-control  @error('mobile_number') is-invalid @enderror" name="mobile_number"
                                        placeholder="Mobile No" required autofocus>
                                 <label for="inputMobileNo">{{ __('Mobile No') }}</label>
