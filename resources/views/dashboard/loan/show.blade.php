@@ -464,20 +464,6 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label for="role_id">Employee : <span
-                                                                    class="text-dark">{{$loan->workPlace->name ?? "--Choose--" }}</span></label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                                        <div class="form-group">
-                                                            <label for="role_id">Employee : <span
-                                                                    class="text-dark">{{$loan->workPlace->address ?? "--Choose--" }}</span></label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
