@@ -44,10 +44,10 @@
                             </div>
 
                             <div class="form-label-group">
-                                <input type="phone" id="inputMobileNo"
+                                <input type="text" id="mobile_number"
                                        class="form-control  @error('mobile_number') is-invalid @enderror" name="mobile_number"
-                                       placeholder="Phone Number" required autofocus>
-                                <label for="inputPhoneNo">{{ __('Mobile No') }}</label>
+                                       placeholder="Phone Number" required  >
+                                <label for="mobile_number">{{ __('Mobile No') }}</label>
                                 @error('mobile_number')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

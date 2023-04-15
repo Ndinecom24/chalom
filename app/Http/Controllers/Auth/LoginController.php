@@ -40,9 +40,26 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+//            $this->username() => 'required|string',
+            'password' => 'required|string',
+        ]);
+    }
+
     public function username()
     {
-        return 'mobile_number';
+        $login = request()->input('mobile_number');
+
+        if(is_numeric($login)){
+            $field = 'mobile_number';
+        } else {
+            $field = 'email';
+        }
+        request()->merge([$field => $login]);
+
+        return $field;
     }
 
     /**

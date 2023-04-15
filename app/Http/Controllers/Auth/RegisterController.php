@@ -73,8 +73,7 @@ class RegisterController extends Controller
         $uuid_user = Str::uuid()->toString();
 
         $user = User::create([
-
-            'mobile_number' => $data['mobileno'],
+            'mobile_number' => $data['mobile_number'],
             'title' => $data['title'],
             'name' => $data['name'],
             'uuid' => $uuid_user,
