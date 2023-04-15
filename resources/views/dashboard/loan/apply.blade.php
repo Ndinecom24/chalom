@@ -800,13 +800,6 @@
                 var payslip_check = document.getElementById('payslip_check').checked;
 
 
-                var lowest_amount = @json( $loanProd->lowest_amount ?? "0" );
-                var highest_amount = @json( $loanProd->highest_amount ?? "0" );
-                var lowest_tenure = @json( $loanProd->lowest_tenure ?? "0" );
-                var highest_tenure = @json( $loanProd->highest_tenure ?? "0" );
-                var loan_type = @json( $loanProd->category->name ?? "0" );
-
-
                 //validation rules
                 var eligible = false;
 
@@ -822,8 +815,17 @@
                 }
 
 
-                if(loan_amount >= lowest_amount  &&  loan_amount <= highest_amount ){
-                    if( repayment_period >= lowest_tenure  && repayment_period <= highest_tenure ){
+
+                var lowest_amount = @json( $loanProd->lowest_amount ?? 0 );
+                var highest_amount = @json( $loanProd->highest_amount ?? 0 );
+                var lowest_tenure = @json( $loanProd->lowest_tenure ?? 0 );
+                var highest_tenure = @json( $loanProd->highest_tenure ?? 0 );
+                var loan_type = @json( $loanProd->category->name ?? "0" );
+
+
+
+                if( (loan_amount >= lowest_amount)  &&  (loan_amount <= highest_amount) ){
+                    if( (repayment_period >= lowest_tenure)  && (repayment_period <= highest_tenure) ){
 
                         //response
                         if (eligible == true) {
