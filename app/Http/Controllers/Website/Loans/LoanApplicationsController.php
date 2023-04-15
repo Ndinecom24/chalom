@@ -656,11 +656,26 @@ class LoanApplicationsController extends Controller
         $save = false;
         $action = $request->approve ?? $request->reject;
 
+        //CANCEL LOAN
+    if ($current_status == config('constants.status.loan_submission')
+        && $logged_in->role_id == config('constants.role.client.id')
+    ) {
+        //actions
+            if ($action == config('constants.action.cancel')) {
+                //actions
+                $next_status = config('constants.status.loan_cancelled');
+                $save = true;
+            }  else {
+                $next_status = config('constants.status.loan_submission');
+            }
+
+        }
+
         //FIRST APPROVAL
-        if ($current_status == config('constants.status.loan_submission')
-            && $logged_in->role_id == config('constants.role.verifier.id')
-        ) {
-            //actions
+    elseif ($current_status == config('constants.status.loan_submission')
+        && $logged_in->role_id == config('constants.role.verifier.id')
+    ) {
+        //actions
             if ($action == config('constants.action.reject')) {
                 $next_status = config('constants.status.loan_rejected');
                 $save = true;
@@ -674,7 +689,9 @@ class LoanApplicationsController extends Controller
                 $next_status = config('constants.status.loan_submission');
             }
 
-        } //SECOND APPROVAL
+        }
+
+        //SECOND APPROVAL
         elseif ($current_status == config('constants.status.loan_reviewed')
             && $logged_in->role_id == config('constants.role.approver.id')
         ) {

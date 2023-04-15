@@ -765,6 +765,31 @@
                                                               title="Client ({{$loan->customer->name  ?? ""  }}) has completed and submitted loan application, it now needs to be verified by admins">
                                                             Pending Loan Verification
                                                         </span>
+
+
+                                                            <div class="row m-2">
+                                                                <div class="col-lg-9 col-sm-12">
+                                                                    <div class="form-group">
+                                                                        <label for="eMail">Comment<span
+                                                                                class="text-danger">*</span></label>
+                                                                        <input type="text" required
+                                                                               title="You need to add a reason/comments for your decision"
+                                                                               class="form-control" id="comment" name="comment"
+                                                                               placeholder="Enter comment for your action">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-3 col-sm-12">
+                                                                    <label for="reject"><span
+                                                                            class="text-danger">Cancel</span></label><br>
+                                                                    <button type="submit" name="reject"
+                                                                            title="Click to cancel this loan application e.g because you have not verified the details"
+                                                                            value="{{config('constants.action.cancel')}}"
+                                                                            class="btn btn-outline-danger"><i
+                                                                            class="ui-icon ui-icon-circle-close "></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     @endif
 
@@ -1336,4 +1361,74 @@
             }
         }
     </script>
+
+
+
+    <script>
+
+
+        function actionCancel(loan_id){
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this loan application!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!  '
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    //delete the form
+                    var route = '{{url('loan/apply/cancel')}}' + '/' + loan_id;
+
+                    /* AJAX */
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    $.ajax({
+                        url: route,
+                        type: 'get',
+                        beforeSend: function () {
+                            // Show image container
+                            /// $("#loader_c_2").show();
+                        },
+                        success: function (response_data) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+
+                            Swal.fire({
+                                title: 'Cancelled!',
+                                text: "Your application has been cancelled",
+                                icon: 'success',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'Okay '
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.reload();
+                                }
+                            });
+                        },
+                        complete: function (response_data) {
+                            //  $("#loader_c_2").hide();
+
+                        }
+                    });
+
+
+                }
+            }) ;
+
+        }
+    </script>
+
+
+
 @endpush

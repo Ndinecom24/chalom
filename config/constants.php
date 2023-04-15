@@ -11,6 +11,7 @@ return [
         'funds_disbursed' => 'Funds Disbursed',
         'loan_payment' => 'Loan Payment',
         'cancel' => 'Cancelled',
+
     ],
 
     'role' => [
