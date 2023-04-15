@@ -374,7 +374,7 @@ class LoanApplicationsController extends Controller
                 'name' => strtoupper($request->work_name ?? "-" ),
                 'description'=> strtoupper($request->work_name  ?? "-" ),
                 'address'=> strtoupper($request->work_address ?? "-" ),
-                'created_by' => auth()->user()->id ??  0
+                'created_by' => auth()->user()->id ??  0,
             ]
         );
 

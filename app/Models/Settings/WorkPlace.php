@@ -17,6 +17,6 @@ class WorkPlace extends Model
         'address',
 //        'city',
 //        'country',
-        'user_id',
+        'created_by',
     ] ;
 }
