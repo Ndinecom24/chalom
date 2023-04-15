@@ -134,7 +134,7 @@ class User extends Authenticatable
         return $this->belongsTo(WorkStatus::class, 'work_status_id', 'id');
     }
     public function workplace(){
-        return $this->belongsTo(WorkPlace::class, 'id', 'user_id');
+        return $this->belongsTo(WorkPlace::class, 'id', 'created_by');
     }
     public function kin(){
         return $this->hasOne(NextOfKin::class);

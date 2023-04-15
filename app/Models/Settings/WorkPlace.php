@@ -15,8 +15,7 @@ class WorkPlace extends Model
         'name',
         'description',
         'address',
-//        'city',
-//        'country',
         'created_by',
+        'user_id'
     ] ;
 }
