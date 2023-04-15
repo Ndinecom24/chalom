@@ -772,11 +772,11 @@
                     //input values
                 var loan_amount = parseFloat(document.getElementById('loan_amount').value || 0 ) ;
                 var loan_name = @json( $loanProd->name ?? "" );
-                var monthly_amount_repayment = document.getElementById('monthly_amount').value;
-                var monthly_income = document.getElementById('monthly_income').value;
-                var other_income = document.getElementById('other_income').value;
-                var monthly_deduct = document.getElementById('monthly_deduct').value;
-                var repayment_period = document.getElementById('repayment_period').value;
+                var monthly_amount_repayment =parseFloat( document.getElementById('monthly_amount').value  || 0 ) ;
+                var monthly_income = parseFloat(document.getElementById('monthly_income').value || 0 ) ;
+                var other_income = parseFloat(document.getElementById('other_income').value || 0 ) ;
+                var monthly_deduct = parseFloat(document.getElementById('monthly_deduct').value|| 0 ) ;
+                var repayment_period =parseFloat( document.getElementById('repayment_period').value || 0) ;
                 var dsr = @json( $loanProd->dept_service_ratio );
 
                 //calculate
