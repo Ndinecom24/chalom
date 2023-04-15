@@ -770,7 +770,7 @@
                 /** check for loan eligibility */
 
                     //input values
-                var loan_amount = document.getElementById('loan_amount').value;
+                var loan_amount = parseFloat(document.getElementById('loan_amount').value || 0 ) ;
                 var loan_name = @json( $loanProd->name ?? "" );
                 var monthly_amount_repayment = document.getElementById('monthly_amount').value;
                 var monthly_income = document.getElementById('monthly_income').value;
