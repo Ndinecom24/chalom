@@ -46,7 +46,7 @@
                             <div class="form-label-group">
                                 <input type="text" id="inputFullName"
                                        class="form-control  @error('name') is-invalid @enderror" name="name"
-                                       placeholder="Full Name" required autofocus>
+                                       placeholder="Full Name" required >
                                 <label for="inputFullName">{{ __('Full Name') }}</label>
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
@@ -56,10 +56,10 @@
                             </div>
 
                             <div class="form-label-group">
-                                <input type="text" id="inputMobileNo"
+                                <input type="tel" id="inputMobileNo" pattern="[+]{1}[0-9]{11,13}"
                                        class="form-control  @error('mobile_number') is-invalid @enderror" name="mobile_number"
-                                       placeholder="Mobile No" required autofocus>
-                                <label for="inputMobileNo">{{ __('Mobile No') }}</label>
+                                       placeholder="Mobile No" required >
+                                <label for="inputMobileNo">{{ __('Mobile No +260') }}</label>
                                 @error('mobile_number')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -70,7 +70,7 @@
                             <div class="form-label-group">
                                 <input type="email" id="inputEmail"
                                        class="form-control  @error('email') is-invalid @enderror" name="email"
-                                       placeholder="Email address" required autofocus>
+                                       placeholder="Email address" required >
                                 <label for="inputEmail">{{ __('E-Mail Address') }}</label>
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">

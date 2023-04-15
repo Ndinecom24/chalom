@@ -468,8 +468,8 @@
                                     @endif
                                     <div class="text">
                                         <h4> {{$notification->name}}</h4>
-                                        <h6>{{$notification->user->name}} | {{$notification->subject}} </h6>
-                                        <p>{{$notification->message}}</p>
+                                        <h6>{{$notification->user->name ?? '-'}} | {{$notification->subject ?? '-'}} </h6>
+                                        <p>{{$notification->message }}</p>
                                         <p class="text-xs text-muted">{{ \Carbon\Carbon::parse($notification->created_at)->diffForhumans() }} </p>
                                     </div>
                                 </div>

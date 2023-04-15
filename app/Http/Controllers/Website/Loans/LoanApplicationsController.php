@@ -366,14 +366,14 @@ class LoanApplicationsController extends Controller
 
         $work_place = WorkPlace::updateOrCreate(
             [
-                'name' => strtoupper($request->work_name ),
-                'description'=> strtoupper($request->work_name ),
-                'address'=> strtoupper($request->work_address ),
+                'name' => strtoupper($request->work_name ?? "-" ),
+                'description'=> strtoupper($request->work_name ?? "-" ),
+                'address'=> strtoupper($request->work_address ?? "-" ),
                 ],
             [
-                'name' => strtoupper($request->work_name ),
-                'description'=> strtoupper($request->work_name ),
-                'address'=> strtoupper($request->work_address ),
+                'name' => strtoupper($request->work_name ?? "-" ),
+                'description'=> strtoupper($request->work_name  ?? "-" ),
+                'address'=> strtoupper($request->work_address ?? "-" ),
                 'created_by' => \auth()->user()->id
             ]
         );
@@ -479,7 +479,7 @@ class LoanApplicationsController extends Controller
         $user->plot_street = $request->plot_street;
         $user->zip_code = $request->zip_code;
         $user->work_status_id = $request->work_status_id;
-        $user->marital_status = $request->marital_status;
+        $user->marital_status = $request->marital_status ?? "-";
         $user->district = $request->district;
 
         $user->save();

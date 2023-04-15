@@ -9,11 +9,11 @@ class WorkPlace extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id';
-    protected $table = 'work_place' ;
+    protected $table = 'work_places' ;
     //fields fillable
     protected $fillable = [
         'name',
-//        'description',
+        'description',
         'address',
 //        'city',
 //        'country',

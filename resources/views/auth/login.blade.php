@@ -36,7 +36,6 @@
                             <div class="text-center mb-4">
                                 <a href="{{ route('welcome') }}">
                                     <h1 style="font-family:'Arial Rounded MT Bold'">Chalom Investments</h1>
-                                    {{--                                    <img class="mb-2" src="{{asset('images/brac.jpg')}}" alt="" width="220" height="72">--}}
                                 </a>
                             </div>
                             <div class="text-center mb-4">
@@ -47,7 +46,7 @@
                                 <input type="text" id="mobile_number"
                                        class="form-control  @error('mobile_number') is-invalid @enderror" name="mobile_number"
                                        placeholder="Phone Number" required  >
-                                <label for="mobile_number">{{ __('Mobile No') }}</label>
+                                <label for="mobile_number">{{ __('Mobile No / Email') }}</label>
                                 @error('mobile_number')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
