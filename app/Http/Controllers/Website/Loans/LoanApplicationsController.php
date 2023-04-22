@@ -441,9 +441,11 @@ class LoanApplicationsController extends Controller
 //            $filesController = new FilesController();
 //            $filesController->upload($request, $file, config('constants.types.collateral'), $loan);
 //        }
-        foreach ($request->file('collateral') as $file) {
-            $filesController = new FilesController();
-            $filesController->upload($request, $file, config('constants.types.collateral'), $loan);
+        if ($request->hasFile('collateral') ) {
+            foreach ($request->file('collateral') as $file) {
+                $filesController = new FilesController();
+                $filesController->upload($request, $file, config('constants.types.collateral'), $loan);
+            }
         }
 
         //save next of kin
