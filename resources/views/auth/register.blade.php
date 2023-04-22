@@ -106,7 +106,7 @@
                                 <select hidden id="customer_types_id" name="customer_types_id"  class="form-control">
                                     <option class="form-control" value="{{config('constants.customer_type.new')}}">{{config('constants.customer_type.new')}}</option>
                                 </select>
-                                <input readonly id="uuid" name="uuid" class="form-control mt-2" value="{{$uuid ?? 0}}">
+                                <input readonly id="uuid" name="uuid" class="form-control mt-2" value="{{$uuid ?? (session()->get('my_uuid') ?? 0)}}">
                                 <input hidden id="status_id" name="status_id" class="form-control mt-2" value="{{config('constants.status.application')}}">
                             </div>
 

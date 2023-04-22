@@ -640,7 +640,12 @@ class LoanApplicationsController extends Controller
     public function newCustomer(Request $request)
     {
         $uuid = $request->uuid;
-        return view('auth.register')->with(compact('uuid'));
+
+//        return view('auth.register')->with(compact('uuid'));
+
+        session(['my_uuid' => $uuid ]);
+
+        return Redirect::route('register')->with(compact('uuid'));
     }
 
     /**
@@ -917,25 +922,28 @@ class LoanApplicationsController extends Controller
 
         //save approval
         if ($save) {
-            //modal create
-            $modal = LoanApproals::UpdateOrCreate(
-                [
-                    'comment' => "Loan application cancelled by the applicant",
-                    'action' => 'cancell',
-                    'from_status_id' => $loan->statuses_id,
-                    'to_status_id' => $next_status,
-                    'loan_applications_id' => $loan_id,
-                    'users_id' => $logged_in->id,
-                ],
-                [
-                    'comment' => "Loan application cancelled by the applicant",
-                    'action' => 'cancell',
-                    'from_status_id' => $loan->statuses_id,
-                    'to_status_id' => $next_status,
-                    'loan_applications_id' => $loan_id,
-                    'users_id' => $logged_in->id,
-                ]
-            );
+
+            if(  $loan->statuses_id  != config('constants.status.loan_request_login')  ){
+                //modal create
+                $modal = LoanApproals::UpdateOrCreate(
+                    [
+                        'comment' => "Loan application cancelled by the applicant",
+                        'action' => 'cancell',
+                        'from_status_id' => $loan->statuses_id,
+                        'to_status_id' => $next_status,
+                        'loan_applications_id' => $loan_id,
+                        'users_id' => $logged_in->id,
+                    ],
+                    [
+                        'comment' => "Loan application cancelled by the applicant",
+                        'action' => 'cancell',
+                        'from_status_id' => $loan->statuses_id,
+                        'to_status_id' => $next_status,
+                        'loan_applications_id' => $loan_id,
+                        'users_id' => $logged_in->id,
+                    ]
+                );
+            }
 
             //update loan application
             $loan->statuses_id = $next_status;
