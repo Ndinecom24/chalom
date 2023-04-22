@@ -7,6 +7,7 @@
                 <div class="card">
                     <div class="card-body">
                         <form class="form-signin" method="post" action="{{ route('register') }}">
+                            {{method_field('POST')}}
                             @csrf
 
                             <div class="text-center mb-4">
